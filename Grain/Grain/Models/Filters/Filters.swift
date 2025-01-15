@@ -119,6 +119,30 @@ struct Shadows: Filter {
 /* All available Core Image filters
 
  [
+ + "CIVividLightBlendMode",
+ + "CIColorBlendMode",
+ + "CIColorBurnBlendMode",
+ + "CIColorDodgeBlendMode",
+ + "CIDarkenBlendMode",
+ + "CIDifferenceBlendMode",
+ + "CIDivideBlendMode",
+ + "CIExclusionBlendMode",
+ + "CIHardLightBlendMode",
+ + "CIHueBlendMode",
+ + "CILightenBlendMode",
+ + "CILinearBurnBlendMode",
+ + "CILinearDodgeBlendMode",
+ + "CILinearLightBlendMode",
+ + "CILuminosityBlendMode",
+ + "CIMultiplyBlendMode",
+ + "CIOverlayBlendMode",
+ + "CIPinLightBlendMode",
+ + "CISaturationBlendMode",
+ + "CIScreenBlendMode",
+ + "CISubtractBlendMode",
+ + "CISoftLightBlendMode",
+
+
     "CIAccordionFoldTransition",
     "CIAdditionCompositing",
     "CIAffineClamp",
@@ -160,8 +184,7 @@ struct Shadows: Filter {
     "CICMYKHalftone",
     "CICode128BarcodeGenerator",
     "CIColorAbsoluteDifference",
-    "CIColorBlendMode",
-    "CIColorBurnBlendMode",
+
     "CIColorClamp",
     "CIColorControls",
     "CIColorCrossPolynomial",
@@ -169,7 +192,7 @@ struct Shadows: Filter {
     "CIColorCubesMixedWithMask",
     "CIColorCubeWithColorSpace",
     "CIColorCurves",
-    "CIColorDodgeBlendMode",
+
     "CIColorInvert",
     "CIColorMap",
     "CIColorMatrix",
@@ -197,11 +220,11 @@ struct Shadows: Filter {
     "CICoreMLModelFilter",
     "CICrop",
     "CICrystallize",
-    "CIDarkenBlendMode",
+
     "CIDepthBlurEffect",
     "CIDepthOfField",
     "CIDepthToDisparity",
-    "CIDifferenceBlendMode",
+
     "CIDiscBlur",
     "CIDisintegrateWithMaskTransition",
     "CIDisparityToDepth",
@@ -209,7 +232,7 @@ struct Shadows: Filter {
     "CIDissolveTransition",
     "CIDistanceGradientFromRedMask",
     "CIDither",
-    "CIDivideBlendMode",
+
     "CIDocumentEnhancer",
     "CIDotScreen",
     "CIDroste",
@@ -217,7 +240,7 @@ struct Shadows: Filter {
     "CIEdges",
     "CIEdgeWork",
     "CIEightfoldReflectedTile",
-    "CIExclusionBlendMode",
+
     "CIExposureAdjust",
     "CIFalseColor",
     "CIFlashTransition",
@@ -233,7 +256,7 @@ struct Shadows: Filter {
     "CIGlideReflectedTile",
     "CIGloom",
     "CIGuidedFilter",
-    "CIHardLightBlendMode",
+
     "CIHatchedScreen",
     "CIHeightFieldFromMask",
     "CIHexagonalPixellate",
@@ -241,7 +264,7 @@ struct Shadows: Filter {
     "CIHistogramDisplayFilter",
     "CIHoleDistortion",
     "CIHueAdjust",
-    "CIHueBlendMode",
+
     "CIHueSaturationValueGradient",
     "CIKaleidoscope",
     "CIKeystoneCorrectionCombined",
@@ -251,16 +274,15 @@ struct Shadows: Filter {
     "CILabDeltaE",
     "CILanczosScaleTransform",
     "CILenticularHaloGenerator",
-    "CILightenBlendMode",
+
     "CILightTunnel",
-    "CILinearBurnBlendMode",
-    "CILinearDodgeBlendMode",
+
     "CILinearGradient",
-    "CILinearLightBlendMode",
+
     "CILinearToSRGBToneCurve",
     "CILineOverlay",
     "CILineScreen",
-    "CILuminosityBlendMode",
+
     "CIMaskedVariableBlur",
     "CIMaskToAlpha",
     "CIMaximumComponent",
@@ -278,13 +300,13 @@ struct Shadows: Filter {
     "CIMorphologyRectangleMaximum",
     "CIMorphologyRectangleMinimum",
     "CIMotionBlur",
-    "CIMultiplyBlendMode",
+
     "CIMultiplyCompositing",
     "CINinePartStretched",
     "CINinePartTiled",
     "CINoiseReduction",
     "CIOpTile",
-    "CIOverlayBlendMode",
+
     "CIPageCurlTransition",
     "CIPageCurlWithShadowTransition",
     "CIPaletteCentroid",
@@ -306,7 +328,7 @@ struct Shadows: Filter {
     "CIPhotoEffectTonal",
     "CIPhotoEffectTransfer",
     "CIPinchDistortion",
-    "CIPinLightBlendMode",
+
     "CIPixellate",
     "CIPointillize",
     "CIQRCodeGenerator",
@@ -318,8 +340,7 @@ struct Shadows: Filter {
     "CIRowAverage",
     "CISaliencyMapFilter",
     "CISampleNearest",
-    "CISaturationBlendMode",
-    "CIScreenBlendMode",
+
     "CISepiaTone",
     "CIShadedMaterial",
     "CISharpenLuminance",
@@ -327,7 +348,6 @@ struct Shadows: Filter {
     "CISixfoldRotatedTile",
     "CISmoothLinearGradient",
     "CISobelGradients",
-    "CISoftLightBlendMode",
     "CISourceAtopCompositing",
     "CISourceInCompositing",
     "CISourceOutCompositing",
@@ -339,7 +359,7 @@ struct Shadows: Filter {
     "CIStraightenFilter",
     "CIStretchCrop",
     "CIStripesGenerator",
-    "CISubtractBlendMode",
+
     "CISunbeamsGenerator",
     "CISwipeTransition",
     "CITemperatureAndTint",
@@ -356,7 +376,6 @@ struct Shadows: Filter {
     "CIVibrance",
     "CIVignette",
     "CIVignetteEffect",
-    "CIVividLightBlendMode",
     "CIVortexDistortion",
     "CIWhitePointAdjust",
     "CIXRay",
