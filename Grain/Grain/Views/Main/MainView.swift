@@ -15,12 +15,12 @@ struct MainView: View {
                 .resizable()
                 .frame(width: 50, height: 50)
                 .opacity(0.5)
-                .onAppear { // Only for testing
-                    if let uiImage = UIImage(named: "Textures/Grain/grain1"),
-                       let cgImage = uiImage.cgImage {
-                        self.editor.updateSourceImage(CIImage(cgImage: cgImage))
-                    }
-                }
+//                .onAppear { // Only for testing
+//                    if let uiImage = UIImage(named: "Textures/Grain/grain1"),
+//                       let cgImage = uiImage.cgImage {
+//                        self.editor.updateSourceImage(CIImage(cgImage: cgImage))
+//                    }
+//                }
             if let filteredImage = editor.finalImage {
                 filteredImage
                     .resizable()
@@ -89,28 +89,49 @@ struct MainView: View {
                 }
             }
             if showsTextures {
-                VStack {
-                    HStack {
-                        Text("Blend mode:")
-                            .font(.h5)
-                            .foregroundStyle(Color.textWhite.opacity(0.8))
-                        Picker(selection: $selectedBlendMode, label: Text("Picker")) {
-                            ForEach(BlendMode.allCases, id: \.self) { mode in
-                                Text("\(mode.rawValue.capitalized)").tag(mode)
+                VStack(spacing: 8) {
+                    TexturesPreviewsView() { selectedTexture in
+                        selectedBlendMode = selectedTexture.prefferedBlendMode
+                        editor.applyTexture(selectedTexture)
+                    }
+
+                    if editor.hasTexture {
+                        VStack(spacing: 0) {
+                            HStack {
+                                Text("Blend mode:")
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
-
+                                Text(selectedBlendMode.title)
+                                    .font(.h5)
+                                    .foregroundStyle(Color.textWhite.opacity(0.8))
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            Slider(value: Binding(
+                                get: { Double(selectedBlendMode.rawValue) },
+                                set: { selectedBlendMode = BlendMode(rawValue: Int($0)) ?? .normal }
+                            ), in: BlendMode.range, step: 1)
+                            .tint(Color.textWhite.opacity(0.1))
+                            .onChange(of: selectedBlendMode) { _, newValue in
+                                editor.changeTextureBlendMode(to: selectedBlendMode)
                             }
                         }
-                        .tint(Color.textWhite.opacity(0.8))
-                        .onChange(of: selectedBlendMode) { _, newValue in
-                            editor.changeTextureBlendMode(to: selectedBlendMode)
+                        VStack(spacing: 0) {
+                            HStack {
+                                Text("Intensity:")
+                                    .font(.h5)
+                                    .foregroundStyle(Color.textWhite.opacity(0.8))
+                                Text("\(editor.textureIntensity)")
+                                    .font(.h5)
+                                    .foregroundStyle(Color.textWhite.opacity(0.8))
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            Slider(value: $editor.textureIntensity, in: 0...1)
+                            .tint(Color.textWhite.opacity(0.1))
+                            .onChange(of: selectedBlendMode) { _, newValue in
+                                editor.changeTextureBlendMode(to: selectedBlendMode)
+                            }
                         }
                     }
-                }
-                TexturesPreviewsView() { selectedTexture in
-                    selectedBlendMode = selectedTexture.prefferedBlendMode
-                    editor.applyTexture(selectedTexture)
                 }
             }
         }
