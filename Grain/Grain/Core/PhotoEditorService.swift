@@ -16,6 +16,14 @@ final class PhotoEditorService {
     var finalImage: Image? = nil
     private var texture: Texture? = nil
     private var textureBlendMode: BlendMode? = nil
+    var hasTexture: Bool {
+        texture != nil
+    }
+    var textureIntensity: Double = 1.0 {
+        didSet {
+            updateImage()
+        }
+    }
 
     func updateSourceImage(_ image: CIImage) {
         self.sourceImage = image
@@ -33,7 +41,7 @@ final class PhotoEditorService {
         vibrance.setToDefault()
         highlights.setToDefault()
         shadows.setToDefault()
-        updateFinalImage()
+        renderFinalImage()
     }
 
     func applyTexture(_ texture: Texture) {
@@ -90,10 +98,10 @@ final class PhotoEditorService {
         if let texture {
             overlayTexture(texture)
         }
-        updateFinalImage()
+        renderFinalImage()
     }
 
-    private func updateFinalImage() {
+    private func renderFinalImage() {
         if let texturedImage {
             if let cgImage = context.createCGImage(texturedImage, from: texturedImage.extent) {
                 print("Generate image after all updates")
@@ -107,26 +115,32 @@ final class PhotoEditorService {
                 finalImage = Image(uiImage: uiImage)
             }
         } else {
-            print("Something wrong in updateFinalImage()") // TODO: Handle errors
+            print("Something wrong in renderFinalImage()") // TODO: Handle errors
         }
     }
 
+    private func updateTextureIntensity(of texture: CIImage, to alpha: CGFloat) -> CIImage? {
+        let alphaFilter = CIFilter.colorMatrix()
+        alphaFilter.setValue(CIVector(x: 0, y: 0, z: 0, w: alpha), forKey: "inputAVector")
+        alphaFilter.inputImage = texture
+        return alphaFilter.outputImage
+    }
+
+    private func configureTexture(_ texture: CIImage, size: CGSize) -> CIImage? { // TODO: Refactor
+        if let resized = resizeImageToAspectFill(image: texture, targetSize: size) {
+            return updateTextureIntensity(of: resized, to: textureIntensity)
+        }
+        return nil
+    }
 
     private func overlayTexture(_ texture: Texture) {
-        if let uiImage = UIImage(named: texture.filename) {
-            guard let cgImage = uiImage.cgImage, let filteredImage else { return }
-            if let resizedInputImage = resizeImageToAspectFill(image: CIImage(cgImage: cgImage), targetSize: filteredImage.extent.size) {
+        if let uiImage = UIImage(named: texture.filename), let cgImage = uiImage.cgImage, let filteredImage, let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: filteredImage.extent.size) {
                 if let filter = textureBlendMode?.ciFilter {
                     filter.backgroundImage = filteredImage
-                    filter.inputImage = resizedInputImage
+                    filter.inputImage = configuredTexture
                     texturedImage = filter.outputImage
-                } else {
-                    // TODO: Normal - без филтров
                 }
-                updateFinalImage()
-            } else {
-                print("Resize texture issue") // TODO: Handle error
-            }
+                renderFinalImage()
         } else {
             print("Texture doesn't exist or has wrong name") // TODO: Handle error
         }
