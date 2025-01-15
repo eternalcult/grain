@@ -16,17 +16,26 @@ struct TexturePreviewView: View {
                 .resizable()
                 .frame(width: 100, height: 100)
                 .overlay(alignment: .bottom) {
-                    Text(texture.name)
-                        .font(.caption)
+                    Text(texture.title)
+                        .font(.h6)
                         .minimumScaleFactor(0.1)
-                        .foregroundStyle(.black)
-                        .frame(height: 30)
+                        .foregroundStyle(Color.textBlack)
+                        .frame(height: 20)
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 4)
-                        .background(.white.opacity(0.8))
+                        .background(Color.backgroundWhite.opacity(0.5))
 
                 }
                 .clipShape(.rect(cornerRadius: 4))
+        }
+    }
+}
+
+
+#Preview {
+    if let texture = texturesCategories.first?.textures.first {
+        TexturePreviewView(texture: texture) {
+            print("Did tap on texture preview")
         }
     }
 }
