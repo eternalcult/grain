@@ -184,7 +184,6 @@ struct Shadows: Filter {
     "CICMYKHalftone",
     "CICode128BarcodeGenerator",
     "CIColorAbsoluteDifference",
-
     "CIColorClamp",
     "CIColorControls",
     "CIColorCrossPolynomial",
@@ -192,7 +191,6 @@ struct Shadows: Filter {
     "CIColorCubesMixedWithMask",
     "CIColorCubeWithColorSpace",
     "CIColorCurves",
-
     "CIColorInvert",
     "CIColorMap",
     "CIColorMatrix",
@@ -220,11 +218,9 @@ struct Shadows: Filter {
     "CICoreMLModelFilter",
     "CICrop",
     "CICrystallize",
-
     "CIDepthBlurEffect",
     "CIDepthOfField",
     "CIDepthToDisparity",
-
     "CIDiscBlur",
     "CIDisintegrateWithMaskTransition",
     "CIDisparityToDepth",
@@ -232,7 +228,6 @@ struct Shadows: Filter {
     "CIDissolveTransition",
     "CIDistanceGradientFromRedMask",
     "CIDither",
-
     "CIDocumentEnhancer",
     "CIDotScreen",
     "CIDroste",
