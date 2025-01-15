@@ -7,12 +7,12 @@ struct MainView: View {
     @State private var editor = PhotoEditorService()
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 8) {
             Image("grain")
                 .resizable()
                 .frame(width: 50, height: 50)
                 .opacity(0.5)
-            if let filteredImage = editor.result {
+            if let filteredImage = editor.finalImage {
                 filteredImage
                     .resizable()
                     .scaledToFit()
@@ -21,11 +21,13 @@ struct MainView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 VStack {
                     ScrollView(.horizontal) {
-                        ForEach(texturesCategories) { category in
-                            HStack(spacing: 8) {
-                                ForEach(category.textures) { texture in
-                                    TexturePreviewView(texture: texture) {
-                                        editor.applyTexture(texture)
+                        HStack {
+                            ForEach(texturesCategories) { category in
+                                HStack(spacing: 8) {
+                                    ForEach(category.textures) { texture in
+                                        TexturePreviewView(texture: texture) {
+                                            editor.applyTexture(texture)
+                                        }
                                     }
                                 }
                             }

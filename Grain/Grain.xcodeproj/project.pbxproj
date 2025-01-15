@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C12AEE1F2D37BF8500069921 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = C12AEE1E2D37BF8500069921 /* AppCore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		C1517A9E2D34511200F61DC6 /* Grain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C12AEE1F2D37BF8500069921 /* AppCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = Grain;
 			packageProductDependencies = (
+				C12AEE1E2D37BF8500069921 /* AppCore */,
 			);
 			productName = Grain;
 			productReference = C1517A9E2D34511200F61DC6 /* Grain.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = C1517A952D34511200F61DC6;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C12AEE1D2D37BF8500069921 /* XCLocalSwiftPackageReference "../../app-core/AppCore" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C1517A9F2D34511200F61DC6 /* Products */;
 			projectDirPath = "";
@@ -334,6 +343,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		C12AEE1D2D37BF8500069921 /* XCLocalSwiftPackageReference "../../app-core/AppCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../app-core/AppCore";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C12AEE1E2D37BF8500069921 /* AppCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C1517A962D34511200F61DC6 /* Project object */;
 }

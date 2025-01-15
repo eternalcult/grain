@@ -12,4 +12,11 @@ protocol Filter {
     var range: ClosedRange<Float> { get }
     var defaultValue: Float { get }
     var current: Float { get set }
+    mutating func setToDefault()
+}
+
+extension Filter {
+    mutating func setToDefault() {
+        current = defaultValue
+    }
 }
