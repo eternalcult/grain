@@ -176,6 +176,7 @@ struct Sharpness: Filter {
  + "CIVibrance",
  + "CIHighlightShadowAdjust",
  + "CITemperatureAndTint",
+ + "CINoiseReduction",
 
 
     "CIAccordionFoldTransition",
@@ -323,7 +324,6 @@ struct Sharpness: Filter {
     "CIMultiplyCompositing",
     "CINinePartStretched",
     "CINinePartTiled",
-    "CINoiseReduction",
     "CIOpTile",
     "CIPageCurlTransition",
     "CIPageCurlWithShadowTransition",

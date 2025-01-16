@@ -48,7 +48,6 @@ struct MainView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .background(Color.backgroundBlackSecondary.opacity(0.3))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .background(.green)
                     filteredImage
                         .resizable()
                         .scaledToFit()

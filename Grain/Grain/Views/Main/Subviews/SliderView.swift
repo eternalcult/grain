@@ -10,6 +10,9 @@ struct SliderView: View {
             Slider(value: $filter.current, in: filter.range)
                 .tint(Color.textWhite.opacity(0.1))
         }
+        .onTapGesture(count: 2) {
+            filter.setToDefault()
+        }
     }
 }
 
