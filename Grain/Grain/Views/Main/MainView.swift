@@ -9,6 +9,7 @@ struct MainView: View {
     @State private var showsFilteredImage = true
     @State private var showsSettings = true
     @State private var showsTextures = false
+    @State private var showsHistogram = false
 
     var body: some View {
         VStack(spacing: 8) {
@@ -34,32 +35,58 @@ struct MainView: View {
                     }
                 }
             }
-//                .onAppear { // Only for testing
-//                    if let uiImage = UIImage(named: "Textures/Grain/grain1"),
-//                       let cgImage = uiImage.cgImage {
-//                        self.editor.updateSourceImage(CIImage(cgImage: cgImage))
-//                    }
+//            .onAppear { // Only for testing
+//                if let uiImage = UIImage(named: "Textures/Grain/grain1"),
+//                   let cgImage = uiImage.cgImage {
+//                    self.photoEditorService.updateSourceImage(CIImage(cgImage: cgImage))
 //                }
+//            }
             if let sourceImage = photoEditorService.sourceImage, let filteredImage = photoEditorService.finalImage {
-                ZStack {
-                    sourceImage
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.backgroundBlackSecondary.opacity(0.3))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                    filteredImage
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.backgroundBlackSecondary.opacity(0.3))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .opacity(showsFilteredImage ? 1 : 0)
-                        .onLongPressGesture { } onPressingChanged: { isPressing in
-                            showsFilteredImage = !isPressing
-                        }
+                VStack {
+                    ZStack(alignment: .trailing) {
+                        sourceImage
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color.backgroundBlackSecondary.opacity(0.3))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        filteredImage
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .opacity(showsFilteredImage ? 1 : 0)
+                            .onLongPressGesture { } onPressingChanged: { isPressing in
+                                showsFilteredImage = !isPressing
+                            }
+                    }
+                    .overlay(alignment: .bottomLeading) {
+                        if showsHistogram, let histogram = photoEditorService.histogram() {
+                            Image(uiImage: histogram)
+                                .resizable()
+                                .opacity(0.8)
+                                .frame(width: 100, height: 50)
+                                .padding()
 
+                        }
+                    }
+                    HStack(spacing: 0) {
+                        Button {
+                            showsHistogram.toggle()
+                        } label: {
+                            Image(systemName: "waveform.path.ecg.rectangle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .padding(4)
+                                .tint(showsHistogram ? Color.textBlack : Color.textWhite)
+                                .background(showsHistogram ? Color.backgroundWhiteSecondary.opacity(0.8) : .clear)
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                        }
+                        .padding(4)
+                    }
                 }
+
                 ScrollView(.vertical) {
                     VStack(spacing: 8) {
                         slidersView

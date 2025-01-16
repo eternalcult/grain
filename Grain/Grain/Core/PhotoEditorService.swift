@@ -106,6 +106,22 @@ final class PhotoEditorService {
         overlayTexture(texture)
     }
 
+    func histogram(height: CGFloat = 100) -> UIImage? {
+        let filter = CIFilter.histogramDisplay()
+        if let texturedCiImage {
+            filter.inputImage = texturedCiImage
+        } else if let filteredCiImage {
+            filter.inputImage = filteredCiImage
+        }
+        filter.lowLimit = 0
+        filter.highLimit = 1
+        if let output = filter.outputImage {
+            return renderCIImageToUIImage(output)
+        }
+        return nil
+    }
+
+
     var brightness: Filter = Brightness() {
         didSet {
             updateImage()
