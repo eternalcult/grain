@@ -44,7 +44,6 @@ struct TexturesPreviewsView: View {
                                             }
                                         }
                                         .onAppear {
-                                            print("onAppear", texture.title)
                                             visibleTexturesCategory = category.id
                                         }
                                     }
@@ -64,9 +63,5 @@ struct TexturesPreviewsView: View {
                 }
             }
         }
-        .padding(.vertical, 12)
-        .padding(.horizontal, 16)
-        .background(Color.backgroundBlackSecondary.opacity(0.3))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }

@@ -20,33 +20,33 @@ import Foundation
 
 struct Brightness: Filter {
     let title = "Brightness"
-    let range: ClosedRange<Float> = -1...1
+    let range: ClosedRange<Float> = -0.20...0.20 // Default: -1...1
     let defaultValue: Float = 0
     var current: Float = 0
 }
 struct Contrast: Filter {
     let title: String = "Contrast"
-    let range: ClosedRange<Float> = 0...4
+    let range: ClosedRange<Float> = 0...2 // Default: 0...4
     let defaultValue: Float = 1
     var current: Float = 1
 }
 struct Saturation: Filter {
     let title: String = "Saturation"
-    let range: ClosedRange<Float> = 0...2
+    let range: ClosedRange<Float> = 0...2 // Default
     let defaultValue: Float = 1
     var current: Float = 1
 }
 
 struct Exposure: Filter {
     let title: String = "Exposure"
-    let range: ClosedRange<Float> = -10...10
+    let range: ClosedRange<Float> = -4...4 // Default: -10...10
     let defaultValue: Float = 0
     var current: Float = 0
 }
 
 struct Vibrance: Filter {
     let title: String = "Vibrance"
-    let range: ClosedRange<Float> = -1...1
+    let range: ClosedRange<Float> = -1...1 // Default
     let defaultValue: Float = 0
     var current: Float = 0
 }
@@ -60,7 +60,7 @@ struct Highlights: Filter { // TODO: Check values, I'm not sure about current an
 
 struct Shadows: Filter {
     let title: String = "Shadows"
-    let range: ClosedRange<Float> = -1...1
+    let range: ClosedRange<Float> = -1...1 // Default
     let defaultValue: Float = 0
     var current: Float = 0
 }
@@ -177,6 +177,7 @@ struct Sharpness: Filter {
  + "CIHighlightShadowAdjust",
  + "CITemperatureAndTint",
  + "CINoiseReduction",
+ + "CIHistogramDisplayFilter",
 
 
     "CIAccordionFoldTransition",
@@ -287,7 +288,6 @@ struct Sharpness: Filter {
     "CIHatchedScreen",
     "CIHeightFieldFromMask",
     "CIHexagonalPixellate",
-    "CIHistogramDisplayFilter",
     "CIHoleDistortion",
     "CIHueAdjust",
     "CIHueSaturationValueGradient",

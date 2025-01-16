@@ -4,7 +4,7 @@ struct SliderView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("\(filter.title): \(String(format: "%.2f", filter.current))")
+            Text("\(filter.title): \(String(format: "%.0f%%", filter.current * 100))")
                 .font(.h5)
                 .foregroundStyle(Color.textWhite.opacity(0.8))
             Slider(value: $filter.current, in: filter.range)
