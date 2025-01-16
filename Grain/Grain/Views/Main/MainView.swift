@@ -6,6 +6,7 @@ import AppCore
 struct MainView: View {
     @State private var editor = PhotoEditorService()
     @State private var selectedItem: PhotosPickerItem? = nil
+    @State private var showsFilteredImage = true
     @State private var showsSettings = false
     @State private var showsTextures = false
 
@@ -21,13 +22,27 @@ struct MainView: View {
 //                        self.editor.updateSourceImage(CIImage(cgImage: cgImage))
 //                    }
 //                }
-            if let filteredImage = editor.finalImage {
-                filteredImage
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.backgroundBlackSecondary.opacity(0.3))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            if let sourceImage = editor.sourceImage, let filteredImage = editor.finalImage {
+                ZStack {
+                    sourceImage
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.backgroundBlackSecondary.opacity(0.3))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .background(.green)
+                    filteredImage
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.backgroundBlackSecondary.opacity(0.3))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .opacity(showsFilteredImage ? 1 : 0)
+                        .onLongPressGesture { } onPressingChanged: { isPressing in
+                            showsFilteredImage = !isPressing
+                        }
+
+                }
                 ScrollView(.vertical) {
                     VStack(spacing: 8) {
                         slidersView
