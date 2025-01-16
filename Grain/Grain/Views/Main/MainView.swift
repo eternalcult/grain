@@ -4,25 +4,43 @@ import PhotosUI
 import AppCore
 
 struct MainView: View {
-    @State private var editor = PhotoEditorService()
+    @State private var photoEditorService = PhotoEditorService()
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var showsFilteredImage = true
-    @State private var showsSettings = false
+    @State private var showsSettings = true
     @State private var showsTextures = false
 
     var body: some View {
         VStack(spacing: 8) {
-            Image("grain")
-                .resizable()
-                .frame(width: 50, height: 50)
-                .opacity(0.5)
+            ZStack {
+                Image("grain")
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                    .opacity(0.5)
+                if photoEditorService.finalImage != nil {
+                    HStack {
+                        Spacer()
+                        Button {
+                            photoEditorService.saveImageToPhotoLibrary()
+                            // TODO: Show successful alert
+                        } label: {
+                            Text("Export")
+                                .font(.h5)
+                                .foregroundStyle(Color.textWhite)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .border(Color.textWhite, width: 1)
+                        }
+                    }
+                }
+            }
 //                .onAppear { // Only for testing
 //                    if let uiImage = UIImage(named: "Textures/Grain/grain1"),
 //                       let cgImage = uiImage.cgImage {
 //                        self.editor.updateSourceImage(CIImage(cgImage: cgImage))
 //                    }
 //                }
-            if let sourceImage = editor.sourceImage, let filteredImage = editor.finalImage {
+            if let sourceImage = photoEditorService.sourceImage, let filteredImage = photoEditorService.finalImage {
                 ZStack {
                     sourceImage
                         .resizable()
@@ -76,7 +94,7 @@ struct MainView: View {
                 Task {
                     if let data = try? await newValue.loadTransferable(type: Data.self),
                        let ciImage = CIImage(data: data) {
-                        self.editor.updateSourceImage(ciImage)
+                        self.photoEditorService.updateSourceImage(ciImage)
                     }
                 }
             })
@@ -107,10 +125,10 @@ struct MainView: View {
                 VStack(spacing: 8) {
                     TexturesPreviewsView() { selectedTexture in
                         selectedBlendMode = selectedTexture.prefferedBlendMode
-                        editor.applyTexture(selectedTexture)
+                        photoEditorService.applyTexture(selectedTexture)
                     }
 
-                    if editor.hasTexture {
+                    if photoEditorService.hasTexture {
                         VStack(spacing: 0) {
                             HStack {
                                 Text("Blend mode:")
@@ -127,7 +145,7 @@ struct MainView: View {
                             ), in: BlendMode.range, step: 1)
                             .tint(Color.textWhite.opacity(0.1))
                             .onChange(of: selectedBlendMode) { _, newValue in
-                                editor.changeTextureBlendMode(to: selectedBlendMode)
+                                photoEditorService.changeTextureBlendMode(to: selectedBlendMode)
                             }
                         }
                         VStack(spacing: 0) {
@@ -135,15 +153,15 @@ struct MainView: View {
                                 Text("Intensity:")
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
-                                Text("\(editor.textureIntensity)")
+                                Text("\(photoEditorService.textureIntensity)")
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            Slider(value: $editor.textureIntensity, in: 0...1)
+                            Slider(value: $photoEditorService.textureIntensity, in: 0...1)
                             .tint(Color.textWhite.opacity(0.1))
                             .onChange(of: selectedBlendMode) { _, newValue in
-                                editor.changeTextureBlendMode(to: selectedBlendMode)
+                                photoEditorService.changeTextureBlendMode(to: selectedBlendMode)
                             }
                         }
                     }
@@ -177,13 +195,15 @@ struct MainView: View {
             }
             if showsSettings {
                 VStack(spacing: 0) {
-                    SliderView(filter: $editor.brightness)
-                    SliderView(filter: $editor.contrast)
-                    SliderView(filter: $editor.saturation)
-                    SliderView(filter: $editor.exposure)
-                    SliderView(filter: $editor.vibrance)
-                    SliderView(filter: $editor.highlights)
-                    SliderView(filter: $editor.shadows)
+                    SliderView(filter: $photoEditorService.brightness)
+                    SliderView(filter: $photoEditorService.contrast)
+                    SliderView(filter: $photoEditorService.saturation)
+                    SliderView(filter: $photoEditorService.exposure)
+                    SliderView(filter: $photoEditorService.vibrance)
+                    SliderView(filter: $photoEditorService.highlights)
+                    SliderView(filter: $photoEditorService.shadows)
+                    SliderView(filter: $photoEditorService.temperature)
+                    SliderView(filter: $photoEditorService.tint)
                 }
             }
         }

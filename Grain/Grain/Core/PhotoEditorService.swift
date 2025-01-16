@@ -1,4 +1,5 @@
 import SwiftUI
+import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
@@ -37,6 +38,55 @@ final class PhotoEditorService {
         texturedCiImage = nil
         finalImage = nil
         resetFilters()
+    }
+
+    // Info.plist - NSPhotoLibraryUsageDescription - We need access to your photo library to save images you create in the app.
+    func saveImageToPhotoLibrary() {
+        if let texturedCiImage, let uiImage = renderCIImageToUIImage(texturedCiImage) {
+            // Request permission to access the photo library
+            PHPhotoLibrary.requestAuthorization { status in
+                guard status == .authorized else {
+                    print("Permission to access photo library denied.")
+                    return
+                }
+
+                // Save the image
+                PHPhotoLibrary.shared().performChanges {
+                    PHAssetChangeRequest.creationRequestForAsset(from: uiImage)
+                } completionHandler: { success, error in
+                    if let error = error {
+                        print("Failed to save image: \(error.localizedDescription)")
+                    } else if success {
+                        print("Image saved successfully!")
+                    } else {
+                        print("Unknown error occurred while saving the image.")
+                    }
+                }
+            }
+        } else if let filteredCiImage, let uiImage = renderCIImageToUIImage(filteredCiImage) {
+            // Request permission to access the photo library
+            PHPhotoLibrary.requestAuthorization { status in
+                guard status == .authorized else {
+                    print("Permission to access photo library denied.")
+                    return
+                }
+
+                // Save the image
+                PHPhotoLibrary.shared().performChanges {
+                    PHAssetChangeRequest.creationRequestForAsset(from: uiImage)
+                } completionHandler: { success, error in
+                    if let error = error { // TODO: Create completions for showing success/error alerts
+                        print("Failed to save image: \(error.localizedDescription)")
+                    } else if success {
+                        print("Image saved successfully!")
+                    } else {
+                        print("Unknown error occurred while saving the image.")
+                    }
+                }
+            }
+        } else {
+            print("Something wrong in saveToGallery()") // TODO: Handle errors
+        }
     }
 
     func resetFilters() {
