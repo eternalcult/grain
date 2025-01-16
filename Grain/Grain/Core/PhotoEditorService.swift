@@ -145,12 +145,25 @@ final class PhotoEditorService {
         }
     }
 
+    var temperature: Filter = Temperature() {
+        didSet {
+            updateImage()
+        }
+    }
+
+    var tint: Filter = Tint() {
+        didSet {
+            updateImage()
+        }
+    }
+
     private func updateImage() {
         filteredCiImage = sourceCiImage
         updateBCS()
         updateExposure()
         updateVibrance()
         updateHS()
+        updateTemperatureAndTint()
         if let texture {
             overlayTexture(texture)
         }
@@ -275,6 +288,14 @@ private extension PhotoEditorService {
         filter.inputImage = filteredCiImage
         filter.intensity = 0
         filter.radius = 0
+        filteredCiImage = filter.outputImage
+    }
+
+    private func updateTemperatureAndTint() {
+        let filter = CIFilter.temperatureAndTint()
+        filter.inputImage = filteredCiImage
+        filter.neutral = CIVector(x: CGFloat(temperature.defaultValue), y: 0) // Neutral daylight white balance
+        filter.targetNeutral = CIVector(x: CGFloat(temperature.current), y: CGFloat(tint.current))
         filteredCiImage = filter.outputImage
     }
 }

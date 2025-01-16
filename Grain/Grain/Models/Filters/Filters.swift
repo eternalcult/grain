@@ -66,6 +66,22 @@ struct Shadows: Filter {
 }
 
 
+struct Temperature: Filter {
+    var title: String = "Temperature"
+    var range: ClosedRange<Float> = 2000...11000 // Default: 2000...15000
+    var defaultValue: Float = 6500
+    var current: Float = 6500
+}
+
+struct Tint: Filter {
+    var title: String = "Tint"
+    var range: ClosedRange<Float> = -200...200 // Default: -200...200
+    var defaultValue: Float = 0
+    var current: Float = 0
+}
+
+
+
 
 /*
 
@@ -141,6 +157,11 @@ struct Shadows: Filter {
  + "CIScreenBlendMode",
  + "CISubtractBlendMode",
  + "CISoftLightBlendMode",
+ + "CIColorControls",
+ + "CIExposureAdjust",
+ + "CIVibrance",
+ + "CIHighlightShadowAdjust",
+ + "CITemperatureAndTint",
 
 
     "CIAccordionFoldTransition",
@@ -168,7 +189,7 @@ struct Shadows: Filter {
     "CIBlendWithBlueMask",
     "CIBlendWithMask",
     "CIBlendWithRedMask",
-    "CIBloom",
+    "CIBloom", - https://developer.apple.com/documentation/coreimage/cifilter/3228276-bloom
     "CIBlurredRectangleGenerator",
     "CIBokehBlur",
     "CIBoxBlur",
@@ -185,7 +206,6 @@ struct Shadows: Filter {
     "CICode128BarcodeGenerator",
     "CIColorAbsoluteDifference",
     "CIColorClamp",
-    "CIColorControls",
     "CIColorCrossPolynomial",
     "CIColorCube",
     "CIColorCubesMixedWithMask",
@@ -219,7 +239,7 @@ struct Shadows: Filter {
     "CICrop",
     "CICrystallize",
     "CIDepthBlurEffect",
-    "CIDepthOfField",
+    "CIDepthOfField", - https://developer.apple.com/documentation/coreimage/cifilter/3228308-depthoffield
     "CIDepthToDisparity",
     "CIDiscBlur",
     "CIDisintegrateWithMaskTransition",
@@ -235,8 +255,6 @@ struct Shadows: Filter {
     "CIEdges",
     "CIEdgeWork",
     "CIEightfoldReflectedTile",
-
-    "CIExposureAdjust",
     "CIFalseColor",
     "CIFlashTransition",
     "CIFourfoldReflectedTile",
@@ -251,15 +269,12 @@ struct Shadows: Filter {
     "CIGlideReflectedTile",
     "CIGloom",
     "CIGuidedFilter",
-
     "CIHatchedScreen",
     "CIHeightFieldFromMask",
     "CIHexagonalPixellate",
-    "CIHighlightShadowAdjust",
     "CIHistogramDisplayFilter",
     "CIHoleDistortion",
     "CIHueAdjust",
-
     "CIHueSaturationValueGradient",
     "CIKaleidoscope",
     "CIKeystoneCorrectionCombined",
@@ -269,15 +284,11 @@ struct Shadows: Filter {
     "CILabDeltaE",
     "CILanczosScaleTransform",
     "CILenticularHaloGenerator",
-
     "CILightTunnel",
-
     "CILinearGradient",
-
     "CILinearToSRGBToneCurve",
     "CILineOverlay",
     "CILineScreen",
-
     "CIMaskedVariableBlur",
     "CIMaskToAlpha",
     "CIMaximumComponent",
@@ -295,13 +306,11 @@ struct Shadows: Filter {
     "CIMorphologyRectangleMaximum",
     "CIMorphologyRectangleMinimum",
     "CIMotionBlur",
-
     "CIMultiplyCompositing",
     "CINinePartStretched",
     "CINinePartTiled",
     "CINoiseReduction",
     "CIOpTile",
-
     "CIPageCurlTransition",
     "CIPageCurlWithShadowTransition",
     "CIPaletteCentroid",
@@ -323,7 +332,6 @@ struct Shadows: Filter {
     "CIPhotoEffectTonal",
     "CIPhotoEffectTransfer",
     "CIPinchDistortion",
-
     "CIPixellate",
     "CIPointillize",
     "CIQRCodeGenerator",
@@ -335,7 +343,6 @@ struct Shadows: Filter {
     "CIRowAverage",
     "CISaliencyMapFilter",
     "CISampleNearest",
-
     "CISepiaTone",
     "CIShadedMaterial",
     "CISharpenLuminance",
@@ -353,11 +360,9 @@ struct Shadows: Filter {
     "CIStarShineGenerator",
     "CIStraightenFilter",
     "CIStretchCrop",
-    "CIStripesGenerator",
-
+    "CIStripesGenerator", - https://developer.apple.com/documentation/coreimage/cifilter/3228417-stripesgenerator
     "CISunbeamsGenerator",
     "CISwipeTransition",
-    "CITemperatureAndTint",
     "CITextImageGenerator",
     "CIThermal",
     "CIToneCurve",
@@ -368,7 +373,6 @@ struct Shadows: Filter {
     "CITwelvefoldReflectedTile",
     "CITwirlDistortion",
     "CIUnsharpMask",
-    "CIVibrance",
     "CIVignette",
     "CIVignetteEffect",
     "CIVortexDistortion",
