@@ -157,6 +157,18 @@ final class PhotoEditorService {
         }
     }
 
+    var noiseReduction: Filter = NoiseReduction() {
+        didSet {
+            updateImage()
+        }
+    }
+
+    var sharpness: Filter = Sharpness() {
+        didSet {
+            updateImage()
+        }
+    }
+
     private func updateImage() {
         filteredCiImage = sourceCiImage
         updateBCS()
@@ -164,6 +176,7 @@ final class PhotoEditorService {
         updateVibrance()
         updateHS()
         updateTemperatureAndTint()
+        updateNoiseReduction()
         if let texture {
             overlayTexture(texture)
         }
@@ -294,8 +307,16 @@ private extension PhotoEditorService {
     private func updateTemperatureAndTint() {
         let filter = CIFilter.temperatureAndTint()
         filter.inputImage = filteredCiImage
-        filter.neutral = CIVector(x: CGFloat(temperature.defaultValue), y: 0) // Neutral daylight white balance
+        filter.neutral = CIVector(x: CGFloat(temperature.defaultValue), y: 0)
         filter.targetNeutral = CIVector(x: CGFloat(temperature.current), y: CGFloat(tint.current))
+        filteredCiImage = filter.outputImage
+    }
+
+    private func updateNoiseReduction() {
+        let filter = CIFilter.noiseReduction()
+        filter.inputImage = filteredCiImage
+        filter.noiseLevel = noiseReduction.current
+        filter.sharpness = sharpness.current
         filteredCiImage = filter.outputImage
     }
 }

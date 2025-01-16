@@ -10,11 +10,11 @@ import Foundation
  - black point
  + saturation
  + vibrance
- - warmth
- - tint
- - sharpness
+ + warmth
+ + tint
+ + sharpness
  - definition
- - noise reduction
+ + noise reduction
  - vignette
  */
 
@@ -78,6 +78,20 @@ struct Tint: Filter {
     var range: ClosedRange<Float> = -200...200 // Default: -200...200
     var defaultValue: Float = 0
     var current: Float = 0
+}
+
+struct NoiseReduction: Filter {
+    var title: String = "Noise Reduction"
+    var range: ClosedRange<Float> = 0.2...1 // Default: 0.0...1
+    var defaultValue: Float = 0.2
+    var current: Float = 0.2
+}
+
+struct Sharpness: Filter {
+    var title: String = "Sharpness"
+    var range: ClosedRange<Float> = 0.4...1 // Default: 0.0...1
+    var defaultValue: Float = 0.4
+    var current: Float = 0.4
 }
 
 

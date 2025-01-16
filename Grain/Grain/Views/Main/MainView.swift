@@ -204,6 +204,8 @@ struct MainView: View {
                     SliderView(filter: $photoEditorService.shadows)
                     SliderView(filter: $photoEditorService.temperature)
                     SliderView(filter: $photoEditorService.tint)
+                    SliderView(filter: $photoEditorService.noiseReduction)
+                    SliderView(filter: $photoEditorService.sharpness)
                 }
             }
         }
