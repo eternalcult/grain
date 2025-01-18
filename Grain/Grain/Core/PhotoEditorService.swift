@@ -5,20 +5,21 @@ import CoreImage.CIFilterBuiltins
 
 @Observable
 final class PhotoEditorService {
+
+//    private let context = CIContext(options:  [ // TODO: Decide should I use it or not?
+//        .priorityRequestLow: true, // Lower priority if running multiple tasks
+//        .useSoftwareRenderer: false, // Forces the use of the GPU renderer.
+//        .highQualityDownsample: false,
+//        .allowLowPower: true
+//    ] )
+
     private let context = CIContext() // Doc: Creating a CIContext is expensive, so create one during your initial setup and reuse it throughout your app.
 
-    var sourceImage: Image? {
-        if let sourceCiImage, let uiImage = renderCIImageToUIImage(sourceCiImage) {
-            return Image(uiImage: uiImage)
-        }
-        return nil
-    }
+
+    var sourceImage: Image? = nil
     /// Source Image doesn't change
     private var sourceCiImage: CIImage? = nil
-    /// Filtered image using only for applying filters
     private var filteredCiImage: CIImage? = nil
-    /// Textured Image using only for texture applying
-    private var texturedCiImage: CIImage? = nil
     /// Final image after all updates
     var finalImage: Image? = nil
     private var texture: Texture? = nil
@@ -34,36 +35,17 @@ final class PhotoEditorService {
 
     func updateSourceImage(_ image: CIImage) {
         self.sourceCiImage = image
+        if let sourceUiImage = renderCIImageToUIImage(image) {
+            self.sourceImage = Image(uiImage: sourceUiImage)
+        }
         filteredCiImage = image
-        texturedCiImage = nil
         finalImage = nil
         resetFilters()
     }
 
     // Info.plist - NSPhotoLibraryUsageDescription - We need access to your photo library to save images you create in the app.
     func saveImageToPhotoLibrary() {
-        if let texturedCiImage, let uiImage = renderCIImageToUIImage(texturedCiImage) {
-            // Request permission to access the photo library
-            PHPhotoLibrary.requestAuthorization { status in
-                guard status == .authorized else {
-                    print("Permission to access photo library denied.")
-                    return
-                }
-
-                // Save the image
-                PHPhotoLibrary.shared().performChanges {
-                    PHAssetChangeRequest.creationRequestForAsset(from: uiImage)
-                } completionHandler: { success, error in
-                    if let error = error {
-                        print("Failed to save image: \(error.localizedDescription)")
-                    } else if success {
-                        print("Image saved successfully!")
-                    } else {
-                        print("Unknown error occurred while saving the image.")
-                    }
-                }
-            }
-        } else if let filteredCiImage, let uiImage = renderCIImageToUIImage(filteredCiImage) {
+        if let filteredCiImage, let uiImage = renderCIImageToUIImage(filteredCiImage) {
             // Request permission to access the photo library
             PHPhotoLibrary.requestAuthorization { status in
                 guard status == .authorized else {
@@ -103,16 +85,12 @@ final class PhotoEditorService {
     func applyTexture(_ texture: Texture) {
         self.texture = texture
         textureBlendMode = texture.prefferedBlendMode
-        overlayTexture(texture)
+        updateImage()
     }
 
     func histogram(height: CGFloat = 100) -> UIImage? {
         let filter = CIFilter.histogramDisplay()
-        if let texturedCiImage {
-            filter.inputImage = texturedCiImage
-        } else if let filteredCiImage {
-            filter.inputImage = filteredCiImage
-        }
+        filter.inputImage = filteredCiImage
         filter.lowLimit = 0
         filter.highLimit = 1
         if let output = filter.outputImage {
@@ -199,10 +177,16 @@ final class PhotoEditorService {
         renderFinalImage()
     }
 
+    // TODO: Separate preview and final image render and after that change scaleFactor
+    private func downsamplePreview(image: CIImage) -> CIImage {
+        let scaleFactor: CGFloat = 1 // Adjust based on your needs
+        let previewSize = CGSize(width: image.extent.width * scaleFactor, height: image.extent.height * scaleFactor)
+        let resizedImage = image.transformed(by: CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
+        return resizedImage
+    }
+
     private func renderFinalImage() {
-        if let texturedCiImage, let uiImage = renderCIImageToUIImage(texturedCiImage) {
-            finalImage = Image(uiImage: uiImage)
-        } else if let filteredCiImage, let uiImage = renderCIImageToUIImage(filteredCiImage) {
+        if let filteredCiImage, let uiImage = renderCIImageToUIImage(downsamplePreview(image: filteredCiImage)) {
             finalImage = Image(uiImage: uiImage)
         } else {
             print("Something wrong in renderFinalImage()") // TODO: Handle errors
@@ -224,13 +208,14 @@ final class PhotoEditorService {
     }
 
     private func overlayTexture(_ texture: Texture) {
-        if let uiImage = UIImage(named: texture.filename), let cgImage = uiImage.cgImage, let filteredCiImage, let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: filteredCiImage.extent.size) {
-                if let filter = textureBlendMode?.ciFilter {
-                    filter.backgroundImage = filteredCiImage
-                    filter.inputImage = configuredTexture
-                    texturedCiImage = filter.outputImage
-                }
-                renderFinalImage()
+        if let uiImage = UIImage(named: texture.filename),
+            let cgImage = uiImage.cgImage,
+            let filteredCiImage,
+            let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: filteredCiImage.extent.size),
+            let blendMode = textureBlendMode?.ciFilter {
+            blendMode.backgroundImage = filteredCiImage
+            blendMode.inputImage = configuredTexture
+            self.filteredCiImage = blendMode.outputImage
         } else {
             print("Texture doesn't exist or has wrong name") // TODO: Handle error
         }
