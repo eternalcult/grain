@@ -1,6 +1,6 @@
 import SwiftUI
 struct SliderView: View {
-    @Binding var filter: Filter
+    @Binding var filter: ImageProperty
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {

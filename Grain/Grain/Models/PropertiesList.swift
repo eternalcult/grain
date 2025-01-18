@@ -18,81 +18,25 @@ import Foundation
  - vignette
  */
 
-struct Brightness: Filter {
-    let title = "Brightness"
-    let range: ClosedRange<Float> = -0.20...0.20 // Default: -1...1
-    let defaultValue: Float = 0
-    var current: Float = 0
-}
-struct Contrast: Filter {
-    let title: String = "Contrast"
-    let range: ClosedRange<Float> = 0...2 // Default: 0...4
-    let defaultValue: Float = 1
-    var current: Float = 1
-}
-struct Saturation: Filter {
-    let title: String = "Saturation"
-    let range: ClosedRange<Float> = 0...2 // Default
-    let defaultValue: Float = 1
-    var current: Float = 1
-}
-
-struct Exposure: Filter {
-    let title: String = "Exposure"
-    let range: ClosedRange<Float> = -4...4 // Default: -10...10
-    let defaultValue: Float = 0
-    var current: Float = 0
-}
-
-struct Vibrance: Filter {
-    let title: String = "Vibrance"
-    let range: ClosedRange<Float> = -1...1 // Default
-    let defaultValue: Float = 0
-    var current: Float = 0
-}
-
-struct Highlights: Filter { // TODO: Check values, I'm not sure about current and range
-    let title: String = "Highlights"
-    let range: ClosedRange<Float> = -1...1
-    let defaultValue: Float = 1
-    var current: Float = 1
-}
-
-struct Shadows: Filter {
-    let title: String = "Shadows"
-    let range: ClosedRange<Float> = -1...1 // Default
-    let defaultValue: Float = 0
-    var current: Float = 0
-}
 
 
-struct Temperature: Filter {
-    var title: String = "Temperature"
-    var range: ClosedRange<Float> = 2000...11000 // Default: 2000...15000
-    var defaultValue: Float = 6500
-    var current: Float = 6500
-}
 
-struct Tint: Filter {
-    var title: String = "Tint"
-    var range: ClosedRange<Float> = -200...200 // Default: -200...200
-    var defaultValue: Float = 0
-    var current: Float = 0
-}
 
-struct NoiseReduction: Filter {
-    var title: String = "Noise Reduction"
-    var range: ClosedRange<Float> = 0.2...1 // Default: 0.0...1
-    var defaultValue: Float = 0.2
-    var current: Float = 0.2
-}
 
-struct Sharpness: Filter {
-    var title: String = "Sharpness"
-    var range: ClosedRange<Float> = 0.4...1 // Default: 0.0...1
-    var defaultValue: Float = 0.4
-    var current: Float = 0.4
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

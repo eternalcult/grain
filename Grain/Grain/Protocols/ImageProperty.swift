@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Filter {
+protocol ImageProperty {
     var title: String { get }
     var range: ClosedRange<Float> { get }
     var defaultValue: Float { get }
@@ -15,7 +15,7 @@ protocol Filter {
     mutating func setToDefault()
 }
 
-extension Filter {
+extension ImageProperty {
     mutating func setToDefault() {
         current = defaultValue
     }
