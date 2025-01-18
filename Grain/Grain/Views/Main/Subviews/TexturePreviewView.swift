@@ -1,10 +1,12 @@
 import SwiftUI
 struct TexturePreviewView: View {
+    private let isSelected: Bool
     private let texture: Texture
     var didTap: (() -> Void)?
 
-    init(texture: Texture, didTap: (() -> Void)?) {
+    init(texture: Texture, isSelected: Bool = false, didTap: (() -> Void)?) {
         self.texture = texture
+        self.isSelected = isSelected
         self.didTap = didTap
     }
 
@@ -14,7 +16,6 @@ struct TexturePreviewView: View {
         } label: {
             Image(texture.filename)
                 .resizable()
-                .frame(width: 100, height: 100)
                 .overlay(alignment: .bottom) {
                     Text(texture.title)
                         .font(.h6)
@@ -27,6 +28,10 @@ struct TexturePreviewView: View {
 
                 }
                 .clipShape(.rect(cornerRadius: 4))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(isSelected ? Color.textWhite : .clear, lineWidth: 2)
+                )
         }
     }
 }

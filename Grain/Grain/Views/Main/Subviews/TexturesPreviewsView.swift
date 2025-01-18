@@ -1,15 +1,14 @@
 import SwiftUI
 
 struct TexturesPreviewsView: View {
+    @Environment(PhotoEditorService.self) private var photoEditorService
     @State private var scrollToIndex: UUID?
     @State private var visibleTexturesCategory: UUID?
     @State private var visibleItems: Set<UUID> = []
 
-    var didTapOnPreview: ((Texture) -> Void)?
-
-
     var body: some View {
         VStack {
+            // Категории
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(texturesCategories) { category in
@@ -27,11 +26,10 @@ struct TexturesPreviewsView: View {
                                 .underline(isUnderlined)
                                 .foregroundStyle(Color.textWhite.opacity(0.8))
                         }
-
                     }
                 }
-
             }
+            // Текстуры
             ScrollViewReader { proxy in
                 ScrollView(.horizontal) {
                     HStack(spacing: 4) {
@@ -39,10 +37,19 @@ struct TexturesPreviewsView: View {
                                 LazyHStack(spacing: 4) {
                                     ForEach(category.textures) { texture in
                                         LazyHStack {
-                                            TexturePreviewView(texture: texture) {
-                                                didTapOnPreview?(texture)
+                                            if let selectedTexture = photoEditorService.texture {
+                                                TexturePreviewView(texture: texture, isSelected: selectedTexture.id == texture.id) {
+                                                    photoEditorService.applyTexture(texture)
+                                                }
+                                                .frame(width: 100, height: 100)
+                                            } else {
+                                                TexturePreviewView(texture: texture) {
+                                                    photoEditorService.applyTexture(texture)
+                                                }
+                                                .frame(width: 100, height: 100)
                                             }
                                         }
+                                        .padding(.vertical, 2)
                                         .onAppear {
                                             visibleTexturesCategory = category.id
                                         }

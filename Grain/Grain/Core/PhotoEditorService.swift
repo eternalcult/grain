@@ -22,8 +22,28 @@ final class PhotoEditorService {
     private var filteredCiImage: CIImage? = nil
     /// Final image after all updates
     var finalImage: Image? = nil
-    private var texture: Texture? = nil
-    private var textureBlendMode: BlendMode? = nil
+
+    private(set) var texture: Texture? = nil
+    private(set) var textureBlendMode: BlendMode? = nil
+
+    func applyTexture(_ newTexture: Texture) {
+        if texture?.id != newTexture.id {
+            texture = newTexture
+            if textureBlendMode != newTexture.prefferedBlendMode {
+                textureBlendMode = newTexture.prefferedBlendMode
+            }
+            updateImage()
+        }
+    }
+
+    func updateTextureBlendMode(to newBlendMode: BlendMode) {
+        if textureBlendMode != newBlendMode {
+            textureBlendMode = newBlendMode
+        }
+        updateImage()
+    }
+
+
     var hasTexture: Bool {
         texture != nil
     }
@@ -80,12 +100,6 @@ final class PhotoEditorService {
         highlights.setToDefault()
         shadows.setToDefault()
         renderFinalImage()
-    }
-
-    func applyTexture(_ texture: Texture) {
-        self.texture = texture
-        textureBlendMode = texture.prefferedBlendMode
-        updateImage()
     }
 
     func histogram(height: CGFloat = 100) -> UIImage? {
@@ -220,14 +234,6 @@ final class PhotoEditorService {
             print("Texture doesn't exist or has wrong name") // TODO: Handle error
         }
     }
-
-    func changeTextureBlendMode(to blendMode: BlendMode) {
-        if textureBlendMode != blendMode {
-            textureBlendMode = blendMode
-        }
-        updateImage()
-    }
-
 
     private func resizeImageToAspectFill(image: CIImage, targetSize: CGSize) -> CIImage? {
         // Calculate the aspect ratio of the original image

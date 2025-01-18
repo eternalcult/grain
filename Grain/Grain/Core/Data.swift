@@ -1,5 +1,17 @@
 
 let texturesCategories: [TextureCategory] = [
+    .init(title: "Glare", textures: [
+        .init(title: "Glare 1", filename: "Textures/Glare/1", prefferedBlendMode: .normal),
+        .init(title: "Glare 2", filename: "Textures/Glare/2", prefferedBlendMode: .normal),
+        .init(title: "Glare 3", filename: "Textures/Glare/3", prefferedBlendMode: .normal),
+        .init(title: "Glare 4", filename: "Textures/Glare/4", prefferedBlendMode: .normal),
+        .init(title: "Glare 5", filename: "Textures/Glare/5", prefferedBlendMode: .normal),
+        .init(title: "Glare 6", filename: "Textures/Glare/6", prefferedBlendMode: .normal),
+        .init(title: "Glare 7", filename: "Textures/Glare/7", prefferedBlendMode: .normal),
+        .init(title: "Glare 8", filename: "Textures/Glare/8", prefferedBlendMode: .normal),
+        .init(title: "Glare 9", filename: "Textures/Glare/9", prefferedBlendMode: .normal),
+        .init(title: "Glare 10", filename: "Textures/Glare/10", prefferedBlendMode: .normal)
+    ]),
     .init(title: "VHS Noise", textures: [
         .init(title: "VHS Noise 1", filename: "Textures/VHS-Noise/1", prefferedBlendMode: .exclusion),
         .init(title: "VHS Noise 2", filename: "Textures/VHS-Noise/2", prefferedBlendMode: .exclusion),
