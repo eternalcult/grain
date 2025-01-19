@@ -7,9 +7,11 @@ struct MainView: View {
     @State private var photoEditorService = PhotoEditorService()
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var showsFilteredImage = true
+    @State private var showsFilters: Bool = false
     @State private var showsSettings = true
     @State private var showsTextures = false
     @State private var showsHistogram = false
+    @State private var isLoadingFiltersPreviews: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -90,6 +92,7 @@ struct MainView: View {
 
                     ScrollView(.vertical) {
                         VStack(spacing: 8) {
+                            filtersView
                             slidersView
                             texturesView
                         }
@@ -107,22 +110,112 @@ struct MainView: View {
                 Rectangle()
                     .fill(.clear)
                     .overlay(alignment: .center) {
-                        Image(systemName: "photo.badge.plus")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .tint(.white.opacity(0.5))
-                            .frame(width: 100, height: 100)
+                        VStack {
+                            Image(systemName: "plus.circle.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .tint(.white)
+                                .frame(width: 20, height: 20)
+                            Text("Choose an image\nfrom the gallery.")
+                                .font(.custom(size: 12))
+                                .foregroundStyle(Color.textWhite)
+                        }.opacity(0.3)
                     }
             }
             .onChange(of: selectedItem, { _, newValue in
                 guard let newValue else { return }
+                isLoadingFiltersPreviews = true
                 Task {
                     if let data = try? await newValue.loadTransferable(type: Data.self),
                        let ciImage = CIImage(data: data) {
-                        self.photoEditorService.updateSourceImage(ciImage)
+                        photoEditorService.updateSourceImage(ciImage)
+                        print("Start generate previews")
+                        await generatePreviews()
+                        print("Finish generate previews")
                     }
                 }
+                isLoadingFiltersPreviews = false
             })
+    }
+
+    private func generatePreviews() async { // TODO: Blocking UI
+        guard let filteredCIImage = photoEditorService.filteredCiImage else {
+            return
+        }
+        filtersCategories = filtersCategories.map { category in
+            print("Processing category: \(category.title)")
+            let updatedFilters = category.filters.map { filter in
+                print("Processing generate filter preview: \(filter.title)")
+                return Filter(
+                    title: filter.title,
+                    filename: filter.filename,
+                    preview: photoEditorService.lutManager.apply(filter, for: filteredCIImage.downsample()))
+            }
+            return FilterCategory(title: category.title, desc: category.desc, filters: updatedFilters)
+        }
+    }
+
+    private var filtersView: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Button {
+                showsFilters.toggle()
+            } label: {
+                HStack {
+                    HStack {
+                        Text("Filters")
+                            .font(.h4)
+                            .foregroundStyle(Color.textWhite.opacity(0.8))
+                            .padding(.bottom, 5)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+//                        NavigationLink {
+//                            FiltersPreviewsListView()
+//                                .environment(photoEditorService)
+//                        } label: {
+//                            Text("Show all")
+//                                .font(.h5)
+//                                .italic()
+//                                .foregroundStyle(Color.textWhite)
+//                        }
+                    }
+                    Spacer()
+                    Image(systemName: "triangle.fill")
+                        .resizable()
+                        .frame(width: 10, height: 10)
+                        .rotationEffect(showsFilters ? Angle(degrees: 180) : Angle(degrees: 0))
+                        .tint(.textWhite.opacity(0.8))
+                }
+            }
+            if let filteredImage = photoEditorService.filteredCiImage, showsFilters {
+                if isLoadingFiltersPreviews {
+                    Text("Loading...")
+                } else {
+                    VStack(spacing: 8) {
+                        FiltersPreviewsView(previewImage: filteredImage)
+                            .environment(photoEditorService)
+
+    //                    if photoEditorService.hasFilter {
+    //                        VStack(spacing: 0) {
+    //                            HStack {
+    //                                Text("Intensity:")
+    //                                    .font(.h5)
+    //                                    .foregroundStyle(Color.textWhite.opacity(0.8))
+    //                                Text("\(photoEditorService.textureIntensity)")
+    //                                    .font(.h5)
+    //                                    .foregroundStyle(Color.textWhite.opacity(0.8))
+    //                            }
+    //                            .frame(maxWidth: .infinity, alignment: .leading)
+    //                            Slider(value: $photoEditorService.textureIntensity, in: 0...1)
+    //                            .tint(Color.textWhite.opacity(0.1))
+    //                        }
+    //                    }
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(Color.backgroundBlackSecondary.opacity(0.3))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
     private var texturesView: some View {
