@@ -51,7 +51,11 @@ struct TexturesPreviewsView: View {
                                         }
                                         .padding(.vertical, 2)
                                         .onAppear {
+                                            print("Texture item \(texture.title) onAppear!")
                                             visibleTexturesCategory = category.id
+                                        }
+                                        .onDisappear {
+                                            print("Texture item \(texture.title) onDisappear!")
                                         }
                                     }
                                 }
