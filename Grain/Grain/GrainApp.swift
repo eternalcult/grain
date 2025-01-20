@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 import AppCore
 
 @main
@@ -18,6 +19,15 @@ struct GrainApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+                .modelContainer(for: [FilterCICubeData.self]) { container in
+                    switch container {
+                    case let .success(container):
+                        DataStorage.shared.addSwiftDataContext(container.mainContext)
+                        DataStorage.shared.configureFiltersDataIfNeeded()
+                    case let .failure(failure):
+                        print("Error with model container", failure.localizedDescription)
+                    }
+                }
         }
     }
 }
