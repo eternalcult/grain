@@ -130,29 +130,12 @@ struct MainView: View {
                        let ciImage = CIImage(data: data) {
                         photoEditorService.updateSourceImage(ciImage)
                         print("Start generate previews")
-                        await generatePreviews()
+                        await DataStorage.shared.updateFiltersPreviews(with: ciImage)
                         print("Finish generate previews")
                     }
                 }
                 isLoadingFiltersPreviews = false
             })
-    }
-
-    private func generatePreviews() async { // TODO: Blocking UI
-        guard let filteredCIImage = photoEditorService.filteredCiImage else {
-            return
-        }
-        filtersCategories = filtersCategories.map { category in
-            print("Processing category: \(category.title)")
-            let updatedFilters = category.filters.map { filter in
-                print("Processing generate filter preview: \(filter.title)")
-                return Filter(
-                    title: filter.title,
-                    filename: filter.filename,
-                    preview: photoEditorService.lutManager.apply(filter, for: filteredCIImage.downsample()))
-            }
-            return FilterCategory(title: category.title, desc: category.desc, filters: updatedFilters)
-        }
     }
 
     private var filtersView: some View {
