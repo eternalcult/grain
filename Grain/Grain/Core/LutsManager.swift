@@ -53,27 +53,29 @@ final class LutsManager {
         return Data(buffer: UnsafeBufferPointer(start: cubeData, count: cubeData.count))
     }
 
-    func createCIColorCube(for filter: Filter) -> CIColorCube? {
+    func createDataForCIColorCube(for filter: Filter) -> FilterCICubeData? {
         if let filterFileURL = Bundle.main.url(forResource: filter.filename, withExtension: "cube") {
             do {
-                // Шаг 1: Читаем файл .cube
                 let (dimension, rawData) = try readCubeFile(url: filterFileURL)
-
-                // Шаг 2: Преобразуем данные в формат cubeData
-                let cubeData = convertToCubeData(dimension: dimension, rawData: rawData)
-
-                // Шаг 3: Создаем CIColorCube фильтр
-                let filter = CIFilter.colorCube()
-                filter.setValue(dimension, forKey: "inputCubeDimension")
-                filter.setValue(cubeData, forKey: "inputCubeData")
-
-                return filter
+                return FilterCICubeData(id: filter.id, dimension: dimension, cubeData: convertToCubeData(dimension: dimension, rawData: rawData))
             } catch {
                 print("Ошибка при чтении .cube файла: \(error)") // TODO: Handle errors
-                fatalError()
+                return nil
             }
-        } else {
-            print("File not found in the main bundle.") // TODO: Handle errors
+        }
+        return nil
+    }
+
+    func createCIColorCube(for filter: Filter) -> CIColorCube? {
+        let filtersData = DataStorage.shared.filtersData
+        if let currentFilterData = filtersData.first(where: { $0.id == filter.id }) {
+            let filter = CIFilter.colorCube()
+            filter.setValue(currentFilterData.dimension, forKey: "inputCubeDimension")
+            filter.setValue(currentFilterData.cubeData, forKey: "inputCubeData")
+            return filter
+        } else { // Данные для текущего фильтра отсутствуют
+            // TODO: Попробовать распарсить их в момент создания
+            print("SwiftData doesn't have data for current filter")
         }
         return nil
     }
