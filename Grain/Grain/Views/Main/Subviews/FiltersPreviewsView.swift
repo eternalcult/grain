@@ -17,7 +17,7 @@ struct FiltersPreviewsView: View {
                 // Категории
                 ScrollView(.horizontal) {
                     HStack {
-                        ForEach(filtersCategories) { category in
+                        ForEach(DataStorage.shared.filtersCategories) { category in
                             Button {
                                 scrollToIndex = category.id
                             } label: {
@@ -39,7 +39,7 @@ struct FiltersPreviewsView: View {
                 ScrollViewReader { proxy in
                     ScrollView(.horizontal) {
                         HStack(spacing: 4) {
-                            ForEach(filtersCategories) { category in
+                            ForEach(DataStorage.shared.filtersCategories) { category in
                                 LazyHStack(spacing: 4) {
                                     ForEach(category.filters) { filter in
                                         LazyHStack {
