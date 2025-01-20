@@ -14,7 +14,7 @@ final class PhotoEditorService {
     //    ] )
 
     private let context = CIContext() // Doc: Creating a CIContext is expensive, so create one during your initial setup and reuse it throughout your app.
-    let lutManager = LutsManager()
+    let lutsManager = LutsManager()
 
     // TODO: DI
 
@@ -84,7 +84,7 @@ final class PhotoEditorService {
     }
 
     private func configureFilter(_ filter: Filter) {
-        if let filter = lutManager.createCIColorCube(for: filter) {
+        if let filter = lutsManager.createCIColorCube(for: filter) {
             filter.inputImage = filteredCiImage
             filteredCiImage = filter.outputImage
         } else {
