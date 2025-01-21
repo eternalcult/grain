@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TexturesPreviewsView: View {
+struct TexturesScrollView: View {
     @Environment(PhotoEditorService.self) private var photoEditorService
     @State private var scrollToIndex: UUID?
     @State private var visibleTexturesCategory: UUID?

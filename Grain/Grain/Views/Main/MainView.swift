@@ -167,15 +167,15 @@ struct MainView: View {
                             .foregroundStyle(Color.textWhite.opacity(0.8))
                             .padding(.bottom, 5)
                             .frame(maxWidth: .infinity, alignment: .leading)
-//                        NavigationLink {
-//                            FiltersPreviewsListView()
-//                                .environment(photoEditorService)
-//                        } label: {
-//                            Text("Show all")
-//                                .font(.h5)
-//                                .italic()
-//                                .foregroundStyle(Color.textWhite)
-//                        }
+                    NavigationLink {
+                        GalleryView(type: .filters)
+                            .environment(photoEditorService)
+                    } label: {
+                        Text("Show all")
+                            .font(.h5)
+                            .italic()
+                            .foregroundStyle(Color.textWhite)
+                        }
                     }
                     Spacer()
                     Image(systemName: "triangle.fill")
@@ -190,7 +190,7 @@ struct MainView: View {
                     Text("Loading...")
                 } else {
                     VStack(spacing: 8) {
-                        FiltersPreviewsView(previewImage: filteredImage)
+                        FiltersScrollView(previewImage: filteredImage)
                             .environment(photoEditorService)
 
     //                    if photoEditorService.hasFilter {
@@ -231,7 +231,7 @@ struct MainView: View {
                             .padding(.bottom, 5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         NavigationLink {
-                            TexturesPreviewsListView()
+                            GalleryView(type: .textures)
                                 .environment(photoEditorService)
                         } label: {
                             Text("Show all")
@@ -250,7 +250,7 @@ struct MainView: View {
             }
             if showsTextures {
                 VStack(spacing: 8) {
-                    TexturesPreviewsView()
+                    TexturesScrollView()
                         .environment(photoEditorService)
 
                     if photoEditorService.hasTexture {

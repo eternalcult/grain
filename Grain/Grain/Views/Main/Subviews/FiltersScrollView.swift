@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct FiltersPreviewsView: View {
+struct FiltersScrollView: View {
     @Environment(PhotoEditorService.self) private var photoEditorService
     @State private var scrollToIndex: UUID?
     @State private var visibleFiltersCategory: UUID?
@@ -35,7 +35,7 @@ struct FiltersPreviewsView: View {
                         }
                     }
                 }
-                // Текстуры
+                // Фильтры
                 ScrollViewReader { proxy in
                     ScrollView(.horizontal) {
                         HStack(spacing: 4) {

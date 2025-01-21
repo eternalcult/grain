@@ -57,7 +57,7 @@ final class PhotoEditorService {
 
     func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation) {
         self.sourceCiImage = image
-        self.sourceImageOrientation = orientation // TODO: Посмотреть что тут с ориентацией, как её более грамотно получать
+        self.sourceImageOrientation = orientation
         if let sourceUiImage = renderCIImageToUIImage(image) {
             self.sourceImage = Image(uiImage: sourceUiImage)
         }
