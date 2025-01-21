@@ -3,4 +3,5 @@ struct Sharpness: ImageProperty {
     var range: ClosedRange<Float> = 0.4...1 // Default: 0.0...1
     var defaultValue: Float = 0.4
     var current: Float = 0.4
+    let formatStyle: ImagePropertyValueFormattedStyle = .zeroTo100
 }
