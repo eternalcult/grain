@@ -19,6 +19,7 @@ struct FilterPreviewView: View {
         } label: {
             Image(uiImage: UIImage(cgImage: previewImage))
                 .resizable()
+                .aspectRatio(contentMode: .fit)
                 .overlay(alignment: .bottom) {
                     Text(title)
                         .font(.h6)
