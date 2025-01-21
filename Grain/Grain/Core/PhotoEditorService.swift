@@ -42,6 +42,17 @@ final class PhotoEditorService {
         filter != nil
     }
 
+    func reset() {
+        sourceImage = nil
+        sourceCiImage = nil
+        filteredCiImage = nil
+        finalImage = nil
+        filter = nil
+        texture = nil
+        textureBlendMode = nil
+        resetFilters()
+    }
+
     func updateSourceImage(_ image: CIImage) {
         self.sourceCiImage = image
         if let sourceUiImage = renderCIImageToUIImage(image) {
@@ -129,13 +140,16 @@ final class PhotoEditorService {
     }
 
     func resetFilters() {
-        brightness.setToDefault() // TODO: Каждый раз вызывает didSet у каждого параметра
+        brightness.setToDefault()
         contrast.setToDefault()
         saturation.setToDefault()
         exposure.setToDefault()
         vibrance.setToDefault()
         highlights.setToDefault()
         shadows.setToDefault()
+        noiseReduction.setToDefault()
+        sharpness.setToDefault()
+        gamma.setToDefault()
         renderFinalImage()
     }
 
@@ -202,6 +216,12 @@ final class PhotoEditorService {
         }
     }
 
+    var gamma: ImageProperty = Gamma() {
+        didSet {
+            updateImage()
+        }
+    }
+
     var noiseReduction: ImageProperty = NoiseReduction() {
         didSet {
             updateImage()
@@ -215,12 +235,14 @@ final class PhotoEditorService {
     }
 
     private func updateImage() {
+        guard let sourceCiImage else { return }
         filteredCiImage = sourceCiImage
         updateBCS()
         updateExposure()
         updateVibrance()
         updateHS()
         updateTemperatureAndTint()
+        updateGamma()
         updateNoiseReduction()
         if let filter {
             configureFilter(filter)
@@ -232,7 +254,7 @@ final class PhotoEditorService {
     }
 
     private func renderFinalImage() {
-        if let filteredCiImage, let uiImage = renderCIImageToUIImage(filteredCiImage.downsample()) {
+        if let filteredCiImage, let uiImage = renderCIImageToUIImage(filteredCiImage) {
             finalImage = Image(uiImage: uiImage)
         } else {
             print("Something wrong in renderFinalImage()") // TODO: Handle errors
@@ -338,6 +360,13 @@ private extension PhotoEditorService {
         filter.inputImage = filteredCiImage
         filter.neutral = CIVector(x: CGFloat(temperature.defaultValue), y: 0)
         filter.targetNeutral = CIVector(x: CGFloat(temperature.current), y: CGFloat(tint.current))
+        filteredCiImage = filter.outputImage
+    }
+
+    func updateGamma() {
+        let filter = CIFilter.gammaAdjust()
+        filter.inputImage = filteredCiImage
+        filter.power = gamma.current
         filteredCiImage = filter.outputImage
     }
 
