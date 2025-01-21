@@ -18,13 +18,14 @@ final class LutsManager {
             let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
 
             // Пропускаем комментарии и пустые строки
-            if trimmedLine.isEmpty || trimmedLine.hasPrefix("#") || trimmedLine.hasPrefix("DOMAIN_MIN") || trimmedLine.hasPrefix("DOMAIN_MAX"){
+            if trimmedLine.isEmpty || trimmedLine.hasPrefix("#") || trimmedLine.hasPrefix("DOMAIN_MIN") || trimmedLine.hasPrefix("DOMAIN_MAX") || trimmedLine.hasPrefix("TITLE") {
                 continue
             }
 
             // Читаем размер LUT (например, LUT_3D_SIZE 33)
             if trimmedLine.hasPrefix("LUT_3D_SIZE") {
                 if let size = Int(trimmedLine.replacingOccurrences(of: "LUT_3D_SIZE", with: "").trimmingCharacters(in: .whitespaces)) {
+                    print("DIMENSION IS", size)
                     dimension = size
                 }
             } else {
@@ -46,11 +47,13 @@ final class LutsManager {
             let r = rawData[startIndex]
             let g = rawData[startIndex + 1]
             let b = rawData[startIndex + 2]
-            let a = componentsPerEntry == 4 ? rawData[startIndex + 3] : 1.0 // Если альфа отсутствует, задаем 1.0
+            let a = componentsPerEntry == 4 ? rawData[startIndex + 3] : 1
             cubeData.append(contentsOf: [r, g, b, a])
         }
-
-        return Data(buffer: UnsafeBufferPointer(start: cubeData, count: cubeData.count))
+        let data = cubeData.withUnsafeBufferPointer { bufferPointer -> Data in
+            Data(buffer: bufferPointer)
+        }
+        return data
     }
 
     func createDataForCIColorCube(for filter: Filter) -> FilterCICubeData? {
@@ -66,12 +69,14 @@ final class LutsManager {
         return nil
     }
 
-    func createCIColorCube(for filter: Filter) -> CIColorCube? {
+    func createCIColorCube(for filter: Filter) -> CIColorCubeWithColorSpace? {
         let filtersData = DataStorage.shared.filtersData
         if let currentFilterData = filtersData.first(where: { $0.id == filter.id }) {
-            let filter = CIFilter.colorCube()
-            filter.setValue(currentFilterData.dimension, forKey: "inputCubeDimension")
-            filter.setValue(currentFilterData.cubeData, forKey: "inputCubeData")
+            let filter = CIFilter.colorCubeWithColorSpace()
+            filter.colorSpace = CGColorSpace(name: CGColorSpace.sRGB)
+            filter.cubeDimension = Float(currentFilterData.dimension)
+            filter.cubeData = currentFilterData.cubeData
+
             return filter
         } else { // Данные для текущего фильтра отсутствуют
             // TODO: Попробовать распарсить их в момент создания
