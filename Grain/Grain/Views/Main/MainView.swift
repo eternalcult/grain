@@ -87,6 +87,19 @@ struct MainView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 4))
                             }
                             .padding(4)
+                            Button {
+                                selectedItem = nil
+                                photoEditorService.reset()
+                            } label: {
+                                Image(systemName: "xmark.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .padding(4)
+                                    .tint(Color.textWhite)
+                                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                            }
+
                         }
                     }
 
@@ -102,6 +115,8 @@ struct MainView: View {
                     photoPickerView
                 }
             }
+            .padding(.horizontal, 8)
+            .background(Color.backgroundBlack)
         }
     }
 
@@ -116,16 +131,16 @@ struct MainView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .tint(.white)
                                 .frame(width: 20, height: 20)
-                            Text("Choose an image\nfrom the gallery.")
+                            Text("Tap to choose an image\nfrom the gallery.")
                                 .font(.custom(size: 12))
                                 .foregroundStyle(Color.textWhite)
-                        }.opacity(0.3)
+                        }.opacity(0.5)
                     }
             }
             .onChange(of: selectedItem, { _, newValue in
                 guard let newValue else { return }
-                isLoadingFiltersPreviews = true
                 Task {
+                    isLoadingFiltersPreviews = true
                     if let data = try? await newValue.loadTransferable(type: Data.self),
                        let ciImage = CIImage(data: data) {
                         photoEditorService.updateSourceImage(ciImage)
@@ -133,8 +148,9 @@ struct MainView: View {
                         await DataStorage.shared.updateFiltersPreviews(with: ciImage)
                         print("Finish generate previews")
                     }
+                    isLoadingFiltersPreviews = false
                 }
-                isLoadingFiltersPreviews = false
+
             })
     }
 
@@ -306,6 +322,7 @@ struct MainView: View {
                     SliderView(filter: $photoEditorService.shadows)
                     SliderView(filter: $photoEditorService.temperature)
                     SliderView(filter: $photoEditorService.tint)
+                    SliderView(filter: $photoEditorService.gamma)
                     SliderView(filter: $photoEditorService.noiseReduction)
                     SliderView(filter: $photoEditorService.sharpness)
                 }
