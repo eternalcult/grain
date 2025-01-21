@@ -23,8 +23,6 @@ extension ImageProperty {
     }
 
     func formattedValue() -> String {
-        let defaultMin = range.lowerBound
-        let defaultMax = range.upperBound
         switch formatStyle {
         case .minus100to100:
             let value = current.formatValueToAnotherRange(currentMin: range.lowerBound, currentMax: range.upperBound, newMin: -100, newMax: 100)

@@ -19,6 +19,7 @@ final class PhotoEditorService {
     // TODO: DI
 
     private(set) var sourceImage: Image? = nil
+    private var sourceImageOrientation: UIImage.Orientation? = nil
     /// Source Image doesn't change
     private(set) var sourceCiImage: CIImage? = nil
     private(set) var filteredCiImage: CIImage? = nil
@@ -44,6 +45,7 @@ final class PhotoEditorService {
 
     func reset() {
         sourceImage = nil
+        sourceImageOrientation = nil
         sourceCiImage = nil
         filteredCiImage = nil
         finalImage = nil
@@ -53,8 +55,9 @@ final class PhotoEditorService {
         resetFilters()
     }
 
-    func updateSourceImage(_ image: CIImage) {
+    func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation) {
         self.sourceCiImage = image
+        self.sourceImageOrientation = orientation // TODO: Посмотреть что тут с ориентацией, как её более грамотно получать
         if let sourceUiImage = renderCIImageToUIImage(image) {
             self.sourceImage = Image(uiImage: sourceUiImage)
         }
@@ -306,7 +309,7 @@ final class PhotoEditorService {
         guard let cgImage = context.createCGImage(ciImage, from: ciImage.extent) else {
             return nil
         }
-        return UIImage(cgImage: cgImage)
+        return UIImage(cgImage: cgImage, scale: 1, orientation: sourceImageOrientation ?? .up)
     }
 
 

@@ -142,8 +142,9 @@ struct MainView: View {
                 Task {
                     isLoadingFiltersPreviews = true
                     if let data = try? await newValue.loadTransferable(type: Data.self),
-                       let ciImage = CIImage(data: data) {
-                        photoEditorService.updateSourceImage(ciImage)
+                       let uiImage = UIImage(data: data), let ciImage = CIImage(data: data) {
+                        // TODO:  Может вместо того, чтобы отдельно передавать CIImage и ориентацию передавать UIImage?
+                        photoEditorService.updateSourceImage(ciImage, orientation: uiImage.imageOrientation)
                         print("Start generate previews")
                         await DataStorage.shared.updateFiltersPreviews(with: ciImage)
                         print("Finish generate previews")
