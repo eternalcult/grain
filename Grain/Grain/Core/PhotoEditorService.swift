@@ -15,7 +15,6 @@ final class PhotoEditorService {
     private(set) var sourceImage: Image?
     /// Source Image doesn't change
     private(set) var sourceCiImage: CIImage?
-    private var sourceImageOrientation: UIImage.Orientation?
     private(set) var filteredCiImage: CIImage?
     /// Final image after all updates
     var finalImage: Image?
@@ -28,6 +27,8 @@ final class PhotoEditorService {
     // MARK: Filter
 
     private(set) var filter: Filter?
+
+    private var sourceImageOrientation: UIImage.Orientation?
 
     //    private let context = CIContext(options:  [ // TODO: Decide should I use it or not?
     //        .priorityRequestLow: true, // Lower priority if running multiple tasks
@@ -201,20 +202,6 @@ final class PhotoEditorService {
         }
     }
 
-    private func resetFilters() {
-        brightness.setToDefault()
-        contrast.setToDefault()
-        saturation.setToDefault()
-        exposure.setToDefault()
-        vibrance.setToDefault()
-        highlights.setToDefault()
-        shadows.setToDefault()
-        noiseReduction.setToDefault()
-        sharpness.setToDefault()
-        gamma.setToDefault()
-        renderFinalImage()
-    }
-
     func reset() {
         sourceImage = nil
         sourceImageOrientation = nil
@@ -236,6 +223,20 @@ final class PhotoEditorService {
             return renderCIImageToUIImage(output)
         }
         return nil
+    }
+
+    private func resetFilters() {
+        brightness.setToDefault()
+        contrast.setToDefault()
+        saturation.setToDefault()
+        exposure.setToDefault()
+        vibrance.setToDefault()
+        highlights.setToDefault()
+        shadows.setToDefault()
+        noiseReduction.setToDefault()
+        sharpness.setToDefault()
+        gamma.setToDefault()
+        renderFinalImage()
     }
 
     private func overlayTexture(_ texture: Texture) {
