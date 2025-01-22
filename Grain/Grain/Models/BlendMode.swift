@@ -25,60 +25,64 @@ enum BlendMode: Int, CaseIterable {
     case luminosity
     case darkerColor
 
-    static let range: ClosedRange<Double> = 0...22
+    // MARK: Static Properties
+
+    static let range: ClosedRange<Double> = 0 ... 22
+
+    // MARK: Computed Properties
 
     var title: String {
         switch self {
         case .normal:
-            return "Normal"
+            "Normal"
         case .darken:
-            return "Darken"
+            "Darken"
         case .exclusion:
-            return "Exclusion"
+            "Exclusion"
         case .colorBurn:
-            return "Color Burn"
+            "Color Burn"
         case .linearBurn:
-            return "Linear Burn"
+            "Linear Burn"
         case .multiply:
-            return "Multipy"
+            "Multipy"
         case .screen:
-            return "Screen"
+            "Screen"
         case .colorDodge:
-            return "Color Dodge"
+            "Color Dodge"
         case .linearDodge:
-            return "Linear Dodge"
+            "Linear Dodge"
         case .overlay:
-            return "Overlay"
+            "Overlay"
         case .softLight:
-            return "Soft Light"
+            "Soft Light"
         case .vividLight:
-            return "Vivid Light"
+            "Vivid Light"
         case .linearLight:
-            return "Linear Light"
+            "Linear Light"
         case .pinLight:
-            return "Pin Light"
+            "Pin Light"
         case .difference:
-            return "Difference"
+            "Difference"
         case .lighten:
-            return "Lighten"
+            "Lighten"
         case .subtract:
-            return "Substract"
+            "Substract"
         case .divide:
-            return "Divide"
+            "Divide"
         case .hue:
-            return "Hue"
+            "Hue"
         case .saturation:
-            return "Saturation"
+            "Saturation"
         case .color:
-            return "Color"
+            "Color"
         case .luminosity:
-            return "Luminosity"
+            "Luminosity"
         case .darkerColor:
-            return "Darker Color"
+            "Darker Color"
         }
     }
 
-    var ciFilter: (CIFilter & CICompositeOperation) {
+    var ciFilter: CIFilter & CICompositeOperation {
         switch self {
         case .normal:
             CIFilter.sourceOverCompositing()
