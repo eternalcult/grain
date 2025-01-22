@@ -30,7 +30,8 @@ struct FullscreenImagePreviewView: View {
             VStack {
                 if let title {
                     Text(title)
-                        .font(.h4)
+                        .font(.h3)
+                        .minimumScaleFactor(0.1)
                         .foregroundStyle(Color.textWhite)
                 }
                 if let cgImage {

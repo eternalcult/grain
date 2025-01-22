@@ -28,7 +28,7 @@ final class PhotoEditorService {
 
     // MARK: Texture
     private(set) var texture: Texture? = nil
-    private(set) var textureBlendMode: BlendMode? = nil
+    private(set) var textureBlendMode: BlendMode = .normal
     var hasTexture: Bool {
         texture != nil
     }
@@ -51,7 +51,7 @@ final class PhotoEditorService {
         finalImage = nil
         filter = nil
         texture = nil
-        textureBlendMode = nil
+        textureBlendMode = .normal
         resetFilters()
     }
 
@@ -77,8 +77,8 @@ final class PhotoEditorService {
         if let uiImage = UIImage(named: texture.filename),
            let cgImage = uiImage.cgImage,
            let filteredCiImage,
-           let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: filteredCiImage.extent.size),
-           let blendMode = textureBlendMode?.ciFilter {
+           let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: filteredCiImage.extent.size) {
+            let blendMode = textureBlendMode.ciFilter
             blendMode.backgroundImage = filteredCiImage
             blendMode.inputImage = configuredTexture
             self.filteredCiImage = blendMode.outputImage
@@ -101,7 +101,7 @@ final class PhotoEditorService {
     func removeTextureIfNeeded() {
         texture = nil
         textureIntensity = 0.5
-        textureBlendMode = nil
+        textureBlendMode = .normal
         updateImage()
     }
 

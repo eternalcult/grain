@@ -173,22 +173,24 @@ struct MainView: View {
                 showsFilters.toggle()
             } label: {
                 HStack {
-                    HStack {
+                    HStack(alignment: .center) {
                         Text("Filters")
                             .font(.h4)
                             .foregroundStyle(Color.textWhite.opacity(0.8))
                             .padding(.bottom, 5)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                    NavigationLink {
-                        GalleryView(type: .filters)
-                            .environment(photoEditorService)
-                    } label: {
-                        Text("Show all")
-                            .font(.h5)
-                            .italic()
-                            .foregroundStyle(Color.textWhite)
+                        if !isLoadingFiltersPreviews {
+                            NavigationLink {
+                                GalleryView(type: .filters)
+                                    .environment(photoEditorService)
+                            } label: {
+                                Text("Show all")
+                                    .font(.h5)
+                                    .italic()
+                                    .foregroundStyle(Color.textWhite)
+                                }
+                            }
                         }
-                    }
                     Spacer()
                     Image(systemName: "triangle.fill")
                         .resizable()
@@ -242,7 +244,7 @@ struct MainView: View {
                 showsTextures.toggle()
             } label: {
                 HStack {
-                    HStack {
+                    HStack(alignment: .center) {
                         Text("Textures")
                             .font(.h4)
                             .foregroundStyle(Color.textWhite.opacity(0.8))
@@ -316,7 +318,7 @@ struct MainView: View {
             Button {
                 showsSettings.toggle()
             } label: {
-                HStack {
+                HStack(alignment: .center) {
                     Text("Settings")
                         .font(.h4)
                         .foregroundStyle(Color.textWhite.opacity(0.8))
