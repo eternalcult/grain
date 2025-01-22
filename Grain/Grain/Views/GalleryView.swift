@@ -4,7 +4,6 @@ struct GalleryView: View {
     let type: GalleryViewType
     @Environment(\.dismiss) private var dismiss
 
-
     enum GalleryViewType {
         case filters
         case textures
@@ -15,7 +14,7 @@ struct GalleryView: View {
     private let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible()),
     ]
 
     var body: some View {
@@ -32,16 +31,15 @@ struct GalleryView: View {
                         ForEach(category.filters) { filter in
                             if filter.preview != nil {
                                 if let selectedFilter = photoEditorService.filter {
-                                    FilterPreviewView(filter, shouldShowFullScreen: true, isSelected: selectedFilter.id == filter.id
-                                    ) {
+                                    FilterPreviewView(filter, shouldShowFullScreen: true, isSelected: selectedFilter.id == filter.id) {
                                         photoEditorService.applyFilter(filter)
                                     }
-                                    .aspectRatio(1/1, contentMode: .fit)
+                                    .aspectRatio(1 / 1, contentMode: .fit)
                                 } else {
                                     FilterPreviewView(filter, shouldShowFullScreen: true) {
                                         photoEditorService.applyFilter(filter)
                                     }
-                                    .aspectRatio(1/1, contentMode: .fit)
+                                    .aspectRatio(1 / 1, contentMode: .fit)
                                 }
                             } else {
                                 EmptyView()
@@ -49,6 +47,7 @@ struct GalleryView: View {
                         }
                     }
                 }
+
             case .textures:
                 ForEach(DataStorage.shared.texturesCategories) { category in
                     Text(category.title)
@@ -62,14 +61,13 @@ struct GalleryView: View {
                                 TexturePreviewView(texture: texture, isSelected: selectedTexture.id == texture.id) {
                                     photoEditorService.applyTexture(texture)
                                 }
-                                .aspectRatio(1/1, contentMode: .fit)
+                                .aspectRatio(1 / 1, contentMode: .fit)
                             } else {
                                 TexturePreviewView(texture: texture) {
                                     photoEditorService.applyTexture(texture)
                                 }
-                                .aspectRatio(1/1, contentMode: .fit)
+                                .aspectRatio(1 / 1, contentMode: .fit)
                             }
-
                         }
                     }
                 }

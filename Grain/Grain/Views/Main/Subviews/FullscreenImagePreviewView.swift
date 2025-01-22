@@ -1,28 +1,37 @@
-import SwiftUI
 import AppCore
+import SwiftUI
 
 struct FullscreenImagePreviewView: View {
+    // MARK: SwiftUI Properties
+
+    @Binding var isShow: Bool
+
+    // MARK: Properties
+
     let title: String?
     let desc: String?
     let cgImage: CGImage?
     let image: Image?
-    @Binding var isShow: Bool
+
+    // MARK: Lifecycle
 
     init(title: String? = nil, desc: String? = nil, image: Image, isShow: Binding<Bool>) {
         self.title = title
         self.desc = desc
-        self.cgImage = nil
+        cgImage = nil
         self.image = image
-        self._isShow = isShow
+        _isShow = isShow
     }
 
     init(title: String? = nil, desc: String? = nil, cgImage: CGImage, isShow: Binding<Bool>) {
         self.title = title
         self.desc = desc
         self.cgImage = cgImage
-        self.image = nil
-        self._isShow = isShow
+        image = nil
+        _isShow = isShow
     }
+
+    // MARK: Content Properties
 
     var body: some View {
         ZStack {

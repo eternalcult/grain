@@ -1,14 +1,22 @@
 import SwiftUI
+
 struct TexturePreviewView: View {
+    // MARK: Properties
+
+    var didTap: (() -> Void)?
+
     private let isSelected: Bool
     private let texture: Texture
-    var didTap: (() -> Void)?
+
+    // MARK: Lifecycle
 
     init(texture: Texture, isSelected: Bool = false, didTap: (() -> Void)?) {
         self.texture = texture
         self.isSelected = isSelected
         self.didTap = didTap
     }
+
+    // MARK: Content Properties
 
     var body: some View {
         Button {
@@ -25,7 +33,6 @@ struct TexturePreviewView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 4)
                         .background(Color.backgroundWhite.opacity(0.5))
-
                 }
                 .clipShape(.rect(cornerRadius: 4))
                 .overlay(
@@ -35,7 +42,6 @@ struct TexturePreviewView: View {
         }
     }
 }
-
 
 #Preview {
     if let texture = DataStorage.shared.texturesCategories.first?.textures.first {

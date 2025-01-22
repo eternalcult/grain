@@ -1,13 +1,20 @@
 import SwiftUI
 
 struct RawPreviewView: View {
-    private let isSelected: Bool
+    // MARK: Properties
+
     var didTap: (() -> Void)?
+
+    private let isSelected: Bool
+
+    // MARK: Lifecycle
 
     init(isSelected: Bool = false, didTap: (() -> Void)?) {
         self.isSelected = isSelected
         self.didTap = didTap
     }
+
+    // MARK: Content Properties
 
     var body: some View {
         Button {

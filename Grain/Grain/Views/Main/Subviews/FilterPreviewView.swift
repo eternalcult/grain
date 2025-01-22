@@ -1,11 +1,19 @@
 import SwiftUI
 
 struct FilterPreviewView: View {
+    // MARK: SwiftUI Properties
+
+    @State private var showsFullScreen = false
+
+    // MARK: Properties
+
+    var didTap: (() -> Void)?
+
     private let filter: Filter
     private let isSelected: Bool
-    var didTap: (() -> Void)?
-    @State private var showsFullScreen = false
     private let shouldShowFullScreen: Bool
+
+    // MARK: Lifecycle
 
     init(_ filter: Filter, shouldShowFullScreen: Bool = false, isSelected: Bool = false, didTap: (() -> Void)?) {
         self.filter = filter
@@ -13,6 +21,8 @@ struct FilterPreviewView: View {
         self.isSelected = isSelected
         self.didTap = didTap
     }
+
+    // MARK: Content Properties
 
     var body: some View {
         GeometryReader { proxy in
@@ -36,7 +46,6 @@ struct FilterPreviewView: View {
                                 .frame(maxWidth: .infinity)
                                 .padding(.horizontal, 4)
                                 .background(Color.backgroundWhite.opacity(0.5))
-
                         }
                         .clipShape(.rect(cornerRadius: 4))
                         .overlay(

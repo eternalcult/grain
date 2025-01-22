@@ -1,10 +1,14 @@
 import SwiftUI
 
 struct TexturesScrollView: View {
+    // MARK: SwiftUI Properties
+
     @Environment(PhotoEditorService.self) private var photoEditorService
     @State private var scrollToIndex: UUID?
     @State private var visibleTexturesCategory: UUID?
     @State private var visibleItems: Set<UUID> = []
+
+    // MARK: Content Properties
 
     var body: some View {
         VStack {
@@ -35,36 +39,36 @@ struct TexturesScrollView: View {
                     HStack(spacing: 4) {
                         RawPreviewView(isSelected: photoEditorService.texture == nil) {
                             photoEditorService.removeTextureIfNeeded()
-                            }
-                            .frame(width: 100, height: 100)
+                        }
+                        .frame(width: 100, height: 100)
                         ForEach(DataStorage.shared.texturesCategories) { category in
-                                LazyHStack(spacing: 4) {
-                                    ForEach(category.textures) { texture in
-                                        LazyHStack {
-                                            if let selectedTexture = photoEditorService.texture {
-                                                TexturePreviewView(texture: texture, isSelected: selectedTexture.id == texture.id) {
-                                                    photoEditorService.applyTexture(texture)
-                                                }
-                                                .frame(width: 100, height: 100)
-                                            } else {
-                                                TexturePreviewView(texture: texture) {
-                                                    photoEditorService.applyTexture(texture)
-                                                }
-                                                .frame(width: 100, height: 100)
+                            LazyHStack(spacing: 4) {
+                                ForEach(category.textures) { texture in
+                                    LazyHStack {
+                                        if let selectedTexture = photoEditorService.texture {
+                                            TexturePreviewView(texture: texture, isSelected: selectedTexture.id == texture.id) {
+                                                photoEditorService.applyTexture(texture)
                                             }
-                                        }
-                                        .padding(.vertical, 2)
-                                        .onAppear {
-                                            print("Texture item \(texture.title) onAppear!")
-                                            visibleTexturesCategory = category.id
-                                        }
-                                        .onDisappear {
-                                            print("Texture item \(texture.title) onDisappear!")
+                                            .frame(width: 100, height: 100)
+                                        } else {
+                                            TexturePreviewView(texture: texture) {
+                                                photoEditorService.applyTexture(texture)
+                                            }
+                                            .frame(width: 100, height: 100)
                                         }
                                     }
+                                    .padding(.vertical, 2)
+                                    .onAppear {
+                                        print("Texture item \(texture.title) onAppear!")
+                                        visibleTexturesCategory = category.id
+                                    }
+                                    .onDisappear {
+                                        print("Texture item \(texture.title) onDisappear!")
+                                    }
                                 }
-                                .id(category.id)
                             }
+                            .id(category.id)
+                        }
                     }
                 }
                 .scrollIndicators(.hidden)

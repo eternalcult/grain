@@ -1,4 +1,5 @@
 import Foundation
+
 /*
  Default photo editor values
  + exposure
@@ -17,29 +18,6 @@ import Foundation
  + noise reduction
  - vignette
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 
@@ -83,12 +61,7 @@ import Foundation
 
  If you need ranges for specific filters not listed here, let me know!
 
-
-
  */
-
-
-
 
 /* All available Core Image filters
 
@@ -122,7 +95,6 @@ import Foundation
  + "CITemperatureAndTint",
  + "CINoiseReduction",
  + "CIHistogramDisplayFilter",
-
 
     "CIAccordionFoldTransition",
     "CIAdditionCompositing",
