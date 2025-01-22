@@ -13,6 +13,7 @@ struct MainView: View {
     @State private var showsTextures = false
     @State private var showsHistogram = false
     @State private var isLoadingFiltersPreviews: Bool = false
+    @State private var showsFullScreenPreview: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -62,6 +63,14 @@ struct MainView: View {
                                 .opacity(showsFilteredImage ? 1 : 0)
                                 .onLongPressGesture { } onPressingChanged: { isPressing in
                                     showsFilteredImage = !isPressing
+                                }
+                                .onTapGesture(count: 2) {
+                                    showsFullScreenPreview = true
+                                }
+                                .fullScreenCover(isPresented: $showsFullScreenPreview) {
+                                    if let filteredCiImage = photoEditorService.filteredCiImage {
+                                        FullscreenImagePreviewView(image: filteredImage, isShow: $showsFullScreenPreview)
+                                    }
                                 }
                         }
                         .overlay(alignment: .bottomLeading) {
