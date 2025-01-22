@@ -1,10 +1,33 @@
-import SwiftUI
-import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import Photos
+import SwiftUI
+
+// MARK: - PhotoEditorService
 
 @Observable
 final class PhotoEditorService {
+    // MARK: Properties
+
+    let lutsManager = LutsManager()
+    // TODO: DI
+
+    private(set) var sourceImage: Image?
+    /// Source Image doesn't change
+    private(set) var sourceCiImage: CIImage?
+    private var sourceImageOrientation: UIImage.Orientation?
+    private(set) var filteredCiImage: CIImage?
+    /// Final image after all updates
+    var finalImage: Image?
+
+    // MARK: Texture
+
+    private(set) var texture: Texture?
+    private(set) var textureBlendMode: BlendMode = .normal
+
+    // MARK: Filter
+
+    private(set) var filter: Filter?
 
     //    private let context = CIContext(options:  [ // TODO: Decide should I use it or not?
     //        .priorityRequestLow: true, // Lower priority if running multiple tasks
@@ -13,184 +36,43 @@ final class PhotoEditorService {
     //        .allowLowPower: true
     //    ] )
 
-    private let context = CIContext() // Doc: Creating a CIContext is expensive, so create one during your initial setup and reuse it throughout your app.
-    let lutsManager = LutsManager()
+    private let context =
+        CIContext() // Doc: Creating a CIContext is expensive, so create one during your initial setup and reuse it throughout your app.
 
-    // TODO: DI
+    // MARK: Computed Properties
 
-    private(set) var sourceImage: Image? = nil
-    private var sourceImageOrientation: UIImage.Orientation? = nil
-    /// Source Image doesn't change
-    private(set) var sourceCiImage: CIImage? = nil
-    private(set) var filteredCiImage: CIImage? = nil
-    /// Final image after all updates
-    var finalImage: Image? = nil
-
-    // MARK: Texture
-    private(set) var texture: Texture? = nil
-    private(set) var textureBlendMode: BlendMode = .normal
     var hasTexture: Bool {
         texture != nil
     }
+
     var textureIntensity: Double = 0.5 {
         didSet {
             updateImage()
         }
     }
-    // MARK: Filter
-    private(set) var filter: Filter? = nil
+
     var hasFilter: Bool {
         filter != nil
     }
-
-    func reset() {
-        sourceImage = nil
-        sourceImageOrientation = nil
-        sourceCiImage = nil
-        filteredCiImage = nil
-        finalImage = nil
-        filter = nil
-        texture = nil
-        textureBlendMode = .normal
-        resetFilters()
-    }
-
-    func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation) {
-        self.sourceCiImage = image
-        self.sourceImageOrientation = orientation
-        if let sourceUiImage = renderCIImageToUIImage(image) {
-            self.sourceImage = Image(uiImage: sourceUiImage)
-        }
-        filteredCiImage = image
-        finalImage = nil
-        resetFilters()
-    }
-
-    func applyTexture(_ newTexture: Texture) {
-        if texture?.id != newTexture.id {
-            texture = newTexture
-            updateImage()
-        }
-    }
-
-    private func overlayTexture(_ texture: Texture) {
-        if let uiImage = UIImage(named: texture.filename),
-           let cgImage = uiImage.cgImage,
-           let filteredCiImage,
-           let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: filteredCiImage.extent.size) {
-            let blendMode = textureBlendMode.ciFilter
-            blendMode.backgroundImage = filteredCiImage
-            blendMode.inputImage = configuredTexture
-            self.filteredCiImage = blendMode.outputImage
-        } else {
-            print("Texture doesn't exist or has wrong name") // TODO: Handle error
-        }
-    }
-
-    func applyFilter(_ newFilter: Filter) {
-        if filter?.id != newFilter.id {
-            filter = newFilter
-            updateImage()
-        }
-    }
-
-    func removeFilterIfNeeded() {
-        filter = nil
-        updateImage()
-    }
-    func removeTextureIfNeeded() {
-        texture = nil
-        textureIntensity = 0.5
-        textureBlendMode = .normal
-        updateImage()
-    }
-
-    private func configureFilter(_ filter: Filter) {
-        if let filter = lutsManager.createCIColorCube(for: filter) {
-            filter.inputImage = filteredCiImage
-            filteredCiImage = filter.outputImage
-        } else {
-            print("Issue with applying filter") // TODO: Handle errors
-        }
-    }
-
-
-    func updateTextureBlendMode(to newBlendMode: BlendMode) {
-        if textureBlendMode != newBlendMode {
-            textureBlendMode = newBlendMode
-        }
-        updateImage()
-    }
-
-    // Info.plist - NSPhotoLibraryUsageDescription - We need access to your photo library to save images you create in the app.
-    func saveImageToPhotoLibrary() {
-        if let filteredCiImage, let uiImage = renderCIImageToUIImage(filteredCiImage) {
-            // Request permission to access the photo library
-            PHPhotoLibrary.requestAuthorization { status in
-                guard status == .authorized else {
-                    print("Permission to access photo library denied.")
-                    return
-                }
-
-                // Save the image
-                PHPhotoLibrary.shared().performChanges {
-                    PHAssetChangeRequest.creationRequestForAsset(from: uiImage)
-                } completionHandler: { success, error in
-                    if let error = error { // TODO: Create completions for showing success/error alerts
-                        print("Failed to save image: \(error.localizedDescription)")
-                    } else if success {
-                        print("Image saved successfully!")
-                    } else {
-                        print("Unknown error occurred while saving the image.")
-                    }
-                }
-            }
-        } else {
-            print("Something wrong in saveToGallery()") // TODO: Handle errors
-        }
-    }
-
-    func resetFilters() {
-        brightness.setToDefault()
-        contrast.setToDefault()
-        saturation.setToDefault()
-        exposure.setToDefault()
-        vibrance.setToDefault()
-        highlights.setToDefault()
-        shadows.setToDefault()
-        noiseReduction.setToDefault()
-        sharpness.setToDefault()
-        gamma.setToDefault()
-        renderFinalImage()
-    }
-
-    func histogram(height: CGFloat = 100) -> UIImage? {
-        let filter = CIFilter.histogramDisplay()
-        filter.inputImage = filteredCiImage
-        filter.lowLimit = 0
-        filter.highLimit = 1
-        if let output = filter.outputImage {
-            return renderCIImageToUIImage(output)
-        }
-        return nil
-    }
-
 
     var brightness: ImageProperty = Brightness() {
         didSet {
             updateImage()
         }
     }
+
     var contrast: ImageProperty = Contrast() {
         didSet {
             updateImage()
         }
     }
+
     var saturation: ImageProperty = Saturation() {
         didSet {
             updateImage()
         }
     }
+
     var exposure: ImageProperty = Exposure() {
         didSet {
             updateImage()
@@ -245,6 +127,141 @@ final class PhotoEditorService {
         }
     }
 
+    // MARK: Functions
+
+    func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation) {
+        sourceCiImage = image
+        sourceImageOrientation = orientation
+        if let sourceUiImage = renderCIImageToUIImage(image) {
+            sourceImage = Image(uiImage: sourceUiImage)
+        }
+        filteredCiImage = image
+        finalImage = nil
+        resetFilters()
+    }
+
+    func applyTexture(_ newTexture: Texture) {
+        if texture?.id != newTexture.id {
+            texture = newTexture
+            updateImage()
+        }
+    }
+
+    func applyTextureBlendMode(to newBlendMode: BlendMode) {
+        if textureBlendMode != newBlendMode {
+            textureBlendMode = newBlendMode
+        }
+        updateImage()
+    }
+
+    func applyFilter(_ newFilter: Filter) {
+        if filter?.id != newFilter.id {
+            filter = newFilter
+            updateImage()
+        }
+    }
+
+    func removeFilterIfNeeded() {
+        filter = nil
+        updateImage()
+    }
+
+    func removeTextureIfNeeded() {
+        texture = nil
+        textureIntensity = 0.5
+        textureBlendMode = .normal
+        updateImage()
+    }
+
+    // Info.plist - NSPhotoLibraryUsageDescription - We need access to your photo library to save images you create in the app.
+    func saveImageToPhotoLibrary() {
+        if let filteredCiImage, let uiImage = renderCIImageToUIImage(filteredCiImage) {
+            // Request permission to access the photo library
+            PHPhotoLibrary.requestAuthorization { status in
+                guard status == .authorized else {
+                    print("Permission to access photo library denied.")
+                    return
+                }
+
+                // Save the image
+                PHPhotoLibrary.shared().performChanges {
+                    PHAssetChangeRequest.creationRequestForAsset(from: uiImage)
+                } completionHandler: { success, error in
+                    if let error { // TODO: Create completions for showing success/error alerts
+                        print("Failed to save image: \(error.localizedDescription)")
+                    } else if success {
+                        print("Image saved successfully!")
+                    } else {
+                        print("Unknown error occurred while saving the image.")
+                    }
+                }
+            }
+        } else {
+            print("Something wrong in saveToGallery()") // TODO: Handle errors
+        }
+    }
+
+    private func resetFilters() {
+        brightness.setToDefault()
+        contrast.setToDefault()
+        saturation.setToDefault()
+        exposure.setToDefault()
+        vibrance.setToDefault()
+        highlights.setToDefault()
+        shadows.setToDefault()
+        noiseReduction.setToDefault()
+        sharpness.setToDefault()
+        gamma.setToDefault()
+        renderFinalImage()
+    }
+
+    func reset() {
+        sourceImage = nil
+        sourceImageOrientation = nil
+        sourceCiImage = nil
+        filteredCiImage = nil
+        finalImage = nil
+        filter = nil
+        texture = nil
+        textureBlendMode = .normal
+        resetFilters()
+    }
+
+    func histogram(height _: CGFloat = 100) -> UIImage? {
+        let filter = CIFilter.histogramDisplay()
+        filter.inputImage = filteredCiImage
+        filter.lowLimit = 0
+        filter.highLimit = 1
+        if let output = filter.outputImage {
+            return renderCIImageToUIImage(output)
+        }
+        return nil
+    }
+
+    private func overlayTexture(_ texture: Texture) {
+        if let uiImage = UIImage(named: texture.filename),
+           let cgImage = uiImage.cgImage,
+           let filteredCiImage,
+           let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: filteredCiImage.extent.size)
+        {
+            let blendMode = textureBlendMode.ciFilter
+            blendMode.backgroundImage = filteredCiImage
+            blendMode.inputImage = configuredTexture
+            self.filteredCiImage = blendMode.outputImage
+        } else {
+            print("Texture doesn't exist or has wrong name") // TODO: Handle error
+        }
+    }
+
+    private func configureFilter(_ filter: Filter) {
+        if let filter = lutsManager.createCIColorCube(for: filter) {
+            filter.inputImage = filteredCiImage
+            filteredCiImage = filter.outputImage
+        } else {
+            print("Issue with applying filter") // TODO: Handle errors
+        }
+    }
+
     private func updateImage() {
         guard let sourceCiImage else { return }
         filteredCiImage = sourceCiImage
@@ -286,8 +303,6 @@ final class PhotoEditorService {
         return nil
     }
 
-
-
     private func resizeImageToAspectFill(image: CIImage, targetSize: CGSize) -> CIImage? {
         // Calculate the aspect ratio of the original image
         let aspectRatio = image.extent.size.width / image.extent.size.height
@@ -301,16 +316,16 @@ final class PhotoEditorService {
         }
 
         // Create a transform to scale the image to the new size
-        let transform = CGAffineTransform(scaleX: newSize.width / image.extent.size.width,
-                                          y: newSize.height / image.extent.size.height)
+        let transform = CGAffineTransform(
+            scaleX: newSize.width / image.extent.size.width,
+            y: newSize.height / image.extent.size.height
+        )
 
         // Apply the transform to the image to resize it
         let resizedImage = image.transformed(by: transform)
 
         // Crop the image to fit exactly within the target size
-        let croppedImage = resizedImage.cropped(to: CGRect(origin: .zero, size: targetSize))
-
-        return croppedImage
+        return resizedImage.cropped(to: CGRect(origin: .zero, size: targetSize))
     }
 
     private func renderCIImageToUIImage(_ ciImage: CIImage) -> UIImage? {
@@ -319,8 +334,6 @@ final class PhotoEditorService {
         }
         return UIImage(cgImage: cgImage, scale: 1, orientation: sourceImageOrientation ?? .up)
     }
-
-
 }
 
 // Private update functions

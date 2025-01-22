@@ -1,9 +1,11 @@
 
-import SwiftUI
-import PhotosUI
 import AppCore
+import PhotosUI
+import SwiftUI
 
 struct MainView: View {
+    // MARK: SwiftUI Properties
+
     @State private var loadFiltersPreviews: Task<Void, Never>? = nil
     @State private var photoEditorService = PhotoEditorService()
     @State private var selectedItem: PhotosPickerItem? = nil
@@ -14,6 +16,8 @@ struct MainView: View {
     @State private var showsHistogram = false
     @State private var isLoadingFiltersPreviews: Bool = false
     @State private var showsFullScreenPreview: Bool = false
+
+    // MARK: Content Properties
 
     var body: some View {
         NavigationStack {
@@ -40,12 +44,12 @@ struct MainView: View {
                         }
                     }
                 }
-    //            .onAppear { // Only for testing
-    //                if let uiImage = UIImage(named: "Textures/Grain/grain1"),
-    //                   let cgImage = uiImage.cgImage {
-    //                    self.photoEditorService.updateSourceImage(CIImage(cgImage: cgImage))
-    //                }
-    //            }
+                //            .onAppear { // Only for testing
+                //                if let uiImage = UIImage(named: "Textures/Grain/grain1"),
+                //                   let cgImage = uiImage.cgImage {
+                //                    self.photoEditorService.updateSourceImage(CIImage(cgImage: cgImage))
+                //                }
+                //            }
                 if let sourceImage = photoEditorService.sourceImage, let filteredImage = photoEditorService.finalImage {
                     VStack {
                         ZStack(alignment: .trailing) {
@@ -61,7 +65,7 @@ struct MainView: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .opacity(showsFilteredImage ? 1 : 0)
-                                .onLongPressGesture { } onPressingChanged: { isPressing in
+                                .onLongPressGesture {} onPressingChanged: { isPressing in
                                     showsFilteredImage = !isPressing
                                 }
                                 .onTapGesture(count: 2) {
@@ -80,7 +84,6 @@ struct MainView: View {
                                     .opacity(0.8)
                                     .frame(width: 100, height: 50)
                                     .padding()
-
                             }
                         }
                         HStack(spacing: 0) {
@@ -110,7 +113,6 @@ struct MainView: View {
                                     .tint(Color.textWhite)
                                     .clipShape(RoundedRectangle(cornerRadius: 4))
                             }
-
                         }
                     }
 
@@ -132,39 +134,39 @@ struct MainView: View {
     }
 
     private var photoPickerView: some View {
-            PhotosPicker(selection: $selectedItem, matching: .images) {
-                Rectangle()
-                    .fill(.clear)
-                    .overlay(alignment: .center) {
-                        VStack {
-                            Image(systemName: "plus.circle.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .tint(.white)
-                                .frame(width: 20, height: 20)
-                            Text("Tap to choose an image\nfrom the gallery.")
-                                .font(.custom(size: 12))
-                                .foregroundStyle(Color.textWhite)
-                        }.opacity(0.5)
-                    }
-            }
-            .onChange(of: selectedItem, { _, newValue in
-                guard let newValue else { return }
-                loadFiltersPreviews?.cancel()
-                loadFiltersPreviews = Task {
-                    isLoadingFiltersPreviews = true
-                    if let data = try? await newValue.loadTransferable(type: Data.self),
-                       let uiImage = UIImage(data: data), let ciImage = CIImage(data: data) {
-                        // TODO:  Может вместо того, чтобы отдельно передавать CIImage и ориентацию передавать UIImage?
-                        photoEditorService.updateSourceImage(ciImage, orientation: uiImage.imageOrientation)
-                        print("Start generate previews")
-                        await DataStorage.shared.updateFiltersPreviews(with: ciImage)
-                        print("Finish generate previews")
-                    }
-                    isLoadingFiltersPreviews = false
+        PhotosPicker(selection: $selectedItem, matching: .images) {
+            Rectangle()
+                .fill(.clear)
+                .overlay(alignment: .center) {
+                    VStack {
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .tint(.white)
+                            .frame(width: 20, height: 20)
+                        Text("Tap to choose an image\nfrom the gallery.")
+                            .font(.custom(size: 12))
+                            .foregroundStyle(Color.textWhite)
+                    }.opacity(0.5)
                 }
-
-            })
+        }
+        .onChange(of: selectedItem) { _, newValue in
+            guard let newValue else { return }
+            loadFiltersPreviews?.cancel()
+            loadFiltersPreviews = Task {
+                isLoadingFiltersPreviews = true
+                if let data = try? await newValue.loadTransferable(type: Data.self),
+                   let uiImage = UIImage(data: data), let ciImage = CIImage(data: data)
+                {
+                    // TODO: Может вместо того, чтобы отдельно передавать CIImage и ориентацию передавать UIImage?
+                    photoEditorService.updateSourceImage(ciImage, orientation: uiImage.imageOrientation)
+                    print("Start generate previews")
+                    await DataStorage.shared.updateFiltersPreviews(with: ciImage)
+                    print("Finish generate previews")
+                }
+                isLoadingFiltersPreviews = false
+            }
+        }
     }
 
     private var filtersView: some View {
@@ -188,9 +190,9 @@ struct MainView: View {
                                     .font(.h5)
                                     .italic()
                                     .foregroundStyle(Color.textWhite)
-                                }
                             }
                         }
+                    }
                     Spacer()
                     Image(systemName: "triangle.fill")
                         .resizable()
@@ -213,21 +215,21 @@ struct MainView: View {
                         FiltersScrollView(previewImage: filteredImage)
                             .environment(photoEditorService)
 
-    //                    if photoEditorService.hasFilter {
-    //                        VStack(spacing: 0) {
-    //                            HStack {
-    //                                Text("Intensity:")
-    //                                    .font(.h5)
-    //                                    .foregroundStyle(Color.textWhite.opacity(0.8))
-    //                                Text("\(photoEditorService.textureIntensity)")
-    //                                    .font(.h5)
-    //                                    .foregroundStyle(Color.textWhite.opacity(0.8))
-    //                            }
-    //                            .frame(maxWidth: .infinity, alignment: .leading)
-    //                            Slider(value: $photoEditorService.textureIntensity, in: 0...1)
-    //                            .tint(Color.textWhite.opacity(0.1))
-    //                        }
-    //                    }
+                        //                    if photoEditorService.hasFilter {
+                        //                        VStack(spacing: 0) {
+                        //                            HStack {
+                        //                                Text("Intensity:")
+                        //                                    .font(.h5)
+                        //                                    .foregroundStyle(Color.textWhite.opacity(0.8))
+                        //                                Text("\(photoEditorService.textureIntensity)")
+                        //                                    .font(.h5)
+                        //                                    .foregroundStyle(Color.textWhite.opacity(0.8))
+                        //                            }
+                        //                            .frame(maxWidth: .infinity, alignment: .leading)
+                        //                            Slider(value: $photoEditorService.textureIntensity, in: 0...1)
+                        //                            .tint(Color.textWhite.opacity(0.1))
+                        //                        }
+                        //                    }
                     }
                 }
             }
@@ -279,16 +281,16 @@ struct MainView: View {
                                 Text("Blend mode:")
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
-                                Text(photoEditorService.textureBlendMode?.title ?? "Not selected")
+                                Text(photoEditorService.textureBlendMode.title)
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             Slider(value: Binding(
-                                get: { Double(photoEditorService.textureBlendMode?.rawValue ?? 0) },
-                                set: { photoEditorService.updateTextureBlendMode(to: BlendMode(rawValue: Int($0)) ?? .normal) }
+                                get: { Double(photoEditorService.textureBlendMode.rawValue) },
+                                set: { photoEditorService.applyTextureBlendMode(to: BlendMode(rawValue: Int($0)) ?? .normal) }
                             ), in: BlendMode.range, step: 1)
-                            .tint(Color.textWhite.opacity(0.1))
+                                .tint(Color.textWhite.opacity(0.1))
                         }
                         VStack(spacing: 0) {
                             HStack {
@@ -300,8 +302,8 @@ struct MainView: View {
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            Slider(value: $photoEditorService.textureIntensity, in: 0...1)
-                            .tint(Color.textWhite.opacity(0.1))
+                            Slider(value: $photoEditorService.textureIntensity, in: 0 ... 1)
+                                .tint(Color.textWhite.opacity(0.1))
                         }
                     }
                 }
