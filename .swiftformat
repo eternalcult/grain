@@ -1,0 +1,8 @@
+--swiftversion 6.0
+--header strip
+--exclude **/Generated
+--maxwidth 140
+--wraparguments before-first
+--wrapcollections before-first
+--enable isEmpty,organizeDeclarations,markTypes,blankLineAfterSwitchCase,redundantProperty
+--organizationmode type
