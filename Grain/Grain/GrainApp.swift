@@ -1,20 +1,10 @@
-//
-//  GrainApp.swift
-//  Grain
-//
-//  Created by Vlad Antonov on 12.01.2025.
-//
-
-import SwiftUI
-import SwiftData
 import AppCore
+import SwiftData
+import SwiftUI
 
 @main
 struct GrainApp: App {
-
-    init() {
-        Font.registerFonts()
-    }
+    // MARK: Computed Properties
 
     var body: some Scene {
         WindowGroup {
@@ -24,10 +14,17 @@ struct GrainApp: App {
                     case let .success(container):
                         DataStorage.shared.addSwiftDataContext(container.mainContext)
                         DataStorage.shared.configureFiltersDataIfNeeded()
+
                     case let .failure(failure):
                         print("Error with model container", failure.localizedDescription)
                     }
                 }
         }
+    }
+
+    // MARK: Lifecycle
+
+    init() {
+        Font.registerFonts()
     }
 }
