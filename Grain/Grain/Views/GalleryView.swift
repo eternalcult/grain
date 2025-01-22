@@ -2,6 +2,8 @@ import SwiftUI
 
 struct GalleryView: View {
     let type: GalleryViewType
+    @Environment(\.dismiss) private var dismiss
+
 
     enum GalleryViewType {
         case filters
@@ -48,7 +50,7 @@ struct GalleryView: View {
                     }
                 }
             case .textures:
-                ForEach(texturesCategories) { category in
+                ForEach(DataStorage.shared.texturesCategories) { category in
                     Text(category.title)
                         .font(.h1)
                         .foregroundStyle(Color.textWhite)
@@ -75,6 +77,18 @@ struct GalleryView: View {
         }
         .padding(.horizontal)
         .background(Color.backgroundBlack)
+        .navigationBarBackButtonHidden(true)
+        .toolbarBackground(Color.backgroundBlack, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.left")
+                        .foregroundColor(.textWhite)
+                }
+            }
+        }
     }
 }
 

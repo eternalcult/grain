@@ -39,6 +39,10 @@ struct FiltersScrollView: View {
                 ScrollViewReader { proxy in
                     ScrollView(.horizontal) {
                         HStack(spacing: 4) {
+                            RawPreviewView(isSelected: photoEditorService.filter == nil) {
+                                photoEditorService.removeFilterIfNeeded()
+                            }
+                            .frame(width: 100, height: 100)
                             ForEach(DataStorage.shared.filtersCategories) { category in
                                 LazyHStack(spacing: 4) {
                                     ForEach(category.filters) { filter in

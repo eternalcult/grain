@@ -102,6 +102,53 @@ final class DataStorage {
             .init(id: 57, title: "Seven", desc: "'What’s in the box?!'", filename: "Seven"),
         ])
     ]
+
+    let texturesCategories: [TextureCategory] = [
+        .init(title: "Glare", textures: [
+            .init(title: "Glare 1", filename: "Textures/Glare/1"),
+            .init(title: "Glare 2", filename: "Textures/Glare/2"),
+            .init(title: "Glare 3", filename: "Textures/Glare/3"),
+            .init(title: "Glare 4", filename: "Textures/Glare/4"),
+            .init(title: "Glare 5", filename: "Textures/Glare/5"),
+            .init(title: "Glare 6", filename: "Textures/Glare/6"),
+            .init(title: "Glare 7", filename: "Textures/Glare/7"),
+            .init(title: "Glare 8", filename: "Textures/Glare/8"),
+            .init(title: "Glare 9", filename: "Textures/Glare/9"),
+            .init(title: "Glare 10", filename: "Textures/Glare/10")
+        ]),
+        .init(title: "VHS", textures: [
+            .init(title: "VHS 1", filename: "Textures/VHS-Noise/1"),
+            .init(title: "VHS 2", filename: "Textures/VHS-Noise/2"),
+            .init(title: "VHS 3", filename: "Textures/VHS-Noise/3"),
+            .init(title: "VHS 4", filename: "Textures/VHS-Noise/4"),
+            .init(title: "VHS 5", filename: "Textures/VHS-Noise/5"),
+            .init(title: "VHS 6", filename: "Textures/VHS-Noise/6"),
+            .init(title: "VHS 7", filename: "Textures/VHS-Noise/7"),
+            .init(title: "VHS 8", filename: "Textures/VHS-Noise/8"),
+            .init(title: "VHS 9", filename: "Textures/VHS-Noise/9"),
+            .init(title: "VHS 10", filename: "Textures/VHS-Noise/10")
+        ]),
+        .init(title: "Grain", textures: [
+            .init(title: "Grain 1", filename: "Textures/Grain/grain1"),
+            .init(title: "Grain 4", filename: "Textures/Grain/grain4"),
+            .init(title: "Grain 5", filename: "Textures/Grain/grain5"),
+            .init(title: "Grain 6", filename: "Textures/Grain/grain6"),
+            .init(title: "Grain 7", filename: "Textures/Grain/grain7")
+        ]),
+        .init(title: "Rust", textures: [
+            .init(title: "Rust 1", filename: "Textures/Rust/rust1"),
+            .init(title: "Rust 2", filename: "Textures/Rust/rust2"),
+            .init(title: "Rust 3", filename: "Textures/Rust/rust3"),
+            .init(title: "Rust 4", filename: "Textures/Rust/rust4"),
+            .init(title: "Rust 5", filename: "Textures/Rust/rust5"),
+            .init(title: "Rust 6", filename: "Textures/Rust/rust6"),
+            .init(title: "Rust 7", filename: "Textures/Rust/rust7"),
+            .init(title: "Rust 8", filename: "Textures/Rust/rust8"),
+            .init(title: "Rust 9", filename: "Textures/Rust/rust9"),
+            .init(title: "Rust 10", filename: "Textures/Rust/rust10")
+        ])
+    ]
+
 }
 
 

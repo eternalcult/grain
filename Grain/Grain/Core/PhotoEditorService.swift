@@ -69,9 +69,6 @@ final class PhotoEditorService {
     func applyTexture(_ newTexture: Texture) {
         if texture?.id != newTexture.id {
             texture = newTexture
-            if textureBlendMode != newTexture.prefferedBlendMode {
-                textureBlendMode = newTexture.prefferedBlendMode
-            }
             updateImage()
         }
     }
@@ -95,6 +92,17 @@ final class PhotoEditorService {
             filter = newFilter
             updateImage()
         }
+    }
+
+    func removeFilterIfNeeded() {
+        filter = nil
+        updateImage()
+    }
+    func removeTextureIfNeeded() {
+        texture = nil
+        textureIntensity = 0.5
+        textureBlendMode = nil
+        updateImage()
     }
 
     private func configureFilter(_ filter: Filter) {

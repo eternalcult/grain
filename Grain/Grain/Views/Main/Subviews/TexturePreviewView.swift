@@ -38,7 +38,7 @@ struct TexturePreviewView: View {
 
 
 #Preview {
-    if let texture = texturesCategories.first?.textures.first {
+    if let texture = DataStorage.shared.texturesCategories.first?.textures.first {
         TexturePreviewView(texture: texture) {
             print("Did tap on texture preview")
         }

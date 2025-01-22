@@ -11,7 +11,7 @@ struct TexturesScrollView: View {
             // Категории
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(texturesCategories) { category in
+                    ForEach(DataStorage.shared.texturesCategories) { category in
                         Button {
                             scrollToIndex = category.id
                         } label: {
@@ -33,7 +33,11 @@ struct TexturesScrollView: View {
             ScrollViewReader { proxy in
                 ScrollView(.horizontal) {
                     HStack(spacing: 4) {
-                            ForEach(texturesCategories) { category in
+                        RawPreviewView(isSelected: photoEditorService.texture == nil) {
+                            photoEditorService.removeTextureIfNeeded()
+                            }
+                            .frame(width: 100, height: 100)
+                        ForEach(DataStorage.shared.texturesCategories) { category in
                                 LazyHStack(spacing: 4) {
                                     ForEach(category.textures) { texture in
                                         LazyHStack {
