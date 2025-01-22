@@ -28,15 +28,15 @@ struct GalleryView: View {
                         .lineLimit(1)
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(category.filters) { filter in
-                            if let preview = filter.preview {
+                            if filter.preview != nil {
                                 if let selectedFilter = photoEditorService.filter {
-                                    FilterPreviewView(previewImage: preview, title: filter.title, isSelected: selectedFilter.id == filter.id
+                                    FilterPreviewView(filter, shouldShowFullScreen: true, isSelected: selectedFilter.id == filter.id
                                     ) {
                                         photoEditorService.applyFilter(filter)
                                     }
                                     .aspectRatio(1/1, contentMode: .fit)
                                 } else {
-                                    FilterPreviewView(previewImage: preview, title: filter.title) {
+                                    FilterPreviewView(filter, shouldShowFullScreen: true) {
                                         photoEditorService.applyFilter(filter)
                                     }
                                     .aspectRatio(1/1, contentMode: .fit)

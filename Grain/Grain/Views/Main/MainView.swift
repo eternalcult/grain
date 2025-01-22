@@ -4,6 +4,7 @@ import PhotosUI
 import AppCore
 
 struct MainView: View {
+    @State private var loadFiltersPreviews: Task<Void, Never>? = nil
     @State private var photoEditorService = PhotoEditorService()
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var showsFilteredImage = true
@@ -89,6 +90,7 @@ struct MainView: View {
                             .padding(4)
                             Button {
                                 selectedItem = nil
+                                loadFiltersPreviews?.cancel()
                                 photoEditorService.reset()
                             } label: {
                                 Image(systemName: "xmark.circle")
@@ -139,7 +141,8 @@ struct MainView: View {
             }
             .onChange(of: selectedItem, { _, newValue in
                 guard let newValue else { return }
-                Task {
+                loadFiltersPreviews?.cancel()
+                loadFiltersPreviews = Task {
                     isLoadingFiltersPreviews = true
                     if let data = try? await newValue.loadTransferable(type: Data.self),
                        let uiImage = UIImage(data: data), let ciImage = CIImage(data: data) {
@@ -187,7 +190,13 @@ struct MainView: View {
             }
             if let filteredImage = photoEditorService.filteredCiImage, showsFilters {
                 if isLoadingFiltersPreviews {
-                    Text("Loading...")
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .tint(.textWhite)
+                        Spacer()
+                    }
                 } else {
                     VStack(spacing: 8) {
                         FiltersScrollView(previewImage: filteredImage)

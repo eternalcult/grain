@@ -43,21 +43,17 @@ struct FiltersScrollView: View {
                                 LazyHStack(spacing: 4) {
                                     ForEach(category.filters) { filter in
                                         LazyHStack {
-                                            if let preview = filter.preview {
+                                            if filter.preview != nil {
                                                 if let selectedFilter = photoEditorService.filter {
                                                     FilterPreviewView(
-                                                        previewImage: preview,
-                                                        title: filter.title,
+                                                        filter,
                                                         isSelected: selectedFilter.id == filter.id
                                                     ) {
                                                         photoEditorService.applyFilter(filter)
                                                     }
                                                     .frame(width: 100, height: 100)
                                                 } else {
-                                                    FilterPreviewView(
-                                                        previewImage: preview,
-                                                        title: filter.title
-                                                    ) {
+                                                    FilterPreviewView(filter) {
                                                         photoEditorService.applyFilter(filter)
                                                     }
                                                     .frame(width: 100, height: 100)
