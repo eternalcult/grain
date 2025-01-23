@@ -15,9 +15,14 @@ final class PhotoEditorService {
     private(set) var sourceImage: Image?
     /// Source Image doesn't change
     private(set) var sourceCiImage: CIImage?
-    private(set) var filteredCiImage: CIImage?
-    /// Final image after all updates
+    /// Final Image after all updates
     var finalImage: Image?
+    /// Final CIImage after all updates
+    var finalCiImage: CIImage? {
+        didSet {
+            print("FinalCIImage is udpated")
+        }
+    }
 
     // MARK: Texture
 
@@ -28,7 +33,10 @@ final class PhotoEditorService {
 
     private(set) var filter: Filter?
 
+    /// Is used only for private applying chain of filters and don't update UI after each filter update
+    private var processedCiImage: CIImage? = nil
     private var sourceImageOrientation: UIImage.Orientation?
+    private var updateImageTask: Task<Void, Never>? = nil
 
     //    private let context = CIContext(options:  [ // TODO: Decide should I use it or not?
     //        .priorityRequestLow: true, // Lower priority if running multiple tasks
@@ -48,7 +56,7 @@ final class PhotoEditorService {
 
     var textureIntensity: Double = 0.5 {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
@@ -58,73 +66,100 @@ final class PhotoEditorService {
 
     var brightness: ImageProperty = Brightness() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
     var contrast: ImageProperty = Contrast() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
     var saturation: ImageProperty = Saturation() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
     var exposure: ImageProperty = Exposure() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
     var vibrance: ImageProperty = Vibrance() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
     var highlights: ImageProperty = Highlights() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
     var shadows: ImageProperty = Shadows() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
     var temperature: ImageProperty = Temperature() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
+    private func updateTask() {
+        updateImageTask?.cancel()
+        guard let sourceCiImage else { return }
+        updateImageTask = Task {
+            if Task.isCancelled {
+                print("Task is cancelled", Task.isCancelled)
+                return
+            }
+            processedCiImage = sourceCiImage
+            updateBCS()
+            updateExposure()
+            updateVibrance()
+            updateHS()
+            updateTemperatureAndTint()
+            updateGamma()
+            updateNoiseReduction()
+            if let filter {
+                configureFilter(filter)
+            }
+            if let texture {
+                overlayTexture(texture)
+            }
+            await renderImage()
+        }
+    }
+
+
     var tint: ImageProperty = Tint() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
     var gamma: ImageProperty = Gamma() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
     var noiseReduction: ImageProperty = NoiseReduction() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
     var sharpness: ImageProperty = Sharpness() {
         didSet {
-            updateImage()
+            updateTask()
         }
     }
 
@@ -136,7 +171,7 @@ final class PhotoEditorService {
         if let sourceUiImage = renderCIImageToUIImage(image) {
             sourceImage = Image(uiImage: sourceUiImage)
         }
-        filteredCiImage = image
+        processedCiImage = image
         finalImage = nil
         resetFilters()
     }
@@ -144,7 +179,7 @@ final class PhotoEditorService {
     func applyTexture(_ newTexture: Texture) {
         if texture?.id != newTexture.id {
             texture = newTexture
-            updateImage()
+            updateTask()
         }
     }
 
@@ -152,31 +187,31 @@ final class PhotoEditorService {
         if textureBlendMode != newBlendMode {
             textureBlendMode = newBlendMode
         }
-        updateImage()
+        updateTask()
     }
 
     func applyFilter(_ newFilter: Filter) {
         if filter?.id != newFilter.id {
             filter = newFilter
-            updateImage()
+            updateTask()
         }
     }
 
     func removeFilterIfNeeded() {
         filter = nil
-        updateImage()
+        updateTask()
     }
 
     func removeTextureIfNeeded() {
         texture = nil
         textureIntensity = 0.5
         textureBlendMode = .normal
-        updateImage()
+        updateTask()
     }
 
     // Info.plist - NSPhotoLibraryUsageDescription - We need access to your photo library to save images you create in the app.
     func saveImageToPhotoLibrary() {
-        if let filteredCiImage, let uiImage = renderCIImageToUIImage(filteredCiImage) {
+        if let processedCiImage, let uiImage = renderCIImageToUIImage(processedCiImage) {
             // Request permission to access the photo library
             PHPhotoLibrary.requestAuthorization { status in
                 guard status == .authorized else {
@@ -204,9 +239,10 @@ final class PhotoEditorService {
 
     func reset() {
         sourceImage = nil
+        processedCiImage = nil
         sourceImageOrientation = nil
         sourceCiImage = nil
-        filteredCiImage = nil
+        processedCiImage = nil
         finalImage = nil
         filter = nil
         texture = nil
@@ -216,7 +252,7 @@ final class PhotoEditorService {
 
     func histogram(height _: CGFloat = 100) -> UIImage? {
         let filter = CIFilter.histogramDisplay()
-        filter.inputImage = filteredCiImage
+        filter.inputImage = processedCiImage
         filter.lowLimit = 0
         filter.highLimit = 1
         if let output = filter.outputImage {
@@ -236,36 +272,11 @@ final class PhotoEditorService {
         noiseReduction.setToDefault()
         sharpness.setToDefault()
         gamma.setToDefault()
-        renderFinalImage()
     }
 
-    private func overlayTexture(_ texture: Texture) {
-        if let uiImage = UIImage(named: texture.filename),
-           let cgImage = uiImage.cgImage,
-           let filteredCiImage,
-           let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: filteredCiImage.extent.size)
-        {
-            let blendMode = textureBlendMode.ciFilter
-            blendMode.backgroundImage = filteredCiImage
-            blendMode.inputImage = configuredTexture
-            self.filteredCiImage = blendMode.outputImage
-        } else {
-            print("Texture doesn't exist or has wrong name") // TODO: Handle error
-        }
-    }
-
-    private func configureFilter(_ filter: Filter) {
-        if let filter = lutsManager.createCIColorCube(for: filter) {
-            filter.inputImage = filteredCiImage
-            filteredCiImage = filter.outputImage
-        } else {
-            print("Issue with applying filter") // TODO: Handle errors
-        }
-    }
-
-    private func updateImage() {
+    private func updateImage() async {
         guard let sourceCiImage else { return }
-        filteredCiImage = sourceCiImage
+        processedCiImage = sourceCiImage
         updateBCS()
         updateExposure()
         updateVibrance()
@@ -279,12 +290,15 @@ final class PhotoEditorService {
         if let texture {
             overlayTexture(texture)
         }
-        renderFinalImage()
+        await renderImage()
     }
 
-    private func renderFinalImage() {
-        if let filteredCiImage, let uiImage = renderCIImageToUIImage(filteredCiImage) {
-            finalImage = Image(uiImage: uiImage)
+    private func renderImage() async {
+        if let processedCiImage, let uiImage = renderCIImageToUIImage(processedCiImage) {
+            await MainActor.run {
+                finalCiImage = processedCiImage
+                finalImage = Image(uiImage: uiImage)
+            }
         } else {
             print("Something wrong in renderFinalImage()") // TODO: Handle errors
         }
@@ -342,64 +356,88 @@ private extension PhotoEditorService {
     // Brightness, Contrast & Saturation
     func updateBCS() {
         let filter = CIFilter.colorControls()
-        filter.inputImage = filteredCiImage
+        filter.inputImage = processedCiImage
         filter.brightness = brightness.current
         filter.contrast = contrast.current
         filter.saturation = saturation.current
-        filteredCiImage = filter.outputImage
+        processedCiImage = filter.outputImage
     }
 
     func updateExposure() {
         let filter = CIFilter.exposureAdjust()
-        filter.inputImage = filteredCiImage
+        filter.inputImage = processedCiImage
         filter.ev = exposure.current
-        filteredCiImage = filter.outputImage
+        processedCiImage = filter.outputImage
     }
 
     func updateVibrance() {
         let filter = CIFilter.vibrance()
-        filter.inputImage = filteredCiImage
+        filter.inputImage = processedCiImage
         filter.amount = vibrance.current
-        filteredCiImage = filter.outputImage
+        processedCiImage = filter.outputImage
     }
 
     // Highlights & Shadows
     func updateHS() {
         let filter = CIFilter.highlightShadowAdjust()
-        filter.inputImage = filteredCiImage
+        filter.inputImage = processedCiImage
         filter.highlightAmount = highlights.current
         filter.shadowAmount = shadows.current
-        filteredCiImage = filter.outputImage
+        processedCiImage = filter.outputImage
     }
 
     func updateVignette() {
         let filter = CIFilter.vignette()
-        filter.inputImage = filteredCiImage
+        filter.inputImage = processedCiImage
         filter.intensity = 0
         filter.radius = 0
-        filteredCiImage = filter.outputImage
+        processedCiImage = filter.outputImage
     }
 
     func updateTemperatureAndTint() {
         let filter = CIFilter.temperatureAndTint()
-        filter.inputImage = filteredCiImage
+        filter.inputImage = processedCiImage
         filter.neutral = CIVector(x: CGFloat(temperature.defaultValue), y: 0)
         filter.targetNeutral = CIVector(x: CGFloat(temperature.current), y: CGFloat(tint.current))
-        filteredCiImage = filter.outputImage
+        processedCiImage = filter.outputImage
     }
 
     func updateGamma() {
         let filter = CIFilter.gammaAdjust()
-        filter.inputImage = filteredCiImage
+        filter.inputImage = processedCiImage
         filter.power = gamma.current
-        filteredCiImage = filter.outputImage
+        processedCiImage = filter.outputImage
     }
 
     func updateNoiseReduction() {
         let filter = CIFilter.noiseReduction()
-        filter.inputImage = filteredCiImage
+        filter.inputImage = processedCiImage
         filter.noiseLevel = noiseReduction.current
         filter.sharpness = sharpness.current
-        filteredCiImage = filter.outputImage
+        processedCiImage = filter.outputImage
+    }
+
+    func overlayTexture(_ texture: Texture) {
+        if let uiImage = UIImage(named: texture.filename),
+           let cgImage = uiImage.cgImage,
+           let processedCiImage,
+           let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: processedCiImage.extent.size)
+        {
+            let blendMode = textureBlendMode.ciFilter
+            blendMode.backgroundImage = processedCiImage
+            blendMode.inputImage = configuredTexture
+            self.processedCiImage = blendMode.outputImage
+        } else {
+            print("Texture doesn't exist or has wrong name") // TODO: Handle error
+        }
+    }
+
+    func configureFilter(_ filter: Filter) {
+        if let filter = lutsManager.createCIColorCube(for: filter) {
+            filter.inputImage = processedCiImage
+            processedCiImage = filter.outputImage
+        } else {
+            print("Issue with applying filter") // TODO: Handle errors
+        }
     }
 }
