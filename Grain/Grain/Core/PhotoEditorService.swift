@@ -118,6 +118,7 @@ final class PhotoEditorService {
         updateImageTask = Task {
             if Task.isCancelled {
                 print("Task is cancelled", Task.isCancelled)
+                processedCiImage = sourceCiImage
                 return
             }
             processedCiImage = sourceCiImage
