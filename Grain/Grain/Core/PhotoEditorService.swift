@@ -18,11 +18,7 @@ final class PhotoEditorService {
     /// Final Image after all updates
     var finalImage: Image?
     /// Final CIImage after all updates
-    var finalCiImage: CIImage? {
-        didSet {
-            print("FinalCIImage is udpated")
-        }
-    }
+    var finalCiImage: CIImage?
 
     // MARK: Texture
 
@@ -117,7 +113,6 @@ final class PhotoEditorService {
         guard let sourceCiImage else { return }
         updateImageTask = Task {
             if Task.isCancelled {
-                print("Task is cancelled", Task.isCancelled)
                 processedCiImage = sourceCiImage
                 return
             }
@@ -216,7 +211,7 @@ final class PhotoEditorService {
             // Request permission to access the photo library
             PHPhotoLibrary.requestAuthorization { status in
                 guard status == .authorized else {
-                    print("Permission to access photo library denied.")
+                    print("Permission to access photo library denied.") // TODO: Handle error
                     return
                 }
 
@@ -225,11 +220,11 @@ final class PhotoEditorService {
                     PHAssetChangeRequest.creationRequestForAsset(from: uiImage)
                 } completionHandler: { success, error in
                     if let error { // TODO: Create completions for showing success/error alerts
-                        print("Failed to save image: \(error.localizedDescription)")
+                        print("Failed to save image: \(error.localizedDescription)") // TODO: Handle error
                     } else if success {
                         print("Image saved successfully!")
                     } else {
-                        print("Unknown error occurred while saving the image.")
+                        print("Unknown error occurred while saving the image.") // TODO: Handle error
                     }
                 }
             }
@@ -438,7 +433,7 @@ private extension PhotoEditorService {
             filter.inputImage = processedCiImage
             processedCiImage = filter.outputImage
         } else {
-            print("Issue with applying filter") // TODO: Handle errors
+            print("Issue with applying filter") // TODO: Handle error
         }
     }
 }

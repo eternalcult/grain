@@ -151,9 +151,7 @@ struct MainView: View {
                 {
                     // TODO: Может вместо того, чтобы отдельно передавать CIImage и ориентацию передавать UIImage?
                     photoEditorService.updateSourceImage(ciImage, orientation: uiImage.imageOrientation)
-                    print("Start generate previews")
                     await DataStorage.shared.updateFiltersPreviews(with: ciImage)
-                    print("Finish generate previews")
                 }
                 isLoadingFiltersPreviews = false
             }

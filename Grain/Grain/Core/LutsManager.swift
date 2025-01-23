@@ -37,7 +37,7 @@ final class LutsManager {
             return filter
         } else { // Данные для текущего фильтра отсутствуют
             // TODO: Попробовать распарсить их в момент создания
-            print("SwiftData doesn't have data for current filter")
+            print("SwiftData doesn't have data for current filter") // TODO: Handle error
         }
         return nil
     }
@@ -64,7 +64,6 @@ final class LutsManager {
 
         // Разделяем файл на строки
         let lines = content.split(separator: "\n")
-        print("LUT .CUBE FILTE LINES COUNT", lines.count)
 
         for line in lines {
             let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -79,7 +78,6 @@ final class LutsManager {
             // Читаем размер LUT (например, LUT_3D_SIZE 33)
             if trimmedLine.hasPrefix("LUT_3D_SIZE") {
                 if let size = Int(trimmedLine.replacingOccurrences(of: "LUT_3D_SIZE", with: "").trimmingCharacters(in: .whitespaces)) {
-                    print("DIMENSION IS", size)
                     dimension = size
                 }
             } else {

@@ -262,10 +262,8 @@ final class DataStorage {
                         swiftDataManager?.insert(filterData)
                         print("Add filter data for \(filter.title)")
                     } else {
-                        print("Can't create data for CIColorCube")
+                        print("Can't create data for CIColorCube") // TODO: Handle error
                     }
-                } else {
-                    print("Filter \(filter.title) exists in SwiftData")
                 }
             }
         }
