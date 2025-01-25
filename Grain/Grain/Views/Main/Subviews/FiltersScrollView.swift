@@ -6,7 +6,7 @@ struct FiltersScrollView: View {
     @Environment(PhotoEditorService.self) private var photoEditorService
     @State private var scrollToIndex: UUID?
     @State private var visibleFiltersCategory: UUID?
-    @State private var visibleItems: Set<UUID> = []
+    @State private var visibleItems = [Int]()
     @State private var isLoading: Bool = true
 
     // MARK: Properties
@@ -53,41 +53,30 @@ struct FiltersScrollView: View {
                         }
                         .frame(width: 100, height: 100)
                         ForEach(DataStorage.shared.filtersCategories) { category in
-                            LazyHStack(spacing: 4) {
+                            HStack(spacing: 4) {
                                 ForEach(category.filters) { filter in
-                                    LazyHStack {
-                                        if filter.preview != nil {
-                                            if let selectedFilter = photoEditorService.filter {
-                                                FilterPreviewView(
-                                                    filter,
-                                                    isSelected: selectedFilter.id == filter.id
-                                                ) {
-                                                    photoEditorService.applyFilter(filter)
-                                                }
-                                                .frame(width: 100, height: 100)
-                                            } else {
-                                                FilterPreviewView(filter) {
-                                                    photoEditorService.applyFilter(filter)
-                                                }
-                                                .frame(width: 100, height: 100)
-                                            }
-                                        } else {
-                                            EmptyView() // TODO: Такого кейса не должно быть, но нужно подумать как его исключить полностью
+                                    GeometryReader { geometry in
+                                        FilterPreviewView(
+                                            filter,
+                                            isSelected: isSelected(currentFilter: filter, selectedFilter: photoEditorService.filter)
+                                        ) {
+                                            photoEditorService.applyFilter(filter)
+                                        }
+                                        .frame(width: 100, height: 100)
+                                        .onChange(of: geometry.frame(in: .global)) { oldValue, newValue in
+                                            trackItemPosition(filter.id, frame: newValue)
+                                        }
+                                        .onChange(of: visibleItems) { oldValue, newValue in
+                                            print(newValue)
                                         }
                                     }
-                                    .padding(.vertical, 2)
-                                    .onAppear {
-                                        print("Filter item \(filter.title) onAppear!")
-                                        visibleFiltersCategory = category.id
-                                    }
-                                    .onDisappear {
-                                        print("Filter item \(filter.title) onDisappear!")
-                                    }
+                                    .frame(width: 100)
                                 }
                             }
                             .id(category.id)
                         }
                     }
+                    .padding(.vertical, 2)
                 }
                 .scrollIndicators(.hidden)
                 .onChange(of: scrollToIndex) { _, newValue in
@@ -100,5 +89,33 @@ struct FiltersScrollView: View {
                 }
             }
         }
+    }
+
+    private func trackItemPosition(_ id: Int, frame: CGRect) {
+        let screenWidth = UIScreen.main.bounds.width
+        if frame.minX < screenWidth && frame.maxX > 0 {
+            if !visibleItems.contains(id) {
+                visibleItems.append(id)
+            }
+        } else {
+            if let index = visibleItems.firstIndex(of: id) {
+                visibleItems.remove(at: index)
+            }
+        }
+        selectedCategory()
+    }
+
+    private func isSelected(currentFilter: Filter, selectedFilter: Filter?) -> Bool {
+        guard let selectedFilter else {
+            return false
+        }
+        return currentFilter.id == selectedFilter.id
+    }
+
+    private func selectedCategory() {
+        let selectedCategories = DataStorage.shared.filtersCategories.filter { $0.filters.contains { filter in
+            visibleItems.contains(filter.id)
+        }}
+        visibleFiltersCategory = selectedCategories.last?.id
     }
 }

@@ -6,7 +6,7 @@ struct TexturesScrollView: View {
     @Environment(PhotoEditorService.self) private var photoEditorService
     @State private var scrollToIndex: UUID?
     @State private var visibleTexturesCategory: UUID?
-    @State private var visibleItems: Set<UUID> = []
+    @State private var visibleItems: [UUID] = []
 
     // MARK: Content Properties
 
@@ -42,34 +42,27 @@ struct TexturesScrollView: View {
                         }
                         .frame(width: 100, height: 100)
                         ForEach(DataStorage.shared.texturesCategories) { category in
-                            LazyHStack(spacing: 4) {
+                            HStack(spacing: 4) {
                                 ForEach(category.textures) { texture in
-                                    LazyHStack {
-                                        if let selectedTexture = photoEditorService.texture {
-                                            TexturePreviewView(texture: texture, isSelected: selectedTexture.id == texture.id) {
-                                                photoEditorService.applyTexture(texture)
-                                            }
-                                            .frame(width: 100, height: 100)
-                                        } else {
-                                            TexturePreviewView(texture: texture) {
-                                                photoEditorService.applyTexture(texture)
-                                            }
-                                            .frame(width: 100, height: 100)
+                                    GeometryReader { geometry in
+                                        TexturePreviewView(texture: texture, isSelected: isSelected(currentTexture: texture, selectedTexture: photoEditorService.texture )) {
+                                            photoEditorService.applyTexture(texture)
+                                        }
+                                        .frame(width: 100, height: 100)
+                                        .onChange(of: geometry.frame(in: .global)) { oldValue, newValue in
+                                            trackItemPosition(texture.id, frame: newValue)
+                                        }
+                                        .onChange(of: visibleItems) { oldValue, newValue in
+                                            print(newValue)
                                         }
                                     }
-                                    .padding(.vertical, 2)
-                                    .onAppear {
-                                        print("Texture item \(texture.title) onAppear!")
-                                        visibleTexturesCategory = category.id
-                                    }
-                                    .onDisappear {
-                                        print("Texture item \(texture.title) onDisappear!")
-                                    }
+                                    .frame(width: 100)
                                 }
                             }
                             .id(category.id)
                         }
                     }
+                    .padding(.vertical, 2)
                 }
                 .scrollIndicators(.hidden)
                 .onChange(of: scrollToIndex) { _, newValue in
@@ -82,5 +75,33 @@ struct TexturesScrollView: View {
                 }
             }
         }
+    }
+
+    private func trackItemPosition(_ id: UUID, frame: CGRect) {
+        let screenWidth = UIScreen.main.bounds.width
+        if frame.minX < screenWidth && frame.maxX > 0 {
+            if !visibleItems.contains(id) {
+                visibleItems.append(id)
+            }
+        } else {
+            if let index = visibleItems.firstIndex(of: id) {
+                visibleItems.remove(at: index)
+            }
+        }
+        selectedCategory()
+    }
+
+    private func isSelected(currentTexture: Texture, selectedTexture: Texture?) -> Bool {
+        guard let selectedTexture else {
+            return false
+        }
+        return currentTexture.id == selectedTexture.id
+    }
+
+    private func selectedCategory() {
+        let selectedCategories = DataStorage.shared.texturesCategories.filter { $0.textures.contains { texture in
+            visibleItems.contains(texture.id)
+        }}
+        visibleTexturesCategory = selectedCategories.last?.id
     }
 }
