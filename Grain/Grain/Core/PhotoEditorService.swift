@@ -30,9 +30,9 @@ final class PhotoEditorService {
     private(set) var filter: Filter?
 
     /// Is used only for private applying chain of filters and don't update UI after each filter update
-    private var processedCiImage: CIImage? = nil
+    private var processedCiImage: CIImage?
     private var sourceImageOrientation: UIImage.Orientation?
-    private var renderImageTask: Task<Void, Never>? = nil
+    private var renderImageTask: Task<Void, Never>?
 
     //    private let context = CIContext(options:  [ // TODO: Decide should I use it or not?
     //        .priorityRequestLow: true, // Lower priority if running multiple tasks
@@ -107,32 +107,6 @@ final class PhotoEditorService {
             updateTask()
         }
     }
-
-    private func updateTask() {
-        renderImageTask?.cancel()
-        guard let sourceCiImage else { return }
-        processedCiImage = sourceCiImage
-        updateBCS()
-        updateExposure()
-        updateVibrance()
-        updateHS()
-        updateTemperatureAndTint()
-        updateGamma()
-        updateNoiseReduction()
-        if let filter {
-            configureFilter(filter)
-        }
-        if let texture {
-            overlayTexture(texture)
-        }
-        renderImageTask = Task {
-            if Task.isCancelled {
-                return
-            }
-            await renderImage()
-        }
-    }
-
 
     var tint: ImageProperty = Tint() {
         didSet {
@@ -245,18 +219,45 @@ final class PhotoEditorService {
         resetFilters()
     }
 
-    func histogram(height _: CGFloat = 100) -> UIImage? { // TODO: Почему-то иногда вызывается в бэкграунд треде и из-за этого ломается UI, когда гистограмма отображается на экране
-        var result: UIImage? = nil
+    func histogram(height _: CGFloat = 100)
+        -> UIImage?
+    {
+        // TODO: Почему-то иногда вызывается в бэкграунд треде и из-за этого ломается UI, когда гистограмма отображается на экране
+        var result: UIImage?
         let filter = CIFilter.histogramDisplay()
         filter.inputImage = processedCiImage
         filter.lowLimit = 0
         filter.highLimit = 1
 
-
         if let output = filter.outputImage {
             result = renderCIImageToUIImage(output)
         }
         return result
+    }
+
+    private func updateTask() {
+        renderImageTask?.cancel()
+        guard let sourceCiImage else { return }
+        processedCiImage = sourceCiImage
+        updateBCS()
+        updateExposure()
+        updateVibrance()
+        updateHS()
+        updateTemperatureAndTint()
+        updateGamma()
+        updateNoiseReduction()
+        if let filter {
+            configureFilter(filter)
+        }
+        if let texture {
+            overlayTexture(texture)
+        }
+        renderImageTask = Task {
+            if Task.isCancelled {
+                return
+            }
+            await renderImage()
+        }
     }
 
     private func resetFilters() {

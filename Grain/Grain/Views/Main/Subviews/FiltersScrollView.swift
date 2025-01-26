@@ -63,7 +63,7 @@ struct FiltersScrollView: View {
                                             photoEditorService.applyFilter(filter)
                                         }
                                         .frame(width: 100, height: 100)
-                                        .onChange(of: geometry.frame(in: .global)) { oldValue, newValue in
+                                        .onChange(of: geometry.frame(in: .global)) { _, newValue in
                                             trackItemPosition(filter.id, frame: newValue)
                                         }
                                     }
@@ -88,9 +88,11 @@ struct FiltersScrollView: View {
         }
     }
 
+    // MARK: Functions
+
     private func trackItemPosition(_ id: Int, frame: CGRect) {
         let screenWidth = UIScreen.main.bounds.width
-        if frame.minX < screenWidth && frame.maxX > 0 {
+        if frame.minX < screenWidth, frame.maxX > 0 {
             if !visibleItems.contains(id) {
                 visibleItems.append(id)
             }

@@ -45,14 +45,17 @@ struct TexturesScrollView: View {
                             HStack(spacing: 4) {
                                 ForEach(category.textures) { texture in
                                     GeometryReader { geometry in
-                                        TexturePreviewView(texture: texture, isSelected: isSelected(currentTexture: texture, selectedTexture: photoEditorService.texture )) {
+                                        TexturePreviewView(
+                                            texture: texture,
+                                            isSelected: isSelected(currentTexture: texture, selectedTexture: photoEditorService.texture)
+                                        ) {
                                             photoEditorService.applyTexture(texture)
                                         }
                                         .frame(width: 100, height: 100)
-                                        .onChange(of: geometry.frame(in: .global)) { oldValue, newValue in
+                                        .onChange(of: geometry.frame(in: .global)) { _, newValue in
                                             trackItemPosition(texture.id, frame: newValue)
                                         }
-                                        .onChange(of: visibleItems) { oldValue, newValue in
+                                        .onChange(of: visibleItems) { _, newValue in
                                             print(newValue)
                                         }
                                     }
@@ -77,9 +80,11 @@ struct TexturesScrollView: View {
         }
     }
 
+    // MARK: Functions
+
     private func trackItemPosition(_ id: UUID, frame: CGRect) {
         let screenWidth = UIScreen.main.bounds.width
-        if frame.minX < screenWidth && frame.maxX > 0 {
+        if frame.minX < screenWidth, frame.maxX > 0 {
             if !visibleItems.contains(id) {
                 visibleItems.append(id)
             }
