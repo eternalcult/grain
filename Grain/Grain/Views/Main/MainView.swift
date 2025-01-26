@@ -13,7 +13,7 @@ struct MainView: View {
     @State private var showsFilters: Bool = false
     @State private var showsSettings = true
     @State private var showsTextures = false
-//    @State private var showsHistogram = false
+    @State private var showsHistogram = false
     @State private var isLoadingFiltersPreviews: Bool = false
     @State private var showsPalette = false
 
@@ -69,29 +69,29 @@ struct MainView: View {
                                     showsFilteredImage = !isPressing
                                 }
                         }
-//                        .overlay(alignment: .bottomLeading) {
-//                            if showsHistogram, let histogram = photoEditorService.histogram() {
-//                                Image(uiImage: histogram)
-//                                    .resizable()
-//                                    .opacity(0.8)
-//                                    .frame(width: 100, height: 50)
-//                                    .padding()
-//                            }
-//                        }
+                        .overlay(alignment: .bottomLeading) {
+                            if showsHistogram, let histogram = photoEditorService.histogram {
+                                Image(uiImage: histogram)
+                                    .resizable()
+                                    .opacity(0.8)
+                                    .frame(width: 100, height: 50)
+                                    .padding()
+                            }
+                        }
                         HStack(spacing: 0) {
-//                            Button {
-//                                showsHistogram.toggle()
-//                            } label: {
-//                                Image(systemName: "waveform.path.ecg.rectangle")
-//                                    .resizable()
-//                                    .scaledToFit()
-//                                    .frame(width: 20, height: 20)
-//                                    .padding(4)
-//                                    .tint(showsHistogram ? Color.textBlack : Color.textWhite)
-//                                    .background(showsHistogram ? Color.backgroundWhiteSecondary.opacity(0.8) : .clear)
-//                                    .clipShape(RoundedRectangle(cornerRadius: 4))
-//                            }
-//                            .padding(4)
+                            Button {
+                                showsHistogram.toggle()
+                            } label: {
+                                Image(systemName: "waveform.path.ecg.rectangle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .padding(4)
+                                    .tint(showsHistogram ? Color.textBlack : Color.textWhite)
+                                    .background(showsHistogram ? Color.backgroundWhiteSecondary.opacity(0.8) : .clear)
+                                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                            }
+                            .padding(4)
                             Button {
                                 selectedItem = nil
                                 loadFiltersPreviews?.cancel()

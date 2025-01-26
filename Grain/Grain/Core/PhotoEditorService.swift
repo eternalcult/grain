@@ -219,20 +219,17 @@ final class PhotoEditorService {
         resetFilters()
     }
 
-    func histogram(height _: CGFloat = 100)
-        -> UIImage?
-    {
-        // TODO: Почему-то иногда вызывается в бэкграунд треде и из-за этого ломается UI, когда гистограмма отображается на экране
-        var result: UIImage?
+    var histogram: UIImage?
+
+    private func renderHistogram() {
         let filter = CIFilter.histogramDisplay()
         filter.inputImage = processedCiImage
         filter.lowLimit = 0
         filter.highLimit = 1
 
         if let output = filter.outputImage {
-            result = renderCIImageToUIImage(output)
+            histogram = renderCIImageToUIImage(output)
         }
-        return result
     }
 
     private func updateTask() {
@@ -252,6 +249,7 @@ final class PhotoEditorService {
         if let texture {
             overlayTexture(texture)
         }
+        renderHistogram()
         renderImageTask = Task {
             if Task.isCancelled {
                 return
