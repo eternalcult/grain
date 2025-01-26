@@ -253,7 +253,6 @@ final class DataStorage {
 
     func configureFiltersDataIfNeeded() {
         let filtersData = filtersData
-        print("FiltersData is", filtersData)
         for category in filtersCategories {
             for filter in category.filters {
                 if !filtersData.contains(where: { $0.id == filter.id }) {

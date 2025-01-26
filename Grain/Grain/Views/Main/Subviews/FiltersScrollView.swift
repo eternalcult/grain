@@ -66,9 +66,6 @@ struct FiltersScrollView: View {
                                         .onChange(of: geometry.frame(in: .global)) { oldValue, newValue in
                                             trackItemPosition(filter.id, frame: newValue)
                                         }
-                                        .onChange(of: visibleItems) { oldValue, newValue in
-                                            print(newValue)
-                                        }
                                     }
                                     .frame(width: 100)
                                 }

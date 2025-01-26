@@ -32,7 +32,7 @@ final class PhotoEditorService {
     /// Is used only for private applying chain of filters and don't update UI after each filter update
     private var processedCiImage: CIImage? = nil
     private var sourceImageOrientation: UIImage.Orientation?
-    private var updateImageTask: Task<Void, Never>? = nil
+    private var renderImageTask: Task<Void, Never>? = nil
 
     //    private let context = CIContext(options:  [ // TODO: Decide should I use it or not?
     //        .priorityRequestLow: true, // Lower priority if running multiple tasks
@@ -109,26 +109,25 @@ final class PhotoEditorService {
     }
 
     private func updateTask() {
-        updateImageTask?.cancel()
+        renderImageTask?.cancel()
         guard let sourceCiImage else { return }
-        updateImageTask = Task {
+        processedCiImage = sourceCiImage
+        updateBCS()
+        updateExposure()
+        updateVibrance()
+        updateHS()
+        updateTemperatureAndTint()
+        updateGamma()
+        updateNoiseReduction()
+        if let filter {
+            configureFilter(filter)
+        }
+        if let texture {
+            overlayTexture(texture)
+        }
+        renderImageTask = Task {
             if Task.isCancelled {
-                processedCiImage = sourceCiImage
                 return
-            }
-            processedCiImage = sourceCiImage
-            updateBCS()
-            updateExposure()
-            updateVibrance()
-            updateHS()
-            updateTemperatureAndTint()
-            updateGamma()
-            updateNoiseReduction()
-            if let filter {
-                configureFilter(filter)
-            }
-            if let texture {
-                overlayTexture(texture)
             }
             await renderImage()
         }
@@ -246,15 +245,18 @@ final class PhotoEditorService {
         resetFilters()
     }
 
-    func histogram(height _: CGFloat = 100) -> UIImage? {
+    func histogram(height _: CGFloat = 100) -> UIImage? { // TODO: Почему-то иногда вызывается в бэкграунд треде и из-за этого ломается UI, когда гистограмма отображается на экране
+        var result: UIImage? = nil
         let filter = CIFilter.histogramDisplay()
         filter.inputImage = processedCiImage
         filter.lowLimit = 0
         filter.highLimit = 1
+
+
         if let output = filter.outputImage {
-            return renderCIImageToUIImage(output)
+            result = renderCIImageToUIImage(output)
         }
-        return nil
+        return result
     }
 
     private func resetFilters() {

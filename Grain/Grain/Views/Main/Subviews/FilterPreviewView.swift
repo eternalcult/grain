@@ -56,6 +56,8 @@ struct FilterPreviewView: View {
                             FullscreenImagePreviewView(title: filter.title, desc: filter.desc, cgImage: preview, isShow: $showsFullScreen)
                         }
                 }
+            } else {
+                // TODO: Что если превью отстутвует?
             }
         }
     }
