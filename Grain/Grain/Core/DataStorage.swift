@@ -243,7 +243,10 @@ final class DataStorage {
 
     // MARK: Lifecycle
 
-    private init() {}
+    private init() {
+        print("Filters count:", filtersCategories.flatMap { $0.filters }.count)
+        print("Textures count:", texturesCategories.flatMap { $0.textures }.count)
+    }
 
     // MARK: Functions
 
