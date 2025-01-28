@@ -1,6 +1,7 @@
 import AppCore
 import SwiftData
 import SwiftUI
+import Firebase
 
 @main
 struct GrainApp: App {
@@ -26,5 +27,6 @@ struct GrainApp: App {
 
     init() {
         Font.registerFonts()
+        FirebaseApp.configure()
     }
 }
