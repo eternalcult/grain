@@ -260,11 +260,9 @@ final class DataStorage {
             for filter in category.filters {
                 if !filtersData.contains(where: { $0.id == filter.id }) {
                     print("\(filter.title) doesn't exist in SwiftData. Trying to create filter data")
-                    if let filterData = lutsManager.createDataForCIColorCube(for: filter) {
-                        swiftDataManager?.insert(filterData)
+                    if let filterData = try? lutsManager.createDataForCIColorCube(for: filter) {
                         print("Add filter data for \(filter.title)")
-                    } else {
-                        print("Can't create data for CIColorCube") // TODO: Handle error
+                        swiftDataManager?.insert(filterData)
                     }
                 }
             }
@@ -282,7 +280,7 @@ final class DataStorage {
                     title: filter.title,
                     desc: filter.desc,
                     filename: filter.filename,
-                    preview: Task.isCancelled ? nil : lutsManager.apply(filter, for: image.downsample(scaleFactor: 0.5))
+                    preview: Task.isCancelled ? nil : try? lutsManager.apply(filter, for: image.downsample(scaleFactor: 0.5))
                 )
             }
             return FilterCategory(title: category.title, desc: category.desc, filters: updatedFilters)

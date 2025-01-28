@@ -9,55 +9,46 @@ final class LutsManager {
 
     // MARK: Functions
 
-    func createDataForCIColorCube(for filter: Filter) -> FilterCICubeData? {
-        if let filterFileURL = Bundle.main.url(forResource: filter.filename, withExtension: "cube") {
-            do {
-                let (dimension, rawData) = try readCubeFile(url: filterFileURL)
-                return FilterCICubeData(
-                    id: filter.id,
-                    dimension: dimension,
-                    cubeData: convertToCubeData(dimension: dimension, rawData: rawData)
-                )
-            } catch {
-                print("Ошибка при чтении .cube файла: \(error)") // TODO: Handle errors
-                return nil
-            }
+    func createDataForCIColorCube(for filter: Filter) throws -> FilterCICubeData {
+        guard let filterFileURL = Bundle.main.url(forResource: filter.filename, withExtension: "cube") else {
+            throw LutsManagerError.couldntFindFilterFileUrl
         }
-        return nil
+        let (dimension, rawData) = try readCubeFile(url: filterFileURL)
+        return FilterCICubeData(
+            id: filter.id,
+            dimension: dimension,
+            cubeData: convertToCubeData(dimension: dimension, rawData: rawData)
+        )
     }
 
-    func createCIColorCube(for filter: Filter) -> CIColorCubeWithColorSpace? {
+    func createCIColorCube(for filter: Filter) throws -> CIColorCubeWithColorSpace {
         let filtersData = DataStorage.shared.filtersData
         if let currentFilterData = filtersData.first(where: { $0.id == filter.id }) {
             let filter = CIFilter.colorCubeWithColorSpace()
             filter.colorSpace = CGColorSpace(name: CGColorSpace.sRGB)
             filter.cubeDimension = Float(currentFilterData.dimension)
             filter.cubeData = currentFilterData.cubeData
-
             return filter
-        } else { // Данные для текущего фильтра отсутствуют
-            // TODO: Попробовать распарсить их в момент создания
-            print("SwiftData doesn't have data for current filter") // TODO: Handle error
         }
-        return nil
+        // TODO: Данные для текущего фильтра отсутствуют, попробовать распарсить их в момент создания
+        throw LutsManagerError.CIColorCubeFilterCreationFailed
     }
 
-    func apply(_ filter: Filter, for image: CIImage) -> CGImage? {
+    func apply(_ filter: Filter, for image: CIImage) throws -> CGImage {
         print("Apply \(filter.title) filter for image")
-        guard let cubeFilter = createCIColorCube(for: filter) else {
-            print("Can't create CIColorCube filter") // TODO: Handle errors
-            return nil
-        }
+        let cubeFilter = try createCIColorCube(for: filter)
         cubeFilter.inputImage = image
         if let output = cubeFilter.outputImage, let cgImage = context.createCGImage(output, from: output.extent) {
             return cgImage
         }
-        return nil
+        throw LutsManagerError.filterApplyingFailed
     }
 
     private func readCubeFile(url: URL) throws -> (Int, [Float]) {
         // Считываем весь текст файла
-        let content = try String(contentsOf: url, encoding: .utf8)
+        guard let content = try? String(contentsOf: url, encoding: .utf8) else {
+            throw LutsManagerError.cubeFileReadingError
+        }
 
         var dimension = 0
         var data = [Float]()

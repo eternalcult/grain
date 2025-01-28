@@ -1,3 +1,4 @@
+import os
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import Photos
@@ -10,6 +11,8 @@ final class PhotoEditorService {
     // MARK: Properties
 
     let lutsManager = LutsManager()
+
+    var errorMessage: String?
     // TODO: DI
 
     private(set) var sourceImage: Image?
@@ -179,12 +182,12 @@ final class PhotoEditorService {
     }
 
     // Info.plist - NSPhotoLibraryUsageDescription - We need access to your photo library to save images you create in the app.
-    func saveImageToPhotoLibrary() {
+    func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void) {
         if let processedCiImage, let uiImage = renderCIImageToUIImage(processedCiImage) {
             // Request permission to access the photo library
             PHPhotoLibrary.requestAuthorization { status in
                 guard status == .authorized else {
-                    print("Permission to access photo library denied.") // TODO: Handle error
+                    completion(.failure(.permissionToAccessPhotoLibraryDenied))
                     return
                 }
 
@@ -192,17 +195,17 @@ final class PhotoEditorService {
                 PHPhotoLibrary.shared().performChanges {
                     PHAssetChangeRequest.creationRequestForAsset(from: uiImage)
                 } completionHandler: { success, error in
-                    if let error { // TODO: Create completions for showing success/error alerts
-                        print("Failed to save image: \(error.localizedDescription)") // TODO: Handle error
-                    } else if success {
-                        print("Image saved successfully!")
-                    } else {
-                        print("Unknown error occurred while saving the image.") // TODO: Handle error
+                    if !success {
+                        if let error {
+                            completion(.failure(.photoLibraryError(description: error.localizedDescription)))
+                        } else {
+                            completion(.failure(.unknown))
+                        }
                     }
                 }
             }
         } else {
-            print("Something wrong in saveToGallery()") // TODO: Handle errors
+            completion(.failure(.missingProcessedImage))
         }
     }
 
@@ -271,34 +274,22 @@ final class PhotoEditorService {
         gamma.setToDefault()
     }
 
-    private func updateImage() async {
-        guard let sourceCiImage else { return }
-        processedCiImage = sourceCiImage
-        updateBCS()
-        updateExposure()
-        updateVibrance()
-        updateHS()
-        updateTemperatureAndTint()
-        updateGamma()
-        updateNoiseReduction()
-        if let filter {
-            configureFilter(filter)
-        }
-        if let texture {
-            overlayTexture(texture)
-        }
-        await renderImage()
-    }
-
     private func renderImage() async {
-        if let processedCiImage, let uiImage = renderCIImageToUIImage(processedCiImage) {
-            await MainActor.run {
-                finalCiImage = processedCiImage
-                finalImage = Image(uiImage: uiImage)
+        do {
+            if let processedCiImage, let uiImage = renderCIImageToUIImage(processedCiImage) {
+                await MainActor.run {
+                    finalCiImage = processedCiImage
+                    finalImage = Image(uiImage: uiImage)
+                }
+            } else {
+                throw PhotoEditorError.failedToRenderImage
             }
-        } else {
-            print("Something wrong in renderFinalImage()") // TODO: Handle errors
+        } catch {
+            await MainActor.run {
+                errorMessage = error.localizedDescription
+            }
         }
+
     }
 
     private func updateTextureIntensity(of texture: CIImage, to alpha: CGFloat) -> CIImage? {
@@ -415,26 +406,30 @@ private extension PhotoEditorService {
     }
 
     func overlayTexture(_ texture: Texture) {
-        if let uiImage = UIImage(named: texture.filename),
-           let cgImage = uiImage.cgImage,
-           let processedCiImage,
-           let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: processedCiImage.extent.size)
-        {
+        do {
+            guard let uiImage = UIImage(named: texture.filename),
+               let cgImage = uiImage.cgImage,
+               let processedCiImage,
+                  let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: processedCiImage.extent.size) else {
+                throw PhotoEditorError.textureDoesntExistOrHasWrongName
+            }
+
             let blendMode = textureBlendMode.ciFilter
             blendMode.backgroundImage = processedCiImage
             blendMode.inputImage = configuredTexture
             self.processedCiImage = blendMode.outputImage
-        } else {
-            print("Texture doesn't exist or has wrong name") // TODO: Handle error
+        } catch {
+            errorMessage = error.localizedDescription
         }
     }
 
     func configureFilter(_ filter: Filter) {
-        if let filter = lutsManager.createCIColorCube(for: filter) {
+        do {
+            let filter = try lutsManager.createCIColorCube(for: filter)
             filter.inputImage = processedCiImage
             processedCiImage = filter.outputImage
-        } else {
-            print("Issue with applying filter") // TODO: Handle error
+        } catch {
+            errorMessage = error.localizedDescription
         }
     }
 }

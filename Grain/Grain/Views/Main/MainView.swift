@@ -16,6 +16,7 @@ struct MainView: View {
     @State private var showsHistogram = false
     @State private var isLoadingFiltersPreviews: Bool = false
     @State private var showsPalette = false
+    @State private var showErrorAlert = false
 
     // MARK: Content Properties
 
@@ -31,8 +32,14 @@ struct MainView: View {
                         HStack {
                             Spacer()
                             Button {
-                                photoEditorService.saveImageToPhotoLibrary()
-                                // TODO: Show successful alert
+                                photoEditorService.saveImageToPhotoLibrary(completion: { result in
+                                    switch result {
+                                    case .success(let success):
+                                        break // TODO: Show success
+                                    case .failure(let failure):
+                                        break // TODO: Show error
+                                    }
+                                })
                             } label: {
                                 Text("Export")
                                     .font(.h5)
@@ -120,8 +127,19 @@ struct MainView: View {
                     photoPickerView
                 }
             }
+            .onChange(of: photoEditorService.errorMessage) { _, newError in
+                if newError != nil {
+                    showErrorAlert = true
+                }
+            }
+            .onChange(of: showErrorAlert, { oldValue, newValue in
+                if !newValue {
+                    photoEditorService.errorMessage = nil
+                }
+            })
             .padding(.horizontal, 8)
             .background(Color.backgroundBlack)
+            .failureBlackAlert($showErrorAlert, message: photoEditorService.errorMessage, duration: 3)
         }
     }
 
