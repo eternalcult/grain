@@ -1,3 +1,4 @@
+import FirebaseCrashlytics
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import os
@@ -286,6 +287,7 @@ final class PhotoEditorService {
             }
         } catch {
             await MainActor.run {
+                Crashlytics.crashlytics().record(error: error)
                 errorMessage = error.localizedDescription
             }
         }
@@ -419,6 +421,7 @@ private extension PhotoEditorService {
             blendMode.inputImage = configuredTexture
             self.processedCiImage = blendMode.outputImage
         } catch {
+            Crashlytics.crashlytics().record(error: error)
             errorMessage = error.localizedDescription
         }
     }
@@ -429,6 +432,7 @@ private extension PhotoEditorService {
             filter.inputImage = processedCiImage
             processedCiImage = filter.outputImage
         } catch {
+            Crashlytics.crashlytics().record(error: error)
             errorMessage = error.localizedDescription
         }
     }
