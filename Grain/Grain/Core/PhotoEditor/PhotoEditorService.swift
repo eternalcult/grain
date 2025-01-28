@@ -1,7 +1,6 @@
-import FirebaseCrashlytics
 import CoreImage
 import CoreImage.CIFilterBuiltins
-import os
+import FirebaseCrashlytics
 import Photos
 import SwiftUI
 
@@ -11,7 +10,7 @@ import SwiftUI
 final class PhotoEditorService {
     // MARK: Properties
 
-    let lutsManager = LutsManager()
+    private let lutsManager = LutsManager()
 
     var errorMessage: String?
     // TODO: DI
@@ -33,7 +32,7 @@ final class PhotoEditorService {
 
     private(set) var filter: Filter?
 
-    var histogram: UIImage?
+    private(set) var histogram: UIImage?
 
     /// Is used only for private applying chain of filters and don't update UI after each filter update
     private var processedCiImage: CIImage?

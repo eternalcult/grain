@@ -6,17 +6,7 @@ import SwiftUI
 struct MainView: View {
     // MARK: SwiftUI Properties
 
-    @State private var loadFiltersPreviews: Task<Void, Never>? = nil
-    @State private var photoEditorService = PhotoEditorService()
-    @State private var selectedItem: PhotosPickerItem? = nil
-    @State private var showsFilteredImage = true
-    @State private var showsFilters: Bool = false
-    @State private var showsSettings = true
-    @State private var showsTextures = false
-    @State private var showsHistogram = false
-    @State private var isLoadingFiltersPreviews: Bool = false
-    @State private var showsPalette = false
-    @State private var showErrorAlert = false
+    @State private var viewModel = MainViewModel()
 
     // MARK: Content Properties
 
@@ -28,18 +18,11 @@ struct MainView: View {
                         .resizable()
                         .frame(width: 50, height: 50)
                         .opacity(0.5)
-                    if photoEditorService.finalImage != nil {
+                    if viewModel.finalImage != nil {
                         HStack {
                             Spacer()
                             Button {
-                                photoEditorService.saveImageToPhotoLibrary(completion: { result in
-                                    switch result {
-                                    case let .success(success):
-                                        break // TODO: Show success
-                                    case let .failure(failure):
-                                        break // TODO: Show error
-                                    }
-                                })
+                                viewModel.saveImageToPhotoLibrary()
                             } label: {
                                 Text("Export")
                                     .font(.h5)
@@ -57,7 +40,9 @@ struct MainView: View {
                 //                    self.photoEditorService.updateSourceImage(CIImage(cgImage: cgImage))
                 //                }
                 //            }
-                if let sourceImage = photoEditorService.sourceImage, let filteredImage = photoEditorService.finalImage {
+                if let sourceImage = viewModel.sourceImage,
+                   let filteredImage = viewModel.finalImage
+                {
                     VStack {
                         ZStack(alignment: .trailing) {
                             sourceImage
@@ -71,13 +56,13 @@ struct MainView: View {
                                 .scaledToFit()
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .opacity(showsFilteredImage ? 1 : 0)
+                                .opacity(viewModel.showsFilteredImage ? 1 : 0)
                                 .onLongPressGesture {} onPressingChanged: { isPressing in
-                                    showsFilteredImage = !isPressing
+                                    viewModel.showsFilteredImage = !isPressing
                                 }
                         }
                         .overlay(alignment: .bottomLeading) {
-                            if showsHistogram, let histogram = photoEditorService.histogram {
+                            if viewModel.showsHistogram, let histogram = viewModel.histogram {
                                 Image(uiImage: histogram)
                                     .resizable()
                                     .opacity(0.8)
@@ -87,22 +72,20 @@ struct MainView: View {
                         }
                         HStack(spacing: 0) {
                             Button {
-                                showsHistogram.toggle()
+                                viewModel.showsHistogram.toggle()
                             } label: {
                                 Image(systemName: "waveform.path.ecg.rectangle")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
                                     .padding(4)
-                                    .tint(showsHistogram ? Color.textBlack : Color.textWhite)
-                                    .background(showsHistogram ? Color.backgroundWhiteSecondary.opacity(0.8) : .clear)
+                                    .tint(viewModel.showsHistogram ? Color.textBlack : Color.textWhite)
+                                    .background(viewModel.showsHistogram ? Color.backgroundWhiteSecondary.opacity(0.8) : .clear)
                                     .clipShape(RoundedRectangle(cornerRadius: 4))
                             }
                             .padding(4)
                             Button {
-                                selectedItem = nil
-                                loadFiltersPreviews?.cancel()
-                                photoEditorService.reset()
+                                viewModel.closeImage()
                             } label: {
                                 Image(systemName: "xmark.circle")
                                     .resizable()
@@ -127,24 +110,19 @@ struct MainView: View {
                     photoPickerView
                 }
             }
-            .onChange(of: photoEditorService.errorMessage) { _, newError in
+            .onChange(of: viewModel.errorMessage) { _, newError in
                 if newError != nil {
-                    showErrorAlert = true
-                }
-            }
-            .onChange(of: showErrorAlert) { _, newValue in
-                if !newValue {
-                    photoEditorService.errorMessage = nil
+                    viewModel.showErrorAlert = true
                 }
             }
             .padding(.horizontal, 8)
             .background(Color.backgroundBlack)
-            .failureBlackAlert($showErrorAlert, message: photoEditorService.errorMessage, duration: 3)
+            .failureBlackAlert($viewModel.showErrorAlert, message: viewModel.errorMessage, duration: 3)
         }
     }
 
     private var photoPickerView: some View {
-        PhotosPicker(selection: $selectedItem, matching: .images) {
+        PhotosPicker(selection: $viewModel.selectedItem, matching: .images) {
             Rectangle()
                 .fill(.clear)
                 .overlay(alignment: .center) {
@@ -160,27 +138,15 @@ struct MainView: View {
                     }.opacity(0.5)
                 }
         }
-        .onChange(of: selectedItem) { _, newValue in
-            guard let newValue else { return }
-            loadFiltersPreviews?.cancel()
-            loadFiltersPreviews = Task {
-                isLoadingFiltersPreviews = true
-                if let data = try? await newValue.loadTransferable(type: Data.self),
-                   let uiImage = UIImage(data: data), let ciImage = CIImage(data: data)
-                {
-                    // TODO: Может вместо того, чтобы отдельно передавать CIImage и ориентацию передавать UIImage?
-                    photoEditorService.updateSourceImage(ciImage, orientation: uiImage.imageOrientation)
-                    await DataStorage.shared.updateFiltersPreviews(with: ciImage)
-                }
-                isLoadingFiltersPreviews = false
-            }
+        .onChange(of: viewModel.selectedItem) { _, _ in
+            viewModel.prepareForEditing()
         }
     }
 
     private var filtersView: some View {
         VStack(alignment: .leading, spacing: 10) {
             Button {
-                showsFilters.toggle()
+                viewModel.showsFilters.toggle()
             } label: {
                 HStack {
                     HStack(alignment: .center) {
@@ -189,10 +155,10 @@ struct MainView: View {
                             .foregroundStyle(Color.textWhite.opacity(0.8))
                             .padding(.bottom, 5)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        if !isLoadingFiltersPreviews {
+                        if !viewModel.isLoadingFiltersPreviews {
                             NavigationLink {
                                 GalleryView(type: .filters)
-                                    .environment(photoEditorService)
+                                    .environment(viewModel)
                             } label: {
                                 Text("Show all")
                                     .font(.h5)
@@ -205,12 +171,12 @@ struct MainView: View {
                     Image(systemName: "triangle.fill")
                         .resizable()
                         .frame(width: 10, height: 10)
-                        .rotationEffect(showsFilters ? Angle(degrees: 180) : Angle(degrees: 0))
+                        .rotationEffect(viewModel.showsFilters ? Angle(degrees: 180) : Angle(degrees: 0))
                         .tint(.textWhite.opacity(0.8))
                 }
             }
-            if let finalCiImage = photoEditorService.finalCiImage, showsFilters {
-                if isLoadingFiltersPreviews {
+            if let finalCiImage = viewModel.finalCiImage, viewModel.showsFilters {
+                if viewModel.isLoadingFiltersPreviews {
                     HStack {
                         Spacer()
                         ProgressView()
@@ -220,8 +186,8 @@ struct MainView: View {
                     }
                 } else {
                     VStack(spacing: 8) {
-                        FiltersScrollView(previewImage: finalCiImage)
-                            .environment(photoEditorService)
+                        FiltersScrollView()
+                            .environment(viewModel)
 
                         //                    if photoEditorService.hasFilter {
                         //                        VStack(spacing: 0) {
@@ -251,7 +217,7 @@ struct MainView: View {
     private var texturesView: some View {
         VStack(alignment: .leading, spacing: 10) {
             Button {
-                showsTextures.toggle()
+                viewModel.showsTextures.toggle()
             } label: {
                 HStack {
                     HStack(alignment: .center) {
@@ -262,7 +228,7 @@ struct MainView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                         NavigationLink {
                             GalleryView(type: .textures)
-                                .environment(photoEditorService)
+                                .environment(viewModel)
                         } label: {
                             Text("Show all")
                                 .font(.h5)
@@ -274,29 +240,29 @@ struct MainView: View {
                     Image(systemName: "triangle.fill")
                         .resizable()
                         .frame(width: 10, height: 10)
-                        .rotationEffect(showsTextures ? Angle(degrees: 180) : Angle(degrees: 0))
+                        .rotationEffect(viewModel.showsTextures ? Angle(degrees: 180) : Angle(degrees: 0))
                         .tint(.textWhite.opacity(0.8))
                 }
             }
-            if showsTextures {
+            if viewModel.showsTextures {
                 VStack(spacing: 8) {
                     TexturesScrollView()
-                        .environment(photoEditorService)
+                        .environment(viewModel)
 
-                    if photoEditorService.hasTexture {
+                    if viewModel.hasTexture {
                         VStack(spacing: 0) {
                             HStack {
                                 Text("Blend mode:")
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
-                                Text(photoEditorService.textureBlendMode.title)
+                                Text(viewModel.textureBlendMode.title)
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             Slider(value: Binding(
-                                get: { Double(photoEditorService.textureBlendMode.rawValue) },
-                                set: { photoEditorService.applyTextureBlendMode(to: BlendMode(rawValue: Int($0)) ?? .normal) }
+                                get: { Double(viewModel.textureBlendMode.rawValue) },
+                                set: { viewModel.applyTextureBlendMode(to: BlendMode(rawValue: Int($0)) ?? .normal) }
                             ), in: BlendMode.range, step: 1)
                                 .tint(Color.textWhite.opacity(0.1))
                         }
@@ -305,12 +271,12 @@ struct MainView: View {
                                 Text("Intensity:")
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
-                                Text("\(photoEditorService.textureIntensity)")
+                                Text("\(viewModel.textureIntensity)")
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            Slider(value: $photoEditorService.textureIntensity, in: 0 ... 1)
+                            Slider(value: $viewModel.textureIntensity, in: 0 ... 1)
                                 .tint(Color.textWhite.opacity(0.1))
                         }
                     }
@@ -326,7 +292,7 @@ struct MainView: View {
     private var slidersView: some View {
         VStack(alignment: .leading, spacing: 10) {
             Button {
-                showsSettings.toggle()
+                viewModel.showsSettings.toggle()
             } label: {
                 HStack(alignment: .center) {
                     Text("Settings")
@@ -338,24 +304,24 @@ struct MainView: View {
                     Image(systemName: "triangle.fill")
                         .resizable()
                         .frame(width: 10, height: 10)
-                        .rotationEffect(showsSettings ? Angle(degrees: 180) : Angle(degrees: 0))
+                        .rotationEffect(viewModel.showsSettings ? Angle(degrees: 180) : Angle(degrees: 0))
                         .tint(.textWhite.opacity(0.8))
                 }
             }
-            if showsSettings {
+            if viewModel.showsSettings {
                 VStack(spacing: 0) {
-                    SliderView(filter: $photoEditorService.brightness)
-                    SliderView(filter: $photoEditorService.contrast)
-                    SliderView(filter: $photoEditorService.saturation)
-                    SliderView(filter: $photoEditorService.exposure)
-                    SliderView(filter: $photoEditorService.vibrance)
-                    SliderView(filter: $photoEditorService.highlights)
-                    SliderView(filter: $photoEditorService.shadows)
-                    SliderView(filter: $photoEditorService.temperature)
-                    SliderView(filter: $photoEditorService.tint)
-                    SliderView(filter: $photoEditorService.gamma)
-                    SliderView(filter: $photoEditorService.noiseReduction)
-                    SliderView(filter: $photoEditorService.sharpness)
+                    SliderView(filter: $viewModel.brightness)
+                    SliderView(filter: $viewModel.contrast)
+                    SliderView(filter: $viewModel.saturation)
+                    SliderView(filter: $viewModel.exposure)
+                    SliderView(filter: $viewModel.vibrance)
+                    SliderView(filter: $viewModel.highlights)
+                    SliderView(filter: $viewModel.shadows)
+                    SliderView(filter: $viewModel.temperature)
+                    SliderView(filter: $viewModel.tint)
+                    SliderView(filter: $viewModel.gamma)
+                    SliderView(filter: $viewModel.noiseReduction)
+                    SliderView(filter: $viewModel.sharpness)
                 }
             }
         }

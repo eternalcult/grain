@@ -9,7 +9,7 @@ struct GalleryView: View {
         case textures
     }
 
-    @Environment(PhotoEditorService.self) private var photoEditorService
+    @Environment(MainViewModel.self) private var viewModel
 
     private let columns = [
         GridItem(.flexible()),
@@ -30,14 +30,14 @@ struct GalleryView: View {
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(category.filters) { filter in
                             if filter.preview != nil {
-                                if let selectedFilter = photoEditorService.filter {
+                                if let selectedFilter = viewModel.filter {
                                     FilterPreviewView(filter, shouldShowFullScreen: true, isSelected: selectedFilter.id == filter.id) {
-                                        photoEditorService.applyFilter(filter)
+                                        viewModel.applyFilter(filter)
                                     }
                                     .aspectRatio(1 / 1, contentMode: .fit)
                                 } else {
                                     FilterPreviewView(filter, shouldShowFullScreen: true) {
-                                        photoEditorService.applyFilter(filter)
+                                        viewModel.applyFilter(filter)
                                     }
                                     .aspectRatio(1 / 1, contentMode: .fit)
                                 }
@@ -57,14 +57,14 @@ struct GalleryView: View {
                         .lineLimit(1)
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(category.textures) { texture in
-                            if let selectedTexture = photoEditorService.texture {
+                            if let selectedTexture = viewModel.texture {
                                 TexturePreviewView(texture: texture, isSelected: selectedTexture.id == texture.id) {
-                                    photoEditorService.applyTexture(texture)
+                                    viewModel.applyTexture(texture)
                                 }
                                 .aspectRatio(1 / 1, contentMode: .fit)
                             } else {
                                 TexturePreviewView(texture: texture) {
-                                    photoEditorService.applyTexture(texture)
+                                    viewModel.applyTexture(texture)
                                 }
                                 .aspectRatio(1 / 1, contentMode: .fit)
                             }

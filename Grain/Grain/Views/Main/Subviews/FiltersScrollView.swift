@@ -3,21 +3,11 @@ import SwiftUI
 struct FiltersScrollView: View {
     // MARK: SwiftUI Properties
 
-    @Environment(PhotoEditorService.self) private var photoEditorService
+    @Environment(MainViewModel.self) private var viewModel
     @State private var scrollToIndex: UUID?
     @State private var visibleFiltersCategory: UUID?
     @State private var visibleItems = [Int]()
     @State private var isLoading: Bool = true
-
-    // MARK: Properties
-
-    private let previewImage: CIImage
-
-    // MARK: Lifecycle
-
-    init(previewImage: CIImage) {
-        self.previewImage = previewImage
-    }
 
     // MARK: Content Properties
 
@@ -48,8 +38,8 @@ struct FiltersScrollView: View {
             ScrollViewReader { proxy in
                 ScrollView(.horizontal) {
                     HStack(spacing: 4) {
-                        RawPreviewView(isSelected: photoEditorService.filter == nil) {
-                            photoEditorService.removeFilterIfNeeded()
+                        RawPreviewView(isSelected: viewModel.filter == nil) {
+                            viewModel.removeFilterIfNeeded()
                         }
                         .frame(width: 100, height: 100)
                         ForEach(DataStorage.shared.filtersCategories) { category in
@@ -58,9 +48,9 @@ struct FiltersScrollView: View {
                                     GeometryReader { geometry in
                                         FilterPreviewView(
                                             filter,
-                                            isSelected: isSelected(currentFilter: filter, selectedFilter: photoEditorService.filter)
+                                            isSelected: isSelected(currentFilter: filter, selectedFilter: viewModel.filter)
                                         ) {
-                                            photoEditorService.applyFilter(filter)
+                                            viewModel.applyFilter(filter)
                                         }
                                         .frame(width: 100, height: 100)
                                         .onChange(of: geometry.frame(in: .global)) { _, newValue in

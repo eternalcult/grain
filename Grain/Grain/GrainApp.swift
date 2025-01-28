@@ -1,7 +1,7 @@
 import AppCore
+import Firebase
 import SwiftData
 import SwiftUI
-import Firebase
 
 @main
 struct GrainApp: App {

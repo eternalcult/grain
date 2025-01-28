@@ -3,7 +3,7 @@ import SwiftUI
 struct TexturesScrollView: View {
     // MARK: SwiftUI Properties
 
-    @Environment(PhotoEditorService.self) private var photoEditorService
+    @Environment(MainViewModel.self) private var viewModel
     @State private var scrollToIndex: UUID?
     @State private var visibleTexturesCategory: UUID?
     @State private var visibleItems: [UUID] = []
@@ -37,8 +37,8 @@ struct TexturesScrollView: View {
             ScrollViewReader { proxy in
                 ScrollView(.horizontal) {
                     HStack(spacing: 4) {
-                        RawPreviewView(isSelected: photoEditorService.texture == nil) {
-                            photoEditorService.removeTextureIfNeeded()
+                        RawPreviewView(isSelected: viewModel.texture == nil) {
+                            viewModel.removeTextureIfNeeded()
                         }
                         .frame(width: 100, height: 100)
                         ForEach(DataStorage.shared.texturesCategories) { category in
@@ -47,9 +47,9 @@ struct TexturesScrollView: View {
                                     GeometryReader { geometry in
                                         TexturePreviewView(
                                             texture: texture,
-                                            isSelected: isSelected(currentTexture: texture, selectedTexture: photoEditorService.texture)
+                                            isSelected: isSelected(currentTexture: texture, selectedTexture: viewModel.texture)
                                         ) {
-                                            photoEditorService.applyTexture(texture)
+                                            viewModel.applyTexture(texture)
                                         }
                                         .frame(width: 100, height: 100)
                                         .onChange(of: geometry.frame(in: .global)) { _, newValue in
