@@ -9,22 +9,24 @@ enum PhotoEditorError: LocalizedError {
     case unknown
     case photoLibraryError(description: String)
 
+    // MARK: Computed Properties
+
     var errorDescription: String? {
         switch self {
         case .failedToRenderImage:
-            return "Failed to render image."
+            "Failed to render image."
         case .missingProcessedImage:
-            return "Image is missing."
+            "Image is missing."
         case .permissionToAccessPhotoLibraryDenied:
-            return "Permission to access photo library denied."
+            "Permission to access photo library denied."
         case .failedToExportImageToPhotoLibrary:
-            return "Failed to save image to photo library."
+            "Failed to save image to photo library."
         case .unknown:
-            return "Unknown error."
+            "Unknown error."
         case let .photoLibraryError(description):
-            return description
+            description
         case .textureDoesntExistOrHasWrongName:
-            return "Texture doesn't exist or has wrong name"
+            "Texture doesn't exist or has wrong name"
         }
     }
 }

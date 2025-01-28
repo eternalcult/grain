@@ -1,6 +1,6 @@
-import os
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import os
 import Photos
 import SwiftUI
 
@@ -31,6 +31,8 @@ final class PhotoEditorService {
     // MARK: Filter
 
     private(set) var filter: Filter?
+
+    var histogram: UIImage?
 
     /// Is used only for private applying chain of filters and don't update UI after each filter update
     private var processedCiImage: CIImage?
@@ -222,8 +224,6 @@ final class PhotoEditorService {
         resetFilters()
     }
 
-    var histogram: UIImage?
-
     private func renderHistogram() {
         let filter = CIFilter.histogramDisplay()
         filter.inputImage = processedCiImage
@@ -289,7 +289,6 @@ final class PhotoEditorService {
                 errorMessage = error.localizedDescription
             }
         }
-
     }
 
     private func updateTextureIntensity(of texture: CIImage, to alpha: CGFloat) -> CIImage? {
@@ -408,9 +407,10 @@ private extension PhotoEditorService {
     func overlayTexture(_ texture: Texture) {
         do {
             guard let uiImage = UIImage(named: texture.filename),
-               let cgImage = uiImage.cgImage,
-               let processedCiImage,
-                  let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: processedCiImage.extent.size) else {
+                  let cgImage = uiImage.cgImage,
+                  let processedCiImage,
+                  let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: processedCiImage.extent.size)
+            else {
                 throw PhotoEditorError.textureDoesntExistOrHasWrongName
             }
 

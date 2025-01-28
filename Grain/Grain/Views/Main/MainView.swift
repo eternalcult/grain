@@ -34,9 +34,9 @@ struct MainView: View {
                             Button {
                                 photoEditorService.saveImageToPhotoLibrary(completion: { result in
                                     switch result {
-                                    case .success(let success):
+                                    case let .success(success):
                                         break // TODO: Show success
-                                    case .failure(let failure):
+                                    case let .failure(failure):
                                         break // TODO: Show error
                                     }
                                 })
@@ -132,11 +132,11 @@ struct MainView: View {
                     showErrorAlert = true
                 }
             }
-            .onChange(of: showErrorAlert, { oldValue, newValue in
+            .onChange(of: showErrorAlert) { _, newValue in
                 if !newValue {
                     photoEditorService.errorMessage = nil
                 }
-            })
+            }
             .padding(.horizontal, 8)
             .background(Color.backgroundBlack)
             .failureBlackAlert($showErrorAlert, message: photoEditorService.errorMessage, duration: 3)

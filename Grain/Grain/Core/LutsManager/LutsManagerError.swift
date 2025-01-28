@@ -6,6 +6,8 @@ enum LutsManagerError: LocalizedError {
     case CIColorCubeFilterCreationFailed
     case filterApplyingFailed
 
+    // MARK: Computed Properties
+
     var errorDescription: String? {
         switch self {
         case .couldntFindFilterFileUrl:
