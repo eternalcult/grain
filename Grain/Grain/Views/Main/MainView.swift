@@ -318,7 +318,13 @@ struct MainView: View {
                                 Text("Intensity:")
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
-                                Text("\(viewModel.textureIntensity)")
+                                let formattedTextureIntensity = viewModel.textureIntensity.formatValueToAnotherRange(
+                                    currentMin: 0,
+                                    currentMax: 1,
+                                    newMin: 0,
+                                    newMax: 100
+                                )
+                                Text(String(format: "%.0f%%", formattedTextureIntensity))
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
                             }

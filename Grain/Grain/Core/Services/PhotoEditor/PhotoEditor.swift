@@ -13,7 +13,7 @@ protocol PhotoEditor {
     var textureBlendMode: BlendMode { get }
     var hasTexture: Bool { get }
 
-    var textureIntensity: Double { get set }
+    var textureIntensity: Float { get set }
 
     // MARK: Filter
 

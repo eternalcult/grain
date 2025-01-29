@@ -175,7 +175,7 @@ final class MainViewModel {
         photoEditor.textureBlendMode
     }
 
-    var textureIntensity: Double {
+    var textureIntensity: Float {
         get {
             photoEditor.textureIntensity
         } set {

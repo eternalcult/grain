@@ -138,7 +138,7 @@ final class PhotoEditorService: PhotoEditor {
         texture != nil
     }
 
-    var textureIntensity: Double = 0.5 {
+    var textureIntensity: Float = 0.5 {
         didSet {
             updateTask()
         }
@@ -333,7 +333,7 @@ private extension PhotoEditorService {
 
     func configureTexture(_ texture: CIImage, size: CGSize) -> CIImage? { // TODO: Refactor
         if let resized = resizeImageToAspectFill(image: texture, targetSize: size) {
-            return updateTextureIntensity(of: resized, to: textureIntensity)
+            return updateTextureIntensity(of: resized, to: CGFloat(textureIntensity))
         }
         return nil
     }
