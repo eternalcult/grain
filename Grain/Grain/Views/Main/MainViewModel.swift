@@ -225,9 +225,26 @@ final class MainViewModel {
         photoEditor.applyFilter(newFilter)
     }
 
+    func applyRandomFilter() {
+        let filters = DataStorage.shared.filtersCategories.flatMap { $0.filters }
+        guard let randomElement = filters.randomElement() else {
+            return
+        }
+        applyFilter(randomElement)
+    }
+
     func applyTexture(_ newTexture: Texture) {
         photoEditor.applyTexture(newTexture)
     }
+
+    func applyRandomTexture() {
+        let textures = DataStorage.shared.texturesCategories.flatMap { $0.textures }
+        guard let randomElement = textures.randomElement() else {
+            return
+        }
+        applyTexture(randomElement)
+    }
+
 
     func removeFilterIfNeeded() {
         photoEditor.removeFilterIfNeeded()

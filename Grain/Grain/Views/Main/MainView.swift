@@ -151,11 +151,24 @@ struct MainView: View {
             } label: {
                 HStack {
                     HStack(alignment: .center) {
-                        Text("Filters")
-                            .font(.h4)
-                            .foregroundStyle(Color.textWhite.opacity(0.8))
-                            .padding(.bottom, 5)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        HStack {
+                            Text("Filters")
+                                .font(.h4)
+                                .foregroundStyle(Color.textWhite.opacity(0.8))
+                                .padding(.bottom, 5)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            if !viewModel.isLoadingFiltersPreviews {
+                                Button {
+                                    viewModel.applyRandomFilter()
+                                } label: {
+                                    Image(systemName: "dice")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .tint(.textWhite.opacity(0.8))
+                                }
+                            }
+                        }
+                        .padding(.trailing, 8)
                         if !viewModel.isLoadingFiltersPreviews {
                             NavigationLink {
                                 GalleryView(type: .filters)
@@ -189,22 +202,6 @@ struct MainView: View {
                     VStack(spacing: 8) {
                         FiltersScrollView()
                             .environment(viewModel)
-
-                        //                    if photoEditorService.hasFilter {
-                        //                        VStack(spacing: 0) {
-                        //                            HStack {
-                        //                                Text("Intensity:")
-                        //                                    .font(.h5)
-                        //                                    .foregroundStyle(Color.textWhite.opacity(0.8))
-                        //                                Text("\(photoEditorService.textureIntensity)")
-                        //                                    .font(.h5)
-                        //                                    .foregroundStyle(Color.textWhite.opacity(0.8))
-                        //                            }
-                        //                            .frame(maxWidth: .infinity, alignment: .leading)
-                        //                            Slider(value: $photoEditorService.textureIntensity, in: 0...1)
-                        //                            .tint(Color.textWhite.opacity(0.1))
-                        //                        }
-                        //                    }
                     }
                 }
             }
@@ -259,11 +256,22 @@ struct MainView: View {
             } label: {
                 HStack {
                     HStack(alignment: .center) {
-                        Text("Textures")
-                            .font(.h4)
-                            .foregroundStyle(Color.textWhite.opacity(0.8))
-                            .padding(.bottom, 5)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        HStack {
+                            Text("Textures")
+                                .font(.h4)
+                                .foregroundStyle(Color.textWhite.opacity(0.8))
+                                .padding(.bottom, 5)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Button {
+                                viewModel.applyRandomTexture()
+                            } label: {
+                                Image(systemName: "dice")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .tint(.textWhite.opacity(0.8))
+                            }
+                        }
+                        .padding(.trailing, 8)
                         NavigationLink {
                             GalleryView(type: .textures)
                                 .environment(viewModel)
@@ -296,6 +304,7 @@ struct MainView: View {
                                 Text(viewModel.textureBlendMode.title)
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
+
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             Slider(value: Binding(
