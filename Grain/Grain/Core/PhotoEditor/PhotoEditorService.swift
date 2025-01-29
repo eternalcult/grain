@@ -4,13 +4,67 @@ import FirebaseCrashlytics
 import Photos
 import SwiftUI
 
+// MARK: - PhotoEditor
+
+protocol PhotoEditor {
+    var errorMessage: String? { get set }
+    var sourceImage: Image? { get }
+    var sourceCiImage: CIImage? { get }
+    var finalImage: Image? { get }
+    var finalCiImage: CIImage? { get }
+
+    // MARK: Texture
+
+    var texture: Texture? { get }
+    var textureBlendMode: BlendMode { get }
+    var hasTexture: Bool { get }
+
+    var textureIntensity: Double { get }
+
+    // MARK: Filter
+
+    var filter: Filter? { get }
+    var hasFilter: Bool { get }
+
+    // MARK: Other
+
+    var histogram: UIImage? { get }
+
+    // MARK: Image Properties
+
+    var brightness: ImageProperty { get set }
+    var contrast: ImageProperty { get set }
+    var saturation: ImageProperty { get set }
+    var exposure: ImageProperty { get set }
+    var vibrance: ImageProperty { get set }
+    var highlights: ImageProperty { get set }
+    var shadows: ImageProperty { get set }
+    var temperature: ImageProperty { get set }
+    var tint: ImageProperty { get set }
+    var gamma: ImageProperty { get set }
+    var noiseReduction: ImageProperty { get set }
+    var sharpness: ImageProperty { get set }
+
+    // MARK: Functions
+
+    func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation)
+
+    func applyTexture(_ newTexture: Texture)
+    func applyTextureBlendMode(to newBlendMode: BlendMode)
+    func removeTextureIfNeeded()
+
+    func applyFilter(_ newFilter: Filter)
+    func removeFilterIfNeeded()
+
+    func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void)
+    func reset()
+}
+
 // MARK: - PhotoEditorService
 
 @Observable
-final class PhotoEditorService {
+final class PhotoEditorService: PhotoEditor {
     // MARK: Properties
-
-    private let lutsManager = LutsManager()
 
     var errorMessage: String?
     // TODO: DI
@@ -19,9 +73,9 @@ final class PhotoEditorService {
     /// Source Image doesn't change
     private(set) var sourceCiImage: CIImage?
     /// Final Image after all updates
-    var finalImage: Image?
+    private(set) var finalImage: Image?
     /// Final CIImage after all updates
-    var finalCiImage: CIImage?
+    private(set) var finalCiImage: CIImage?
 
     // MARK: Texture
 
@@ -34,36 +88,16 @@ final class PhotoEditorService {
 
     private(set) var histogram: UIImage?
 
+    private let lutsManager = LutsManager()
     /// Is used only for private applying chain of filters and don't update UI after each filter update
     private var processedCiImage: CIImage?
     private var sourceImageOrientation: UIImage.Orientation?
     private var renderImageTask: Task<Void, Never>?
 
-    //    private let context = CIContext(options:  [ // TODO: Decide should I use it or not?
-    //        .priorityRequestLow: true, // Lower priority if running multiple tasks
-    //        .useSoftwareRenderer: false, // Forces the use of the GPU renderer.
-    //        .highQualityDownsample: false,
-    //        .allowLowPower: true
-    //    ] )
-
     private let context =
         CIContext() // Doc: Creating a CIContext is expensive, so create one during your initial setup and reuse it throughout your app.
 
     // MARK: Computed Properties
-
-    var hasTexture: Bool {
-        texture != nil
-    }
-
-    var textureIntensity: Double = 0.5 {
-        didSet {
-            updateTask()
-        }
-    }
-
-    var hasFilter: Bool {
-        filter != nil
-    }
 
     var brightness: ImageProperty = Brightness() {
         didSet {
@@ -137,6 +171,24 @@ final class PhotoEditorService {
         }
     }
 
+    // MARK: Texture
+
+    var hasTexture: Bool {
+        texture != nil
+    }
+
+    var textureIntensity: Double = 0.5 {
+        didSet {
+            updateTask()
+        }
+    }
+
+    // MARK: Filter
+
+    var hasFilter: Bool {
+        filter != nil
+    }
+
     // MARK: Functions
 
     func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation) {
@@ -164,6 +216,13 @@ final class PhotoEditorService {
         updateTask()
     }
 
+    func removeTextureIfNeeded() {
+        texture = nil
+        textureIntensity = 0.5
+        textureBlendMode = .normal
+        updateTask()
+    }
+
     func applyFilter(_ newFilter: Filter) {
         if filter?.id != newFilter.id {
             filter = newFilter
@@ -173,13 +232,6 @@ final class PhotoEditorService {
 
     func removeFilterIfNeeded() {
         filter = nil
-        updateTask()
-    }
-
-    func removeTextureIfNeeded() {
-        texture = nil
-        textureIntensity = 0.5
-        textureBlendMode = .normal
         updateTask()
     }
 
@@ -223,8 +275,12 @@ final class PhotoEditorService {
         textureBlendMode = .normal
         resetFilters()
     }
+}
 
-    private func renderHistogram() {
+// MARK: Private methods
+
+private extension PhotoEditorService {
+    func renderHistogram() {
         let filter = CIFilter.histogramDisplay()
         filter.inputImage = processedCiImage
         filter.lowLimit = 0
@@ -235,7 +291,7 @@ final class PhotoEditorService {
         }
     }
 
-    private func updateTask() {
+    func updateTask() {
         renderImageTask?.cancel()
         guard let sourceCiImage else { return }
         processedCiImage = sourceCiImage
@@ -261,7 +317,7 @@ final class PhotoEditorService {
         }
     }
 
-    private func resetFilters() {
+    func resetFilters() {
         brightness.setToDefault()
         contrast.setToDefault()
         saturation.setToDefault()
@@ -274,7 +330,7 @@ final class PhotoEditorService {
         gamma.setToDefault()
     }
 
-    private func renderImage() async {
+    func renderImage() async {
         do {
             if let processedCiImage, let uiImage = renderCIImageToUIImage(processedCiImage) {
                 await MainActor.run {
@@ -292,21 +348,21 @@ final class PhotoEditorService {
         }
     }
 
-    private func updateTextureIntensity(of texture: CIImage, to alpha: CGFloat) -> CIImage? {
+    func updateTextureIntensity(of texture: CIImage, to alpha: CGFloat) -> CIImage? {
         let alphaFilter = CIFilter.colorMatrix()
         alphaFilter.setValue(CIVector(x: 0, y: 0, z: 0, w: alpha), forKey: "inputAVector")
         alphaFilter.inputImage = texture
         return alphaFilter.outputImage
     }
 
-    private func configureTexture(_ texture: CIImage, size: CGSize) -> CIImage? { // TODO: Refactor
+    func configureTexture(_ texture: CIImage, size: CGSize) -> CIImage? { // TODO: Refactor
         if let resized = resizeImageToAspectFill(image: texture, targetSize: size) {
             return updateTextureIntensity(of: resized, to: textureIntensity)
         }
         return nil
     }
 
-    private func resizeImageToAspectFill(image: CIImage, targetSize: CGSize) -> CIImage? {
+    func resizeImageToAspectFill(image: CIImage, targetSize: CGSize) -> CIImage? {
         // Calculate the aspect ratio of the original image
         let aspectRatio = image.extent.size.width / image.extent.size.height
         var newSize = targetSize
@@ -331,7 +387,7 @@ final class PhotoEditorService {
         return resizedImage.cropped(to: CGRect(origin: .zero, size: targetSize))
     }
 
-    private func renderCIImageToUIImage(_ ciImage: CIImage) -> UIImage? {
+    func renderCIImageToUIImage(_ ciImage: CIImage) -> UIImage? {
         guard let cgImage = context.createCGImage(ciImage, from: ciImage.extent) else {
             return nil
         }
@@ -339,7 +395,8 @@ final class PhotoEditorService {
     }
 }
 
-// Private update functions
+// MARK: Private image properties funtions
+
 private extension PhotoEditorService {
     // Brightness, Contrast & Saturation
     func updateBCS() {

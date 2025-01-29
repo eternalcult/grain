@@ -6,7 +6,7 @@ final class MainViewModel {
     // MARK: Properties
 
     var loadFiltersPreviews: Task<Void, Never>?
-    var photoEditor = PhotoEditorService()
+    var photoEditor: PhotoEditor
     var selectedItem: PhotosPickerItem?
     var showsFilteredImage = true
     var showsFilters: Bool = false
@@ -39,11 +39,7 @@ final class MainViewModel {
     }
 
     var finalCiImage: CIImage? {
-        get {
-            photoEditor.finalCiImage
-        } set {
-            photoEditor.finalCiImage = newValue
-        }
+        photoEditor.finalCiImage
     }
 
     var sourceImage: Image? {
@@ -180,6 +176,12 @@ final class MainViewModel {
         } set {
             photoEditor
         }
+    }
+
+    // MARK: Lifecycle
+
+    init(photoEditor: PhotoEditor = PhotoEditorService()) {
+        self.photoEditor = photoEditor
     }
 
     // MARK: Functions
