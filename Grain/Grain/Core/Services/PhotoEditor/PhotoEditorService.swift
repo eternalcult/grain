@@ -4,66 +4,17 @@ import FirebaseCrashlytics
 import Photos
 import SwiftUI
 
-// MARK: - PhotoEditor
 
-protocol PhotoEditor {
-    var errorMessage: String? { get set }
-    var sourceImage: Image? { get }
-    var sourceCiImage: CIImage? { get }
-    var finalImage: Image? { get }
-    var finalCiImage: CIImage? { get }
 
-    // MARK: Texture
 
-    var texture: Texture? { get }
-    var textureBlendMode: BlendMode { get }
-    var hasTexture: Bool { get }
 
-    var textureIntensity: Double { get }
 
-    // MARK: Filter
-
-    var filter: Filter? { get }
-    var hasFilter: Bool { get }
-
-    // MARK: Other
-
-    var histogram: UIImage? { get }
-
-    // MARK: Image Properties
-
-    var brightness: ImageProperty { get set }
-    var contrast: ImageProperty { get set }
-    var saturation: ImageProperty { get set }
-    var exposure: ImageProperty { get set }
-    var vibrance: ImageProperty { get set }
-    var highlights: ImageProperty { get set }
-    var shadows: ImageProperty { get set }
-    var temperature: ImageProperty { get set }
-    var tint: ImageProperty { get set }
-    var gamma: ImageProperty { get set }
-    var noiseReduction: ImageProperty { get set }
-    var sharpness: ImageProperty { get set }
-
-    // MARK: Functions
-
-    func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation)
-
-    func applyTexture(_ newTexture: Texture)
-    func applyTextureBlendMode(to newBlendMode: BlendMode)
-    func removeTextureIfNeeded()
-
-    func applyFilter(_ newFilter: Filter)
-    func removeFilterIfNeeded()
-
-    func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void)
-    func reset()
-}
-
-// MARK: - PhotoEditorService
 
 @Observable
 final class PhotoEditorService: PhotoEditor {
+    init(lutsService: LutsServiceProtocol = LutsService()) {
+        self.lutsService = lutsService
+    }
     // MARK: Properties
 
     var errorMessage: String?
@@ -88,7 +39,7 @@ final class PhotoEditorService: PhotoEditor {
 
     private(set) var histogram: UIImage?
 
-    private let lutsManager = LutsManager()
+    private let lutsService: LutsServiceProtocol
     /// Is used only for private applying chain of filters and don't update UI after each filter update
     private var processedCiImage: CIImage?
     private var sourceImageOrientation: UIImage.Orientation?
@@ -484,7 +435,7 @@ private extension PhotoEditorService {
 
     func configureFilter(_ filter: Filter) {
         do {
-            let filter = try lutsManager.createCIColorCube(for: filter)
+            let filter = try lutsService.createCIColorCube(for: filter)
             filter.inputImage = processedCiImage
             processedCiImage = filter.outputImage
         } catch {

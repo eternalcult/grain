@@ -174,7 +174,7 @@ final class MainViewModel {
         get {
             photoEditor.textureIntensity
         } set {
-            photoEditor
+            photoEditor.textureIntensity = newValue
         }
     }
 

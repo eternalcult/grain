@@ -231,7 +231,7 @@ final class DataStorage {
 //        ])
     ]
 
-    private let lutsManager = LutsManager()
+    private let lutsManager = LutsService()
 
     private var swiftDataManager: SwiftDataManager?
 

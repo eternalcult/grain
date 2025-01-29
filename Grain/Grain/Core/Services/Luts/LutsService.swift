@@ -1,17 +1,17 @@
 import CoreImage
 import Foundation
 
-// TODO: createCIColorCube каждый раз парсит .cube файл и запускает луп на 35к строк, исправить
-final class LutsManager {
+final class LutsService: LutsServiceProtocol {
     // MARK: Properties
 
     private let context = CIContext()
 
     // MARK: Functions
 
+    /// Parse .cube file into FilterCICubeData
     func createDataForCIColorCube(for filter: Filter) throws -> FilterCICubeData {
         guard let filterFileURL = Bundle.main.url(forResource: filter.filename, withExtension: "cube") else {
-            throw LutsManagerError.couldntFindFilterFileUrl
+            throw LutsServiceError.couldntFindFilterFileUrl
         }
         let (dimension, rawData) = try readCubeFile(url: filterFileURL)
         return FilterCICubeData(
@@ -21,6 +21,7 @@ final class LutsManager {
         )
     }
 
+    /// Create CIColorCubeWithColorSpace filter from FilterCICubeData from SwiftData
     func createCIColorCube(for filter: Filter) throws -> CIColorCubeWithColorSpace {
         let filtersData = DataStorage.shared.filtersData
         if let currentFilterData = filtersData.first(where: { $0.id == filter.id }) {
@@ -31,9 +32,10 @@ final class LutsManager {
             return filter
         }
         // TODO: Данные для текущего фильтра отсутствуют, попробовать распарсить их в момент создания
-        throw LutsManagerError.CIColorCubeFilterCreationFailed
+        throw LutsServiceError.CIColorCubeFilterCreationFailed
     }
 
+    /// Apply selected filter and apply it to selected image
     func apply(_ filter: Filter, for image: CIImage) throws -> CGImage {
         print("Apply \(filter.title) filter for image")
         let cubeFilter = try createCIColorCube(for: filter)
@@ -41,13 +43,13 @@ final class LutsManager {
         if let output = cubeFilter.outputImage, let cgImage = context.createCGImage(output, from: output.extent) {
             return cgImage
         }
-        throw LutsManagerError.filterApplyingFailed
+        throw LutsServiceError.filterApplyingFailed
     }
 
     private func readCubeFile(url: URL) throws -> (Int, [Float]) {
         // Считываем весь текст файла
         guard let content = try? String(contentsOf: url, encoding: .utf8) else {
-            throw LutsManagerError.cubeFileReadingError
+            throw LutsServiceError.cubeFileReadingError
         }
 
         var dimension = 0
@@ -81,6 +83,7 @@ final class LutsManager {
         return (dimension, data)
     }
 
+    /// Convert .cube data into CIColorCube data
     private func convertToCubeData(dimension: Int, rawData: [Float]) -> Data {
         var cubeData = [Float]()
         let componentsPerEntry = rawData.count / (dimension * dimension * dimension) // 3 (RGB) или 4 (RGBA)

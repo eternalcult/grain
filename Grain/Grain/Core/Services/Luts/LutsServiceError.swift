@@ -1,6 +1,6 @@
 import Foundation
 
-enum LutsManagerError: LocalizedError {
+enum LutsServiceError: LocalizedError {
     case couldntFindFilterFileUrl
     case cubeFileReadingError
     case CIColorCubeFilterCreationFailed
