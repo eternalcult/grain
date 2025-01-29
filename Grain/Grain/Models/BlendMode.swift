@@ -1,3 +1,4 @@
+import SwiftUI
 import CoreImage
 
 enum BlendMode: Int, CaseIterable {
@@ -31,7 +32,7 @@ enum BlendMode: Int, CaseIterable {
 
     // MARK: Computed Properties
 
-    var title: String {
+    var title: LocalizedStringKey {
         switch self {
         case .normal:
             "Normal"
@@ -82,7 +83,7 @@ enum BlendMode: Int, CaseIterable {
         }
     }
 
-    var description: String {
+    var description: LocalizedStringKey {
         switch self {
         case .normal:
             "Edits or paints each pixel to make it the result color. This is the default mode. (Normal mode is called Threshold when you’re working with a bitmapped or indexed-color image.)"

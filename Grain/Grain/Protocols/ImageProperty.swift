@@ -1,10 +1,10 @@
 import AppCore
-import Foundation
+import SwiftUI
 
 // MARK: - ImageProperty
 
 protocol ImageProperty {
-    var title: String { get }
+    var title: LocalizedStringKey { get }
     var range: ClosedRange<Float> { get }
     var defaultValue: Float { get }
     var current: Float { get set }
