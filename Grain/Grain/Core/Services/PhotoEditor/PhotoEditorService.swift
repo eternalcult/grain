@@ -4,17 +4,10 @@ import FirebaseCrashlytics
 import Photos
 import SwiftUI
 
-
-
-
-
-
+// MARK: - PhotoEditorService
 
 @Observable
 final class PhotoEditorService: PhotoEditor {
-    init(lutsService: LutsServiceProtocol = LutsService()) {
-        self.lutsService = lutsService
-    }
     // MARK: Properties
 
     var errorMessage: String?
@@ -138,6 +131,12 @@ final class PhotoEditorService: PhotoEditor {
 
     var hasFilter: Bool {
         filter != nil
+    }
+
+    // MARK: Lifecycle
+
+    init(lutsService: LutsServiceProtocol = LutsService()) {
+        self.lutsService = lutsService
     }
 
     // MARK: Functions
