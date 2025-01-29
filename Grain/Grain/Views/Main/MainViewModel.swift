@@ -55,8 +55,6 @@ final class MainViewModel {
         photoEditor.errorMessage
     }
 
-    // MARK: Image Properties
-
     var propertiesModified: Bool {
         photoEditor.propertiesModified
     }
@@ -226,7 +224,7 @@ final class MainViewModel {
     }
 
     func applyRandomFilter() {
-        let filters = DataStorage.shared.filtersCategories.flatMap { $0.filters }
+        let filters = DataStorage.shared.filtersCategories.flatMap(\.filters)
         guard let randomElement = filters.randomElement() else {
             return
         }
@@ -238,13 +236,12 @@ final class MainViewModel {
     }
 
     func applyRandomTexture() {
-        let textures = DataStorage.shared.texturesCategories.flatMap { $0.textures }
+        let textures = DataStorage.shared.texturesCategories.flatMap(\.textures)
         guard let randomElement = textures.randomElement() else {
             return
         }
         applyTexture(randomElement)
     }
-
 
     func removeFilterIfNeeded() {
         photoEditor.removeFilterIfNeeded()

@@ -44,7 +44,9 @@ final class PhotoEditorService: PhotoEditor {
     // MARK: Computed Properties
 
     var propertiesModified: Bool {
-        brightness.isUpdated || contrast.isUpdated || saturation.isUpdated || exposure.isUpdated || vibrance.isUpdated || highlights.isUpdated || shadows.isUpdated || temperature.isUpdated || tint.isUpdated || gamma.isUpdated || noiseReduction.isUpdated || sharpness.isUpdated
+        brightness.isUpdated || contrast.isUpdated || saturation.isUpdated || exposure.isUpdated || vibrance.isUpdated || highlights
+            .isUpdated || shadows.isUpdated || temperature.isUpdated || tint.isUpdated || gamma.isUpdated || noiseReduction
+            .isUpdated || sharpness.isUpdated
     }
 
     var brightness: ImageProperty = Brightness() {
@@ -120,6 +122,7 @@ final class PhotoEditorService: PhotoEditor {
     }
 
     // MARK: Effects
+
     var vignetteIntensity: ImageProperty = VignetteIntensity() {
         didSet {
             updateTask()
@@ -131,7 +134,7 @@ final class PhotoEditorService: PhotoEditor {
             updateTask()
         }
     }
-    
+
     // MARK: Texture
 
     var hasTexture: Bool {
@@ -374,8 +377,8 @@ private extension PhotoEditorService {
 // MARK: Private image properties funtions
 
 private extension PhotoEditorService {
-
     // MARK: Image properties
+
     // Brightness, Contrast & Saturation
     func updateBCS() {
         let filter = CIFilter.colorControls()

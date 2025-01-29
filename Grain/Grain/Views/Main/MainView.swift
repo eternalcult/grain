@@ -189,7 +189,7 @@ struct MainView: View {
                         .tint(.textWhite.opacity(0.8))
                 }
             }
-            if let finalCiImage = viewModel.finalCiImage, viewModel.showsFilters {
+            if viewModel.showsFilters {
                 if viewModel.isLoadingFiltersPreviews {
                     HStack {
                         Spacer()
@@ -304,7 +304,15 @@ struct MainView: View {
                                 Text(viewModel.textureBlendMode.title)
                                     .font(.h5)
                                     .foregroundStyle(Color.textWhite.opacity(0.8))
-
+                                Spacer()
+                                NavigationLink {
+                                    BlendModeView()
+                                } label: {
+                                    Image(systemName: "questionmark.circle.fill")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .tint(.textWhite.opacity(0.8))
+                                }
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             Slider(value: Binding(

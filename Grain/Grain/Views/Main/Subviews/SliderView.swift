@@ -1,5 +1,7 @@
 import SwiftUI
 
+// MARK: - SliderView
+
 struct SliderView: View {
     // MARK: SwiftUI Properties
 
@@ -25,6 +27,7 @@ struct SliderView: View {
     MainView()
 }
 
+// MARK: - DoubleSlider
 
 struct DoubleSlider: View {
     // MARK: SwiftUI Properties

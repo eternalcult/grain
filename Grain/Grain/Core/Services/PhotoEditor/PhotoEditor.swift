@@ -41,9 +41,10 @@ protocol PhotoEditor {
     var sharpness: ImageProperty { get set }
 
     // MARK: Effects
+
     var vignetteIntensity: ImageProperty { get set }
     var vignetteRadius: ImageProperty { get set }
-    
+
     // MARK: Functions
 
     func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation)
