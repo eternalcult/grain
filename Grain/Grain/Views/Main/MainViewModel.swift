@@ -57,6 +57,10 @@ final class MainViewModel {
 
     // MARK: Image Properties
 
+    var propertiesModified: Bool {
+        photoEditor.propertiesModified
+    }
+
     var brightness: ImageProperty {
         get {
             photoEditor.brightness
@@ -208,6 +212,10 @@ final class MainViewModel {
     }
 
     // MARK: Functions
+
+    func resetSettings() {
+        photoEditor.resetSettings()
+    }
 
     func removeTextureIfNeeded() {
         photoEditor.removeTextureIfNeeded()

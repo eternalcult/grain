@@ -26,6 +26,7 @@ protocol PhotoEditor {
 
     // MARK: Image Properties
 
+    var propertiesModified: Bool { get }
     var brightness: ImageProperty { get set }
     var contrast: ImageProperty { get set }
     var saturation: ImageProperty { get set }
@@ -56,4 +57,5 @@ protocol PhotoEditor {
 
     func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void)
     func reset()
+    func resetSettings()
 }

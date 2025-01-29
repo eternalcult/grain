@@ -43,6 +43,10 @@ final class PhotoEditorService: PhotoEditor {
 
     // MARK: Computed Properties
 
+    var propertiesModified: Bool {
+        brightness.isUpdated || contrast.isUpdated || saturation.isUpdated || exposure.isUpdated || vibrance.isUpdated || highlights.isUpdated || shadows.isUpdated || temperature.isUpdated || tint.isUpdated || gamma.isUpdated || noiseReduction.isUpdated || sharpness.isUpdated
+    }
+
     var brightness: ImageProperty = Brightness() {
         didSet {
             updateTask()
@@ -162,7 +166,7 @@ final class PhotoEditorService: PhotoEditor {
         }
         processedCiImage = image
         finalImage = nil
-        resetFilters()
+        resetSettings()
     }
 
     func applyTexture(_ newTexture: Texture) {
@@ -236,8 +240,21 @@ final class PhotoEditorService: PhotoEditor {
         filter = nil
         texture = nil
         textureBlendMode = .normal
-        resetFilters()
+        resetSettings()
         resetEffects()
+    }
+
+    func resetSettings() {
+        brightness.setToDefault()
+        contrast.setToDefault()
+        saturation.setToDefault()
+        exposure.setToDefault()
+        vibrance.setToDefault()
+        highlights.setToDefault()
+        shadows.setToDefault()
+        noiseReduction.setToDefault()
+        sharpness.setToDefault()
+        gamma.setToDefault()
     }
 }
 
@@ -282,19 +299,6 @@ private extension PhotoEditorService {
             }
             await renderImage()
         }
-    }
-
-    func resetFilters() {
-        brightness.setToDefault()
-        contrast.setToDefault()
-        saturation.setToDefault()
-        exposure.setToDefault()
-        vibrance.setToDefault()
-        highlights.setToDefault()
-        shadows.setToDefault()
-        noiseReduction.setToDefault()
-        sharpness.setToDefault()
-        gamma.setToDefault()
     }
 
     func resetEffects() {

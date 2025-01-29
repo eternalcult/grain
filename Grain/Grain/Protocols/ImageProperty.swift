@@ -10,6 +10,7 @@ protocol ImageProperty {
     var current: Float { get set }
     var formatStyle: ImagePropertyValueFormattedStyle { get }
     mutating func setToDefault()
+    var isUpdated: Bool { get }
 }
 
 extension ImageProperty {
@@ -40,6 +41,10 @@ extension ImageProperty {
         case .without:
             return "\(Int(current))"
         }
+    }
+
+    var isUpdated: Bool {
+        current != defaultValue
     }
 }
 

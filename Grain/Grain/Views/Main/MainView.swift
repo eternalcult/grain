@@ -333,11 +333,24 @@ struct MainView: View {
                 viewModel.showsSettings.toggle()
             } label: {
                 HStack(alignment: .center) {
-                    Text("Settings")
-                        .font(.h4)
-                        .foregroundStyle(Color.textWhite.opacity(0.8))
-                        .padding(.bottom, 5)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    HStack {
+                        Text("Settings")
+                            .font(.h4)
+                            .foregroundStyle(Color.textWhite.opacity(0.8))
+                            .padding(.bottom, 5)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        if viewModel.propertiesModified {
+                            Button {
+                                viewModel.resetSettings()
+                            } label: {
+                                Image(systemName: "arrow.trianglehead.counterclockwise")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .tint(.textWhite.opacity(0.8))
+                            }
+                        }
+                        Spacer()
+                    }
                     Spacer()
                     Image(systemName: "triangle.fill")
                         .resizable()
