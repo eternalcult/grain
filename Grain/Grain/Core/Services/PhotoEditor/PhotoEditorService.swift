@@ -115,6 +115,19 @@ final class PhotoEditorService: PhotoEditor {
         }
     }
 
+    // MARK: Effects
+    var vignetteIntensity: ImageProperty = VignetteIntensity() {
+        didSet {
+            updateTask()
+        }
+    }
+
+    var vignetteRadius: ImageProperty = VignetteRadius() {
+        didSet {
+            updateTask()
+        }
+    }
+    
     // MARK: Texture
 
     var hasTexture: Bool {
@@ -224,6 +237,7 @@ final class PhotoEditorService: PhotoEditor {
         texture = nil
         textureBlendMode = .normal
         resetFilters()
+        resetEffects()
     }
 }
 
@@ -245,6 +259,7 @@ private extension PhotoEditorService {
         renderImageTask?.cancel()
         guard let sourceCiImage else { return }
         processedCiImage = sourceCiImage
+        // Properties
         updateBCS()
         updateExposure()
         updateVibrance()
@@ -252,6 +267,8 @@ private extension PhotoEditorService {
         updateTemperatureAndTint()
         updateGamma()
         updateNoiseReduction()
+        // Effects
+        updateVignette()
         if let filter {
             configureFilter(filter)
         }
@@ -278,6 +295,11 @@ private extension PhotoEditorService {
         noiseReduction.setToDefault()
         sharpness.setToDefault()
         gamma.setToDefault()
+    }
+
+    func resetEffects() {
+        vignetteRadius.setToDefault()
+        vignetteIntensity.setToDefault()
     }
 
     func renderImage() async {
@@ -348,6 +370,8 @@ private extension PhotoEditorService {
 // MARK: Private image properties funtions
 
 private extension PhotoEditorService {
+
+    // MARK: Image properties
     // Brightness, Contrast & Saturation
     func updateBCS() {
         let filter = CIFilter.colorControls()
@@ -381,14 +405,6 @@ private extension PhotoEditorService {
         processedCiImage = filter.outputImage
     }
 
-    func updateVignette() {
-        let filter = CIFilter.vignette()
-        filter.inputImage = processedCiImage
-        filter.intensity = 0
-        filter.radius = 0
-        processedCiImage = filter.outputImage
-    }
-
     func updateTemperatureAndTint() {
         let filter = CIFilter.temperatureAndTint()
         filter.inputImage = processedCiImage
@@ -411,6 +427,18 @@ private extension PhotoEditorService {
         filter.sharpness = sharpness.current
         processedCiImage = filter.outputImage
     }
+
+    // MARK: Effects
+
+    func updateVignette() {
+        let filter = CIFilter.vignette()
+        filter.inputImage = processedCiImage
+        filter.intensity = vignetteIntensity.current
+        filter.radius = vignetteRadius.current
+        processedCiImage = filter.outputImage
+    }
+
+    // MARK: Textures & Filters
 
     func overlayTexture(_ texture: Texture) {
         do {

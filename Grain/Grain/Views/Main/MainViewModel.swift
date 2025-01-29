@@ -11,6 +11,7 @@ final class MainViewModel {
     var showsFilteredImage = true
     var showsFilters: Bool = false
     var showsSettings = true
+    var showsEffects = false
     var showsTextures = false
     var showsHistogram = false
     var isLoadingFiltersPreviews: Bool = false
@@ -54,9 +55,7 @@ final class MainViewModel {
         photoEditor.errorMessage
     }
 
-    var hasTexture: Bool {
-        photoEditor.hasTexture
-    }
+    // MARK: Image Properties
 
     var brightness: ImageProperty {
         get {
@@ -166,6 +165,8 @@ final class MainViewModel {
         }
     }
 
+    // MARK: Texture
+
     var textureBlendMode: BlendMode {
         photoEditor.textureBlendMode
     }
@@ -175,6 +176,28 @@ final class MainViewModel {
             photoEditor.textureIntensity
         } set {
             photoEditor.textureIntensity = newValue
+        }
+    }
+
+    var hasTexture: Bool {
+        photoEditor.hasTexture
+    }
+
+    // MARK: Effects
+
+    var vignetteIntensity: ImageProperty {
+        get {
+            photoEditor.vignetteIntensity
+        } set {
+            photoEditor.vignetteIntensity = newValue
+        }
+    }
+
+    var vignetteRadius: ImageProperty {
+        get {
+            photoEditor.vignetteRadius
+        } set {
+            photoEditor.vignetteRadius = newValue
         }
     }
 

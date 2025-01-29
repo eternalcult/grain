@@ -102,6 +102,7 @@ struct MainView: View {
                         VStack(spacing: 8) {
                             filtersView
                             slidersView
+                            effectsView
                             texturesView
                         }
                     }
@@ -214,6 +215,43 @@ struct MainView: View {
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
+    private var effectsView: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Button {
+                viewModel.showsEffects.toggle()
+            } label: {
+                HStack {
+                    HStack(alignment: .center) {
+                        Text("Effects")
+                            .font(.h4)
+                            .foregroundStyle(Color.textWhite.opacity(0.8))
+                            .padding(.bottom, 5)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    Spacer()
+                    Image(systemName: "triangle.fill")
+                        .resizable()
+                        .frame(width: 10, height: 10)
+                        .rotationEffect(viewModel.showsEffects ? Angle(degrees: 180) : Angle(degrees: 0))
+                        .tint(.textWhite.opacity(0.8))
+                }
+            }
+            if viewModel.showsEffects {
+                VStack(spacing: 0) {
+                    DoubleSlider(
+                        title: "Vignette",
+                        mainProperty: $viewModel.vignetteIntensity,
+                        additionalProperty: $viewModel.vignetteRadius
+                    )
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(Color.backgroundBlackSecondary.opacity(0.3))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+
     private var texturesView: some View {
         VStack(alignment: .leading, spacing: 10) {
             Button {
@@ -310,18 +348,18 @@ struct MainView: View {
             }
             if viewModel.showsSettings {
                 VStack(spacing: 0) {
-                    SliderView(filter: $viewModel.brightness)
-                    SliderView(filter: $viewModel.contrast)
-                    SliderView(filter: $viewModel.saturation)
-                    SliderView(filter: $viewModel.exposure)
-                    SliderView(filter: $viewModel.vibrance)
-                    SliderView(filter: $viewModel.highlights)
-                    SliderView(filter: $viewModel.shadows)
-                    SliderView(filter: $viewModel.temperature)
-                    SliderView(filter: $viewModel.tint)
-                    SliderView(filter: $viewModel.gamma)
-                    SliderView(filter: $viewModel.noiseReduction)
-                    SliderView(filter: $viewModel.sharpness)
+                    SliderView(property: $viewModel.brightness)
+                    SliderView(property: $viewModel.contrast)
+                    SliderView(property: $viewModel.saturation)
+                    SliderView(property: $viewModel.exposure)
+                    SliderView(property: $viewModel.vibrance)
+                    SliderView(property: $viewModel.highlights)
+                    SliderView(property: $viewModel.shadows)
+                    SliderView(property: $viewModel.temperature)
+                    SliderView(property: $viewModel.tint)
+                    SliderView(property: $viewModel.gamma)
+                    SliderView(property: $viewModel.noiseReduction)
+                    SliderView(property: $viewModel.sharpness)
                 }
             }
         }
