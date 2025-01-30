@@ -255,6 +255,8 @@ final class PhotoEditorService: PhotoEditor {
         vibrance.setToDefault()
         highlights.setToDefault()
         shadows.setToDefault()
+        temperature.setToDefault()
+        tint.setToDefault()
         noiseReduction.setToDefault()
         sharpness.setToDefault()
         gamma.setToDefault()
@@ -381,6 +383,9 @@ private extension PhotoEditorService {
 
     // Brightness, Contrast & Saturation
     func updateBCS() {
+        guard brightness.isUpdated || contrast.isUpdated || saturation.isUpdated else {
+            return
+        }
         let filter = CIFilter.colorControls()
         filter.inputImage = processedCiImage
         filter.brightness = brightness.current
@@ -390,6 +395,9 @@ private extension PhotoEditorService {
     }
 
     func updateExposure() {
+        guard exposure.isUpdated else {
+            return
+        }
         let filter = CIFilter.exposureAdjust()
         filter.inputImage = processedCiImage
         filter.ev = exposure.current
@@ -397,6 +405,9 @@ private extension PhotoEditorService {
     }
 
     func updateVibrance() {
+        guard exposure.isUpdated else {
+            return
+        }
         let filter = CIFilter.vibrance()
         filter.inputImage = processedCiImage
         filter.amount = vibrance.current
@@ -405,6 +416,9 @@ private extension PhotoEditorService {
 
     // Highlights & Shadows
     func updateHS() {
+        guard highlights.isUpdated || shadows.isUpdated else {
+            return
+        }
         let filter = CIFilter.highlightShadowAdjust()
         filter.inputImage = processedCiImage
         filter.highlightAmount = highlights.current
@@ -413,6 +427,9 @@ private extension PhotoEditorService {
     }
 
     func updateTemperatureAndTint() {
+        guard temperature.isUpdated || tint.isUpdated else {
+            return
+        }
         let filter = CIFilter.temperatureAndTint()
         filter.inputImage = processedCiImage
         filter.neutral = CIVector(x: CGFloat(temperature.defaultValue), y: 0)
@@ -421,6 +438,9 @@ private extension PhotoEditorService {
     }
 
     func updateGamma() {
+        guard gamma.isUpdated else {
+            return
+        }
         let filter = CIFilter.gammaAdjust()
         filter.inputImage = processedCiImage
         filter.power = gamma.current
@@ -428,6 +448,9 @@ private extension PhotoEditorService {
     }
 
     func updateNoiseReduction() {
+        guard noiseReduction.isUpdated || sharpness.isUpdated else {
+            return
+        }
         let filter = CIFilter.noiseReduction()
         filter.inputImage = processedCiImage
         filter.noiseLevel = noiseReduction.current
@@ -438,6 +461,9 @@ private extension PhotoEditorService {
     // MARK: Effects
 
     func updateVignette() {
+        guard vignetteRadius.isUpdated || vignetteIntensity.isUpdated else {
+            return
+        }
         let filter = CIFilter.vignette()
         filter.inputImage = processedCiImage
         filter.intensity = vignetteIntensity.current
