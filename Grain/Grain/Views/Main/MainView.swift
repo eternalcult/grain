@@ -10,115 +10,127 @@ struct MainView: View {
 
     // MARK: Content Properties
 
-    var body: some View {
-        NavigationStack {
-            VStack(spacing: 8) {
-                ZStack {
-                    Image("grain")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .opacity(0.5)
-                    if viewModel.finalImage != nil {
-                        HStack {
-                            Spacer()
-                            Button {
-                                viewModel.saveImageToPhotoLibrary()
-                            } label: {
-                                Text("Export")
-                                    .font(.h5)
-                                    .foregroundStyle(Color.textWhite)
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 5)
-                                    .border(Color.textWhite, width: 1)
-                            }
-                        }
+    var headerView: some View {
+        ZStack {
+            Image("grain")
+                .resizable()
+                .frame(width: 50, height: 50)
+                .opacity(0.5)
+            if viewModel.finalImage != nil {
+                HStack {
+                    Spacer()
+                    Button {
+                        viewModel.saveImageToPhotoLibrary()
+                    } label: {
+                        Text("Export")
+                            .font(.h5)
+                            .foregroundStyle(Color.textWhite)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .border(Color.textWhite, width: 1)
                     }
                 }
-                //            .onAppear { // Only for testing
-                //                if let uiImage = UIImage(named: "Textures/Grain/grain1"),
-                //                   let cgImage = uiImage.cgImage {
-                //                    self.photoEditorService.updateSourceImage(CIImage(cgImage: cgImage))
-                //                }
-                //            }
-                if let sourceImage = viewModel.sourceImage,
-                   let filteredImage = viewModel.finalImage
-                {
-                    VStack {
-                        ZStack(alignment: .trailing) {
-                            sourceImage
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .background(Color.backgroundBlackSecondary.opacity(0.3))
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                            filteredImage
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .opacity(viewModel.showsFilteredImage ? 1 : 0)
-                                .onLongPressGesture {} onPressingChanged: { isPressing in
-                                    viewModel.showsFilteredImage = !isPressing
-                                }
-                        }
-                        .overlay(alignment: .bottomLeading) {
-                            if viewModel.showsHistogram, let histogram = viewModel.histogram {
-                                Image(uiImage: histogram)
-                                    .resizable()
-                                    .opacity(0.8)
-                                    .frame(width: 100, height: 50)
-                                    .padding()
-                            }
-                        }
-                        HStack(spacing: 0) {
-                            Button {
-                                viewModel.showsHistogram.toggle()
-                            } label: {
-                                Image(systemName: "waveform.path.ecg.rectangle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .padding(4)
-                                    .tint(viewModel.showsHistogram ? Color.textBlack : Color.textWhite)
-                                    .background(viewModel.showsHistogram ? Color.backgroundWhiteSecondary.opacity(0.8) : .clear)
-                                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                            }
-                            .padding(4)
-                            Button {
-                                viewModel.closeImage()
-                            } label: {
-                                Image(systemName: "xmark.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .padding(4)
-                                    .tint(Color.textWhite)
-                                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                            }
-                        }
-                    }
+            }
+        }
+        //            .onAppear { // Only for testing
+        //                if let uiImage = UIImage(named: "Textures/Grain/grain1"),
+        //                   let cgImage = uiImage.cgImage {
+        //                    self.photoEditorService.updateSourceImage(CIImage(cgImage: cgImage))
+        //                }
+        //            }
+    }
 
-                    ScrollView(.vertical) {
-                        VStack(spacing: 8) {
-                            filtersView
-                            slidersView
-                            effectsView
-                            texturesView
+    var body: some View {
+        VStack(spacing: 8) {
+            headerView
+            if viewModel.sourceImage == nil, viewModel.finalImage == nil {
+                photoPickerView
+
+            } else {
+                editorView
+            }
+        }
+        .padding(.horizontal, 8)
+        .background(Color.backgroundBlack)
+        .navigationBarBackButtonHidden(true)
+        .onChange(of: viewModel.errorMessage) { _, newError in
+            if newError != nil {
+                viewModel.showErrorAlert = true
+            }
+        }
+        .failureBlackAlert($viewModel.showErrorAlert, message: viewModel.errorMessage, duration: 3)
+    }
+
+    private var editorView: some View {
+        if let sourceImage = viewModel.sourceImage, let finalImage = viewModel.finalImage {
+            return VStack(spacing: 8) {
+                VStack {
+                    ZStack(alignment: .trailing) {
+                        sourceImage
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color.backgroundBlackSecondary.opacity(0.3))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        finalImage
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .opacity(viewModel.showsFilteredImage ? 1 : 0)
+                            .onLongPressGesture {} onPressingChanged: { isPressing in
+                                viewModel.showsFilteredImage = !isPressing
+                            }
+                    }
+                    .overlay(alignment: .bottomLeading) {
+                        if viewModel.showsHistogram, let histogram = viewModel.histogram {
+                            Image(uiImage: histogram)
+                                .resizable()
+                                .opacity(0.8)
+                                .frame(width: 100, height: 50)
+                                .padding()
                         }
                     }
-                    .scrollIndicators(.hidden)
-                } else {
-                    photoPickerView
+                    HStack(spacing: 0) {
+                        Button {
+                            viewModel.showsHistogram.toggle()
+                        } label: {
+                            Image(systemName: "waveform.path.ecg.rectangle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .padding(4)
+                                .tint(viewModel.showsHistogram ? Color.textBlack : Color.textWhite)
+                                .background(viewModel.showsHistogram ? Color.backgroundWhiteSecondary.opacity(0.8) : .clear)
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                        }
+                        .padding(4)
+                        Button {
+                            viewModel.closeImage()
+                        } label: {
+                            Image(systemName: "xmark.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .padding(4)
+                                .tint(Color.textWhite)
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                        }
+                    }
                 }
-            }
-            .onChange(of: viewModel.errorMessage) { _, newError in
-                if newError != nil {
-                    viewModel.showErrorAlert = true
+
+                ScrollView(.vertical) {
+                    VStack(spacing: 8) {
+                        filtersView
+                        settingsView
+                        effectsView
+                        texturesView
+                    }
                 }
+                .scrollIndicators(.hidden)
             }
-            .padding(.horizontal, 8)
-            .background(Color.backgroundBlack)
-            .failureBlackAlert($viewModel.showErrorAlert, message: viewModel.errorMessage, duration: 3)
+        } else {
+            return EmptyView()
         }
     }
 
@@ -203,6 +215,61 @@ struct MainView: View {
                         FiltersScrollView()
                             .environment(viewModel)
                     }
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(Color.backgroundBlackSecondary.opacity(0.3))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+
+    private var settingsView: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Button {
+                viewModel.showsSettings.toggle()
+            } label: {
+                HStack(alignment: .center) {
+                    HStack {
+                        Text("Settings")
+                            .font(.h4)
+                            .foregroundStyle(Color.textWhite.opacity(0.8))
+                            .padding(.bottom, 5)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        if viewModel.propertiesModified {
+                            Button {
+                                viewModel.resetSettings()
+                            } label: {
+                                Image(systemName: "arrow.trianglehead.counterclockwise")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .tint(.textWhite.opacity(0.8))
+                            }
+                        }
+                        Spacer()
+                    }
+                    Spacer()
+                    Image(systemName: "triangle.fill")
+                        .resizable()
+                        .frame(width: 10, height: 10)
+                        .rotationEffect(viewModel.showsSettings ? Angle(degrees: 180) : Angle(degrees: 0))
+                        .tint(.textWhite.opacity(0.8))
+                }
+            }
+            if viewModel.showsSettings {
+                VStack(spacing: 0) {
+                    SliderView(property: $viewModel.brightness)
+                    SliderView(property: $viewModel.contrast)
+                    SliderView(property: $viewModel.saturation)
+                    SliderView(property: $viewModel.exposure)
+                    SliderView(property: $viewModel.vibrance)
+                    SliderView(property: $viewModel.highlights)
+                    SliderView(property: $viewModel.shadows)
+                    SliderView(property: $viewModel.temperature)
+                    SliderView(property: $viewModel.tint)
+                    SliderView(property: $viewModel.gamma)
+                    SliderView(property: $viewModel.noiseReduction)
+                    SliderView(property: $viewModel.sharpness)
                 }
             }
         }
@@ -341,61 +408,6 @@ struct MainView: View {
                                 .tint(Color.textWhite.opacity(0.1))
                         }
                     }
-                }
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .background(Color.backgroundBlackSecondary.opacity(0.3))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
-    }
-
-    private var slidersView: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Button {
-                viewModel.showsSettings.toggle()
-            } label: {
-                HStack(alignment: .center) {
-                    HStack {
-                        Text("Settings")
-                            .font(.h4)
-                            .foregroundStyle(Color.textWhite.opacity(0.8))
-                            .padding(.bottom, 5)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        if viewModel.propertiesModified {
-                            Button {
-                                viewModel.resetSettings()
-                            } label: {
-                                Image(systemName: "arrow.trianglehead.counterclockwise")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .tint(.textWhite.opacity(0.8))
-                            }
-                        }
-                        Spacer()
-                    }
-                    Spacer()
-                    Image(systemName: "triangle.fill")
-                        .resizable()
-                        .frame(width: 10, height: 10)
-                        .rotationEffect(viewModel.showsSettings ? Angle(degrees: 180) : Angle(degrees: 0))
-                        .tint(.textWhite.opacity(0.8))
-                }
-            }
-            if viewModel.showsSettings {
-                VStack(spacing: 0) {
-                    SliderView(property: $viewModel.brightness)
-                    SliderView(property: $viewModel.contrast)
-                    SliderView(property: $viewModel.saturation)
-                    SliderView(property: $viewModel.exposure)
-                    SliderView(property: $viewModel.vibrance)
-                    SliderView(property: $viewModel.highlights)
-                    SliderView(property: $viewModel.shadows)
-                    SliderView(property: $viewModel.temperature)
-                    SliderView(property: $viewModel.tint)
-                    SliderView(property: $viewModel.gamma)
-                    SliderView(property: $viewModel.noiseReduction)
-                    SliderView(property: $viewModel.sharpness)
                 }
             }
         }
