@@ -11,7 +11,10 @@ struct SliderView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(property.title) + Text(": \(property.formattedValue())")
+            Text(property.title)
+                .font(.h5)
+                .foregroundStyle(Color.textWhite.opacity(0.8))
+            + Text(": \(property.formattedValue())")
                 .font(.h5)
                 .foregroundStyle(Color.textWhite.opacity(0.8))
             Slider(value: $property.current, in: property.range)
@@ -44,7 +47,10 @@ struct DoubleSlider: View {
                 .font(.h5)
                 .foregroundStyle(Color.textWhite.opacity(0.8))
             VStack(alignment: .leading, spacing: 0) {
-                Text(mainProperty.title) + Text(": \(mainProperty.formattedValue())")
+                Text(mainProperty.title)
+                    .font(.h5)
+                    .foregroundStyle(Color.textWhite.opacity(0.8))
+                + Text(": \(mainProperty.formattedValue())")
                     .font(.h6)
                     .foregroundStyle(Color.textWhite.opacity(0.8))
                 Slider(value: $mainProperty.current, in: mainProperty.range)
@@ -54,7 +60,10 @@ struct DoubleSlider: View {
                 mainProperty.setToDefault()
             }
             VStack(alignment: .leading, spacing: 0) {
-                Text(additionalProperty.title) + Text(": \(additionalProperty.formattedValue())")
+                Text(additionalProperty.title)
+                    .font(.h5)
+                    .foregroundStyle(Color.textWhite.opacity(0.8))
+                + Text(": \(additionalProperty.formattedValue())")
                     .font(.h6)
                     .foregroundStyle(Color.textWhite.opacity(0.8))
                 Slider(value: $additionalProperty.current, in: additionalProperty.range)
