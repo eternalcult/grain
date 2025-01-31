@@ -1,0 +1,3272 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    ": %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ": %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ": %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ": %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ": %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ": %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ": %@"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ": %@"
+          }
+        }
+      }
+    },
+    "Blend mode:" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Farbmodus"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo de fusión:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode de fusion:"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modalità di fusione:"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブレンドモード: "
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим смешивания:"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "混合模式:"
+          }
+        }
+      }
+    },
+    "Blend modes" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Farbmodi"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modos de fusión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modes de fusion"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modalità di fusione"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブレンドモード"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режимы смешивания"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "混合模式"
+          }
+        }
+      }
+    },
+    "Brightness" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Helligkeit"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brillo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luminosité"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luminosità"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明るさ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Яркость"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "亮度"
+          }
+        }
+      }
+    },
+    "Burns or dodges the colors by decreasing or increasing the brightness, depending on the blend color. If the blend color (light source) is lighter than 50% gray, the image is lightened by increasing the brightness. If the blend color is darker than 50% gray, the image is darkened by decreasing the brightness." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Farben werden durch Verringern oder Erhöhen der Helligkeit in Abhängigkeit von der Überblendfarbe aufgehellt oder abgetönt. Ist die Mischfarbe (Lichtquelle) heller als 50 % Grau, wird das Bild durch Erhöhen der Helligkeit aufgehellt. Ist die Mischfarbe dunkler als 50 % Grau, wird das Bild durch Verringern der Helligkeit abgedunkelt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quema o aclara los colores disminuyendo o aumentando el brillo, dependiendo del color de fusión. Si el color de fusión (fuente de luz) es más claro que un 50% de gris, la imagen se aclara aumentando el brillo. Si el color de fusión es más oscuro que un 50% de gris, la imagen se oscurece reduciendo el brillo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brûle ou éclaircit les couleurs en diminuant ou en augmentant la luminosité, selon la couleur de fusion. Si la couleur de fusion (source de lumière) est plus claire que 50 % de gris, l'image est éclaircie en augmentant la luminosité. Si la couleur de fusion est plus sombre que 50 % de gris, l'image est assombrie en diminuant la luminosité."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brucia o schiarisce i colori diminuendo o aumentando la luminosità, a seconda del colore di fusione. Se il colore di fusione (fonte di luce) è più chiaro del 50% grigio, l’immagine viene schiarita aumentando la luminosità. Se il colore di fusione è più scuro del 50% grigio, l’immagine viene scurita diminuendo la luminosità."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブレンドカラーに応じて明るさを増減させることで、色を焼き込んだり覆い焼きしたりします。ブレンドカラー（光源）が50%グレーより明るい場合、明るさを増やして画像を明るくします。ブレンドカラーが50%グレーより暗い場合、明るさを減らして画像を暗くします。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тонирует или осветляет цвета, уменьшая или увеличивая яркость, в зависимости от цвета наложения. Если цвет наложения (источник света) светлее 50% серого, изображение становится светлее за счет увеличения яркости. Если цвет наложения темнее 50% серого, изображение затемняется за счет уменьшения яркости."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据混合颜色调整亮度来加深或减淡颜色。如果混合颜色（光源）比 50% 灰色更亮，则通过增加亮度使图像变亮。如果混合颜色比 50% 灰色更暗，则通过降低亮度使图像变暗。"
+          }
+        }
+      }
+    },
+    "Burns or dodges the colors by increasing or decreasing the contrast, depending on the blend color. If the blend color (light source) is lighter than 50% gray, the image is lightened by decreasing the contrast. If the blend color is darker than 50% gray, the image is darkened by increasing the contrast." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erhöht oder verringert den Kontrast, je nach Überblendungsfarbe, um die Farben aufzuhellen oder abzuschwächen. Ist die Mischfarbe (Lichtquelle) heller als 50 % Grau, wird das Bild durch Verringern des Kontrasts aufgehellt. Ist die Mischfarbe dunkler als 50 % Grau, wird das Bild durch Erhöhen des Kontrasts abgedunkelt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quema o aclara los colores aumentando o disminuyendo el contraste, dependiendo del color de fusión. Si el color de fusión (fuente de luz) es más claro que un 50% de gris, la imagen se aclara reduciendo el contraste. Si el color de fusión es más oscuro que un 50% de gris, la imagen se oscurece aumentando el contraste."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brûle ou éclaircit les couleurs en augmentant ou en diminuant le contraste, selon la couleur de fusion. Si la couleur de fusion (source de lumière) est plus claire que 50 % de gris, l'image est éclaircie en diminuant le contraste. Si la couleur de fusion est plus sombre que 50 % de gris, l'image est assombrie en augmentant le contraste."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brucia o schiarisce i colori aumentando o diminuendo il contrasto, a seconda del colore di fusione. Se il colore di fusione (fonte di luce) è più chiaro del 50% grigio, l’immagine viene schiarita diminuendo il contrasto. Se il colore di fusione è più scuro del 50% grigio, l’immagine viene scurita aumentando il contrasto."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブレンドカラーに応じてコントラストを増減させることで、色を焼き込んだり覆い焼きしたりします。ブレンドカラー（光源）が50%グレーより明るい場合、コントラストを下げて画像を明るくします。ブレンドカラーが50%グレーより暗い場合、コントラストを上げて画像を暗くします。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тонирует или осветляет цвета, увеличивая или уменьшая контраст, в зависимости от цвета наложения. Если цвет наложения (источник света) светлее 50% серого, изображение становится светлее за счет уменьшения контраста. Если цвет наложения темнее 50% серого, изображение затемняется за счет увеличения контраста."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据混合颜色调整对比度来加深或减淡颜色。如果混合颜色（光源）比 50% 灰色更亮，则通过降低对比度使图像变亮。如果混合颜色比 50% 灰色更暗，则通过增加对比度使图像变暗。"
+          }
+        }
+      }
+    },
+    "Color" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Farbe"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couleur"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colore"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カラー"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цвет"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "颜色"
+          }
+        }
+      }
+    },
+    "Color Burn" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Farbverbrennung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subexposición de color"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brûlure de couleur"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brucia Colore"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カラーバーン"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Затемнение основы"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "颜色加深"
+          }
+        }
+      }
+    },
+    "Color Dodge" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Farbdodging"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sobreexposición de color"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Éclaircissement de couleur"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schiarisci Colore "
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カラードッジ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Осветление основы"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "颜色减淡"
+          }
+        }
+      }
+    },
+    "Compares the total of all channel values for the blend and base color and displays the lower value color. Darker Color does not produce a third color, which can result from the Darken blend, because it chooses the lowest channel values from both the base and the blend color to create the result color." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vergleicht die Summe aller Kanalwerte für die Mischung und die Grundfarbe und zeigt die Farbe mit dem niedrigeren Wert an. Dunkle Farbe erzeugt keine dritte Farbe, die sich aus der Überblendung „Dunkler“ ergeben kann, da die niedrigsten Kanalwerte sowohl der Grund- als auch der Überblendungsfarbe ausgewählt werden, um die Ergebnisfarbe zu erstellen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compara la suma de todos los valores de los canales del color base y el de fusión, y muestra el color con el valor más bajo. \"Color más oscuro\" no produce un tercer color, como ocurre con el modo \"Oscurecer\", ya que elige los valores más bajos de los canales del color base y el de fusión para crear el color resultante."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compare la somme des valeurs de tous les canaux pour la couleur de fusion et la couleur de base, et affiche la couleur avec la valeur la plus faible. La couleur plus sombre ne produit pas une troisième couleur, comme cela peut arriver avec le mode Assombrir, car elle choisit les valeurs de canal les plus basses de la couleur de base et de la couleur de fusion pour créer la couleur résultante."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confronta il totale dei valori di tutti i canali del colore di fusione e di base e mostra il colore con il valore più basso. Colore più scuro non produce un terzo colore, come può accadere con la modalità Scurisci, perché sceglie i valori più bassi tra i colori di base e di fusione per creare il colore risultante."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブレンドカラーとベースカラーのすべてのチャンネルの合計値を比較し、低い方のカラーを表示します。ダーカーカラーは、「暗くする」ブレンドと異なり、第三の色を生成せず、両方のカラーの最も低いチャンネル値を選択して結果のカラーを作成します。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сравнивает значения всех каналов для цвета наложения и основного цвета, отображая цвет с наименьшими значениями. Темный цвет не создает третьего цвета, как это может происходить при смешивании с темным, потому что он выбирает наименьшие значения каналов из основного и наложенного цвета для создания результирующего цвета."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "比较混合颜色和基础颜色的所有通道值，并显示较低的颜色。\"较深颜色\"不会生成第三种颜色，而是选择基础颜色和混合颜色中最低的通道值来生成最终颜色。"
+          }
+        }
+      }
+    },
+    "Contrast" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontrast"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contraste"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contrast"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contrasto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コントラスト"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Контраст"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "对比度"
+          }
+        }
+      }
+    },
+    "Creates a result color with the hue and saturation of the base color and the luminance of the blend color. This mode creates the inverse effect of Color mode." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erzeugt eine Ergebnisfarbe mit dem Farbton und der Sättigung der Grundfarbe und der Luminanz der Mischfarbe. Dieser Modus erzeugt den umgekehrten Effekt des Farbmodus."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea un color resultante con el tono y la saturación del color base y la luminancia del color de fusión. Este modo produce el efecto inverso del modo \"Color\"."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crée une couleur résultante avec la teinte et la saturation de la couleur de base et la luminance de la couleur de fusion. Ce mode crée l'effet inverse du mode Couleur."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea un colore risultante con la tonalità e la saturazione del colore di base e la luminanza del colore di fusione. Questa modalità crea l'effetto inverso rispetto alla modalità Colore."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベースカラーの色相と彩度、およびブレンドカラーの輝度を使用して結果のカラーを作成します。このモードは「カラー」モードの逆の効果を生み出します。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создает результирующий цвет с оттенком и насыщенностью основного цвета и яркостью цвета наложения. Этот режим создает обратный эффект от режима «Цвет»."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用基础颜色的色相和饱和度以及混合颜色的亮度来生成最终颜色。此模式与“颜色”模式的效果相反。"
+          }
+        }
+      }
+    },
+    "Creates a result color with the luminance and hue of the base color and the saturation of the blend color. Painting with this mode in an area with no (0) saturation (gray) causes no change." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erzeugt eine Ergebnisfarbe mit der Luminanz und dem Farbton der Grundfarbe und der Sättigung der Mischfarbe. Das Malen mit diesem Modus in einem Bereich ohne (0) Sättigung (grau) bewirkt keine Veränderung."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea un color resultante con la luminancia y el tono del color base y la saturación del color de fusión. Pintar con este modo en un área sin saturación (gris) no produce cambios."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crée une couleur résultante avec la luminance et la teinte de la couleur de base et la saturation de la couleur de fusion. Peindre avec ce mode dans une zone sans saturation (gris) ne provoque aucun changement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea un colore risultante con la luminanza e la tonalità del colore di base e la saturazione del colore di fusione. Applicare questa modalità su un'area senza saturazione (grigia) non produce alcun cambiamento."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベースカラーの輝度と色相、およびブレンドカラーの彩度を使用して結果のカラーを作成します。このモードで彩度がゼロ（グレー）の領域を塗っても変化はありません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создает результирующий цвет с яркостью и оттенком основного цвета и насыщенностью цвета наложения. Рисование в этой области с нулевой насыщенностью (серый) не вызывает изменений."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用基础颜色的亮度和色相以及混合颜色的饱和度来生成最终颜色。在无饱和度（灰色）区域使用此模式不会产生任何变化。"
+          }
+        }
+      }
+    },
+    "Creates a result color with the luminance and saturation of the base color and the hue of the blend color." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erzeugt eine Ergebnisfarbe mit der Luminanz und Sättigung der Grundfarbe und dem Farbton der Mischfarbe."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea un color resultante con la luminancia y la saturación del color base y el tono del color de fusión."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crée une couleur résultante avec la luminance et la saturation de la couleur de base et la teinte de la couleur de fusion."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea un colore risultante con la luminanza e la saturazione del colore di base e la tonalità del colore di fusione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベースカラーの輝度と彩度、およびブレンドカラーの色相を使用して結果のカラーを作成します。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создает результирующий цвет с яркостью и насыщенностью основного цвета и оттенком цвета наложения."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用基础颜色的亮度和饱和度以及混合颜色的色相来生成最终颜色。"
+          }
+        }
+      }
+    },
+    "Creates a result color with the luminance of the base color and the hue and saturation of the blend color. This preserves the gray levels in the image and is useful for coloring monochrome images and for tinting color images." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erzeugt eine Ergebnisfarbe mit der Luminanz der Grundfarbe und dem Farbton und der Sättigung der Mischfarbe. Dadurch bleiben die Graustufen im Bild erhalten, was für das Einfärben von monochromen Bildern und für das Abtönen von Farbbildern nützlich ist."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea un color resultante con la luminancia del color base y el tono y la saturación del color de fusión. Esto preserva los niveles de gris en la imagen y es útil para colorear imágenes monocromáticas o aplicar tintes a imágenes en color."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crée une couleur résultante avec la luminance de la couleur de base et la teinte et la saturation de la couleur de fusion. Cela préserve les niveaux de gris dans l'image et est utile pour coloriser des images monochromes et pour teinter des images en couleur."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea un colore risultante con la luminanza del colore di base e la tonalità e saturazione del colore di fusione. Questo mantiene i livelli di grigio dell'immagine ed è utile per colorare immagini monocromatiche e per tonalizzare immagini a colori."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベースカラーの輝度と、ブレンドカラーの色相と彩度を使用して結果のカラーを作成します。画像のグレーのレベルを保持するため、モノクロ画像の着色やカラー画像の色合い調整に便利です。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создает результирующий цвет с яркостью основного цвета и оттенком и насыщенностью цвета наложения. Это сохраняет уровни серого в изображении и полезно для окрашивания монохромных изображений и для тонировки цветных изображений."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用基础颜色的亮度以及混合颜色的色相和饱和度来生成最终颜色。这种模式可保留图像中的灰色级别，适用于给单色图像着色或为彩色图像添加色调。"
+          }
+        }
+      }
+    },
+    "Creates an effect similar to but lower in contrast than the Difference mode. Blending with white inverts the base color values. Blending with black produces no change." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erzeugt einen ähnlichen Effekt wie der Modus „Differenz“, jedoch mit geringerem Kontrast. Die Überblendung mit Weiß invertiert die Grundfarbwerte. Die Überblendung mit Schwarz bewirkt keine Veränderung."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea un efecto similar al modo \"Diferencia\", pero con menor contraste. Mezclar con blanco invierte los valores del color base. Mezclar con negro no produce cambios."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crée un effet similaire au mode Différence, mais avec un contraste plus faible. Le mélange avec le blanc inverse les valeurs de la couleur de base. Le mélange avec le noir ne produit aucun changement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea un effetto simile alla modalità Differenza ma con un contrasto inferiore. La fusione con il bianco inverte i valori del colore di base. La fusione con il nero non produce alcun cambiamento."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「差の絶対値」モードに似ていますが、コントラストが低くなります。白でブレンドするとベースカラーの値が反転します。黒でブレンドすると変化はありません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создает эффект, похожий на режим «Разница», но с меньшим контрастом. Смешивание с белым инвертирует значения основного цвета. Смешивание с черным не вызывает изменений."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成类似于“差值”模式但对比度较低的效果。与白色混合会反转基础颜色值。与黑色混合不会产生变化。"
+          }
+        }
+      }
+    },
+    "Darken" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dunkeln"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oscurecer"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assombrir"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scurisci"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暗くする"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Затемнить"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "变暗"
+          }
+        }
+      }
+    },
+    "Darkens or lightens the colors, depending on the blend color. The effect is similar to shining a diffused spotlight on the image. If the blend color (light source) is lighter than 50% gray, the image is lightened as if it were dodged. If the blend color is darker than 50% gray, the image is darkened as if it were burned in. Painting with pure black or white produces a distinctly darker or lighter area, but does not result in pure black or white." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verdunkelt oder hellt die Farben auf, abhängig von der Mischfarbe. Der Effekt ähnelt dem eines diffusen Scheinwerfers, der auf das Bild fällt. Ist die Überblendfarbe (Lichtquelle) heller als 50 % Grau, wird das Bild aufgehellt, als ob es abgewischt wäre. Ist die Mischfarbe dunkler als 50 % Grau, wird das Bild abgedunkelt, als ob es eingebrannt wäre. Das Malen mit reinem Schwarz oder Weiß erzeugt einen deutlich dunkleren oder helleren Bereich, führt aber nicht zu reinem Schwarz oder Weiß."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oscurece o aclara los colores dependiendo del color de fusión. El efecto es similar a iluminar la imagen con una luz difusa. Si el color de fusión (fuente de luz) es más claro que un 50% de gris, la imagen se aclara como si se hubiera aplicado un \"esquivar\". Si el color de fusión es más oscuro que un 50% de gris, la imagen se oscurece como si se hubiera \"quemado\". Pintar con negro o blanco puro crea una zona notablemente más oscura o más clara, pero no produce negro o blanco puros."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assombrit ou éclaircit les couleurs en fonction de la couleur de fusion. L'effet est similaire à celui d'un projecteur diffus sur l'image. Si la couleur de fusion (source de lumière) est plus claire que 50 % de gris, l'image est éclaircie comme si elle était éclaircie. Si la couleur de fusion est plus sombre que 50 % de gris, l'image est assombrie comme si elle était brûlée. Peindre avec du noir pur ou du blanc pur produit une zone nettement plus sombre ou plus claire, mais ne donne pas du noir ou du blanc pur."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scurisce o schiarisce i colori a seconda del colore di fusione. L'effetto è simile a quello di un riflettore diffuso sull'immagine. Se il colore di fusione (fonte di luce) è più chiaro del 50% grigio, l'immagine viene schiarita come se fosse stata schiarita. Se il colore di fusione è più scuro del 50% grigio, l'immagine viene scurita come se fosse stata bruciata. Dipingere con nero o bianco puro crea un'area più scura o più chiara, ma non porta a un nero o bianco puro."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブレンドカラーに応じて、色を暗くしたり明るくしたりします。効果は、画像に拡散したスポットライトを当てるようなものです。ブレンドカラー（光源）が50%グレーより明るい場合、画像は覆い焼きされたように明るくなります。ブレンドカラーが50%グレーより暗い場合、画像は焼き込みされたように暗くなります。純粋な黒や白で塗ると、明確に暗いまたは明るい領域ができますが、完全な黒や白にはなりません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Осветляет или затемняет цвета в зависимости от цвета наложения. Эффект похож на использование рассеянного прожектора на изображении. Если цвет наложения (источник света) светлее 50% серого, изображение осветляется, как если бы оно было осветлено. Если цвет наложения темнее 50% серого, изображение затемняется, как если бы оно было затемнено. Рисование с чистым черным или белым создает отчетливо темную или светлую область, но не приводит к чистому черному или белому."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据混合颜色调整颜色的亮度，使其变暗或变亮。此效果类似于向图像投射柔和的聚光灯。如果混合颜色（光源）比 50% 灰色更亮，图像会像“减淡”一样变亮。如果混合颜色比 50% 灰色更暗，图像会像“加深”一样变暗。使用纯黑或纯白绘制会产生明显的深色或浅色区域，但不会变为纯黑或纯白。"
+          }
+        }
+      }
+    },
+    "Darker Color" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dunklere Farbe"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color más oscuro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couleur plus sombre"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colore più Scuro"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "より暗い色"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Темный цвет"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "较深颜色"
+          }
+        }
+      }
+    },
+    "Difference" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Differenz"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diferencia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Différence"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Differenza"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "差の絶対値"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разница"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "差值"
+          }
+        }
+      }
+    },
+    "Divide" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teilen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dividir"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diviser"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dividi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "除算"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Делить"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "划分"
+          }
+        }
+      }
+    },
+    "Edits or paints each pixel to make it the result color. This is the default mode. (Normal mode is called Threshold when you’re working with a bitmapped or indexed-color image.)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeitet oder malt jedes Pixel, um ihm die Ergebnisfarbe zu geben. Dies ist der Standardmodus. (Der normale Modus wird Schwellenwert genannt, wenn Sie mit einem Bild mit Bitmap- oder indizierten Farben arbeiten)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edita o pinta cada píxel para convertirlo en el color resultante. Este es el modo por defecto. (El modo normal se llama Umbral cuando se trabaja con una imagen de mapa de bits o de color indexado)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifie ou peint chaque pixel pour le transformer en la couleur résultante. C'est le mode par défaut. (Le mode Normal est appelé Seuil lorsque vous travaillez avec une image bitmap ou en couleurs indexées.)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica o dipinge ogni pixel per ottenere il colore risultante. Questa è la modalità predefinita. (La modalità Normale è chiamata Soglia quando si lavora con un’immagine bitmap o a colori indicizzati.)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各ピクセルを編集またはペイントして、結果の色にする。これはデフォルトのモードです。(通常のモードは、ビットマップ画像やインデックス化されたカラー画像を扱っているときにしきい値と呼ばれます)。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Редактирует или рисует каждый пиксель, чтобы он стал результирующим цветом. Это режим по умолчанию. (Режим «Нормальный» называется «Порог» при работе с растровыми или индексированными изображениями.)"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑或绘制每个像素，使其成为结果颜色。这是默认模式。(在处理位图或索引色图像时，正常模式称为阈值）。"
+          }
+        }
+      }
+    },
+    "Effects" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effekte"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efectos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effets"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effetti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エフェクト"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эффекты"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "效果"
+          }
+        }
+      }
+    },
+    "Exclusion" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausschluss"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exclusión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exclusion"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esclusione"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "排他的差分"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исключение"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "排除"
+          }
+        }
+      }
+    },
+    "Export" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportieren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exporter"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esporta"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エクスポート"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экспорт"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出"
+          }
+        }
+      }
+    },
+    "Exposure" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Belichtung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exposición"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exposition"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esposizione"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "露出"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экспозиция"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "曝光"
+          }
+        }
+      }
+    },
+    "Filters" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtros"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtres"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtri"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィルター"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фильтры"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "滤镜"
+          }
+        }
+      }
+    },
+    "Gamma" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gamma"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gamma"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gamma"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gamma"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ガンマ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Гамма"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "伽马"
+          }
+        }
+      }
+    },
+    "Highlights" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lichter"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luces"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hautes lumières"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alte Luci"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ハイライト"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Светлые участки"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高光"
+          }
+        }
+      }
+    },
+    "Hue" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Farbton"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tono"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teinte"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonalità"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "色相"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оттенок"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "色相"
+          }
+        }
+      }
+    },
+    "Intensity" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intensität"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intensidad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intensité"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intensità"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "強度"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Интенсивность"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "强度"
+          }
+        }
+      }
+    },
+    "Intensity:" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intensität:"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intensidad:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intensité:"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intensità:"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "強度:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Интенсивность:"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "强度:"
+          }
+        }
+      }
+    },
+    "Lighten" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufhellen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aclarar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Éclaircir"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schiarisci"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明るくする"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Осветлить"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "变亮"
+          }
+        }
+      }
+    },
+    "Linear Burn" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lineare Brennung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subexposición lineal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brûlure linéaire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brucia Lineare"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リニアバーン"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Линейное затемнение"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "线性加深"
+          }
+        }
+      }
+    },
+    "Linear Dodge" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Lineares Dodge"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sobreexposición lineal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Éclaircissement linéaire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schiarisci Lineare"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リニアドッジ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Линейное осветление"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "线性减淡"
+          }
+        }
+      }
+    },
+    "Linear Light" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lineares Licht"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luz lineal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lumière linéaire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luce Lineare"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リニアライト"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Линейный свет"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "线性光"
+          }
+        }
+      }
+    },
+    "Looks at each channel’s color information and multiplies the inverse of the blend and base colors. The result color is always a lighter color. Screening with black leaves the color unchanged. Screening with white produces white. The effect is similar to projecting multiple photographic slides on top of each other." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betrachtet die Farbinformationen der einzelnen Kanäle und multipliziert den Kehrwert der Misch- und Grundfarben. Die Ergebnisfarbe ist immer eine hellere Farbe. Die Rasterung mit Schwarz lässt die Farbe unverändert. Die Rasterung mit Weiß ergibt Weiß. Der Effekt ist vergleichbar mit der Projektion mehrerer fotografischer Dias übereinander."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mira la información de color de cada canal y multiplica el inverso de los colores de mezcla y base. El color resultante es siempre un color más claro. El tramado con negro no cambia el color. El cribado con blanco produce blanco. El efecto es similar a proyectar varias diapositivas fotográficas una sobre otra."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examine les informations de couleur de chaque canal et multiplie l'inverse des couleurs de fusion et de base. La couleur résultante est toujours plus claire. L'application de noir laisse la couleur inchangée. L'application de blanc produit du blanc. L'effet est similaire à la projection de plusieurs diapositives photographiques les unes sur les autres."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esamina le informazioni cromatiche di ciascun canale e moltiplica l'inverso dei colori di miscela e di base. Il risultato è sempre un colore più chiaro. La retinatura con il nero lascia il colore invariato. La retinatura con il bianco produce il bianco. L'effetto è simile alla proiezione di più diapositive fotografiche una sull'altra."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各チャンネルの色情報を見て、ブレンドカラーとベースカラーの逆数を乗算します。結果の色は常に明るい色になる。黒でスクリーニングすると色は変わりません。白でスクリーニングすると白になる。この効果は、複数の写真スライドを重ねて投影するのと似ている。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрит на информацию о цвете каждого канала и умножает инвертированные цвета наложения и основного. Результирующий цвет всегда светлее. Применение черного не изменяет цвет. Применение белого приводит к белому цвету. Эффект похож на наложение нескольких фотографий друг на друга."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看每个通道的色彩信息，并乘以混合色和基色的倒数。得到的颜色始终是浅色。用黑色加网，颜色不变。用白色加网产生白色。效果类似于将多张幻灯片叠加投影。"
+          }
+        }
+      }
+    },
+    "Looks at the color information in each channel and brightens the base color to reflect the blend color by decreasing contrast between the two. Blending with black produces no change." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betrachtet die Farbinformationen in jedem Kanal und hellt die Grundfarbe auf, um die Überblendfarbe wiederzugeben, indem der Kontrast zwischen den beiden verringert wird. Die Überblendung mit Schwarz bewirkt keine Änderung."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examina la información de color de cada canal y aclara el color base para reflejar el color de fusión disminuyendo el contraste entre ambos. La mezcla con negro no produce ningún cambio."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examine les informations de couleur de chaque canal et éclaircit la couleur de base pour refléter la couleur de fusion en diminuant le contraste entre les deux. Le mélange avec le noir ne produit aucun changement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esamina le informazioni sul colore in ciascun canale e schiarisce il colore di base per riflettere il colore della miscela, diminuendo il contrasto tra i due. La miscelazione con il nero non produce alcun cambiamento."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各チャンネルのカラー情報を見て、ベースカラーかブレンドカラーのどちらか明るい方を結果カラーとして選択します。ブレンドカラーより暗いピクセルは置き換えられ、ブレンドカラーより明るいピクセルは変化しません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрит на информацию о цвете каждого канала и осветляет основной цвет, уменьшая контраст между ними. Смешивание с черным не приводит к изменениям."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看每个通道中的颜色信息，通过减小两者之间的对比度来增亮基色，以反映混合色。与黑色混合不会产生任何变化。"
+          }
+        }
+      }
+    },
+    "Looks at the color information in each channel and brightens the base color to reflect the blend color by increasing the brightness. Blending with black produces no change." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betrachtet die Farbinformationen in jedem Kanal und hellt die Grundfarbe auf, um die Mischfarbe durch Erhöhung der Helligkeit wiederzugeben. Die Überblendung mit Schwarz bewirkt keine Änderung."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mira la información de color en cada canal y aclara el color base para reflejar el color de mezcla aumentando el brillo. La mezcla con negro no produce ningún cambio."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examine les informations de couleur de chaque canal et éclaircit la couleur de base pour refléter la couleur de fusion en augmentant la luminosité. Le mélange avec le noir ne produit aucun changement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esamina le informazioni sul colore in ciascun canale e schiarisce il colore di base per riflettere il colore di fusione aumentando la luminosità. La miscelazione con il nero non produce alcun cambiamento."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各チャンネルの色情報を見て、ベースカラーを明るくしてブレンドカラーを反映させます。黒とのブレンドでは変化はありません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрит на информацию о цвете каждого канала и осветляет основной цвет, увеличивая яркость. Смешивание с черным не приводит к изменениям."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看每个通道中的颜色信息，并通过增加亮度使基色变亮，以反映混合色。与黑色混合不会产生任何变化。"
+          }
+        }
+      }
+    },
+    "Looks at the color information in each channel and darkens the base color to reflect the blend color by decreasing the brightness. Blending with white produces no change." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betrachtet die Farbinformationen in jedem Kanal und verdunkelt die Grundfarbe, um die Mischfarbe durch Verringerung der Helligkeit wiederzugeben. Die Überblendung mit Weiß bewirkt keine Änderung."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mira la información de color en cada canal y oscurece el color base para reflejar el color de mezcla disminuyendo el brillo. La mezcla con blanco no produce ningún cambio."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examine les informations de couleur de chaque canal et assombrit la couleur de base pour refléter la couleur de fusion en diminuant la luminosité. Le mélange avec le blanc ne produit aucun changement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esamina le informazioni sul colore in ciascun canale e scurisce il colore di base per riflettere il colore della miscela, diminuendo la luminosità. La miscelazione con il bianco non produce alcun cambiamento."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各チャンネルの色情報を見て、ベースカラーを暗くし、明度を下げてブレンドカラーを反映させる。白とのブレンドでは変化はありません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрит на информацию о цвете каждого канала и затемняет основной цвет, уменьшая яркость. Смешивание с белым не приводит к изменениям."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看每个通道中的颜色信息，通过降低亮度使基色变暗，以反映混合色。与白色混合不会产生任何变化。"
+          }
+        }
+      }
+    },
+    "Looks at the color information in each channel and darkens the base color to reflect the blend color by increasing the contrast between the two. Blending with white produces no change." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betrachtet die Farbinformationen in den einzelnen Kanälen und verdunkelt die Grundfarbe, um die Mischfarbe wiederzugeben, indem der Kontrast zwischen den beiden erhöht wird. Die Überblendung mit Weiß bewirkt keine Änderung."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examina la información de color de cada canal y oscurece el color base para reflejar el color de fusión aumentando el contraste entre ambos. La mezcla con blanco no produce ningún cambio."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examine les informations de couleur de chaque canal et assombrit la couleur de base pour refléter la couleur de fusion en augmentant le contraste entre les deux. Le mélange avec le blanc ne produit aucun changement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esamina le informazioni sul colore in ciascun canale e scurisce il colore di base per riflettere il colore della miscela, aumentando il contrasto tra i due. La miscelazione con il bianco non produce alcun cambiamento."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各チャンネルの色情報を見て、2つの間のコントラストを上げることによって、ブレンドカラーを反映するためにベースカラーを暗くします。白とのブレンドでは変化はありません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрит на информацию о цвете каждого канала и затемняет основной цвет, увеличивая контраст между ними. Смешивание с белым не приводит к изменениям."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看每个通道中的颜色信息，通过增加两者之间的对比度，使基色变暗以反映混合色。与白色混合不会产生任何变化。"
+          }
+        }
+      }
+    },
+    "Looks at the color information in each channel and divides the blend color from the base color." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Untersucht die Farbinformationen in den einzelnen Kanälen und trennt die Mischfarbe von der Grundfarbe."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mira la información de color en cada canal y divide el color de mezcla del color base."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examine les informations de couleur de chaque canal et divise la couleur de fusion par la couleur de base."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esamina le informazioni cromatiche di ciascun canale e divide il colore della miscela dal colore di base."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各チャンネルの色情報を見て、ベースカラーからブレンドカラーを分ける。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрит на информацию о цвете каждого канала и делит цвет наложения на основной."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看每个通道的颜色信息，并将混合色从基色中划分出来。"
+          }
+        }
+      }
+    },
+    "Looks at the color information in each channel and multiplies the base color by the blend color. The result color is always a darker color. Multiplying any color with black produces black. Multiplying any color with white leaves the color unchanged. When you’re painting with a color other than black or white, successive strokes with a painting tool produce progressively darker colors. The effect is similar to drawing on the image with multiple marking pens." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betrachtet die Farbinformationen in jedem Kanal und multipliziert die Grundfarbe mit der Mischfarbe. Die Ergebnisfarbe ist immer eine dunklere Farbe. Die Multiplikation einer beliebigen Farbe mit Schwarz ergibt Schwarz. Die Multiplikation einer beliebigen Farbe mit Weiß lässt die Farbe unverändert. Wenn Sie mit einer anderen Farbe als Schwarz oder Weiß malen, erzeugen aufeinanderfolgende Striche mit einem Malwerkzeug zunehmend dunklere Farben. Der Effekt ist vergleichbar mit dem Zeichnen auf dem Bild mit mehreren Markierungsstiften."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mira la información de color en cada canal y multiplica el color base por el color de mezcla. El color resultante es siempre un color más oscuro. Multiplicar cualquier color por negro produce negro. Multiplicar cualquier color por blanco deja el color sin cambios. Cuando pinte con un color que no sea blanco o negro, los trazos sucesivos con una herramienta de pintura producen colores progresivamente más oscuros. El efecto es similar al de dibujar sobre la imagen con varios rotuladores."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examine les informations de couleur de chaque canal et multiplie la couleur de base par la couleur de fusion. La couleur résultante est toujours plus sombre. Multiplier n'importe quelle couleur par du noir produit du noir. Multiplier n'importe quelle couleur par du blanc laisse la couleur inchangée. Lorsque vous peignez avec une couleur autre que le noir ou le blanc, les coups successifs avec un outil de peinture produisent des couleurs de plus en plus sombres. L'effet est similaire à dessiner sur l'image avec plusieurs marqueurs."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esamina le informazioni cromatiche di ciascun canale e moltiplica il colore di base per il colore di fusione. Il colore risultante è sempre un colore più scuro. Moltiplicando qualsiasi colore con il nero si ottiene il nero. Moltiplicando qualsiasi colore con il bianco, il colore rimane invariato. Quando si dipinge con un colore diverso dal nero o dal bianco, i tratti successivi con uno strumento di pittura producono colori progressivamente più scuri. L'effetto è simile a quello di disegnare sull'immagine con più pennarelli."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各チャンネルの色情報を見て、ベースカラーにブレンドカラーを掛けます。結果の色は常に暗い色になります。任意の色に黒を掛けると黒になります。任意の色に白を乗算すると、色は変化しません。黒または白以外の色でペイントする場合、ペイントツールで連続してストロークすると、徐々に暗い色になります。この効果は、複数のマーキングペンで画像に描画するのと似ています。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрит на информацию о цвете каждого канала и умножает основной цвет на цвет наложения. Результат всегда темнее. Умножение на черный дает черный цвет, умножение на белый оставляет цвет неизменным. При рисовании с цветом, отличным от черного или белого, каждый следующий мазок инструмента делает цвет темнее. Эффект схож с рисованием на изображении несколькими маркерами."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看每个通道的颜色信息，并将基色乘以混合色。得到的颜色总是较深的颜色。将任何颜色与黑色相乘都会产生黑色。将任何颜色与白色相乘，颜色都不会改变。在使用黑色或白色以外的颜色进行绘画时，使用绘画工具连续描画会产生逐渐变暗的颜色。这种效果类似于用多支标记笔在图像上作画。"
+          }
+        }
+      }
+    },
+    "Looks at the color information in each channel and selects the base or blend color—whichever is darker—as the result color. Pixels lighter than the blend color are replaced, and pixels darker than the blend color do not change." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betrachtet die Farbinformationen in jedem Kanal und wählt die Grund- oder Mischfarbe - je nachdem, welche Farbe dunkler ist - als Ergebnisfarbe aus. Pixel, die heller als die Mischfarbe sind, werden ersetzt, und Pixel, die dunkler als die Mischfarbe sind, werden nicht verändert."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examina la información de color de cada canal y selecciona el color base o de fusión (el que sea más oscuro) como color resultante. Los píxeles más claros que el color de fusión se sustituyen, y los píxeles más oscuros que el color de fusión no cambian."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examine les informations de couleur de chaque canal et sélectionne la couleur de base ou de fusion — la plus sombre — comme couleur résultante. Les pixels plus clairs que la couleur de fusion sont remplacés, et les pixels plus sombres que la couleur de fusion ne changent pas."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esamina le informazioni sul colore in ciascun canale e seleziona il colore di base o il colore di miscela, a seconda di quale sia più scuro, come colore di risultato. I pixel più chiari del colore di miscela vengono sostituiti, mentre i pixel più scuri del colore di miscela non cambiano."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各チャンネルのカラー情報を見て、ベースカラーかブレンドカラーのどちらか濃い方を結果カラーとして選択します。ブレンドカラーより明るいピクセルは置き換えられ、ブレンドカラーより暗いピクセルは変化しません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрит на информацию о цвете каждого канала и выбирает основной или наложенный цвет — какой из них темнее — как результирующий цвет. Пиксели светлее цвета наложения заменяются, а пиксели темнее цвета наложения остаются неизменными."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看每个通道的颜色信息，选择基色或混合色（以颜色较深者为准）作为结果色。比混合色浅的像素会被替换，而比混合色深的像素则不会改变。"
+          }
+        }
+      }
+    },
+    "Looks at the color information in each channel and selects the base or blend color—whichever is lighter—as the result color. Pixels darker than the blend color are replaced, and pixels lighter than the blend color do not change." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betrachtet die Farbinformationen in jedem Kanal und wählt die Grund- oder Mischfarbe - je nachdem, welche Farbe heller ist - als Ergebnisfarbe aus. Pixel, die dunkler als die Mischfarbe sind, werden ersetzt, und Pixel, die heller als die Mischfarbe sind, werden nicht verändert."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examina la información de color de cada canal y selecciona el color base o de fusión (el que sea más claro) como color resultante. Los píxeles más oscuros que el color de fusión se sustituyen, y los píxeles más claros que el color de fusión no cambian."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examine les informations de couleur de chaque canal et sélectionne la couleur de base ou de fusion — la plus claire — comme couleur résultante. Les pixels plus sombres que la couleur de fusion sont remplacés, et les pixels plus clairs que la couleur de fusion ne changent pas."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esamina le informazioni sul colore in ciascun canale e seleziona il colore di base o il colore di miscela, a seconda di quale sia più chiaro, come colore di risultato. I pixel più scuri del colore di miscela vengono sostituiti, mentre i pixel più chiari del colore di miscela non cambiano."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各チャンネルのカラー情報を見て、ベースカラーかブレンドカラーのどちらか明るい方を結果カラーとして選択します。ブレンドカラーより暗いピクセルは置き換えられ、ブレンドカラーより明るいピクセルは変化しません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрит на информацию о цвете каждого канала и выбирает основной или наложенный цвет — какой из них светлее — как результирующий цвет. Пиксели темнее цвета наложения заменяются, а пиксели светлее цвета наложения остаются неизменными."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看每个通道的颜色信息，选择基色或混合色（以较浅者为准）作为结果色。比混合色深的像素会被替换，而比混合色浅的像素则不会改变。"
+          }
+        }
+      }
+    },
+    "Looks at the color information in each channel and subtracts either the blend color from the base color or the base color from the blend color, depending on which has the greater brightness value. Blending with white inverts the base color values; blending with black produces no change." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betrachtet die Farbinformationen in jedem Kanal und subtrahiert entweder die Mischfarbe von der Grundfarbe oder die Grundfarbe von der Mischfarbe, je nachdem, welcher Wert heller ist. Das Mischen mit Weiß invertiert die Grundfarbwerte; das Mischen mit Schwarz bewirkt keine Änderung."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examina la información de color en cada canal y resta el color de fusión del color base o el color base del color de fusión, dependiendo de cuál tenga el valor de brillo más alto. Mezclar con blanco invierte los valores del color base; mezclar con negro no produce ningún cambio."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examine les informations de couleur dans chaque canal et soustrait soit la couleur de fusion de la couleur de base, soit la couleur de base de la couleur de fusion, selon la valeur de luminosité la plus élevée. Le mélange avec le blanc inverse les valeurs de la couleur de base ; le mélange avec le noir ne produit aucun changement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esamina le informazioni sul colore in ogni canale e sottrae il colore di fusione dal colore di base o il colore di base dal colore di fusione, a seconda di quale abbia il valore di luminosità più alto. La fusione con il bianco inverte i valori del colore di base; la fusione con il nero non produce alcun cambiamento"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各チャンネルの色情報を調べ、ブレンドカラーをベースカラーから減算するか、ベースカラーをブレンドカラーから減算します。どちらを減算するかは、明るさの値が大きい方に依存します。白とブレンドするとベースカラーの値が反転し、黒とブレンドしても変化はありません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрит на информацию о цвете каждого канала и вычитает либо цвет наложения из основного цвета, либо основной цвет из цвета наложения, в зависимости от того, какое значение яркости больше. Смешивание с белым инвертирует значения основного цвета; смешивание с черным не вызывает изменений."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看每个通道中的颜色信息，并根据亮度值较大的颜色从基色中减去混合色或从混合色中减去基色。与白色混合会反转基色值；与黑色混合不会产生任何变化。"
+          }
+        }
+      }
+    },
+    "Looks at the color information in each channel and subtracts the blend color from the base color. In 8- and 16-bit images, any resulting negative values are clipped to zero." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betrachtet die Farbinformationen in jedem Kanal und subtrahiert die Mischfarbe von der Grundfarbe. Bei 8- und 16-Bit-Bildern werden alle resultierenden negativen Werte auf Null gesetzt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examina la información de color en cada canal y resta el color de fusión del color base. En imágenes de 8 y 16 bits, cualquier valor negativo resultante se recorta a cero."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examine les informations de couleur dans chaque canal et soustrait la couleur de fusion de la couleur de base. Dans les images 8 et 16 bits, toutes les valeurs négatives résultantes sont ramenées à zéro."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esamina le informazioni sul colore in ogni canale e sottrae il colore di fusione dal colore di base. Nelle immagini a 8 e 16 bit, tutti i valori negativi risultanti vengono tagliati a zero."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各チャンネルの色情報を調べ、ブレンドカラーをベースカラーから減算します。8ビットおよび16ビット画像では、結果として得られる負の値はすべてゼロにクリップされます。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрит на информацию о цвете каждого канала и вычитает цвет наложения из основного цвета. В 8- и 16-битных изображениях все отрицательные значения обрезаются до нуля."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看每个通道中的颜色信息，并从基色中减去混合色。在8位和16位图像中，任何生成的负值都会被裁剪为零。"
+          }
+        }
+      }
+    },
+    "Luminosity" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leuchtkraft"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luminosidad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luminosité"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luminosità"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "輝度"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Яркость"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明度"
+          }
+        }
+      }
+    },
+    "Multiplies or screens the colors, depending on the base color. Patterns or colors overlay the existing pixels while preserving the highlights and shadows of the base color. The base color is not replaced, but mixed with the blend color to reflect the lightness or darkness of the original color." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Multipliziert oder überlagert die Farben, abhängig von der Grundfarbe. Muster oder Farben überlagern die vorhandenen Pixel, während die Lichter und Schatten der Grundfarbe erhalten bleiben. Die Grundfarbe wird nicht ersetzt, sondern mit der Mischfarbe gemischt, um die Helligkeit oder Dunkelheit der ursprünglichen Farbe widerzuspiegeln."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Multiplica o superpone los colores, dependiendo del color base. Los patrones o colores se superponen a los píxeles existentes mientras se conservan los reflejos y sombras del color base. El color base no se reemplaza, sino que se mezcla con el color de fusión para reflejar la claridad u oscuridad del color original."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Multiplie ou superpose les couleurs, en fonction de la couleur de base. Les motifs ou les couleurs se superposent aux pixels existants tout en préservant les reflets et les ombres de la couleur de base. La couleur de base n'est pas remplacée, mais mélangée avec la couleur de fusion pour refléter la clarté ou l'obscurité de la couleur d'origine."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moltiplica o sovrappone i colori, a seconda del colore di base. I motivi o i colori si sovrappongono ai pixel esistenti preservando le luci e le ombre del colore di base. Il colore di base non viene sostituito, ma mescolato con il colore di fusione per riflettere la luminosità o l'oscurità del colore originale."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベースカラーに応じて色を乗算またはスクリーンします。パターンや色は、ベースカラーのハイライトとシャドウを保ちながら、既存のピクセルに重ねられます。ベースカラーは置き換えられず、ブレンドカラーと混合されて、元の色の明るさや暗さを反映します。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Умножает или накладывает цвета в зависимости от основного цвета. Узоры или цвета накладываются на существующие пиксели, сохраняя светлые и темные участки основного цвета. Основной цвет не заменяется, а смешивается с цветом наложения, чтобы отразить яркость или темноту исходного цвета."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据基色对颜色进行乘法或屏幕操作。图案或颜色会覆盖现有像素，同时保留基色的高光和阴影。基色不会被替换，而是与混合色混合以反映原始颜色的明暗度。"
+          }
+        }
+      }
+    },
+    "Multipy" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Multiplizieren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Multiplicar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Multiplier"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moltiplica"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "乗算"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Умножение"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "相乘"
+          }
+        }
+      }
+    },
+    "Noise Reduction" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rauschunterdrückung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reducción de ruido"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réduction du bruit"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riduzione del rumore"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノイズ低減"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уменьшение шума"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "降噪"
+          }
+        }
+      }
+    },
+    "None" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ninguno"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessuno"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "なし"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无"
+          }
+        }
+      }
+    },
+    "Normal" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normale"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標準"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нормальный"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正常"
+          }
+        }
+      }
+    },
+    "Overlay" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Überlagerung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Superposición"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Superposition"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sovrapponi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オーバーレイ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Наложение"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "叠加"
+          }
+        }
+      }
+    },
+    "Pin Light" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punktlicht"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luz de punto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lumière ponctuelle"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luce puntuale"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ピンライト"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Точечный свет"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点光"
+          }
+        }
+      }
+    },
+    "Radius" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radius"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rayon"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raggio"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "半径"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Радиус"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "半径"
+          }
+        }
+      }
+    },
+    "Replaces the colors, depending on the blend color. If the blend color (light source) is lighter than 50% gray, pixels darker than the blend color are replaced, and pixels lighter than the blend color do not change. If the blend color is darker than 50% gray, pixels lighter than the blend color are replaced, and pixels darker than the blend color do not change. This is useful for adding special effects to an image." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ersetzt die Farben, abhängig von der Mischfarbe. Wenn die Mischfarbe (Lichtquelle) heller als 50% Grau ist, werden Pixel, die dunkler als die Mischfarbe sind, ersetzt, und Pixel, die heller als die Mischfarbe sind, bleiben unverändert. Wenn die Mischfarbe dunkler als 50% Grau ist, werden Pixel, die heller als die Mischfarbe sind, ersetzt, und Pixel, die dunkler als die Mischfarbe sind, bleiben unverändert. Dies ist nützlich, um einem Bild Spezialeffekte hinzuzufügen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reemplaza los colores dependiendo del color de fusión. Si el color de fusión (fuente de luz) es más claro que el 50 % de gris, los píxeles más oscuros que el color de fusión se reemplazan, y los píxeles más claros que el color de fusión no cambian. Si el color de fusión es más oscuro que el 50 % de gris, los píxeles más claros que el color de fusión se reemplazan, y los píxeles más oscuros que el color de fusión no cambian. Esto es útil para agregar efectos especiales a una imagen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remplace les couleurs en fonction de la couleur de fusion. Si la couleur de fusion (source de lumière) est plus claire que 50 % de gris, les pixels plus sombres que la couleur de fusion sont remplacés, et les pixels plus clairs que la couleur de fusion ne changent pas. Si la couleur de fusion est plus sombre que 50 % de gris, les pixels plus clairs que la couleur de fusion sont remplacés, et les pixels plus sombres que la couleur de fusion ne changent pas. Ceci est utile pour ajouter des effets spéciaux à une image."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sostituisce i colori in base al colore di fusione. Se il colore di fusione (sorgente luminosa) è più chiaro del 50% di grigio, i pixel più scuri del colore di fusione vengono sostituiti e i pixel più chiari del colore di fusione non cambiano. Se il colore di fusione è più scuro del 50% di grigio, i pixel più chiari del colore di fusione vengono sostituiti e i pixel più scuri del colore di fusione non cambiano. Questo è utile per aggiungere effetti speciali a un'immagine."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブレンドカラーに応じて色を置き換えます。ブレンドカラー（光源）が50％グレーより明るい場合、ブレンドカラーより暗いピクセルが置き換えられ、ブレンドカラーより明るいピクセルは変化しません。ブレンドカラーが50％グレーより暗い場合、ブレンドカラーより明るいピクセルが置き換えられ、ブレンドカラーより暗いピクセルは変化しません。これは、画像に特殊効果を追加するのに役立ちます。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заменяет цвета в зависимости от цвета наложения. Если цвет наложения (источник света) светлее 50% серого, пиксели темнее цвета наложения заменяются, а пиксели светлее цвета наложения остаются неизменными. Если цвет наложения темнее 50% серого, пиксели светлее цвета наложения заменяются, а пиксели темнее цвета наложения остаются неизменными. Это полезно для добавления специальных эффектов к изображению."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据混合色替换颜色。如果混合色（光源）比50%灰色更亮，则比混合色更暗的像素将被替换，而比混合色更亮的像素保持不变。如果混合色比50%灰色更暗，则比混合色更亮的像素将被替换，而比混合色更暗的像素保持不变。这对于向图像添加特殊效果非常有用。"
+          }
+        }
+      }
+    },
+    "Saturation" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sättigung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saturación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saturation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saturazione"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "彩度"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Насыщенность"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "饱和度"
+          }
+        }
+      }
+    },
+    "Screen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bildschirm"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pantalla"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écran"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schermo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクリーン"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экран"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "屏幕"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paramètres"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impostazioni"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
+          }
+        }
+      }
+    },
+    "Shadows" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schatten"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sombras"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ombres"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ombre"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "シャドウ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тени"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "阴影"
+          }
+        }
+      }
+    },
+    "Sharpness" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schärfe"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nitidez"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netteté"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nitidezza"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "シャープネス"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Резкость"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "锐度"
+          }
+        }
+      }
+    },
+    "Show all" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle anzeigen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar todo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout afficher"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra tutto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべて表示"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать все"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示全部"
+          }
+        }
+      }
+    },
+    "Soft Light" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiches Licht"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luz suave"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lumière douce"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luce soffusa"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ソフトライト"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мягкий свет"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "柔光"
+          }
+        }
+      }
+    },
+    "Substract" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subtrahieren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sustraer"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soustraire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sottrai"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "減算"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вычитание"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "减掉"
+          }
+        }
+      }
+    },
+    "Tap to choose an image\nfrom the gallery." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippen, um ein Bild aus der Galerie auszuwählen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca para elegir una imagen de la galería."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touchez pour choisir une image de la galerie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tocca per scegliere un'immagine dalla galleria."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ギャラリーから画像を選択するにはタップしてください。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите, чтобы выбрать изображение из галереи."
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点击从图库选择图片。"
+          }
+        }
+      }
+    },
+    "Temperature" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperatur"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperatura"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Température"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperatura"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "温度"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Температура"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "温度"
+          }
+        }
+      }
+    },
+    "Textures" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texturen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texturas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Textures"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trame"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テクスチャ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текстуры"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纹理"
+          }
+        }
+      }
+    },
+    "Tint" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Farbton"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Matiz"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teinte"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tinta"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "色合い"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оттенок"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "色调"
+          }
+        }
+      }
+    },
+    "Vibrance" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dynamik"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibración"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibrance"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vividezza"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自然な彩度"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вибрация"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鲜艳度"
+          }
+        }
+      }
+    },
+    "Vivid Light" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lebendiges Licht"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luz intensa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lumière vive"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luce vivida"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ビビッドライト"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Яркий свет"
+          }
+        },
+        "zh" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "强光"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
