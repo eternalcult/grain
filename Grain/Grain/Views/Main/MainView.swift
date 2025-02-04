@@ -12,6 +12,20 @@ struct MainView: View {
 
     var headerView: some View {
         ZStack {
+            if viewModel.finalImage != nil {
+                HStack {
+                    NavigationLink {
+                        SettingsView(currentAppId: 6741040418)
+                    } label: {
+                        Image(systemName: "line.3.horizontal")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .tint(Color.textWhite)
+                    }
+                    Spacer()
+                }
+            }
             Image("grain")
                 .resizable()
                 .frame(width: 50, height: 50)
