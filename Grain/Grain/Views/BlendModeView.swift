@@ -11,7 +11,7 @@ struct BlendModeView: View {
         ScrollView {
             Text("Blend modes")
                 .font(.h1)
-                .foregroundStyle(Color.textWhite)
+                .foregroundStyle(Color.text)
                 .minimumScaleFactor(0.1)
                 .lineLimit(1)
             VStack(spacing: 16) {
@@ -19,11 +19,11 @@ struct BlendModeView: View {
                     VStack {
                         Text(blendMode.title)
                             .font(.h4)
-                            .foregroundStyle(Color.textWhite)
+                            .foregroundStyle(Color.text)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         Text(blendMode.description)
                             .font(.text)
-                            .foregroundStyle(Color.textWhite)
+                            .foregroundStyle(Color.text)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(maxWidth: .infinity)
@@ -31,16 +31,16 @@ struct BlendModeView: View {
             }
         }
         .padding(.horizontal)
-        .background(Color.backgroundBlack)
+        .background(Color.background)
         .navigationBarBackButtonHidden(true)
-        .toolbarBackground(Color.backgroundBlack, for: .navigationBar)
+        .toolbarBackground(Color.background, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
                     dismiss()
                 } label: {
                     Image(systemName: "arrow.left")
-                        .foregroundColor(.textWhite)
+                        .foregroundColor(.text)
                 }
             }
         }

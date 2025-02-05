@@ -29,7 +29,7 @@ struct FiltersScrollView: View {
                             Text(category.title)
                                 .font(.h5)
                                 .underline(isUnderlined)
-                                .foregroundStyle(Color.textWhite.opacity(0.8))
+                                .foregroundStyle(Color.text.opacity(0.8))
                         }
                     }
                 }

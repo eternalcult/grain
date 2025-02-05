@@ -35,13 +35,13 @@ struct FullscreenImagePreviewView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            Color.background.ignoresSafeArea()
             VStack {
                 if let title {
                     Text(title)
                         .font(.h3)
                         .minimumScaleFactor(0.1)
-                        .foregroundStyle(Color.textWhite)
+                        .foregroundStyle(Color.text)
                 }
                 if let cgImage {
                     Image(uiImage: UIImage(cgImage: cgImage))
@@ -57,7 +57,7 @@ struct FullscreenImagePreviewView: View {
                     Text(desc)
                         .font(.text)
                         .italic()
-                        .foregroundStyle(Color.textWhite)
+                        .foregroundStyle(Color.text)
                 }
             }
             .padding()

@@ -21,12 +21,12 @@ struct MainView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 30, height: 30)
-                            .tint(Color.textWhite)
+                            .tint(Color.text)
                     }
                     Spacer()
                 }
             }
-            Image("grain")
+            Image("grain") // TODO: Update color
                 .resizable()
                 .frame(width: 50, height: 50)
                 .opacity(0.5)
@@ -38,20 +38,20 @@ struct MainView: View {
                     } label: {
                         Text("Export")
                             .font(.h5)
-                            .foregroundStyle(Color.textWhite)
+                            .foregroundStyle(Color.text)
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)
-                            .border(Color.textWhite, width: 1)
+                            .border(Color.text, width: 1)
                     }
                 }
             }
         }
-        //            .onAppear { // Only for testing
-        //                if let uiImage = UIImage(named: "Textures/Grain/grain1"),
-        //                   let cgImage = uiImage.cgImage {
-        //                    self.photoEditorService.updateSourceImage(CIImage(cgImage: cgImage))
-        //                }
-        //            }
+//        .onAppear { // Only for testing
+//            if let uiImage = UIImage(named: "preview"),
+//               let cgImage = uiImage.cgImage {
+//                viewModel.photoEditor.updateSourceImage(CIImage(cgImage: cgImage), orientation: .up)
+//            }
+//        }
     }
 
     var body: some View {
@@ -65,7 +65,7 @@ struct MainView: View {
             }
         }
         .padding(.horizontal, 8)
-        .background(Color.backgroundBlack)
+        .background(Color.background)
         .navigationBarBackButtonHidden(true)
         .onChange(of: viewModel.errorMessage) { _, newError in
             if newError != nil {
@@ -84,7 +84,7 @@ struct MainView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .background(Color.backgroundBlackSecondary.opacity(0.3))
+                            .background(Color.backgroundSecondary.opacity(0.1))
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                         finalImage
                             .resizable()
@@ -114,7 +114,7 @@ struct MainView: View {
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
                                 .padding(4)
-                                .tint(viewModel.showsHistogram ? Color.textBlack : Color.textWhite)
+                                .tint(viewModel.showsHistogram ? Color.textBlack : Color.text)
                                 .background(viewModel.showsHistogram ? Color.backgroundWhiteSecondary.opacity(0.8) : .clear)
                                 .clipShape(RoundedRectangle(cornerRadius: 4))
                         }
@@ -127,7 +127,7 @@ struct MainView: View {
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
                                 .padding(4)
-                                .tint(Color.textWhite)
+                                .tint(Color.text)
                                 .clipShape(RoundedRectangle(cornerRadius: 4))
                         }
                     }
@@ -157,11 +157,11 @@ struct MainView: View {
                         Image(systemName: "plus.circle.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .tint(.white)
+                            .tint(.text)
                             .frame(width: 20, height: 20)
                         Text("Tap to choose an image\nfrom the gallery.")
                             .font(.custom(size: 12))
-                            .foregroundStyle(Color.textWhite)
+                            .foregroundStyle(Color.text)
                     }.opacity(0.5)
                 }
         }
@@ -180,7 +180,7 @@ struct MainView: View {
                         HStack {
                             Text("Filters")
                                 .font(.h4)
-                                .foregroundStyle(Color.textWhite.opacity(0.8))
+                                .foregroundStyle(Color.text.opacity(0.8))
                                 .padding(.bottom, 5)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             if !viewModel.isLoadingFiltersPreviews {
@@ -190,7 +190,7 @@ struct MainView: View {
                                     Image(systemName: "dice")
                                         .resizable()
                                         .frame(width: 20, height: 20)
-                                        .tint(.textWhite.opacity(0.8))
+                                        .tint(.text.opacity(0.8))
                                 }
                             }
                         }
@@ -203,7 +203,7 @@ struct MainView: View {
                                 Text("Show all")
                                     .font(.h5)
                                     .italic()
-                                    .foregroundStyle(Color.textWhite)
+                                    .foregroundStyle(Color.text)
                             }
                         }
                     }
@@ -212,7 +212,7 @@ struct MainView: View {
                         .resizable()
                         .frame(width: 10, height: 10)
                         .rotationEffect(viewModel.showsFilters ? Angle(degrees: 180) : Angle(degrees: 0))
-                        .tint(.textWhite.opacity(0.8))
+                        .tint(.text.opacity(0.8))
                 }
             }
             if viewModel.showsFilters {
@@ -221,7 +221,7 @@ struct MainView: View {
                         Spacer()
                         ProgressView()
                             .progressViewStyle(.circular)
-                            .tint(.textWhite)
+                            .tint(.text)
                         Spacer()
                     }
                 } else {
@@ -234,7 +234,7 @@ struct MainView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(Color.backgroundBlackSecondary.opacity(0.3))
+        .background(Color.backgroundSecondary.opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
@@ -247,7 +247,7 @@ struct MainView: View {
                     HStack {
                         Text("Settings")
                             .font(.h4)
-                            .foregroundStyle(Color.textWhite.opacity(0.8))
+                            .foregroundStyle(Color.text.opacity(0.8))
                             .padding(.bottom, 5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         if viewModel.propertiesModified {
@@ -257,7 +257,7 @@ struct MainView: View {
                                 Image(systemName: "arrow.trianglehead.counterclockwise")
                                     .resizable()
                                     .frame(width: 20, height: 20)
-                                    .tint(.textWhite.opacity(0.8))
+                                    .tint(.text.opacity(0.8))
                             }
                         }
                         Spacer()
@@ -267,7 +267,7 @@ struct MainView: View {
                         .resizable()
                         .frame(width: 10, height: 10)
                         .rotationEffect(viewModel.showsSettings ? Angle(degrees: 180) : Angle(degrees: 0))
-                        .tint(.textWhite.opacity(0.8))
+                        .tint(.text.opacity(0.8))
                 }
             }
             if viewModel.showsSettings {
@@ -289,7 +289,7 @@ struct MainView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(Color.backgroundBlackSecondary.opacity(0.3))
+        .background(Color.backgroundSecondary.opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
@@ -302,7 +302,7 @@ struct MainView: View {
                     HStack(alignment: .center) {
                         Text("Effects")
                             .font(.h4)
-                            .foregroundStyle(Color.textWhite.opacity(0.8))
+                            .foregroundStyle(Color.text.opacity(0.8))
                             .padding(.bottom, 5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
@@ -311,7 +311,7 @@ struct MainView: View {
                         .resizable()
                         .frame(width: 10, height: 10)
                         .rotationEffect(viewModel.showsEffects ? Angle(degrees: 180) : Angle(degrees: 0))
-                        .tint(.textWhite.opacity(0.8))
+                        .tint(.text.opacity(0.8))
                 }
             }
             if viewModel.showsEffects {
@@ -326,7 +326,7 @@ struct MainView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(Color.backgroundBlackSecondary.opacity(0.3))
+        .background(Color.backgroundSecondary.opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
@@ -340,7 +340,7 @@ struct MainView: View {
                         HStack {
                             Text("Textures")
                                 .font(.h4)
-                                .foregroundStyle(Color.textWhite.opacity(0.8))
+                                .foregroundStyle(Color.text.opacity(0.8))
                                 .padding(.bottom, 5)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             Button {
@@ -349,7 +349,7 @@ struct MainView: View {
                                 Image(systemName: "dice")
                                     .resizable()
                                     .frame(width: 20, height: 20)
-                                    .tint(.textWhite.opacity(0.8))
+                                    .tint(.text.opacity(0.8))
                             }
                         }
                         .padding(.trailing, 8)
@@ -360,7 +360,7 @@ struct MainView: View {
                             Text("Show all")
                                 .font(.h5)
                                 .italic()
-                                .foregroundStyle(Color.textWhite)
+                                .foregroundStyle(Color.text)
                         }
                     }
                     Spacer()
@@ -368,7 +368,7 @@ struct MainView: View {
                         .resizable()
                         .frame(width: 10, height: 10)
                         .rotationEffect(viewModel.showsTextures ? Angle(degrees: 180) : Angle(degrees: 0))
-                        .tint(.textWhite.opacity(0.8))
+                        .tint(.text.opacity(0.8))
                 }
             }
             if viewModel.showsTextures {
@@ -381,10 +381,10 @@ struct MainView: View {
                             HStack {
                                 Text("Blend mode:")
                                     .font(.h5)
-                                    .foregroundStyle(Color.textWhite.opacity(0.8))
+                                    .foregroundStyle(Color.text.opacity(0.8))
                                 Text(viewModel.textureBlendMode.title)
                                     .font(.h5)
-                                    .foregroundStyle(Color.textWhite.opacity(0.8))
+                                    .foregroundStyle(Color.text.opacity(0.8))
                                 Spacer()
                                 NavigationLink {
                                     BlendModeView()
@@ -392,7 +392,7 @@ struct MainView: View {
                                     Image(systemName: "questionmark.circle.fill")
                                         .resizable()
                                         .frame(width: 20, height: 20)
-                                        .tint(.textWhite.opacity(0.8))
+                                        .tint(.text.opacity(0.8))
                                 }
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -400,13 +400,13 @@ struct MainView: View {
                                 get: { Double(viewModel.textureBlendMode.rawValue) },
                                 set: { viewModel.applyTextureBlendMode(to: BlendMode(rawValue: Int($0)) ?? .normal) }
                             ), in: BlendMode.range, step: 1)
-                                .tint(Color.textWhite.opacity(0.1))
+                                .tint(Color.text.opacity(0.1))
                         }
                         VStack(spacing: 0) {
                             HStack {
                                 Text("Intensity:")
                                     .font(.h5)
-                                    .foregroundStyle(Color.textWhite.opacity(0.8))
+                                    .foregroundStyle(Color.text.opacity(0.8))
                                 let formattedTextureIntensity = viewModel.textureIntensity.formatValueToAnotherRange(
                                     currentMin: 0,
                                     currentMax: 1,
@@ -415,11 +415,11 @@ struct MainView: View {
                                 )
                                 Text(String(format: "%.0f%%", formattedTextureIntensity))
                                     .font(.h5)
-                                    .foregroundStyle(Color.textWhite.opacity(0.8))
+                                    .foregroundStyle(Color.text.opacity(0.8))
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             Slider(value: $viewModel.textureIntensity, in: 0 ... 1)
-                                .tint(Color.textWhite.opacity(0.1))
+                                .tint(Color.text.opacity(0.1))
                         }
                     }
                 }
@@ -427,7 +427,7 @@ struct MainView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(Color.backgroundBlackSecondary.opacity(0.3))
+        .background(Color.backgroundSecondary.opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }

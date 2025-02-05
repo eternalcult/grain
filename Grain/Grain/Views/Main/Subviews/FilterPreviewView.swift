@@ -41,16 +41,16 @@ struct FilterPreviewView: View {
                             Text(filter.title)
                                 .font(.h6)
                                 .minimumScaleFactor(0.1)
-                                .foregroundStyle(Color.textBlack)
+                                .foregroundStyle(Color.text)
                                 .frame(height: 20)
                                 .frame(maxWidth: .infinity)
                                 .padding(.horizontal, 4)
-                                .background(Color.backgroundWhite.opacity(0.5))
+                                .background(Color.background.opacity(0.5))
                         }
                         .clipShape(.rect(cornerRadius: 4))
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
-                                .stroke(isSelected ? Color.textWhite : .clear, lineWidth: 2)
+                                .stroke(isSelected ? Color.text : .clear, lineWidth: 2)
                         )
                         .fullScreenCover(isPresented: $showsFullScreen) {
                             FullscreenImagePreviewView(title: filter.title, desc: filter.desc, cgImage: preview, isShow: $showsFullScreen)

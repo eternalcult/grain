@@ -24,7 +24,7 @@ struct GalleryView: View {
                 ForEach(DataStorage.shared.filtersCategories) { category in
                     Text(category.title)
                         .font(.h1)
-                        .foregroundStyle(Color.textWhite)
+                        .foregroundStyle(Color.text)
                         .minimumScaleFactor(0.1)
                         .lineLimit(1)
                     LazyVGrid(columns: columns, spacing: 8) {
@@ -52,7 +52,7 @@ struct GalleryView: View {
                 ForEach(DataStorage.shared.texturesCategories) { category in
                     Text(category.title)
                         .font(.h1)
-                        .foregroundStyle(Color.textWhite)
+                        .foregroundStyle(Color.text)
                         .minimumScaleFactor(0.1)
                         .lineLimit(1)
                     LazyVGrid(columns: columns, spacing: 8) {
@@ -74,16 +74,16 @@ struct GalleryView: View {
             }
         }
         .padding(.horizontal)
-        .background(Color.backgroundBlack)
+        .background(Color.background)
         .navigationBarBackButtonHidden(true)
-        .toolbarBackground(Color.backgroundBlack, for: .navigationBar)
+        .toolbarBackground(Color.background, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
                     dismiss()
                 } label: {
                     Image(systemName: "arrow.left")
-                        .foregroundColor(.textWhite)
+                        .foregroundColor(.text)
                 }
             }
         }
