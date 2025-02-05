@@ -48,6 +48,15 @@ struct GrainApp: App {
         })
         ).navigationDestination(isPresented: $fromOnboardingToMain) {
             MainView()
+                .modelContainer(for: [FilterCICubeData.self]) { container in
+                    switch container {
+                    case let .success(container):
+                        DataStorage.shared.addSwiftDataContext(container.mainContext)
+                        DataStorage.shared.configureFiltersDataIfNeeded()
+                    case let .failure(failure):
+                        print("Error with model container", failure.localizedDescription)
+                    }
+                }
         }
     }
 
