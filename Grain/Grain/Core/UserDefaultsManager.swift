@@ -4,6 +4,7 @@ import Foundation
 
 enum UserDefaultsKey: String {
     case launchCount
+    case hasLaunchedBefore
 }
 
 // MARK: - UserDefaultsManager

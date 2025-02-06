@@ -2,8 +2,7 @@ import SwiftUI
 
 struct BlendModeView: View {
     // MARK: SwiftUI Properties
-
-    @Environment(\.dismiss) private var dismiss
+    @Environment(MainRouter.self) private var router
 
     // MARK: Content Properties
 
@@ -37,7 +36,7 @@ struct BlendModeView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    dismiss()
+                    router.popToRoot()
                 } label: {
                     Image(systemName: "arrow.left")
                         .foregroundColor(.text)

@@ -1,15 +1,10 @@
 import SwiftUI
 
 struct GalleryView: View {
-    let type: GalleryViewType
-    @Environment(\.dismiss) private var dismiss
-
-    enum GalleryViewType {
-        case filters
-        case textures
-    }
-
+    @Environment(MainRouter.self) private var router
     @Environment(MainViewModel.self) private var viewModel
+
+    let type: GalleryViewType
 
     private let columns = [
         GridItem(.flexible()),
@@ -80,7 +75,7 @@ struct GalleryView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    dismiss()
+                    router.popToRoot()
                 } label: {
                     Image(systemName: "arrow.left")
                         .foregroundColor(.text)
