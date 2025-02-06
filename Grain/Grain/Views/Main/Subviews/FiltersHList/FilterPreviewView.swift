@@ -53,7 +53,7 @@ struct FilterPreviewView: View {
                                 .stroke(isSelected ? Color.text : .clear, lineWidth: 2)
                         )
                         .fullScreenCover(isPresented: $showsFullScreen) {
-                            FullscreenImagePreviewView(title: filter.title, desc: filter.desc, cgImage: preview, isShow: $showsFullScreen)
+                            FullscreenImageView(title: filter.title, desc: filter.desc, cgImage: preview, isShow: $showsFullScreen)
                         }
                 }
             } else {

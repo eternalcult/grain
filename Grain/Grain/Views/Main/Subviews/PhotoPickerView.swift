@@ -1,0 +1,32 @@
+import PhotosUI
+import SwiftUI
+
+struct MainPhotoPickerView: View {
+    @State private var viewModel: MainViewModel
+
+    init(with parentViewModel: MainViewModel) {
+        self.viewModel = parentViewModel
+    }
+    
+    var body: some View {
+        PhotosPicker(selection: $viewModel.selectedItem, matching: .images) {
+            Rectangle()
+                .fill(.clear)
+                .overlay(alignment: .center) {
+                    VStack {
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .tint(.text)
+                            .frame(width: 20, height: 20)
+                        Text("Tap to choose an image\nfrom the gallery.")
+                            .font(.custom(size: 12))
+                            .foregroundStyle(Color.text)
+                    }.opacity(0.5)
+                }
+        }
+        .onChange(of: viewModel.selectedItem) { _, _ in
+            viewModel.prepareForEditing()
+        }
+    }
+}

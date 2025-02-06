@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TexturesScrollView: View {
+struct TexturesHListView: View {
     // MARK: SwiftUI Properties
 
     @Environment(MainViewModel.self) private var viewModel

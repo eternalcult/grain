@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct FiltersScrollView: View {
+struct FiltersHListView: View {
     // MARK: SwiftUI Properties
 
     @Environment(MainViewModel.self) private var viewModel

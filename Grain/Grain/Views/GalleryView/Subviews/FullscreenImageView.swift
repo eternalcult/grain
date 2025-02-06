@@ -1,7 +1,8 @@
 import AppCore
 import SwiftUI
 
-struct FullscreenImagePreviewView: View {
+/// Отображенает превью изображения с примененным фильтром на весь экран
+struct FullscreenImageView: View {
     // MARK: SwiftUI Properties
 
     @Binding var isShow: Bool
