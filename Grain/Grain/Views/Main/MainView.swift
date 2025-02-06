@@ -41,15 +41,14 @@ struct MainView: View {
             .navigationDestination(for: MainRoute.self) { route in
                 router.view(for: route).environment(router)
             }
+            //        .onAppear { // Only for testing
+            //            if let uiImage = UIImage(named: "preview"),
+            //               let cgImage = uiImage.cgImage {
+            //                viewModel.photoEditor.updateSourceImage(CIImage(cgImage: cgImage), orientation: .up)
+            //            }
+            //        }
         }
     }
-
-//        .onAppear { // Only for testing
-//            if let uiImage = UIImage(named: "preview"),
-//               let cgImage = uiImage.cgImage {
-//                viewModel.photoEditor.updateSourceImage(CIImage(cgImage: cgImage), orientation: .up)
-//            }
-//        }
 }
 
 #Preview {
