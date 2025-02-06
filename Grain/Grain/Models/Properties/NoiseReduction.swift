@@ -1,4 +1,5 @@
 import SwiftUI
+
 struct NoiseReduction: ImageProperty {
     var title: LocalizedStringKey = "Noise Reduction"
     var range: ClosedRange<Float> = 0.2 ... 1 // Default: 0.0...1

@@ -5,8 +5,12 @@ import SwiftUI
 
 @main
 struct GrainApp: App {
-    // MARK: Computed Properties
+    // MARK: SwiftUI Properties
+
     @AppStorage("hasLaunchedBefore") private var hasLaunchedBefore: Bool = false
+
+    // MARK: Computed Properties
+
     var body: some Scene {
         WindowGroup {
             if hasLaunchedBefore {
@@ -17,6 +21,15 @@ struct GrainApp: App {
         }
     }
 
+    // MARK: Lifecycle
+
+    init() {
+        Font.registerFonts()
+        FirebaseApp.configure()
+    }
+
+    // MARK: Content Properties
+
     private var mainView: some View {
         MainView()
             .modelContainer(for: [FilterCICubeData.self]) { container in
@@ -24,6 +37,7 @@ struct GrainApp: App {
                 case let .success(container):
                     DataStorage.shared.addSwiftDataContext(container.mainContext)
                     DataStorage.shared.configureFiltersDataIfNeeded()
+
                 case let .failure(failure):
                     print("Error with model container", failure.localizedDescription)
                 }
@@ -31,21 +45,15 @@ struct GrainApp: App {
     }
 
     private var onboardingView: some View {
-        OnboardingView(pages: DataStorage.shared.onboardingPages,
-        settings: .init(didTapNextButton: { isLastSlide in
-            if isLastSlide {
+        OnboardingView(
+            pages: DataStorage.shared.onboardingPages,
+            settings: .init(didTapNextButton: { isLastSlide in
+                if isLastSlide {
+                    hasLaunchedBefore = true
+                }
+            }, didTapCloseButton: {
                 hasLaunchedBefore = true
-            }
-        }, didTapCloseButton: {
-            hasLaunchedBefore = true
-        })
+            })
         )
-    }
-
-    // MARK: Lifecycle
-
-    init() {
-        Font.registerFonts()
-        FirebaseApp.configure()
     }
 }

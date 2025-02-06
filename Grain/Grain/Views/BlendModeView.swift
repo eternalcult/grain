@@ -2,6 +2,7 @@ import SwiftUI
 
 struct BlendModeView: View {
     // MARK: SwiftUI Properties
+
     @Environment(MainRouter.self) private var router
 
     // MARK: Content Properties

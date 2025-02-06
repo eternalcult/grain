@@ -1,4 +1,5 @@
 import SwiftUI
+
 struct Gamma: ImageProperty {
     var title: LocalizedStringKey = "Gamma"
     var range: ClosedRange<Float> = 0 ... 2.0 // Default

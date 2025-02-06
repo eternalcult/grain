@@ -24,7 +24,7 @@ final class DataStorage {
             imageName: "Onboarding/onboarding3",
             title: "100% Free to Use!",
             description: "No subscriptions, no hidden fees—Grain is completely free. Enjoy full access to all our powerful photo editing tools without any cost!"
-        )
+        ),
     ]
 
     private(set) var filtersCategories: [FilterCategory] = [

@@ -1,4 +1,5 @@
 import SwiftUI
+
 struct Shadows: ImageProperty {
     let title: LocalizedStringKey = "Shadows"
     let range: ClosedRange<Float> = -1 ... 1 // Default

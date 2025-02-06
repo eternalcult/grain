@@ -6,7 +6,6 @@ final class MainViewModel {
     // MARK: Properties
 
     var loadFiltersPreviews: Task<Void, Never>?
-    private var photoEditor: PhotoEditor
     var selectedItem: PhotosPickerItem?
     var showsFilteredImage = true
     var showsFilters: Bool = false
@@ -16,6 +15,8 @@ final class MainViewModel {
     var showsHistogram = false
     var isLoadingFiltersPreviews: Bool = false
     var showsPalette = false
+
+    private var photoEditor: PhotoEditor
 
     // MARK: Computed Properties
 

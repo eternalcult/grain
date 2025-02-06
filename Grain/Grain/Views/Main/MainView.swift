@@ -4,12 +4,15 @@ import SwiftUI
 
 struct MainView: View {
     // MARK: SwiftUI Properties
+
     @State private var router: MainRouter
     @State private var viewModel = MainViewModel()
 
+    // MARK: Lifecycle
+
     init(viewModel: MainViewModel = MainViewModel()) {
         self.viewModel = viewModel
-        self.router = MainRouter(viewModel: viewModel)
+        router = MainRouter(viewModel: viewModel)
     }
 
     // MARK: Content Properties

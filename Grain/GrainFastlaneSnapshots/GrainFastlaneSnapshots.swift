@@ -1,13 +1,7 @@
-//
-//  GrainFastlaneSnapshots.swift
-//  GrainFastlaneSnapshots
-//
-//  Created by Vlad Antonov on 04.02.2025.
-//
-
 import XCTest
 
 final class GrainFastlaneSnapshots: XCTestCase {
+    // MARK: Overridden Functions
 
     @MainActor
     override func setUpWithError() throws {
@@ -17,7 +11,7 @@ final class GrainFastlaneSnapshots: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testScreenshots() throws {
-        
-    }
+    // MARK: Functions
+
+    func testScreenshots() throws {}
 }

@@ -2,11 +2,19 @@ import SwiftUI
 
 /// Шапка главного экрана. Содержит в себе кнопку меню, логотип приложения и кнопку экспорта
 struct MainHeaderView: View {
+    // MARK: SwiftUI Properties
+
     @Environment(MainRouter.self) private var router
     @State private var viewModel: MainViewModel
+
+    // MARK: Lifecycle
+
     init(with parentViewModel: MainViewModel) {
-        self.viewModel = parentViewModel
+        viewModel = parentViewModel
     }
+
+    // MARK: Content Properties
+
     var body: some View {
         ZStack {
             if viewModel.finalImage != nil {

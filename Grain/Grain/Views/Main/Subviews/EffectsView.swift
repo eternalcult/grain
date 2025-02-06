@@ -1,12 +1,18 @@
 import SwiftUI
 
 struct EffectsView: View {
+    // MARK: SwiftUI Properties
+
     @State private var viewModel: MainViewModel
 
+    // MARK: Lifecycle
+
     init(with parentViewModel: MainViewModel) {
-        self.viewModel = parentViewModel
+        viewModel = parentViewModel
     }
-    
+
+    // MARK: Content Properties
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Button {

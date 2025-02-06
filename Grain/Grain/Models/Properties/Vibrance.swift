@@ -1,4 +1,5 @@
 import SwiftUI
+
 struct Vibrance: ImageProperty {
     let title: LocalizedStringKey = "Vibrance"
     let range: ClosedRange<Float> = -1 ... 1 // Default

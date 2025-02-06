@@ -14,7 +14,7 @@ struct PropertySliderView: View {
             Text(property.title)
                 .font(.h5)
                 .foregroundStyle(Color.text.opacity(0.8))
-            + Text(": \(property.formattedValue())")
+                + Text(": \(property.formattedValue())")
                 .font(.h5)
                 .foregroundStyle(Color.text.opacity(0.8))
             Slider(value: $property.current, in: property.range)

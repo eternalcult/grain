@@ -1,21 +1,19 @@
-//
-//  GrainFastlaneSnapshotsLaunchTests.swift
-//  GrainFastlaneSnapshots
-//
-//  Created by Vlad Antonov on 04.02.2025.
-//
-
 import XCTest
 
 final class GrainFastlaneSnapshotsLaunchTests: XCTestCase {
+    // MARK: Overridden Properties
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
 
+    // MARK: Overridden Functions
+
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
+
+    // MARK: Functions
 
     @MainActor
     func testLaunch() throws {

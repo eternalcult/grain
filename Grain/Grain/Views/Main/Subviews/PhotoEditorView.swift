@@ -1,15 +1,23 @@
 import SwiftUI
 
 struct PhotoEditorView: View {
+    // MARK: SwiftUI Properties
+
     @Environment(MainRouter.self) private var router
     @State private var sourceImage: Image
     @State private var finalImage: Image
     @State private var viewModel: MainViewModel
+
+    // MARK: Lifecycle
+
     init(_ sourceImage: Image, _ finalImage: Image, with parentViewModel: MainViewModel) {
         self.sourceImage = sourceImage
         self.finalImage = finalImage
-        self.viewModel = parentViewModel
+        viewModel = parentViewModel
     }
+
+    // MARK: Content Properties
+
     var body: some View {
         VStack(spacing: 8) {
             VStack {

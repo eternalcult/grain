@@ -1,8 +1,12 @@
 import SwiftUI
 
 struct GalleryView: View {
+    // MARK: SwiftUI Properties
+
     @Environment(MainRouter.self) private var router
     @Environment(MainViewModel.self) private var viewModel
+
+    // MARK: Properties
 
     let type: GalleryViewType
 
@@ -11,6 +15,8 @@ struct GalleryView: View {
         GridItem(.flexible()),
         GridItem(.flexible()),
     ]
+
+    // MARK: Content Properties
 
     var body: some View {
         ScrollView {

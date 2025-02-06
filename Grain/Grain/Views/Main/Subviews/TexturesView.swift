@@ -1,13 +1,19 @@
 import SwiftUI
 
-
 struct TexturesView: View {
+    // MARK: SwiftUI Properties
+
     @Environment(MainRouter.self) private var router
     @State private var viewModel: MainViewModel
 
+    // MARK: Lifecycle
+
     init(with parentViewModel: MainViewModel) {
-        self.viewModel = parentViewModel
+        viewModel = parentViewModel
     }
+
+    // MARK: Content Properties
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Button {

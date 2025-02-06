@@ -1,5 +1,5 @@
-import SwiftUI
 import CoreImage
+import SwiftUI
 
 enum BlendMode: Int, CaseIterable {
     case normal
