@@ -39,13 +39,7 @@ struct FilterPreviewView: View {
                         .frame(width: proxy.size.width, height: proxy.size.height)
                         .overlay(alignment: .bottom) {
                             Text(filter.title)
-                                .font(.h6)
-                                .minimumScaleFactor(0.1)
-                                .foregroundStyle(Color.text)
-                                .frame(height: 20)
-                                .frame(maxWidth: .infinity)
-                                .padding(.horizontal, 4)
-                                .background(Color.background.opacity(0.5))
+                                .hListItemTitleStyle()
                         }
                         .clipShape(.rect(cornerRadius: 4))
                         .overlay(

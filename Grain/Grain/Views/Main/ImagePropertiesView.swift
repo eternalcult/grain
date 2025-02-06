@@ -21,10 +21,7 @@ struct ImagePropertiesView: View {
                 HStack(alignment: .center) {
                     HStack {
                         Text("Settings")
-                            .font(.h4)
-                            .foregroundStyle(Color.text.opacity(0.8))
-                            .padding(.bottom, 5)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .toggleListHeaderStyle()
                         if viewModel.propertiesModified {
                             Button {
                                 viewModel.resetSettings()

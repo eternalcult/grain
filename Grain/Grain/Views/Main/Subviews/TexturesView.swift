@@ -23,10 +23,7 @@ struct TexturesView: View {
                     HStack(alignment: .center) {
                         HStack {
                             Text("Textures")
-                                .font(.h4)
-                                .foregroundStyle(Color.text.opacity(0.8))
-                                .padding(.bottom, 5)
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .toggleListHeaderStyle()
                             Button {
                                 viewModel.applyRandomTexture()
                             } label: {
@@ -41,9 +38,7 @@ struct TexturesView: View {
                             router.push(MainRoute.gallery(.textures))
                         } label: {
                             Text("Show all")
-                                .font(.h5)
-                                .italic()
-                                .foregroundStyle(Color.text)
+                                .showAllButtonStyle()
                         }
                     }
                     Spacer()

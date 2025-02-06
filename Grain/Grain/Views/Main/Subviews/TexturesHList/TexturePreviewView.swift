@@ -26,19 +26,14 @@ struct TexturePreviewView: View {
                 .resizable()
                 .overlay(alignment: .bottom) {
                     Text(texture.title)
-                        .font(.h6)
-                        .minimumScaleFactor(0.1)
-                        .foregroundStyle(Color.text)
-                        .frame(height: 20)
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal, 4)
-                        .background(Color.background.opacity(0.5))
+                        .hListItemTitleStyle()
+
+                        .clipShape(.rect(cornerRadius: 4))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 4)
+                                .stroke(isSelected ? Color.text : .clear, lineWidth: 2)
+                        )
                 }
-                .clipShape(.rect(cornerRadius: 4))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(isSelected ? Color.text : .clear, lineWidth: 2)
-                )
         }
     }
 }

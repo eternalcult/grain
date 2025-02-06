@@ -24,13 +24,7 @@ struct RawPreviewView: View {
             VStack {
                 Spacer()
                 Text("None")
-                    .font(.h6)
-                    .minimumScaleFactor(0.1)
-                    .foregroundStyle(Color.text)
-                    .frame(height: 20)
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 4)
-                    .background(Color.backgroundSecondary.opacity(0.5))
+                    .hListItemTitleStyle()
                 Spacer()
             }
             .clipShape(.rect(cornerRadius: 4))
