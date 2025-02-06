@@ -23,10 +23,7 @@ struct FiltersView: View {
                     HStack(alignment: .center) {
                         HStack {
                             Text("Filters")
-                                .font(.h4)
-                                .foregroundStyle(Color.text.opacity(0.8))
-                                .padding(.bottom, 5)
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .toggleListHeaderStyle()
                             if !viewModel.isLoadingFiltersPreviews {
                                 Button {
                                     viewModel.applyRandomFilter()
@@ -44,9 +41,7 @@ struct FiltersView: View {
                                 router.push(MainRoute.gallery(.filters))
                             } label: {
                                 Text("Show all")
-                                    .font(.h5)
-                                    .italic()
-                                    .foregroundStyle(Color.text)
+                                    .showAllButtonStyle()
                             }
                         }
                     }
