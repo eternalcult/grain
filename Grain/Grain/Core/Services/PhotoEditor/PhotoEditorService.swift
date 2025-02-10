@@ -219,7 +219,9 @@ final class PhotoEditorService: PhotoEditor {
                 PHPhotoLibrary.shared().performChanges {
                     PHAssetChangeRequest.creationRequestForAsset(from: uiImage)
                 } completionHandler: { success, error in
-                    if !success {
+                    if success {
+                        completion(.success(()))
+                    } else {
                         if let error {
                             completion(.failure(.photoLibraryError(description: error.localizedDescription)))
                         } else {
