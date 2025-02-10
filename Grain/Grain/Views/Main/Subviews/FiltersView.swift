@@ -33,6 +33,10 @@ struct FiltersView: View {
                                         .frame(width: 20, height: 20)
                                         .tint(.text.opacity(0.8))
                                 }
+                            } else {
+                                ProgressView()
+                                    .progressViewStyle(.circular)
+                                    .tint(.text)
                             }
                         }
                         .padding(.trailing, 8)
@@ -53,20 +57,11 @@ struct FiltersView: View {
                         .tint(.text.opacity(0.8))
                 }
             }
+            .allowsHitTesting(!viewModel.isLoadingFiltersPreviews)
             if viewModel.showsFilters {
-                if viewModel.isLoadingFiltersPreviews {
-                    HStack {
-                        Spacer()
-                        ProgressView()
-                            .progressViewStyle(.circular)
-                            .tint(.text)
-                        Spacer()
-                    }
-                } else {
-                    VStack(spacing: 8) {
-                        FiltersHListView()
-                            .environment(viewModel)
-                    }
+                VStack(spacing: 8) {
+                    FiltersHListView()
+                        .environment(viewModel)
                 }
             }
         }

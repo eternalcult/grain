@@ -276,6 +276,7 @@ final class MainViewModel {
         loadFiltersPreviews?.cancel()
         loadFiltersPreviews = Task {
             isLoadingFiltersPreviews = true
+            showsFilters = false
             if let data = try? await selectedItem.loadTransferable(type: Data.self),
                let uiImage = UIImage(data: data), let ciImage = CIImage(data: data)
             {
