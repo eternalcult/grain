@@ -224,29 +224,7 @@ final class DataStorage {
             .init(title: "Holographic 18", filename: "Textures/Holographic/18"),
             .init(title: "Holographic 19", filename: "Textures/Holographic/19"),
             .init(title: "Holographic 20", filename: "Textures/Holographic/20"),
-        ]),
-//        .init(title: "Rust", textures: [
-//            .init(title: "Rust 1", filename: "Textures/Rust/1"),
-//            .init(title: "Rust 2", filename: "Textures/Rust/2"),
-//            .init(title: "Rust 3", filename: "Textures/Rust/3"),
-//            .init(title: "Rust 4", filename: "Textures/Rust/4"),
-//            .init(title: "Rust 5", filename: "Textures/Rust/5"),
-//            .init(title: "Rust 6", filename: "Textures/Rust/6"),
-//            .init(title: "Rust 7", filename: "Textures/Rust/7"),
-//            .init(title: "Rust 8", filename: "Textures/Rust/8"),
-//            .init(title: "Rust 9", filename: "Textures/Rust/9"),
-//            .init(title: "Rust 10", filename: "Textures/Rust/10"),
-//            .init(title: "Rust 11", filename: "Textures/Rust/11"),
-//            .init(title: "Rust 12", filename: "Textures/Rust/12"),
-//            .init(title: "Rust 13", filename: "Textures/Rust/13"),
-//            .init(title: "Rust 14", filename: "Textures/Rust/14"),
-//            .init(title: "Rust 15", filename: "Textures/Rust/15"),
-//            .init(title: "Rust 16", filename: "Textures/Rust/16"),
-//            .init(title: "Rust 17", filename: "Textures/Rust/17"),
-//            .init(title: "Rust 18", filename: "Textures/Rust/18"),
-//            .init(title: "Rust 19", filename: "Textures/Rust/19"),
-//            .init(title: "Rust 20", filename: "Textures/Rust/20"),
-//        ])
+        ])
     ]
 
     private let lutsManager = LutsService()

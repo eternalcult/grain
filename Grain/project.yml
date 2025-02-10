@@ -1,0 +1,52 @@
+name: Grain
+options:
+  bundleIdPrefix: ru.vlad-antonov
+  deploymentTarget:
+    iOS: '17.0'
+  developmentLanguage: en
+  knownRegions: ["en", "ru", "es", "fr", "de", "ja", "it"]
+configs:
+  Debug: debug
+  Release: release
+packages:
+  AppCore:
+    path: ../../app-core/AppCore
+  Firebase:
+    url: 'https://github.com/firebase/firebase-ios-sdk'
+    from: 11.7.0
+
+
+targets:
+  Grain:
+    type: application
+    platform: iOS
+    sources:
+      - path: Grain  
+    resources:
+      - path: Grain/Resources
+    dependencies:
+      - package: AppCore
+      - package: Firebase
+        product: FirebaseCrashlytics
+      - package: Firebase
+        product: FirebaseAnalytics
+    settings:
+      base:
+        CODE_SIGN_STYLE: Automatic
+    info:
+      path: Grain/info.plist
+      CFBundleDisplayName: Grain
+      LSApplicationCategoryType: public.app-category.photography
+    schemes:
+      Grain:
+        build:
+          targets:
+            Grain: all
+        run:
+          config: Debug
+        test:
+          config: Debug
+          targets:
+            - Grain
+        archive:
+          config: Release

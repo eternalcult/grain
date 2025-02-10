@@ -4,15 +4,11 @@ struct PhotoEditorView: View {
     // MARK: SwiftUI Properties
 
     @Environment(MainRouter.self) private var router
-    @State private var sourceImage: Image
-    @State private var finalImage: Image
     @State private var viewModel: MainViewModel
 
     // MARK: Lifecycle
 
-    init(_ sourceImage: Image, _ finalImage: Image, with parentViewModel: MainViewModel) {
-        self.sourceImage = sourceImage
-        self.finalImage = finalImage
+    init(with parentViewModel: MainViewModel) {
         viewModel = parentViewModel
     }
 
@@ -22,21 +18,26 @@ struct PhotoEditorView: View {
         VStack(spacing: 8) {
             VStack {
                 ZStack(alignment: .trailing) {
-                    sourceImage
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.backgroundSecondary.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                    finalImage
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .opacity(viewModel.showsFilteredImage ? 1 : 0)
-                        .onLongPressGesture {} onPressingChanged: { isPressing in
-                            viewModel.showsFilteredImage = !isPressing
-                        }
+                    if let sourceImage = viewModel.sourceImage {
+                        sourceImage
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color.backgroundSecondary.opacity(0.1))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    if let finalImage = viewModel.finalImage {
+                        finalImage
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .opacity(viewModel.showsFilteredImage ? 1 : 0)
+                            .onLongPressGesture {} onPressingChanged: { isPressing in
+                                viewModel.showsFilteredImage = !isPressing
+                            }
+                            .background(.green)
+                    }
                 }
                 .overlay(alignment: .bottomLeading) {
                     if viewModel.showsHistogram, let histogram = viewModel.histogram {

@@ -22,8 +22,8 @@ struct MainView: View {
             VStack(spacing: 8) {
                 MainHeaderView(with: viewModel)
                     .environment(router)
-                if let sourceImage = viewModel.sourceImage, let finalImage = viewModel.finalImage {
-                    PhotoEditorView(sourceImage, finalImage, with: viewModel)
+                if viewModel.sourceImage != nil, viewModel.finalImage != nil {
+                    PhotoEditorView(with: viewModel)
                         .environment(router)
                 } else {
                     MainPhotoPickerView(with: viewModel)
