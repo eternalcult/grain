@@ -1,4 +1,5 @@
 import SwiftUI
+import AppCore
 
 struct PhotoEditorView: View {
     // MARK: SwiftUI Properties
@@ -34,9 +35,9 @@ struct PhotoEditorView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .opacity(viewModel.showsFilteredImage ? 1 : 0)
                             .onLongPressGesture {} onPressingChanged: { isPressing in
+                                Vibration.soft()
                                 viewModel.showsFilteredImage = !isPressing
                             }
-                            .background(.green)
                     }
                 }
                 .overlay(alignment: .bottomLeading) {

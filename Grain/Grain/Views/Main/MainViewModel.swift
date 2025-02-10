@@ -1,5 +1,6 @@
 import PhotosUI
 import SwiftUI
+import AppCore
 
 @Observable
 final class MainViewModel {
@@ -262,9 +263,14 @@ final class MainViewModel {
         photoEditor.saveImageToPhotoLibrary { result in
             switch result {
             case let .success(success):
-                break // TODO: Show success
+                Task {
+                    await MainActor.run {
+                        Vibration.success()
+                    }
+                }
+                // TODO: Show success alert or snackbar
             case let .failure(failure):
-                break // TODO: Show error
+                break // TODO: Show error alert or snackbar
             }
         }
     }
