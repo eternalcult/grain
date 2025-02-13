@@ -266,7 +266,7 @@ final class DataStorage {
         swiftDataManager?.saveChanges()
     }
 
-    func updateFiltersPreviews(with image: CIImage) async { // TODO: Blocking UI
+    func updateFiltersPreviews(with image: CIImage) async {
         filtersCategories = filtersCategories.map { category in
             print("Processing category: \(category.title)")
             let updatedFilters = category.filters.map { filter in
@@ -276,7 +276,7 @@ final class DataStorage {
                     title: filter.title,
                     desc: filter.desc,
                     filename: filter.filename,
-                    preview: Task.isCancelled ? nil : try? lutsManager.apply(filter, for: image.downsample(scaleFactor: 0.5))
+                    preview: Task.isCancelled ? nil : try? lutsManager.apply(filter, for: image)
                 )
             }
             return FilterCategory(title: category.title, desc: category.desc, filters: updatedFilters)
