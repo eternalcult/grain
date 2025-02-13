@@ -268,7 +268,7 @@ final class PhotoEditorService: PhotoEditor {
 // MARK: Private methods
 
 private extension PhotoEditorService {
-    func renderHistogram() {
+    func renderHistogram() async {
         let filter = CIFilter.histogramDisplay()
         filter.inputImage = processedCiImage
         filter.lowLimit = 0
@@ -283,27 +283,27 @@ private extension PhotoEditorService {
         renderImageTask?.cancel()
         guard let sourceCiImage else { return }
         processedCiImage = sourceCiImage
-        // Properties
-        updateBCS()
-        updateExposure()
-        updateVibrance()
-        updateHS()
-        updateTemperatureAndTint()
-        updateGamma()
-        updateNoiseReduction()
-        // Effects
-        updateVignette()
-        if let filter {
-            configureFilter(filter)
-        }
-        if let texture {
-            overlayTexture(texture)
-        }
-        renderHistogram()
         renderImageTask = Task {
             if Task.isCancelled {
                 return
             }
+            // Properties
+            await updateBCS()
+            await updateExposure()
+            await updateVibrance()
+            await updateHS()
+            await updateTemperatureAndTint()
+            await updateGamma()
+            await updateNoiseReduction()
+            // Effects
+            await updateVignette()
+            if let filter {
+                await configureFilter(filter)
+            }
+            if let texture {
+                await overlayTexture(texture)
+            }
+            await renderHistogram()
             await renderImage()
         }
     }
@@ -384,7 +384,7 @@ private extension PhotoEditorService {
     // MARK: Image properties
 
     // Brightness, Contrast & Saturation
-    func updateBCS() {
+    func updateBCS() async {
         guard brightness.isUpdated || contrast.isUpdated || saturation.isUpdated else {
             return
         }
@@ -396,7 +396,7 @@ private extension PhotoEditorService {
         processedCiImage = filter.outputImage
     }
 
-    func updateExposure() {
+    func updateExposure() async {
         guard exposure.isUpdated else {
             return
         }
@@ -406,7 +406,7 @@ private extension PhotoEditorService {
         processedCiImage = filter.outputImage
     }
 
-    func updateVibrance() {
+    func updateVibrance() async {
         guard exposure.isUpdated else {
             return
         }
@@ -417,7 +417,7 @@ private extension PhotoEditorService {
     }
 
     // Highlights & Shadows
-    func updateHS() {
+    func updateHS() async {
         guard highlights.isUpdated || shadows.isUpdated else {
             return
         }
@@ -428,7 +428,7 @@ private extension PhotoEditorService {
         processedCiImage = filter.outputImage
     }
 
-    func updateTemperatureAndTint() {
+    func updateTemperatureAndTint() async {
         guard temperature.isUpdated || tint.isUpdated else {
             return
         }
@@ -439,7 +439,7 @@ private extension PhotoEditorService {
         processedCiImage = filter.outputImage
     }
 
-    func updateGamma() {
+    func updateGamma() async {
         guard gamma.isUpdated else {
             return
         }
@@ -449,7 +449,7 @@ private extension PhotoEditorService {
         processedCiImage = filter.outputImage
     }
 
-    func updateNoiseReduction() {
+    func updateNoiseReduction() async {
         guard noiseReduction.isUpdated || sharpness.isUpdated else {
             return
         }
@@ -462,7 +462,7 @@ private extension PhotoEditorService {
 
     // MARK: Effects
 
-    func updateVignette() {
+    func updateVignette() async {
         guard vignetteRadius.isUpdated || vignetteIntensity.isUpdated else {
             return
         }
@@ -475,7 +475,7 @@ private extension PhotoEditorService {
 
     // MARK: Textures & Filters
 
-    func overlayTexture(_ texture: Texture) {
+    func overlayTexture(_ texture: Texture) async {
         do {
             guard let uiImage = UIImage(named: texture.filename),
                   let cgImage = uiImage.cgImage,
@@ -495,7 +495,7 @@ private extension PhotoEditorService {
         }
     }
 
-    func configureFilter(_ filter: Filter) {
+    func configureFilter(_ filter: Filter) async {
         do {
             let filter = try lutsService.createCIColorCube(for: filter)
             filter.inputImage = processedCiImage
