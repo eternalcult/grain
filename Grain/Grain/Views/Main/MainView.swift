@@ -20,16 +20,18 @@ struct MainView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             VStack(spacing: 8) {
-                MainHeaderView(with: viewModel)
-                    .environment(router)
                 if viewModel.sourceImage != nil, viewModel.finalImage != nil {
-                    PhotoEditorView(with: viewModel)
-                        .environment(router)
+                    VStack(spacing: 0) {
+                        MainHeaderView(with: viewModel)
+                            .environment(router)
+                        PhotoEditorView(with: viewModel)
+                            .environment(router)
+                    }
+                    .padding(.horizontal, 8)
                 } else {
                     MainPhotoPickerView(with: viewModel)
                 }
             }
-            .padding(.horizontal, 8)
             .background(Color.background)
             .navigationBarBackButtonHidden(true)
             .onChange(of: viewModel.errorMessage) { _, newError in
