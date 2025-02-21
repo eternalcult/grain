@@ -36,11 +36,19 @@ final class PhotoEditorService: PhotoEditor {
     /// Is used only for private applying chain of filters and don't update UI after each filter update
     private var processedCiImage: CIImage?
     private var sourceImageOrientation: UIImage.Orientation?
-    private var renderImageTask: Task<Void, Never>?
+
+    // MARK: CIFilters
+    private let colorControlsFilter = CIFilter.colorControls()
+    private let exposureAdjustFilter = CIFilter.exposureAdjust()
+    private let vibranceFilter = CIFilter.vibrance()
+    private let highlightShadowAdjustFilter = CIFilter.highlightShadowAdjust()
+    private let temperatureAndTintFilter = CIFilter.temperatureAndTint()
+    private let gammaAdjustFilter = CIFilter.gammaAdjust()
+    private let noiseReductionFilter = CIFilter.noiseReduction()
+    private let vignetteFilter = CIFilter.vignette()
 
 
-    private let context = CIContext()
-//    CIContext(mtlDevice: MTLCreateSystemDefaultDevice()!, options: [CIContextOption.cacheIntermediates: false, CIContextOption.allowLowPower: true]) // Doc: Creating a CIContext is expensive, so create one during your initial setup and reuse it throughout your app.
+    private let context = CIContext() // TODO: Настроить CIContext
 
     // MARK: Computed Properties
 
@@ -288,7 +296,6 @@ private extension PhotoEditorService { // TODO: Crash
     }
 
     func updateTask() {
-        renderImageTask?.cancel()
         guard let sourceCiImage else { return }
 
         processedCiImage = downscale(image: sourceCiImage, scale: 0.5) // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить
@@ -390,32 +397,29 @@ private extension PhotoEditorService {
         guard brightness.isUpdated || contrast.isUpdated || saturation.isUpdated else {
             return
         }
-        let filter = CIFilter.colorControls()
-        filter.inputImage = processedCiImage
-        filter.brightness = brightness.current
-        filter.contrast = contrast.current
-        filter.saturation = saturation.current
-        processedCiImage = filter.outputImage
+        colorControlsFilter.inputImage = processedCiImage
+        colorControlsFilter.brightness = brightness.current
+        colorControlsFilter.contrast = contrast.current
+        colorControlsFilter.saturation = saturation.current
+        processedCiImage = colorControlsFilter.outputImage
     }
 
     func updateExposure() {
         guard exposure.isUpdated else {
             return
         }
-        let filter = CIFilter.exposureAdjust()
-        filter.inputImage = processedCiImage
-        filter.ev = exposure.current
-        processedCiImage = filter.outputImage
+        exposureAdjustFilter.inputImage = processedCiImage
+        exposureAdjustFilter.ev = exposure.current
+        processedCiImage = exposureAdjustFilter.outputImage
     }
 
     func updateVibrance() {
         guard exposure.isUpdated else {
             return
         }
-        let filter = CIFilter.vibrance()
-        filter.inputImage = processedCiImage
-        filter.amount = vibrance.current
-        processedCiImage = filter.outputImage
+        vibranceFilter.inputImage = processedCiImage
+        vibranceFilter.amount = vibrance.current
+        processedCiImage = vibranceFilter.outputImage
     }
 
     // Highlights & Shadows
@@ -423,43 +427,39 @@ private extension PhotoEditorService {
         guard highlights.isUpdated || shadows.isUpdated else {
             return
         }
-        let filter = CIFilter.highlightShadowAdjust()
-        filter.inputImage = processedCiImage
-        filter.highlightAmount = highlights.current
-        filter.shadowAmount = shadows.current
-        processedCiImage = filter.outputImage
+        highlightShadowAdjustFilter.inputImage = processedCiImage
+        highlightShadowAdjustFilter.highlightAmount = highlights.current
+        highlightShadowAdjustFilter.shadowAmount = shadows.current
+        processedCiImage = highlightShadowAdjustFilter.outputImage
     }
 
     func updateTemperatureAndTint() {
         guard temperature.isUpdated || tint.isUpdated else {
             return
         }
-        let filter = CIFilter.temperatureAndTint()
-        filter.inputImage = processedCiImage
-        filter.neutral = CIVector(x: CGFloat(temperature.defaultValue), y: 0)
-        filter.targetNeutral = CIVector(x: CGFloat(temperature.current), y: CGFloat(tint.current))
-        processedCiImage = filter.outputImage
+        temperatureAndTintFilter.inputImage = processedCiImage
+        temperatureAndTintFilter.neutral = CIVector(x: CGFloat(temperature.defaultValue), y: 0)
+        temperatureAndTintFilter.targetNeutral = CIVector(x: CGFloat(temperature.current), y: CGFloat(tint.current))
+        processedCiImage = temperatureAndTintFilter.outputImage
     }
 
     func updateGamma() {
         guard gamma.isUpdated else {
             return
         }
-        let filter = CIFilter.gammaAdjust()
-        filter.inputImage = processedCiImage
-        filter.power = gamma.current
-        processedCiImage = filter.outputImage
+        gammaAdjustFilter.inputImage = processedCiImage
+        gammaAdjustFilter.power = gamma.current
+        processedCiImage = gammaAdjustFilter.outputImage
     }
 
     func updateNoiseReduction() {
         guard noiseReduction.isUpdated || sharpness.isUpdated else {
             return
         }
-        let filter = CIFilter.noiseReduction()
-        filter.inputImage = processedCiImage
-        filter.noiseLevel = noiseReduction.current
-        filter.sharpness = sharpness.current
-        processedCiImage = filter.outputImage
+        noiseReductionFilter.inputImage = processedCiImage
+        noiseReductionFilter.noiseLevel = noiseReduction.current
+        noiseReductionFilter.sharpness = sharpness.current
+        processedCiImage = noiseReductionFilter.outputImage
     }
 
     // MARK: Effects
@@ -468,11 +468,10 @@ private extension PhotoEditorService {
         guard vignetteRadius.isUpdated || vignetteIntensity.isUpdated else {
             return
         }
-        let filter = CIFilter.vignette()
-        filter.inputImage = processedCiImage
-        filter.intensity = vignetteIntensity.current
-        filter.radius = vignetteRadius.current
-        processedCiImage = filter.outputImage
+        vignetteFilter.inputImage = processedCiImage
+        vignetteFilter.intensity = vignetteIntensity.current
+        vignetteFilter.radius = vignetteRadius.current
+        processedCiImage = vignetteFilter.outputImage
     }
 
     // MARK: Textures & Filters
