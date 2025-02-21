@@ -3,11 +3,13 @@ import SwiftUI
 
 // MARK: - ImageProperty
 
+typealias ImagePropertyValue = Float
+
 protocol ImageProperty {
     var title: LocalizedStringKey { get }
-    var range: ClosedRange<Float> { get }
-    var defaultValue: Float { get }
-    var current: Float { get set }
+    var range: ClosedRange<ImagePropertyValue> { get }
+    var defaultValue: ImagePropertyValue { get }
+    var current: ImagePropertyValue { get set }
     var formatStyle: ImagePropertyValueFormattedStyle { get }
     mutating func setToDefault()
     var isUpdated: Bool { get }

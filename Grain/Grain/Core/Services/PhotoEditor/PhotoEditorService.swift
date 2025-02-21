@@ -60,73 +60,73 @@ final class PhotoEditorService: PhotoEditor {
 
     var brightness: ImageProperty = Brightness() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var contrast: ImageProperty = Contrast() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var saturation: ImageProperty = Saturation() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var exposure: ImageProperty = Exposure() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var vibrance: ImageProperty = Vibrance() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var highlights: ImageProperty = Highlights() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var shadows: ImageProperty = Shadows() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var temperature: ImageProperty = Temperature() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var tint: ImageProperty = Tint() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var gamma: ImageProperty = Gamma() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var noiseReduction: ImageProperty = NoiseReduction() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var sharpness: ImageProperty = Sharpness() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
@@ -134,13 +134,13 @@ final class PhotoEditorService: PhotoEditor {
 
     var vignetteIntensity: ImageProperty = VignetteIntensity() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
     var vignetteRadius: ImageProperty = VignetteRadius() {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
@@ -152,7 +152,7 @@ final class PhotoEditorService: PhotoEditor {
 
     var textureIntensity: Float = 0.5 {
         didSet {
-            updateTask()
+            updateImage()
         }
     }
 
@@ -184,7 +184,7 @@ final class PhotoEditorService: PhotoEditor {
     func applyTexture(_ newTexture: Texture) {
         if texture?.id != newTexture.id {
             texture = newTexture
-            updateTask()
+            updateImage()
         }
     }
 
@@ -192,26 +192,26 @@ final class PhotoEditorService: PhotoEditor {
         if textureBlendMode != newBlendMode {
             textureBlendMode = newBlendMode
         }
-        updateTask()
+        updateImage()
     }
 
     func removeTextureIfNeeded() {
         texture = nil
         textureIntensity = 0.5
         textureBlendMode = .normal
-        updateTask()
+        updateImage()
     }
 
     func applyFilter(_ newFilter: Filter) {
         if filter?.id != newFilter.id {
             filter = newFilter
-            updateTask()
+            updateImage()
         }
     }
 
     func removeFilterIfNeeded() {
         filter = nil
-        updateTask()
+        updateImage()
     }
 
     // Info.plist - NSPhotoLibraryUsageDescription - We need access to your photo library to save images you create in the app.
@@ -295,7 +295,7 @@ private extension PhotoEditorService { // TODO: Crash
         return filter.outputImage
     }
 
-    func updateTask() {
+    func updateImage() {
         guard let sourceCiImage else { return }
 
         processedCiImage = downscale(image: sourceCiImage, scale: 0.5) // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить
