@@ -38,8 +38,9 @@ final class PhotoEditorService: PhotoEditor {
     private var sourceImageOrientation: UIImage.Orientation?
     private var renderImageTask: Task<Void, Never>?
 
-    private let context =
-        CIContext() // Doc: Creating a CIContext is expensive, so create one during your initial setup and reuse it throughout your app.
+
+    private let context = CIContext()
+//    CIContext(mtlDevice: MTLCreateSystemDefaultDevice()!, options: [CIContextOption.cacheIntermediates: false, CIContextOption.allowLowPower: true]) // Doc: Creating a CIContext is expensive, so create one during your initial setup and reuse it throughout your app.
 
     // MARK: Computed Properties
 
@@ -267,8 +268,8 @@ final class PhotoEditorService: PhotoEditor {
 
 // MARK: Private methods
 
-private extension PhotoEditorService {
-    func renderHistogram() async {
+private extension PhotoEditorService { // TODO: Crash
+    func renderHistogram() {
         let filter = CIFilter.histogramDisplay()
         filter.inputImage = processedCiImage
         filter.lowLimit = 0
@@ -279,33 +280,38 @@ private extension PhotoEditorService {
         }
     }
 
+    func downscale(image: CIImage, scale: CGFloat)  -> CIImage? {
+        let filter = CIFilter(name: "CILanczosScaleTransform")!
+        filter.setValue(image, forKey: kCIInputImageKey)
+        filter.setValue(scale, forKey: kCIInputScaleKey)
+        return filter.outputImage
+    }
+
     func updateTask() {
         renderImageTask?.cancel()
         guard let sourceCiImage else { return }
-        processedCiImage = sourceCiImage
-        renderImageTask = Task {
-            if Task.isCancelled {
-                return
-            }
-            // Properties
-            await updateBCS()
-            await updateExposure()
-            await updateVibrance()
-            await updateHS()
-            await updateTemperatureAndTint()
-            await updateGamma()
-            await updateNoiseReduction()
-            // Effects
-            await updateVignette()
-            if let filter {
-                await configureFilter(filter)
-            }
-            if let texture {
-                await overlayTexture(texture)
-            }
-            await renderHistogram()
-            await renderImage()
+
+        processedCiImage = downscale(image: sourceCiImage, scale: 0.5) // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить
+
+        // Properties
+        updateBCS()
+        updateExposure()
+        updateVibrance()
+        updateHS()
+        updateTemperatureAndTint()
+        updateGamma()
+        updateNoiseReduction()
+        // Effects
+        updateVignette()
+        if let filter {
+            configureFilter(filter)
         }
+        if let texture {
+            overlayTexture(texture)
+        }
+        renderHistogram()
+        renderImage()
+
     }
 
     func resetEffects() {
@@ -313,21 +319,17 @@ private extension PhotoEditorService {
         vignetteIntensity.setToDefault()
     }
 
-    func renderImage() async {
+    func renderImage() {
         do {
             if let processedCiImage, let uiImage = renderCIImageToUIImage(processedCiImage) {
-                await MainActor.run {
-                    finalCiImage = processedCiImage
-                    finalImage = Image(uiImage: uiImage)
-                }
+                finalCiImage = processedCiImage
+                finalImage = Image(uiImage: uiImage)
             } else {
                 throw PhotoEditorError.failedToRenderImage
             }
         } catch {
-            await MainActor.run {
                 Crashlytics.crashlytics().record(error: error)
                 errorMessage = error.localizedDescription
-            }
         }
     }
 
@@ -384,7 +386,7 @@ private extension PhotoEditorService {
     // MARK: Image properties
 
     // Brightness, Contrast & Saturation
-    func updateBCS() async {
+    func updateBCS() {
         guard brightness.isUpdated || contrast.isUpdated || saturation.isUpdated else {
             return
         }
@@ -396,7 +398,7 @@ private extension PhotoEditorService {
         processedCiImage = filter.outputImage
     }
 
-    func updateExposure() async {
+    func updateExposure() {
         guard exposure.isUpdated else {
             return
         }
@@ -406,7 +408,7 @@ private extension PhotoEditorService {
         processedCiImage = filter.outputImage
     }
 
-    func updateVibrance() async {
+    func updateVibrance() {
         guard exposure.isUpdated else {
             return
         }
@@ -417,7 +419,7 @@ private extension PhotoEditorService {
     }
 
     // Highlights & Shadows
-    func updateHS() async {
+    func updateHS() {
         guard highlights.isUpdated || shadows.isUpdated else {
             return
         }
@@ -428,7 +430,7 @@ private extension PhotoEditorService {
         processedCiImage = filter.outputImage
     }
 
-    func updateTemperatureAndTint() async {
+    func updateTemperatureAndTint() {
         guard temperature.isUpdated || tint.isUpdated else {
             return
         }
@@ -439,7 +441,7 @@ private extension PhotoEditorService {
         processedCiImage = filter.outputImage
     }
 
-    func updateGamma() async {
+    func updateGamma() {
         guard gamma.isUpdated else {
             return
         }
@@ -449,7 +451,7 @@ private extension PhotoEditorService {
         processedCiImage = filter.outputImage
     }
 
-    func updateNoiseReduction() async {
+    func updateNoiseReduction() {
         guard noiseReduction.isUpdated || sharpness.isUpdated else {
             return
         }
@@ -462,7 +464,7 @@ private extension PhotoEditorService {
 
     // MARK: Effects
 
-    func updateVignette() async {
+    func updateVignette() {
         guard vignetteRadius.isUpdated || vignetteIntensity.isUpdated else {
             return
         }
@@ -475,7 +477,7 @@ private extension PhotoEditorService {
 
     // MARK: Textures & Filters
 
-    func overlayTexture(_ texture: Texture) async {
+    func overlayTexture(_ texture: Texture) {
         do {
             guard let uiImage = UIImage(named: texture.filename),
                   let cgImage = uiImage.cgImage,
@@ -495,7 +497,7 @@ private extension PhotoEditorService {
         }
     }
 
-    func configureFilter(_ filter: Filter) async {
+    func configureFilter(_ filter: Filter) {
         do {
             let filter = try lutsService.createCIColorCube(for: filter)
             filter.inputImage = processedCiImage
