@@ -27,13 +27,12 @@ struct TexturePreviewView: View {
                 .overlay(alignment: .bottom) {
                     Text(texture.title)
                         .hListItemTitleStyle()
-
-                        .clipShape(.rect(cornerRadius: 4))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 4)
-                                .stroke(isSelected ? Color.text : .clear, lineWidth: 2)
-                        )
                 }
+                .clipShape(.rect(cornerRadius: 4))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(isSelected ? Color.text : .clear, lineWidth: 2)
+                )
         }
     }
 }

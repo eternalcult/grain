@@ -276,7 +276,7 @@ final class DataStorage {
                     title: filter.title,
                     desc: filter.desc,
                     filename: filter.filename,
-                    preview: Task.isCancelled ? nil : try? lutsManager.apply(filter, for: image)
+                    preview: Task.isCancelled ? nil : try? lutsManager.apply(filter, for: image.downsample(scaleFactor: 0.5))
                 )
             }
             return FilterCategory(title: category.title, desc: category.desc, filters: updatedFilters)
