@@ -7,6 +7,7 @@ import SwiftUI
 struct GrainApp: App {
     // MARK: SwiftUI Properties
 
+    @AppStorage("launchCounter") private var launchCounter: Int = 0
     @AppStorage("hasLaunchedBefore") private var hasLaunchedBefore: Bool = false
 
     // MARK: Computed Properties
@@ -32,6 +33,10 @@ struct GrainApp: App {
 
     private var mainView: some View {
         MainView()
+            .onAppear {
+                launchCounter += 1
+                askReviewIfNeeded()
+            }
             .modelContainer(for: [FilterCICubeData.self]) { container in
                 switch container {
                 case let .success(container):
@@ -55,5 +60,11 @@ struct GrainApp: App {
                 hasLaunchedBefore = true
             })
         )
+    }
+
+    func askReviewIfNeeded() {
+        if launchCounter == 5 || launchCounter == 20 || launchCounter == 50 || launchCounter == 100 {
+            AppService.askReview()
+        }
     }
 }
