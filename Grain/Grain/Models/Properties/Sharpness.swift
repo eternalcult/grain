@@ -6,4 +6,5 @@ struct Sharpness: ImageProperty {
     var defaultValue: Float = 0.4
     var current: Float = 0.4
     let formatStyle: ImagePropertyValueFormattedStyle = .zeroTo100
+    let propertyKey: String? = "inputSharpness"
 }

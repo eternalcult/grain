@@ -6,4 +6,5 @@ struct Gamma: ImageProperty {
     var defaultValue: Float = 1.0
     var current: Float = 1.0
     let formatStyle: ImagePropertyValueFormattedStyle = .minus100to100
+    let propertyKey: String? = "inputPower"
 }

@@ -6,4 +6,5 @@ struct Temperature: ImageProperty {
     var defaultValue: Float = 6500
     var current: Float = 6500
     let formatStyle: ImagePropertyValueFormattedStyle = .without
+    let propertyKey: String? = nil
 }

@@ -8,6 +8,7 @@ struct VignetteIntensity: ImageProperty {
     var defaultValue: Float = 0
     var current: Float = 0
     var formatStyle: ImagePropertyValueFormattedStyle = .zeroTo100
+    let propertyKey: String? = nil
 }
 
 // MARK: - VignetteRadius
@@ -18,4 +19,5 @@ struct VignetteRadius: ImageProperty {
     var defaultValue: Float = 1
     var current: Float = 1
     var formatStyle: ImagePropertyValueFormattedStyle = .minus100to100
+    let propertyKey: String? = nil
 }

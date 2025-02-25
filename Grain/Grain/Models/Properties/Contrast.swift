@@ -6,4 +6,5 @@ struct Contrast: ImageProperty {
     let defaultValue: Float = 1
     var current: Float = 1
     let formatStyle: ImagePropertyValueFormattedStyle = .minus100to100
+    let propertyKey: String? = kCIInputContrastKey
 }

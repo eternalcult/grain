@@ -6,4 +6,5 @@ struct NoiseReduction: ImageProperty {
     var defaultValue: Float = 0.2
     var current: Float = 0.2
     let formatStyle: ImagePropertyValueFormattedStyle = .zeroTo100
+    let propertyKey: String? = "inputNoiseLevel"
 }

@@ -11,8 +11,9 @@ protocol ImageProperty {
     var defaultValue: ImagePropertyValue { get }
     var current: ImagePropertyValue { get set }
     var formatStyle: ImagePropertyValueFormattedStyle { get }
-    mutating func setToDefault()
+    var propertyKey: String? { get }
     var isUpdated: Bool { get }
+    mutating func setToDefault()
 }
 
 extension ImageProperty {

@@ -301,13 +301,16 @@ private extension PhotoEditorService { // TODO: Crash
         processedCiImage = downscale(image: sourceCiImage, scale: 0.5) // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить
 
         // Properties
-        updateBCS()
-        updateExposure()
-        updateVibrance()
+        applyFilter(colorControlsFilter, property: brightness)
+        applyFilter(colorControlsFilter, property: contrast)
+        applyFilter(colorControlsFilter, property: saturation)
+        applyFilter(exposureAdjustFilter, property: exposure)
+        applyFilter(vibranceFilter, property: vibrance)
         updateHS()
+        applyFilter(gammaAdjustFilter, property: gamma)
         updateTemperatureAndTint()
-        updateGamma()
-        updateNoiseReduction()
+        applyFilter(noiseReductionFilter, property: noiseReduction)
+        applyFilter(noiseReductionFilter, property: sharpness)
         // Effects
         updateVignette()
         if let filter {
@@ -392,34 +395,11 @@ private extension PhotoEditorService { // TODO: Crash
 private extension PhotoEditorService {
     // MARK: Image properties
 
-    // Brightness, Contrast & Saturation
-    func updateBCS() {
-        guard brightness.isUpdated || contrast.isUpdated || saturation.isUpdated else {
-            return
-        }
-        colorControlsFilter.inputImage = processedCiImage
-        colorControlsFilter.brightness = brightness.current
-        colorControlsFilter.contrast = contrast.current
-        colorControlsFilter.saturation = saturation.current
-        processedCiImage = colorControlsFilter.outputImage
-    }
-
-    func updateExposure() {
-        guard exposure.isUpdated else {
-            return
-        }
-        exposureAdjustFilter.inputImage = processedCiImage
-        exposureAdjustFilter.ev = exposure.current
-        processedCiImage = exposureAdjustFilter.outputImage
-    }
-
-    func updateVibrance() {
-        guard exposure.isUpdated else {
-            return
-        }
-        vibranceFilter.inputImage = processedCiImage
-        vibranceFilter.amount = vibrance.current
-        processedCiImage = vibranceFilter.outputImage
+    private func applyFilter<T: ImageProperty>(_ filter: CIFilter, property: T) {
+        guard property.isUpdated, let propertyKey = property.propertyKey else { return }
+        filter.setValue(processedCiImage, forKey: kCIInputImageKey) // Устанавливаем изображение как входные данные фильтра
+        filter.setValue(property.current, forKey: propertyKey) // Устанавливаем значение для фильтра
+        processedCiImage = filter.outputImage
     }
 
     // Highlights & Shadows
@@ -442,26 +422,6 @@ private extension PhotoEditorService {
         temperatureAndTintFilter.targetNeutral = CIVector(x: CGFloat(temperature.current), y: CGFloat(tint.current))
         processedCiImage = temperatureAndTintFilter.outputImage
     }
-
-    func updateGamma() {
-        guard gamma.isUpdated else {
-            return
-        }
-        gammaAdjustFilter.inputImage = processedCiImage
-        gammaAdjustFilter.power = gamma.current
-        processedCiImage = gammaAdjustFilter.outputImage
-    }
-
-    func updateNoiseReduction() {
-        guard noiseReduction.isUpdated || sharpness.isUpdated else {
-            return
-        }
-        noiseReductionFilter.inputImage = processedCiImage
-        noiseReductionFilter.noiseLevel = noiseReduction.current
-        noiseReductionFilter.sharpness = sharpness.current
-        processedCiImage = noiseReductionFilter.outputImage
-    }
-
     // MARK: Effects
 
     func updateVignette() {
