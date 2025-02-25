@@ -67,6 +67,10 @@ protocol PhotoEditor {
     var vignetteIntensity: ImageProperty { get set }
     /// Радиус виньетки.
     var vignetteRadius: ImageProperty { get set }
+    /// Интенсивность Bloom эффекта.
+    var bloomIntensity: ImageProperty { get set }
+    /// Радиус Bloom эффекта.
+    var bloomRadius: ImageProperty { get set }
 
     // MARK: Functions
 

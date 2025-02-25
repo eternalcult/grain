@@ -203,6 +203,22 @@ final class MainViewModel {
         }
     }
 
+    var bloomIntensity: ImageProperty {
+        get {
+            photoEditor.bloomIntensity
+        } set {
+            photoEditor.bloomIntensity = newValue
+        }
+    }
+
+    var bloomRadius: ImageProperty {
+        get {
+            photoEditor.bloomRadius
+        } set {
+            photoEditor.bloomRadius = newValue
+        }
+    }
+
     // MARK: Lifecycle
 
     init(photoEditor: PhotoEditor = PhotoEditorService()) {

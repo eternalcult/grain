@@ -41,6 +41,7 @@ final class PhotoEditorService: PhotoEditor {
     private let gammaAdjustFilter = CIFilter.gammaAdjust()
     private let noiseReductionFilter = CIFilter.noiseReduction()
     private let vignetteFilter = CIFilter.vignette()
+    private let bloomFilter = CIFilter.bloom()
 
     private let context = CIContext() // TODO: Настроить CIContext
 
@@ -126,13 +127,24 @@ final class PhotoEditorService: PhotoEditor {
 
     // MARK: Effects
 
-    var vignetteIntensity: ImageProperty = VignetteIntensity() {
+    var vignetteIntensity: ImageProperty = VignetteIntensity() { // TODO: Create ImageEffect protocol
         didSet {
             updateImage()
         }
     }
 
-    var vignetteRadius: ImageProperty = VignetteRadius() {
+    var vignetteRadius: ImageProperty = VignetteRadius() { // TODO: Create ImageEffect protocol
+        didSet {
+            updateImage()
+        }
+    }
+
+    var bloomIntensity: ImageProperty = BloomIntensity() { // TODO: Create ImageEffect protocol
+        didSet {
+            updateImage()
+        }
+    }
+    var bloomRadius: ImageProperty = BloomRadius() { // TODO: Create ImageEffect protocol
         didSet {
             updateImage()
         }
@@ -320,6 +332,7 @@ private extension PhotoEditorService { // TODO: Crash
         applyFilter(noiseReductionFilter, property: sharpness)
         // Effects
         updateVignette()
+        updateBloom()
         if let filter {
             configureFilter(filter)
         }
@@ -418,6 +431,19 @@ private extension PhotoEditorService {
         vignetteFilter.intensity = vignetteIntensity.current
         vignetteFilter.radius = vignetteRadius.current
         processedCiImage = vignetteFilter.outputImage
+    }
+
+    func updateBloom() {
+        guard bloomRadius.isUpdated || bloomIntensity.isUpdated else {
+            return
+        }
+
+        bloomFilter.inputImage = processedCiImage
+        bloomFilter.intensity = bloomIntensity.current
+        bloomFilter.radius = bloomRadius.current
+        if let originalExtent = processedCiImage?.extent, let croppedOutput = bloomFilter.outputImage?.cropped(to: originalExtent) {
+            processedCiImage = croppedOutput
+        }
     }
 
     // MARK: Textures & Filters
