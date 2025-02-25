@@ -1,6 +1,6 @@
+import AppCore
 import PhotosUI
 import SwiftUI
-import AppCore
 
 @Observable
 final class MainViewModel {
@@ -16,6 +16,8 @@ final class MainViewModel {
     var showsHistogram = false
     var isLoadingFiltersPreviews: Bool = false
     var showsPalette = false
+
+    var filtersPreview: [FilterPreview] = []
 
     private var photoEditor: PhotoEditor
 
@@ -265,14 +267,13 @@ final class MainViewModel {
                         Vibration.success()
                     }
                 }
-                // TODO: Show success alert or snackbar
+
+            // TODO: Show success alert or snackbar
             case let .failure(failure):
                 break // TODO: Show error alert or snackbar
             }
         }
     }
-
-    var filtersPreview: [FilterPreview] = []
 
     func prepareForEditing() {
         guard let selectedItem else {
@@ -288,8 +289,7 @@ final class MainViewModel {
                 // TODO: Может вместо того, чтобы отдельно передавать CIImage и ориентацию передавать UIImage?
                 photoEditor.updateSourceImage(ciImage, orientation: uiImage.imageOrientation)
                 await DataStorage.shared.createFiltersPreviews(with: ciImage)
-                filtersPreview =  DataStorage.shared.filtersPreview
-
+                filtersPreview = DataStorage.shared.filtersPreview
             }
             isLoadingFiltersPreviews = false
         }

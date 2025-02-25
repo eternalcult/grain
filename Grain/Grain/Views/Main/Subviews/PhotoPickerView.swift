@@ -1,6 +1,6 @@
+import AppCore
 import PhotosUI
 import SwiftUI
-import AppCore
 
 struct MainPhotoPickerView: View {
     // MARK: SwiftUI Properties

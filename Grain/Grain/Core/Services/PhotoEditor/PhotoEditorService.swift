@@ -32,6 +32,7 @@ final class PhotoEditorService: PhotoEditor {
     private var sourceImageOrientation: UIImage.Orientation?
 
     // MARK: CIFilters
+
     private let colorControlsFilter = CIFilter.colorControls()
     private let exposureAdjustFilter = CIFilter.exposureAdjust()
     private let vibranceFilter = CIFilter.vibrance()
@@ -40,7 +41,6 @@ final class PhotoEditorService: PhotoEditor {
     private let gammaAdjustFilter = CIFilter.gammaAdjust()
     private let noiseReductionFilter = CIFilter.noiseReduction()
     private let vignetteFilter = CIFilter.vignette()
-
 
     private let context = CIContext() // TODO: Настроить CIContext
 
@@ -292,7 +292,7 @@ private extension PhotoEditorService { // TODO: Crash
         }
     }
 
-    func downscale(image: CIImage, scale: CGFloat)  -> CIImage? {
+    func downscale(image: CIImage, scale: CGFloat) -> CIImage? {
         let filter = CIFilter(name: "CILanczosScaleTransform")!
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(scale, forKey: kCIInputScaleKey)
@@ -302,7 +302,10 @@ private extension PhotoEditorService { // TODO: Crash
     func updateImage() {
         guard let sourceCiImage else { return }
 
-        processedCiImage = downscale(image: sourceCiImage, scale: 0.5) // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить
+        processedCiImage = downscale(
+            image: sourceCiImage,
+            scale: 0.5
+        ) // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить
 
         // Properties
         applyFilter(colorControlsFilter, property: brightness)
@@ -377,7 +380,7 @@ private extension PhotoEditorService { // TODO: Crash
 private extension PhotoEditorService {
     // MARK: Image properties
 
-    private func applyFilter<T: ImageProperty>(_ filter: CIFilter, property: T) {
+    private func applyFilter(_ filter: CIFilter, property: some ImageProperty) {
         guard property.isUpdated, let propertyKey = property.propertyKey else { return }
         filter.setValue(processedCiImage, forKey: kCIInputImageKey) // Устанавливаем изображение как входные данные фильтра
         filter.setValue(property.current, forKey: propertyKey) // Устанавливаем значение для фильтра
@@ -404,6 +407,7 @@ private extension PhotoEditorService {
         temperatureAndTintFilter.targetNeutral = CIVector(x: CGFloat(temperature.current), y: CGFloat(tint.current))
         processedCiImage = temperatureAndTintFilter.outputImage
     }
+
     // MARK: Effects
 
     func updateVignette() {

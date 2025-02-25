@@ -1,5 +1,5 @@
-import SwiftUI
 import AppCore
+import SwiftUI
 
 struct PhotoEditorView: View {
     // MARK: SwiftUI Properties

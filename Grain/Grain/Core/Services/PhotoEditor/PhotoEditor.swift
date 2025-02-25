@@ -70,7 +70,6 @@ protocol PhotoEditor {
 
     // MARK: Functions
 
-
     /// Обновить исходное изображение.
     /// - Parameters:
     ///   - image: Новое исходное изображение
@@ -78,6 +77,7 @@ protocol PhotoEditor {
     func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation)
 
     // MARK: Textures methods
+
     /// Применить текстуру
     func applyTexture(_ newTexture: Texture)
     /// Обновляет режим смешивания текстуры.

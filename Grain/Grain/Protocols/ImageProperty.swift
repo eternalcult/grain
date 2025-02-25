@@ -5,6 +5,8 @@ import SwiftUI
 
 typealias ImagePropertyValue = Float
 
+// MARK: - ImageProperty
+
 protocol ImageProperty {
     var title: LocalizedStringKey { get }
     var range: ClosedRange<ImagePropertyValue> { get }

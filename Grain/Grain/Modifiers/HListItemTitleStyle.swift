@@ -1,7 +1,9 @@
 import SwiftUI
 
+// MARK: - HListItemTitleStyle
+
 /// Используется для отображения заголовков элементов в FiltersHListView, TexturesHListView и RawPreviewView
-fileprivate struct HListItemTitleStyle: ViewModifier {
+private struct HListItemTitleStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.h6)
@@ -17,6 +19,6 @@ fileprivate struct HListItemTitleStyle: ViewModifier {
 extension View {
     /// Применяет модификатор HListItemTitleStyle
     func hListItemTitleStyle() -> some View {
-        self.modifier(HListItemTitleStyle())
+        modifier(HListItemTitleStyle())
     }
 }

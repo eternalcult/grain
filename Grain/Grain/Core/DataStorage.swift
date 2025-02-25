@@ -30,6 +30,8 @@ final class DataStorage {
     private(set) var filtersCategories: [FiltersCategory] = []
     private(set) var texturesCategories: [TexturesCategory] = []
 
+    var filtersPreview = [FilterPreview]()
+
     private let lutsManager = LutsService()
 
     private var swiftDataManager: SwiftDataManager?
@@ -39,7 +41,6 @@ final class DataStorage {
     var filtersData: [FilterCICubeData] {
         swiftDataManager?.fetch(FilterCICubeData.self) ?? []
     }
-    var filtersPreview = [FilterPreview]()
 
     // MARK: Lifecycle
 
@@ -54,7 +55,6 @@ final class DataStorage {
 
         print("Filters count:", filtersCategories.flatMap(\.filters).count)
         print("Textures count:", texturesCategories.flatMap(\.textures).count)
-
     }
 
     // MARK: Functions
@@ -82,11 +82,11 @@ final class DataStorage {
 
     func createFiltersPreviews(with image: CIImage) async {
         print("Creating previews for filters")
-        let filters = filtersCategories.flatMap { $0.filters }
+        let filters = filtersCategories.flatMap(\.filters)
         filtersPreview = filters.map {
             FilterPreview(
                 id: $0.id,
-                preview: Task.isCancelled ? nil : try? lutsManager.apply($0,for: image.downsample(scaleFactor: 0.5))
+                preview: Task.isCancelled ? nil : try? lutsManager.apply($0, for: image.downsample(scaleFactor: 0.5))
             )
         }
     }

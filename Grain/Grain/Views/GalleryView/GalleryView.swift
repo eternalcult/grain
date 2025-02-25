@@ -33,12 +33,17 @@ struct GalleryView: View {
                             let filterPreview = DataStorage.shared.filtersPreview.first(where: { $0.id == filter.id })?.preview
                             if let filterPreview {
                                 if let selectedFilter = viewModel.filter {
-                                    FilterPreviewView(filter,filterPreview, shouldShowFullScreen: true, isSelected: selectedFilter.id == filter.id) {
+                                    FilterPreviewView(
+                                        filter,
+                                        filterPreview,
+                                        shouldShowFullScreen: true,
+                                        isSelected: selectedFilter.id == filter.id
+                                    ) {
                                         viewModel.applyFilter(filter)
                                     }
                                     .aspectRatio(1 / 1, contentMode: .fit)
                                 } else {
-                                    FilterPreviewView(filter,filterPreview, shouldShowFullScreen: true) {
+                                    FilterPreviewView(filter, filterPreview, shouldShowFullScreen: true) {
                                         viewModel.applyFilter(filter)
                                     }
                                     .aspectRatio(1 / 1, contentMode: .fit)
