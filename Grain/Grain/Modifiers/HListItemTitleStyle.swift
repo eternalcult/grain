@@ -15,6 +15,7 @@ fileprivate struct HListItemTitleStyle: ViewModifier {
 }
 
 extension View {
+    /// Применяет модификатор HListItemTitleStyle
     func hListItemTitleStyle() -> some View {
         self.modifier(HListItemTitleStyle())
     }

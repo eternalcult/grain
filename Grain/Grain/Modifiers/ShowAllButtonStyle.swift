@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Стиль кнопки ShowAll
 fileprivate struct ShowAllButtonStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -11,6 +12,7 @@ fileprivate struct ShowAllButtonStyle: ViewModifier {
 
 
 extension View {
+    /// Применяет ShowAllButtonStyle модификатор
     func showAllButtonStyle() -> some View {
         self.modifier(ShowAllButtonStyle())
     }

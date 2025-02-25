@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Стиль заголовком Toggle объектов
 fileprivate struct ToggleListHeaderStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -11,6 +12,7 @@ fileprivate struct ToggleListHeaderStyle: ViewModifier {
 }
 
 extension View {
+    /// Применяет ToggleListHeaderStyle модификатор
     func toggleListHeaderStyle() -> some View {
         self.modifier(ToggleListHeaderStyle())
     }

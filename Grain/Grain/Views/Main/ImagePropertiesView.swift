@@ -22,7 +22,7 @@ struct ImagePropertiesView: View {
                     HStack {
                         Text("Settings")
                             .toggleListHeaderStyle()
-                        if viewModel.propertiesModified {
+                        if viewModel.hasModifiedProperties {
                             Button {
                                 viewModel.resetSettings()
                             } label: {

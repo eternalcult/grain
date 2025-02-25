@@ -41,10 +41,6 @@ final class MainViewModel {
         photoEditor.filter
     }
 
-    var finalCiImage: CIImage? {
-        photoEditor.finalCiImage
-    }
-
     var sourceImage: Image? {
         photoEditor.sourceImage
     }
@@ -57,8 +53,8 @@ final class MainViewModel {
         photoEditor.errorMessage
     }
 
-    var propertiesModified: Bool {
-        photoEditor.propertiesModified
+    var hasModifiedProperties: Bool {
+        photoEditor.hasModifiedProperties
     }
 
     var brightness: ImageProperty {
@@ -175,11 +171,11 @@ final class MainViewModel {
         photoEditor.textureBlendMode
     }
 
-    var textureIntensity: Float {
+    var textureAlpha: Float {
         get {
-            photoEditor.textureIntensity
+            photoEditor.textureAlpha
         } set {
-            photoEditor.textureIntensity = newValue
+            photoEditor.textureAlpha = newValue
         }
     }
 
@@ -249,8 +245,8 @@ final class MainViewModel {
         photoEditor.removeFilterIfNeeded()
     }
 
-    func applyTextureBlendMode(to blendMode: BlendMode) {
-        photoEditor.applyTextureBlendMode(to: blendMode)
+    func updateTextureBlendMode(to blendMode: BlendMode) {
+        photoEditor.updateTextureBlendMode(to: blendMode)
     }
 
     func closeImage() {

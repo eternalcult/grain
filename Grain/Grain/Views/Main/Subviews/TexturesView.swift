@@ -76,7 +76,7 @@ struct TexturesView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             Slider(value: Binding(
                                 get: { Double(viewModel.textureBlendMode.rawValue) },
-                                set: { viewModel.applyTextureBlendMode(to: BlendMode(rawValue: Int($0)) ?? .normal) }
+                                set: { viewModel.updateTextureBlendMode(to: BlendMode(rawValue: Int($0)) ?? .normal) }
                             ), in: BlendMode.range, step: 1)
                                 .tint(Color.text.opacity(0.1))
                         }
@@ -85,7 +85,7 @@ struct TexturesView: View {
                                 Text("Intensity:")
                                     .font(.h5)
                                     .foregroundStyle(Color.text.opacity(0.8))
-                                let formattedTextureIntensity = viewModel.textureIntensity.formatValueToAnotherRange(
+                                let formattedTextureIntensity = viewModel.textureAlpha.formatValueToAnotherRange(
                                     currentMin: 0,
                                     currentMax: 1,
                                     newMin: 0,
@@ -96,7 +96,7 @@ struct TexturesView: View {
                                     .foregroundStyle(Color.text.opacity(0.8))
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            Slider(value: $viewModel.textureIntensity, in: 0 ... 1)
+                            Slider(value: $viewModel.textureAlpha, in: 0 ... 1)
                                 .tint(Color.text.opacity(0.1))
                         }
                     }

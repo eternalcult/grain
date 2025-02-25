@@ -11,15 +11,9 @@ final class PhotoEditorService: PhotoEditor {
     // MARK: Properties
 
     var errorMessage: String?
-    // TODO: DI
-
     private(set) var sourceImage: Image?
-    /// Source Image doesn't change
     private(set) var sourceCiImage: CIImage?
-    /// Final Image after all updates
     private(set) var finalImage: Image?
-    /// Final CIImage after all updates
-    private(set) var finalCiImage: CIImage?
 
     // MARK: Texture
 
@@ -33,7 +27,7 @@ final class PhotoEditorService: PhotoEditor {
     private(set) var histogram: UIImage?
 
     private let lutsService: LutsServiceProtocol
-    /// Is used only for private applying chain of filters and don't update UI after each filter update
+
     private var processedCiImage: CIImage?
     private var sourceImageOrientation: UIImage.Orientation?
 
@@ -52,7 +46,7 @@ final class PhotoEditorService: PhotoEditor {
 
     // MARK: Computed Properties
 
-    var propertiesModified: Bool {
+    var hasModifiedProperties: Bool {
         brightness.isUpdated || contrast.isUpdated || saturation.isUpdated || exposure.isUpdated || vibrance.isUpdated || highlights
             .isUpdated || shadows.isUpdated || temperature.isUpdated || tint.isUpdated || gamma.isUpdated || noiseReduction
             .isUpdated || sharpness.isUpdated
@@ -150,7 +144,7 @@ final class PhotoEditorService: PhotoEditor {
         texture != nil
     }
 
-    var textureIntensity: Float = 0.5 {
+    var textureAlpha: Float = 0.5 {
         didSet {
             updateImage()
         }
@@ -173,11 +167,10 @@ final class PhotoEditorService: PhotoEditor {
     func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation) {
         sourceCiImage = image
         sourceImageOrientation = orientation
-        if let sourceUiImage = renderCIImageToUIImage(image) {
+        if let sourceUiImage = image.renderToUIImage(with: context, orientation: orientation) {
             sourceImage = Image(uiImage: sourceUiImage)
         }
         processedCiImage = image
-        finalImage = nil
         resetSettings()
     }
 
@@ -188,7 +181,7 @@ final class PhotoEditorService: PhotoEditor {
         }
     }
 
-    func applyTextureBlendMode(to newBlendMode: BlendMode) {
+    func updateTextureBlendMode(to newBlendMode: BlendMode) {
         if textureBlendMode != newBlendMode {
             textureBlendMode = newBlendMode
         }
@@ -197,7 +190,7 @@ final class PhotoEditorService: PhotoEditor {
 
     func removeTextureIfNeeded() {
         texture = nil
-        textureIntensity = 0.5
+        textureAlpha = 0.5
         textureBlendMode = .normal
         updateImage()
     }
@@ -214,9 +207,8 @@ final class PhotoEditorService: PhotoEditor {
         updateImage()
     }
 
-    // Info.plist - NSPhotoLibraryUsageDescription - We need access to your photo library to save images you create in the app.
     func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void) {
-        if let processedCiImage, let uiImage = renderCIImageToUIImage(processedCiImage) {
+        if let processedCiImage, let uiImage = processedCiImage.renderToUIImage(with: context, orientation: sourceImageOrientation) {
             // Request permission to access the photo library
             PHPhotoLibrary.requestAuthorization { status in
                 guard status == .authorized else {
@@ -250,7 +242,6 @@ final class PhotoEditorService: PhotoEditor {
         sourceImageOrientation = nil
         sourceCiImage = nil
         processedCiImage = nil
-        finalImage = nil
         filter = nil
         texture = nil
         textureBlendMode = .normal
@@ -277,6 +268,19 @@ final class PhotoEditorService: PhotoEditor {
 // MARK: Private methods
 
 private extension PhotoEditorService { // TODO: Crash
+    func renderImage() {
+        do {
+            if let uiImage = processedCiImage?.renderToUIImage(with: context, orientation: sourceImageOrientation) {
+                finalImage = Image(uiImage: uiImage)
+            } else {
+                throw PhotoEditorError.failedToRenderImage
+            }
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            errorMessage = error.localizedDescription
+        }
+    }
+
     func renderHistogram() {
         let filter = CIFilter.histogramDisplay()
         filter.inputImage = processedCiImage
@@ -284,7 +288,7 @@ private extension PhotoEditorService { // TODO: Crash
         filter.highLimit = 1
 
         if let output = filter.outputImage {
-            histogram = renderCIImageToUIImage(output)
+            histogram = output.renderToUIImage(with: context)
         }
     }
 
@@ -321,26 +325,11 @@ private extension PhotoEditorService { // TODO: Crash
         }
         renderHistogram()
         renderImage()
-
     }
 
     func resetEffects() {
         vignetteRadius.setToDefault()
         vignetteIntensity.setToDefault()
-    }
-
-    func renderImage() {
-        do {
-            if let processedCiImage, let uiImage = renderCIImageToUIImage(processedCiImage) {
-                finalCiImage = processedCiImage
-                finalImage = Image(uiImage: uiImage)
-            } else {
-                throw PhotoEditorError.failedToRenderImage
-            }
-        } catch {
-                Crashlytics.crashlytics().record(error: error)
-                errorMessage = error.localizedDescription
-        }
     }
 
     func updateTextureIntensity(of texture: CIImage, to alpha: CGFloat) -> CIImage? {
@@ -352,7 +341,7 @@ private extension PhotoEditorService { // TODO: Crash
 
     func configureTexture(_ texture: CIImage, size: CGSize) -> CIImage? { // TODO: Refactor
         if let resized = resizeImageToAspectFill(image: texture, targetSize: size) {
-            return updateTextureIntensity(of: resized, to: CGFloat(textureIntensity))
+            return updateTextureIntensity(of: resized, to: CGFloat(textureAlpha))
         }
         return nil
     }
@@ -380,13 +369,6 @@ private extension PhotoEditorService { // TODO: Crash
 
         // Crop the image to fit exactly within the target size
         return resizedImage.cropped(to: CGRect(origin: .zero, size: targetSize))
-    }
-
-    func renderCIImageToUIImage(_ ciImage: CIImage) -> UIImage? {
-        guard let cgImage = context.createCGImage(ciImage, from: ciImage.extent) else {
-            return nil
-        }
-        return UIImage(cgImage: cgImage, scale: 1, orientation: sourceImageOrientation ?? .up)
     }
 }
 
