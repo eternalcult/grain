@@ -27,9 +27,23 @@
 		C1F076C32D5263B5002508B0 /* GrainFastlaneSnapshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrainFastlaneSnapshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		C1E6800B2D6DD1DC0024BD81 /* Exceptions for "Grain" folder in "Compile Sources" phase from "Grain" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = C1517A9A2D34511200F61DC6 /* Sources */;
+			membershipExceptions = (
+				Core/JSON/Filters.json,
+				Core/JSON/Textures.json,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C1517AA02D34511200F61DC6 /* Grain */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C1E6800B2D6DD1DC0024BD81 /* Exceptions for "Grain" folder in "Compile Sources" phase from "Grain" target */,
+			);
 			path = Grain;
 			sourceTree = "<group>";
 		};

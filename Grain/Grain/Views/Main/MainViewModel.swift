@@ -257,6 +257,7 @@ final class MainViewModel {
         selectedItem = nil
         loadFiltersPreviews?.cancel()
         photoEditor.reset()
+        DataStorage.shared.filtersPreview = []
     }
 
     func saveImageToPhotoLibrary() {
@@ -275,6 +276,8 @@ final class MainViewModel {
         }
     }
 
+    var filtersPreview: [FilterPreview] = []
+
     func prepareForEditing() {
         guard let selectedItem else {
             return
@@ -288,7 +291,9 @@ final class MainViewModel {
             {
                 // TODO: Может вместо того, чтобы отдельно передавать CIImage и ориентацию передавать UIImage?
                 photoEditor.updateSourceImage(ciImage, orientation: uiImage.imageOrientation)
-                await DataStorage.shared.updateFiltersPreviews(with: ciImage)
+                await DataStorage.shared.createFiltersPreviews(with: ciImage)
+                filtersPreview =  DataStorage.shared.filtersPreview
+
             }
             isLoadingFiltersPreviews = false
         }

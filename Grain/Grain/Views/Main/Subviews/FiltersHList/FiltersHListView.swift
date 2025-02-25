@@ -48,6 +48,7 @@ struct FiltersHListView: View {
                                     GeometryReader { geometry in
                                         FilterPreviewView(
                                             filter,
+                                            DataStorage.shared.filtersPreview.first(where: { $0.id == filter.id })?.preview,
                                             isSelected: isSelected(currentFilter: filter, selectedFilter: viewModel.filter)
                                         ) {
                                             viewModel.applyFilter(filter)

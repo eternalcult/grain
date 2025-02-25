@@ -10,13 +10,15 @@ struct FilterPreviewView: View {
     var didTap: (() -> Void)?
 
     private let filter: Filter
+    private let preview: CGImage?
     private let isSelected: Bool
     private let shouldShowFullScreen: Bool
 
     // MARK: Lifecycle
 
-    init(_ filter: Filter, shouldShowFullScreen: Bool = false, isSelected: Bool = false, didTap: (() -> Void)?) {
+    init(_ filter: Filter, _ preview: CGImage?, shouldShowFullScreen: Bool = false, isSelected: Bool = false, didTap: (() -> Void)?) {
         self.filter = filter
+        self.preview = preview
         self.shouldShowFullScreen = shouldShowFullScreen
         self.isSelected = isSelected
         self.didTap = didTap
@@ -26,7 +28,7 @@ struct FilterPreviewView: View {
 
     var body: some View {
         GeometryReader { proxy in
-            if let preview = filter.preview {
+            if let preview {
                 Button {
                     if shouldShowFullScreen {
                         showsFullScreen = true
