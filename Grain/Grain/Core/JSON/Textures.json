@@ -1,0 +1,257 @@
+    [
+        {
+            "title": "Grain & Dust",
+            "textures": [
+                {
+                    "title": "Grain & Dust 1",
+                    "filename": "Textures/GrainDust/01"
+                },
+                {
+                    "title": "Grain & Dust 2",
+                    "filename": "Textures/GrainDust/02"
+                },
+                {
+                    "title": "Grain & Dust 3",
+                    "filename": "Textures/GrainDust/03"
+                },
+                {
+                    "title": "Grain & Dust 4",
+                    "filename": "Textures/GrainDust/04"
+                },
+                {
+                    "title": "Grain & Dust 5",
+                    "filename": "Textures/GrainDust/05"
+                },
+                {
+                    "title": "Grain & Dust 6",
+                    "filename": "Textures/GrainDust/06"
+                },
+                {
+                    "title": "Grain & Dust 7",
+                    "filename": "Textures/GrainDust/07"
+                },
+                {
+                    "title": "Grain & Dust 8",
+                    "filename": "Textures/GrainDust/08"
+                },
+                {
+                    "title": "Grain & Dust 9",
+                    "filename": "Textures/GrainDust/09"
+                },
+                {
+                    "title": "Grain & Dust 10",
+                    "filename": "Textures/GrainDust/10"
+                },
+                {
+                    "title": "Grain & Dust 11",
+                    "filename": "Textures/GrainDust/11"
+                },
+                {
+                    "title": "Grain & Dust 12",
+                    "filename": "Textures/GrainDust/12"
+                },
+                {
+                    "title": "Grain & Dust 13",
+                    "filename": "Textures/GrainDust/13"
+                },
+                {
+                    "title": "Grain & Dust 14",
+                    "filename": "Textures/GrainDust/14"
+                },
+                {
+                    "title": "Grain & Dust 15",
+                    "filename": "Textures/GrainDust/15"
+                },
+                {
+                    "title": "Grain & Dust 16",
+                    "filename": "Textures/GrainDust/16"
+                },
+                {
+                    "title": "Grain & Dust 17",
+                    "filename": "Textures/GrainDust/17"
+                },
+                {
+                    "title": "Grain & Dust 18",
+                    "filename": "Textures/GrainDust/18"
+                },
+                {
+                    "title": "Grain & Dust 19",
+                    "filename": "Textures/GrainDust/19"
+                },
+                {
+                    "title": "Grain & Dust 20",
+                    "filename": "Textures/GrainDust/20"
+                }
+            ]
+        },
+        {
+            "title": "VHS",
+            "textures": [
+                {
+                    "title": "VHS 1",
+                    "filename": "Textures/VHS/1"
+                },
+                {
+                    "title": "VHS 2",
+                    "filename": "Textures/VHS/2"
+                },
+                {
+                    "title": "VHS 3",
+                    "filename": "Textures/VHS/3"
+                },
+                {
+                    "title": "VHS 4",
+                    "filename": "Textures/VHS/4"
+                },
+                {
+                    "title": "VHS 5",
+                    "filename": "Textures/VHS/5"
+                },
+                {
+                    "title": "VHS 6",
+                    "filename": "Textures/VHS/6"
+                },
+                {
+                    "title": "VHS 7",
+                    "filename": "Textures/VHS/7"
+                },
+                {
+                    "title": "VHS 8",
+                    "filename": "Textures/VHS/8"
+                },
+                {
+                    "title": "VHS 9",
+                    "filename": "Textures/VHS/9"
+                },
+                {
+                    "title": "VHS 10",
+                    "filename": "Textures/VHS/10"
+                },
+                {
+                    "title": "VHS 11",
+                    "filename": "Textures/VHS/11"
+                },
+                {
+                    "title": "VHS 12",
+                    "filename": "Textures/VHS/v12"
+                },
+                {
+                    "title": "VHS 13",
+                    "filename": "Textures/VHS/v13"
+                },
+                {
+                    "title": "VHS 14",
+                    "filename": "Textures/VHS/v14"
+                },
+                {
+                    "title": "VHS 15",
+                    "filename": "Textures/VHS/v15"
+                },
+                {
+                    "title": "VHS 16",
+                    "filename": "Textures/VHS/v16"
+                },
+                {
+                    "title": "VHS 17",
+                    "filename": "Textures/VHS/v17"
+                },
+                {
+                    "title": "VHS 18",
+                    "filename": "Textures/VHS/v18"
+                },
+                {
+                    "title": "VHS 19",
+                    "filename": "Textures/VHS/v19"
+                },
+                {
+                    "title": "VHS 20",
+                    "filename": "Textures/VHS/v20"
+                }
+            ]
+        },
+        {
+            "title": "Holographic",
+            "textures": [
+                {
+                    "title": "Holographic 1",
+                    "filename": "Textures/Holographic/1"
+                },
+                {
+                    "title": "Holographic 2",
+                    "filename": "Textures/Holographic/2"
+                },
+                {
+                    "title": "Holographic 3",
+                    "filename": "Textures/Holographic/3"
+                },
+                {
+                    "title": "Holographic 4",
+                    "filename": "Textures/Holographic/4"
+                },
+                {
+                    "title": "Holographic 5",
+                    "filename": "Textures/Holographic/5"
+                },
+                {
+                    "title": "Holographic 6",
+                    "filename": "Textures/Holographic/6"
+                },
+                {
+                    "title": "Holographic 7",
+                    "filename": "Textures/Holographic/7"
+                },
+                {
+                    "title": "Holographic 8",
+                    "filename": "Textures/Holographic/8"
+                },
+                {
+                    "title": "Holographic 9",
+                    "filename": "Textures/Holographic/9"
+                },
+                {
+                    "title": "Holographic 10",
+                    "filename": "Textures/Holographic/10"
+                },
+                {
+                    "title": "Holographic 11",
+                    "filename": "Textures/Holographic/11"
+                },
+                {
+                    "title": "Holographic 12",
+                    "filename": "Textures/Holographic/12"
+                },
+                {
+                    "title": "Holographic 13",
+                    "filename": "Textures/Holographic/13"
+                },
+                {
+                    "title": "Holographic 14",
+                    "filename": "Textures/Holographic/14"
+                },
+                {
+                    "title": "Holographic 15",
+                    "filename": "Textures/Holographic/15"
+                },
+                {
+                    "title": "Holographic 16",
+                    "filename": "Textures/Holographic/16"
+                },
+                {
+                    "title": "Holographic 17",
+                    "filename": "Textures/Holographic/17"
+                },
+                {
+                    "title": "Holographic 18",
+                    "filename": "Textures/Holographic/18"
+                },
+                {
+                    "title": "Holographic 19",
+                    "filename": "Textures/Holographic/19"
+                },
+                {
+                    "title": "Holographic 20",
+                    "filename": "Textures/Holographic/20"
+                }
+            ]
+        }
+    ]
