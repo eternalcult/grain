@@ -1,12 +1,12 @@
 import Foundation
 
-struct Texture: Identifiable, Decodable {
+struct TexturesCategory: Identifiable, Decodable {
     let id = UUID()
     let title: String
-    let filename: String
+    let textures: [Texture]
 
     enum CodingKeys: String, CodingKey {
         case title
-        case filename
+        case textures
     }
 }
