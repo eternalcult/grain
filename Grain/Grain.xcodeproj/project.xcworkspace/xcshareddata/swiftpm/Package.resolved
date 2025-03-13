@@ -1,5 +1,5 @@
 {
-  "originHash" : "9f75320bde7353c02c9fbe13666552b633211dd6124b772db5ee70053aee2bc6",
+  "originHash" : "f11c2e6226263c5f2d4b0489acedf3975cd09a6a2016411f3aeba6bc11400066",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "61b85103a1aeed8218f17c794687781505fbbef5",
         "version" : "11.2.0"
+      }
+    },
+    {
+      "identity" : "app-core",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:eternalcult/app-core.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "180201f65073813742cd8aaa67e7d8f8a0d67dee"
       }
     },
     {

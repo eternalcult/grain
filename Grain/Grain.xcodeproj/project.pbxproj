@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C12AEE1F2D37BF8500069921 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = C12AEE1E2D37BF8500069921 /* AppCore */; };
 		C171BDBC2D49270F00670E46 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C171BDBB2D49270F00670E46 /* FirebaseAnalytics */; };
 		C171BDBE2D49270F00670E46 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C171BDBD2D49270F00670E46 /* FirebaseCrashlytics */; };
+		C1CC8A8D2D8360BA00FAB345 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = C1CC8A8C2D8360BA00FAB345 /* AppCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,9 +59,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1CC8A8D2D8360BA00FAB345 /* AppCore in Frameworks */,
 				C171BDBE2D49270F00670E46 /* FirebaseCrashlytics in Frameworks */,
 				C171BDBC2D49270F00670E46 /* FirebaseAnalytics in Frameworks */,
-				C12AEE1F2D37BF8500069921 /* AppCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,9 +114,9 @@
 			);
 			name = Grain;
 			packageProductDependencies = (
-				C12AEE1E2D37BF8500069921 /* AppCore */,
 				C171BDBB2D49270F00670E46 /* FirebaseAnalytics */,
 				C171BDBD2D49270F00670E46 /* FirebaseCrashlytics */,
+				C1CC8A8C2D8360BA00FAB345 /* AppCore */,
 			);
 			productName = Grain;
 			productReference = C1517A9E2D34511200F61DC6 /* Grain.app */;
@@ -179,8 +179,8 @@
 			mainGroup = C1517A952D34511200F61DC6;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				C12AEE1D2D37BF8500069921 /* XCLocalSwiftPackageReference "../../app-core/AppCore" */,
 				C171BDBA2D49270E00670E46 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C1CC8A8B2D8360BA00FAB345 /* XCRemoteSwiftPackageReference "app-core" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C1517A9F2D34511200F61DC6 /* Products */;
@@ -535,13 +535,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		C12AEE1D2D37BF8500069921 /* XCLocalSwiftPackageReference "../../app-core/AppCore" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../app-core/AppCore";
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		C171BDBA2D49270E00670E46 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -551,13 +544,17 @@
 				minimumVersion = 11.7.0;
 			};
 		};
+		C1CC8A8B2D8360BA00FAB345 /* XCRemoteSwiftPackageReference "app-core" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:eternalcult/app-core.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C12AEE1E2D37BF8500069921 /* AppCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AppCore;
-		};
 		C171BDBB2D49270F00670E46 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C171BDBA2D49270E00670E46 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -567,6 +564,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C171BDBA2D49270E00670E46 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		C1CC8A8C2D8360BA00FAB345 /* AppCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C1CC8A8B2D8360BA00FAB345 /* XCRemoteSwiftPackageReference "app-core" */;
+			productName = AppCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
