@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Контрастность
 struct Contrast: ImageProperty {
     let title: LocalizedStringKey = "Contrast"
     let range: ClosedRange<Float> = 0 ... 2 // Default: 0...4

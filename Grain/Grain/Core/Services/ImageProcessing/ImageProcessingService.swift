@@ -41,7 +41,7 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
 
     // MARK: Functions
 
-    func updateProperties(to processedCiImage: CIImage?) -> CIImage? {
+    func updateProperties(to processedCiImage: CIImage?) -> CIImage? { // TODO: Возвращать CIImage и выбрасывать ошибку если что-то не то
         defer {
             self.processedCiImage = nil
         }
@@ -78,7 +78,7 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
 }
 
 extension ImageProcessingService {
-    private func updateProperty(_ filter: CIFilter, property: some ImageProperty) {
+    private func updateProperty(_ filter: CIFilter, property: some ImageProperty) { // TODO: Кастомные ошибки, сделать обработку
         guard property.isUpdated, let propertyKey = property.propertyKey else { return }
         filter.setValue(processedCiImage, forKey: kCIInputImageKey) // Устанавливаем изображение как входные данные фильтра
         filter.setValue(property.current, forKey: propertyKey) // Устанавливаем значение для фильтра

@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Экспозиция
 struct Exposure: ImageProperty {
     let title: LocalizedStringKey = "Exposure"
     let range: ClosedRange<Float> = -4 ... 4 // Default: -10...10

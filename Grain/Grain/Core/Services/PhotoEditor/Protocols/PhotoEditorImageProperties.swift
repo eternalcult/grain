@@ -1,3 +1,4 @@
+/// Все необходимые свойства и методы необходимые PhotoEditor для работы со стандартными настройками изображения
 protocol PhotoEditorImageProperties {
     /// Есть ли измененные свойства изображения.
     var hasModifiedProperties: Bool { get }

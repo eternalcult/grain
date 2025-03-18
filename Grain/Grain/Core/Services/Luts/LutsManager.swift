@@ -10,10 +10,9 @@ final class LutsManager: LutsManagerProtocol {
 
     // MARK: Functions
 
-    /// Parse .cube file into FilterCICubeData
     func createDataForCIColorCube(for filter: Filter) throws -> FilterCICubeData {
         guard let filterFileURL = Bundle.main.url(forResource: filter.filename, withExtension: "cube") else {
-            throw LutsServiceError.couldntFindFilterFileUrl
+            throw LutsManagerError.couldntFindFilterFileUrl
         }
         let (dimension, rawData) = try readCubeFile(url: filterFileURL)
         return FilterCICubeData(
@@ -34,7 +33,7 @@ final class LutsManager: LutsManagerProtocol {
             return filter
         }
         // TODO: Данные для текущего фильтра отсутствуют, попробовать распарсить их в момент создания
-        throw LutsServiceError.CIColorCubeFilterCreationFailed
+        throw LutsManagerError.CIColorCubeFilterCreationFailed
     }
 
     /// Apply selected filter and apply it to selected image
@@ -45,7 +44,7 @@ final class LutsManager: LutsManagerProtocol {
         if let output = cubeFilter.outputImage, let cgImage = context.createCGImage(output, from: output.extent) {
             return cgImage
         }
-        throw LutsServiceError.filterApplyingFailed
+        throw LutsManagerError.filterApplyingFailed
     }
 }
 
@@ -53,7 +52,7 @@ extension LutsManager {
     private func readCubeFile(url: URL) throws -> (Int, [Float]) {
         // Считываем весь текст файла
         guard let content = try? String(contentsOf: url, encoding: .utf8) else {
-            throw LutsServiceError.cubeFileReadingError
+            throw LutsManagerError.cubeFileReadingError
         }
 
         var dimension = 0

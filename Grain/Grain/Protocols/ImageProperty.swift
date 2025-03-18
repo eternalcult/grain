@@ -6,16 +6,25 @@ import SwiftUI
 typealias ImagePropertyValue = Float
 
 // MARK: - ImageProperty
-
+/// Стандартная настройка изображения – яркость, контрастность и т.д
 protocol ImageProperty {
+    /// Название
     var title: LocalizedStringKey { get }
+    /// Диапазон доступных значений
     var range: ClosedRange<ImagePropertyValue> { get }
+    /// Шаг изменения значения
     var step: Float { get }
+    /// Стандартное значение
     var defaultValue: ImagePropertyValue { get }
+    /// Текущее значение
     var current: ImagePropertyValue { get set }
+    /// Стиль отображения - от 0 до 100%, от -100% до 100% или без форматирования
     var formatStyle: ImagePropertyValueFormattedStyle { get }
+    /// Ключ необходходимый для указания значения CIFilter
     var propertyKey: String? { get }
+    /// Было ли изменено значение
     var isUpdated: Bool { get }
+    /// Возвращает стандартное значение свойству current
     mutating func setToDefault()
 }
 

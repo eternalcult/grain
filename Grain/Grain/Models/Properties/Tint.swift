@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Оттенок
 struct Tint: ImageProperty {
     var title: LocalizedStringKey = "Tint"
     var range: ClosedRange<Float> = -200 ... 200 // Default: -200...200

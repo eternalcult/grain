@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Насыщенность
 struct Saturation: ImageProperty {
     let title: LocalizedStringKey = "Saturation"
     let range: ClosedRange<Float> = 0 ... 2 // Default

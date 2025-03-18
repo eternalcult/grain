@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Температура
 struct Temperature: ImageProperty {
     var title: LocalizedStringKey = "Temperature"
     var range: ClosedRange<Float> = 2000 ... 11000 // Default: 2000...15000

@@ -1,6 +1,7 @@
 import CoreImage
 import SwiftUI
 
+/// Режим смешивания текстур
 enum BlendMode: Int, CaseIterable {
     case normal
     case darken
@@ -32,6 +33,7 @@ enum BlendMode: Int, CaseIterable {
 
     // MARK: Computed Properties
 
+    /// Название выбранного режима смешивания
     var title: LocalizedStringKey {
         switch self {
         case .normal:
@@ -83,6 +85,7 @@ enum BlendMode: Int, CaseIterable {
         }
     }
 
+    /// Подробное описание выбранного режима смешивания
     var description: LocalizedStringKey {
         switch self {
         case .normal:
@@ -134,6 +137,7 @@ enum BlendMode: Int, CaseIterable {
         }
     }
 
+    /// CIFilter для выбранного режима смешивания
     var ciFilter: CIFilter & CICompositeOperation {
         switch self {
         case .normal:

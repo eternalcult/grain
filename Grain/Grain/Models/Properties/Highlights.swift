@@ -1,7 +1,7 @@
 import SwiftUI
 
+/// Светлые участки
 struct Highlights: ImageProperty {
-    // TODO: Check values, I'm not sure about current and range
     let title: LocalizedStringKey = "Highlights"
     let range: ClosedRange<Float> = -1 ... 1
     let defaultValue: Float = 1

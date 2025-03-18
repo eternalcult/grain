@@ -1,4 +1,4 @@
-/// Свойства и методы необходимые PhotoEditor для работы с фильтрами
+/// Все необходимые свойства и методы необходимые PhotoEditor для работы с фильтрами
 protocol PhotoEditorFilter {
     /// Примененный в данный момент лут
     var currentFilter: Filter? { get }
