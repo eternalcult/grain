@@ -11,9 +11,9 @@ protocol TextureService {
     var textureAlpha: Float { get }
 
 
-    func updateTexture(to newTexture: Texture, completion: (Bool) -> Void)
+    func update(to newTexture: Texture, completion: () -> Void)
     func updateAlpha(to newValue: Float)
     func updateTextureBlendMode(to newBlendMode: BlendMode)
-    func clear()
+    func removeTexture()
     func overlayTexture(to processedCiImage: CIImage?) -> Result<CIImage, Error>
 }

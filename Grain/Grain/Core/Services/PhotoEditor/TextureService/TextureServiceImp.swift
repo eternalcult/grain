@@ -15,12 +15,11 @@ final class TextureServiceImp: TextureService { // TODO: TextureService protocol
         textureAlpha = newValue
     }
 
-    func updateTexture(to newTexture: Texture, completion: (Bool) -> Void) {
+    func update(to newTexture: Texture, completion: () -> Void) {
         if texture?.id != newTexture.id {
             texture = newTexture
-            completion(true)
+            completion()
         }
-        completion(false)
     }
 
     func updateTextureBlendMode(to newBlendMode: BlendMode) {
@@ -29,7 +28,7 @@ final class TextureServiceImp: TextureService { // TODO: TextureService protocol
         }
     }
 
-    func clear() {
+    func removeTexture() {
         texture = nil
         textureAlpha = 0.5
         textureBlendMode = .normal
