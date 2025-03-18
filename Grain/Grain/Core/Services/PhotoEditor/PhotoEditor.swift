@@ -1,16 +1,7 @@
 import SwiftUI
 
-/// Все необходимые свойства и методы для реализации PhotoEditorService
-protocol PhotoEditor {
-    /// User friendly сообщение об ошибке
-    var errorMessage: String? { get set }
-    /// Исходное изображение. Никак не изменяется
-    var sourceImage: Image? { get }
-    var sourceCiImage: CIImage? { get }
-    var finalImage: Image? { get }
-
-    // MARK: Texture
-
+/// Методы связанные с TextureService
+protocol PhotoEditorTexture {
     /// Примененная текстура в данный момент.
     var texture: Texture? { get }
     /// Режим смешивания текстуры.
@@ -19,6 +10,25 @@ protocol PhotoEditor {
     var hasTexture: Bool { get }
     /// Прозрачность текстуры. Стандартное значение: 0.5.
     var textureAlpha: Float { get set }
+
+    /// Применить текстуру
+    func applyTexture(_ newTexture: Texture)
+    /// Обновляет режим смешивания текстуры.
+    /// - Parameter newBlendMode: Новый выбранный режим смешивания
+    func updateTextureBlendMode(to newBlendMode: BlendMode)
+    /// Удаляет текстуру и возвращает стандартные настройки blendMode и alpha для текстуры
+    func removeTexture()
+}
+
+/// Все необходимые свойства и методы для реализации PhotoEditorService
+protocol PhotoEditor: PhotoEditorTexture {
+    /// User friendly сообщение об ошибке
+    var errorMessage: String? { get set }
+    /// Исходное изображение. Никак не изменяется
+    var sourceImage: Image? { get }
+    var sourceCiImage: CIImage? { get }
+    var finalImage: Image? { get }
+
 
     // MARK: Filter
 
@@ -79,16 +89,6 @@ protocol PhotoEditor {
     ///   - image: Новое исходное изображение
     ///   - orientation: Ориентация изображения
     func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation)
-
-    // MARK: Textures methods
-
-    /// Применить текстуру
-    func applyTexture(_ newTexture: Texture)
-    /// Обновляет режим смешивания текстуры.
-    /// - Parameter newBlendMode: Новый выбранный режим смешивания
-    func updateTextureBlendMode(to newBlendMode: BlendMode)
-    /// Удаляет текстуру, если это необходимо.
-    func removeTextureIfNeeded()
 
     // MARK: Filters methods
 

@@ -15,11 +15,62 @@ final class PhotoEditorService: PhotoEditor {
     private(set) var sourceCiImage: CIImage?
     private(set) var finalImage: Image?
 
-    // MARK: Texture
+    // MARK: Textures
 
-    private(set) var texture: Texture?
-    private(set) var textureBlendMode: BlendMode = .normal
+    private let textureService: TextureService = TextureServiceImp() // TODO: DI
 
+    var texture: Texture? {
+        get {
+            textureService.texture
+        }
+        set {
+            if let newValue {
+                textureService.updateTexture(to: newValue) { isUpdated in
+                    if isUpdated {
+                        updateImage()
+                    }
+                }
+            }
+        }
+    }
+
+    var textureBlendMode: BlendMode {
+        get {
+            textureService.textureBlendMode
+        }
+        set {
+            textureService.updateTextureBlendMode(to: newValue)
+        }
+    }
+
+    var hasTexture: Bool {
+        textureService.hasTexture
+    }
+
+    func updateTextureBlendMode(to newBlendMode: BlendMode) {
+        textureService.updateTextureBlendMode(to: newBlendMode)
+        updateImage()
+    }
+    func applyTexture(_ newTexture: Texture) {
+        textureService.updateTexture(to: newTexture) { isUpdated in
+            if isUpdated {
+                updateImage()
+            }
+        }
+    }
+    func removeTexture() {
+        textureService.clear()
+        updateImage()
+    }
+    var textureAlpha: Float {
+        get {
+            textureService.textureAlpha
+        }
+        set {
+            textureService.updateAlpha(to: newValue)
+            updateImage()
+        }
+    }
     // MARK: Filter
 
     private(set) var filter: Filter?
@@ -150,18 +201,6 @@ final class PhotoEditorService: PhotoEditor {
         }
     }
 
-    // MARK: Texture
-
-    var hasTexture: Bool {
-        texture != nil
-    }
-
-    var textureAlpha: Float = 0.5 {
-        didSet {
-            updateImage()
-        }
-    }
-
     // MARK: Filter
 
     var hasFilter: Bool {
@@ -184,27 +223,6 @@ final class PhotoEditorService: PhotoEditor {
         }
         processedCiImage = image
         resetSettings()
-    }
-
-    func applyTexture(_ newTexture: Texture) {
-        if texture?.id != newTexture.id {
-            texture = newTexture
-            updateImage()
-        }
-    }
-
-    func updateTextureBlendMode(to newBlendMode: BlendMode) {
-        if textureBlendMode != newBlendMode {
-            textureBlendMode = newBlendMode
-        }
-        updateImage()
-    }
-
-    func removeTextureIfNeeded() {
-        texture = nil
-        textureAlpha = 0.5
-        textureBlendMode = .normal
-        updateImage()
     }
 
     func applyFilter(_ newFilter: Filter) {
@@ -255,8 +273,7 @@ final class PhotoEditorService: PhotoEditor {
         sourceCiImage = nil
         processedCiImage = nil
         filter = nil
-        texture = nil
-        textureBlendMode = .normal
+        textureService.clear()
         resetSettings()
         resetEffects()
     }
@@ -336,8 +353,15 @@ private extension PhotoEditorService { // TODO: Crash
         if let filter {
             configureFilter(filter)
         }
-        if let texture {
-            overlayTexture(texture)
+        if textureService.hasTexture {
+            let result = textureService.overlayTexture(to: processedCiImage)
+            switch result {
+            case let .success(texturedImage):
+                processedCiImage = texturedImage
+            case let .failure(error):
+                Crashlytics.crashlytics().record(error: error)
+                errorMessage = error.localizedDescription
+            }
         }
         renderHistogram()
         renderImage()
@@ -346,45 +370,6 @@ private extension PhotoEditorService { // TODO: Crash
     func resetEffects() {
         vignetteRadius.setToDefault()
         vignetteIntensity.setToDefault()
-    }
-
-    func updateTextureIntensity(of texture: CIImage, to alpha: CGFloat) -> CIImage? {
-        let alphaFilter = CIFilter.colorMatrix()
-        alphaFilter.setValue(CIVector(x: 0, y: 0, z: 0, w: alpha), forKey: "inputAVector")
-        alphaFilter.inputImage = texture
-        return alphaFilter.outputImage
-    }
-
-    func configureTexture(_ texture: CIImage, size: CGSize) -> CIImage? { // TODO: Refactor
-        if let resized = resizeImageToAspectFill(image: texture, targetSize: size) {
-            return updateTextureIntensity(of: resized, to: CGFloat(textureAlpha))
-        }
-        return nil
-    }
-
-    func resizeImageToAspectFill(image: CIImage, targetSize: CGSize) -> CIImage? {
-        // Calculate the aspect ratio of the original image
-        let aspectRatio = image.extent.size.width / image.extent.size.height
-        var newSize = targetSize
-
-        // Scale the image to ensure it fills the target size (aspect fill)
-        if targetSize.width / targetSize.height > aspectRatio {
-            newSize.height = targetSize.width / aspectRatio
-        } else {
-            newSize.width = targetSize.height * aspectRatio
-        }
-
-        // Create a transform to scale the image to the new size
-        let transform = CGAffineTransform(
-            scaleX: newSize.width / image.extent.size.width,
-            y: newSize.height / image.extent.size.height
-        )
-
-        // Apply the transform to the image to resize it
-        let resizedImage = image.transformed(by: transform)
-
-        // Crop the image to fit exactly within the target size
-        return resizedImage.cropped(to: CGRect(origin: .zero, size: targetSize))
     }
 }
 
@@ -443,28 +428,6 @@ private extension PhotoEditorService {
         bloomFilter.radius = bloomRadius.current
         if let originalExtent = processedCiImage?.extent, let croppedOutput = bloomFilter.outputImage?.cropped(to: originalExtent) {
             processedCiImage = croppedOutput
-        }
-    }
-
-    // MARK: Textures & Filters
-
-    func overlayTexture(_ texture: Texture) {
-        do {
-            guard let uiImage = UIImage(named: texture.filename),
-                  let cgImage = uiImage.cgImage,
-                  let processedCiImage,
-                  let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: processedCiImage.extent.size)
-            else {
-                throw PhotoEditorError.textureDoesntExistOrHasWrongName
-            }
-
-            let blendMode = textureBlendMode.ciFilter
-            blendMode.backgroundImage = processedCiImage
-            blendMode.inputImage = configuredTexture
-            self.processedCiImage = blendMode.outputImage
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
-            errorMessage = error.localizedDescription
         }
     }
 
