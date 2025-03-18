@@ -15,170 +15,7 @@ final class PhotoEditorService: PhotoEditor {
     private(set) var sourceCiImage: CIImage?
     private(set) var finalImage: Image?
 
-    // MARK: Textures
-
-    private let textureService: TextureService = TextureServiceImp() // TODO: DI
-
-    var texture: Texture? {
-        get {
-            textureService.texture
-        }
-    }
-
-    var textureBlendMode: BlendMode {
-        get {
-            textureService.textureBlendMode
-        }
-        set {
-            textureService.updateTextureBlendMode(to: newValue)
-        }
-    }
-
-    var hasTexture: Bool {
-        textureService.hasTexture
-    }
-
-    func updateTextureBlendMode(to newBlendMode: BlendMode) {
-        textureService.updateTextureBlendMode(to: newBlendMode)
-        updateImage()
-    }
-    func applyTexture(_ newTexture: Texture) {
-        textureService.update(to: newTexture) {
-            updateImage()
-        }
-    }
-    func removeTexture() {
-        textureService.removeTexture()
-        updateImage()
-    }
-    var textureAlpha: Float {
-        get {
-            textureService.textureAlpha
-        }
-        set {
-            textureService.updateAlpha(to: newValue)
-            updateImage()
-        }
-    }
-    // MARK: Filter
-
-    private let filterService = FilterServiceImp() // TODO: DI
-
-    var currentFilter: Lut? {
-        get {
-            filterService.currentFilter
-        }
-    }
-
-    func applyFilter(_ newLut: Lut) {
-        filterService.update(to: newLut) {
-            updateImage()
-        }
-    }
-
-    func removeFilter() {
-        filterService.removeFilter()
-        updateImage()
-    }
-
     private(set) var histogram: UIImage?
-
-    private var processedCiImage: CIImage?
-    private var sourceImageOrientation: UIImage.Orientation?
-
-    // MARK: CIFilters
-
-    private let colorControlsFilter = CIFilter.colorControls()
-    private let exposureAdjustFilter = CIFilter.exposureAdjust()
-    private let vibranceFilter = CIFilter.vibrance()
-    private let highlightShadowAdjustFilter = CIFilter.highlightShadowAdjust()
-    private let temperatureAndTintFilter = CIFilter.temperatureAndTint()
-    private let gammaAdjustFilter = CIFilter.gammaAdjust()
-    private let noiseReductionFilter = CIFilter.noiseReduction()
-    private let vignetteFilter = CIFilter.vignette()
-    private let bloomFilter = CIFilter.bloom()
-
-    private let context = CIContext() // TODO: Настроить CIContext
-
-    // MARK: Computed Properties
-
-    var hasModifiedProperties: Bool {
-        brightness.isUpdated || contrast.isUpdated || saturation.isUpdated || exposure.isUpdated || vibrance.isUpdated || highlights
-            .isUpdated || shadows.isUpdated || temperature.isUpdated || tint.isUpdated || gamma.isUpdated || noiseReduction
-            .isUpdated || sharpness.isUpdated
-    }
-
-    var brightness: ImageProperty = Brightness() {
-        didSet {
-            updateImage()
-        }
-    }
-
-    var contrast: ImageProperty = Contrast() {
-        didSet {
-            updateImage()
-        }
-    }
-
-    var saturation: ImageProperty = Saturation() {
-        didSet {
-            updateImage()
-        }
-    }
-
-    var exposure: ImageProperty = Exposure() {
-        didSet {
-            updateImage()
-        }
-    }
-
-    var vibrance: ImageProperty = Vibrance() {
-        didSet {
-            updateImage()
-        }
-    }
-
-    var highlights: ImageProperty = Highlights() {
-        didSet {
-            updateImage()
-        }
-    }
-
-    var shadows: ImageProperty = Shadows() {
-        didSet {
-            updateImage()
-        }
-    }
-
-    var temperature: ImageProperty = Temperature() {
-        didSet {
-            updateImage()
-        }
-    }
-
-    var tint: ImageProperty = Tint() {
-        didSet {
-            updateImage()
-        }
-    }
-
-    var gamma: ImageProperty = Gamma() {
-        didSet {
-            updateImage()
-        }
-    }
-
-    var noiseReduction: ImageProperty = NoiseReduction() {
-        didSet {
-            updateImage()
-        }
-    }
-
-    var sharpness: ImageProperty = Sharpness() {
-        didSet {
-            updateImage()
-        }
-    }
 
     // MARK: Effects
 
@@ -199,16 +36,35 @@ final class PhotoEditorService: PhotoEditor {
             updateImage()
         }
     }
+
     var bloomRadius: ImageProperty = BloomRadius() { // TODO: Create ImageEffect protocol
         didSet {
             updateImage()
         }
     }
 
-    // MARK: Filter
+    private var imageProcessingService: ImageProcessingServiceProtocol
+    private let filterService: FilterServiceProtocol
+    private let textureService: TextureServiceProtocol
 
-    var hasLut: Bool {
-        filterService.hasFilter
+    private var processedCiImage: CIImage?
+    private var sourceImageOrientation: UIImage.Orientation?
+
+    private let context = CIContext() // TODO: Настроить CIContext
+
+    private let vignetteFilter = CIFilter.vignette()
+    private let bloomFilter = CIFilter.bloom()
+
+    // MARK: Lifecycle
+
+    init(
+        imageProcessingService: ImageProcessingServiceProtocol = ImageProcessingService(),
+        filterService: FilterServiceProtocol = FilterService(),
+        textureService: TextureServiceProtocol = TextureService()
+    ) {
+        self.imageProcessingService = imageProcessingService
+        self.filterService = filterService
+        self.textureService = textureService
     }
 
     // MARK: Functions
@@ -220,7 +76,7 @@ final class PhotoEditorService: PhotoEditor {
             sourceImage = Image(uiImage: sourceUiImage)
         }
         processedCiImage = image
-        resetSettings()
+        imageProcessingService.reset()
     }
 
     func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void) {
@@ -260,29 +116,217 @@ final class PhotoEditorService: PhotoEditor {
         processedCiImage = nil
         filterService.removeFilter()
         textureService.removeTexture()
-        resetSettings()
+        imageProcessingService.reset()
         resetEffects()
     }
+}
 
-    func resetSettings() {
-        brightness.setToDefault()
-        contrast.setToDefault()
-        saturation.setToDefault()
-        exposure.setToDefault()
-        vibrance.setToDefault()
-        highlights.setToDefault()
-        shadows.setToDefault()
-        temperature.setToDefault()
-        tint.setToDefault()
-        noiseReduction.setToDefault()
-        sharpness.setToDefault()
-        gamma.setToDefault()
+// MARK: PhotoEditorFilter
+
+extension PhotoEditorService: PhotoEditorFilter {
+    var hasFilter: Bool {
+        filterService.hasFilter
+    }
+
+    var currentFilter: Lut? {
+        filterService.currentFilter
+    }
+
+    func applyFilter(_ newLut: Lut) {
+        filterService.update(to: newLut) {
+            updateImage()
+        }
+    }
+
+    func removeFilter() {
+        filterService.removeFilter()
+        updateImage()
+    }
+}
+
+// MARK: PhotoEditorTexture
+
+extension PhotoEditorService: PhotoEditorTexture {
+    var texture: Texture? {
+        textureService.texture
+    }
+
+    var textureBlendMode: BlendMode {
+        get {
+            textureService.textureBlendMode
+        }
+        set {
+            textureService.updateTextureBlendMode(to: newValue)
+        }
+    }
+
+    var hasTexture: Bool {
+        textureService.hasTexture
+    }
+
+    func updateTextureBlendMode(to newBlendMode: BlendMode) {
+        textureService.updateTextureBlendMode(to: newBlendMode)
+        updateImage()
+    }
+
+    func applyTexture(_ newTexture: Texture) {
+        textureService.update(to: newTexture) {
+            updateImage()
+        }
+    }
+
+    func removeTexture() {
+        textureService.removeTexture()
+        updateImage()
+    }
+
+    var textureAlpha: Float {
+        get {
+            textureService.textureAlpha
+        }
+        set {
+            textureService.updateAlpha(to: newValue)
+            updateImage()
+        }
+    }
+}
+
+// MARK: PhotoEditorImageProperties
+
+extension PhotoEditorService: PhotoEditorImageProperties {
+    var hasModifiedProperties: Bool {
+        imageProcessingService.hasModifiedProperties
+    }
+
+    var brightness: ImageProperty {
+        get {
+            imageProcessingService.brightness
+        }
+        set {
+            imageProcessingService.brightness = newValue
+            updateImage()
+        }
+    }
+
+    var contrast: ImageProperty {
+        get {
+            imageProcessingService.contrast
+        }
+        set {
+            imageProcessingService.contrast = newValue
+            updateImage()
+        }
+    }
+
+    var saturation: ImageProperty {
+        get {
+            imageProcessingService.saturation
+        }
+        set {
+            imageProcessingService.saturation = newValue
+            updateImage()
+        }
+    }
+
+    var exposure: ImageProperty {
+        get {
+            imageProcessingService.exposure
+        }
+        set {
+            imageProcessingService.exposure = newValue
+            updateImage()
+        }
+    }
+
+    var vibrance: ImageProperty {
+        get {
+            imageProcessingService.vibrance
+        }
+        set {
+            imageProcessingService.vibrance = newValue
+            updateImage()
+        }
+    }
+
+    var highlights: ImageProperty {
+        get {
+            imageProcessingService.highlights
+        }
+        set {
+            imageProcessingService.highlights = newValue
+            updateImage()
+        }
+    }
+
+    var shadows: ImageProperty {
+        get {
+            imageProcessingService.shadows
+        }
+        set {
+            imageProcessingService.shadows = newValue
+            updateImage()
+        }
+    }
+
+    var temperature: ImageProperty {
+        get {
+            imageProcessingService.temperature
+        }
+        set {
+            imageProcessingService.temperature = newValue
+            updateImage()
+        }
+    }
+
+    var tint: ImageProperty {
+        get {
+            imageProcessingService.tint
+        }
+        set {
+            imageProcessingService.tint = newValue
+            updateImage()
+        }
+    }
+
+    var gamma: ImageProperty {
+        get {
+            imageProcessingService.gamma
+        }
+        set {
+            imageProcessingService.gamma = newValue
+            updateImage()
+        }
+    }
+
+    var noiseReduction: ImageProperty {
+        get {
+            imageProcessingService.noiseReduction
+        }
+        set {
+            imageProcessingService.noiseReduction = newValue
+            updateImage()
+        }
+    }
+
+    var sharpness: ImageProperty {
+        get {
+            imageProcessingService.sharpness
+        }
+        set {
+            imageProcessingService.sharpness = newValue
+            updateImage()
+        }
+    }
+
+    func resetImageProperties() {
+        imageProcessingService.reset()
+        updateImage()
     }
 }
 
 // MARK: Private methods
 
-private extension PhotoEditorService { // TODO: Crash
+private extension PhotoEditorService {
     func renderImage() {
         do {
             if let uiImage = processedCiImage?.renderToUIImage(with: context, orientation: sourceImageOrientation) {
@@ -317,22 +361,13 @@ private extension PhotoEditorService { // TODO: Crash
     func updateImage() {
         guard let sourceCiImage else { return }
 
+        // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить
+        // TODO: При рендеринге используется это же изображение низкого качества, исправить
         processedCiImage = downscale(
             image: sourceCiImage,
             scale: 0.5
-        ) // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить
-
-        // Properties
-        applyFilter(colorControlsFilter, property: brightness)
-        applyFilter(colorControlsFilter, property: contrast)
-        applyFilter(colorControlsFilter, property: saturation)
-        applyFilter(exposureAdjustFilter, property: exposure)
-        applyFilter(vibranceFilter, property: vibrance)
-        updateHS()
-        applyFilter(gammaAdjustFilter, property: gamma)
-        updateTemperatureAndTint()
-        applyFilter(noiseReductionFilter, property: noiseReduction)
-        applyFilter(noiseReductionFilter, property: sharpness)
+        )
+        processedCiImage = imageProcessingService.updateProperties(to: processedCiImage)
         // Effects
         updateVignette()
         updateBloom()
@@ -342,7 +377,7 @@ private extension PhotoEditorService { // TODO: Crash
             switch applyLutResult {
             case let .success(lutImage):
                 processedCiImage = lutImage
-            case .failure(let error):
+            case let .failure(error):
                 Crashlytics.crashlytics().record(error: error)
                 errorMessage = error.localizedDescription
             }
@@ -372,36 +407,6 @@ private extension PhotoEditorService { // TODO: Crash
 // MARK: Private image properties funtions
 
 private extension PhotoEditorService {
-    // MARK: Image properties
-
-    private func applyFilter(_ filter: CIFilter, property: some ImageProperty) {
-        guard property.isUpdated, let propertyKey = property.propertyKey else { return }
-        filter.setValue(processedCiImage, forKey: kCIInputImageKey) // Устанавливаем изображение как входные данные фильтра
-        filter.setValue(property.current, forKey: propertyKey) // Устанавливаем значение для фильтра
-        processedCiImage = filter.outputImage
-    }
-
-    // Highlights & Shadows
-    func updateHS() {
-        guard highlights.isUpdated || shadows.isUpdated else {
-            return
-        }
-        highlightShadowAdjustFilter.inputImage = processedCiImage
-        highlightShadowAdjustFilter.highlightAmount = highlights.current
-        highlightShadowAdjustFilter.shadowAmount = shadows.current
-        processedCiImage = highlightShadowAdjustFilter.outputImage
-    }
-
-    func updateTemperatureAndTint() {
-        guard temperature.isUpdated || tint.isUpdated else {
-            return
-        }
-        temperatureAndTintFilter.inputImage = processedCiImage
-        temperatureAndTintFilter.neutral = CIVector(x: CGFloat(temperature.defaultValue), y: 0)
-        temperatureAndTintFilter.targetNeutral = CIVector(x: CGFloat(temperature.current), y: CGFloat(tint.current))
-        processedCiImage = temperatureAndTintFilter.outputImage
-    }
-
     // MARK: Effects
 
     func updateVignette() {
