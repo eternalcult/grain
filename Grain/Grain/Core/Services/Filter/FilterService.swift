@@ -1,15 +1,25 @@
 import CoreImage
 
 final class FilterService: FilterServiceProtocol {
-    private let lutsManager: LutsManagerProtocol
+    // MARK: Properties
+
     private(set) var currentFilter: Lut?
+
+    private let lutsManager: LutsManagerProtocol
+
+    // MARK: Computed Properties
+
     var hasFilter: Bool {
         currentFilter != nil
     }
 
+    // MARK: Lifecycle
+
     init(lutsManager: LutsManagerProtocol = LutsManager()) {
         self.lutsManager = lutsManager
     }
+
+    // MARK: Functions
 
     func update(to newFilter: Lut, completion: () -> Void) {
         if currentFilter?.id != newFilter.id {

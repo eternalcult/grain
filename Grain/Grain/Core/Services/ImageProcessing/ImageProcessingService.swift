@@ -1,15 +1,8 @@
 import CoreImage
 
 final class ImageProcessingService: ImageProcessingServiceProtocol {
-    // MARK: Computed Properties
+    // MARK: Properties
 
-    var hasModifiedProperties: Bool {
-        brightness.isUpdated || contrast.isUpdated || saturation.isUpdated || exposure.isUpdated || vibrance.isUpdated || highlights
-            .isUpdated || shadows.isUpdated || temperature.isUpdated || tint.isUpdated || gamma.isUpdated || noiseReduction
-            .isUpdated || sharpness.isUpdated
-    }
-
-    // MARK: Image Properties
     var brightness: ImageProperty = Brightness()
     var contrast: ImageProperty = Contrast()
     var saturation: ImageProperty = Saturation()
@@ -24,6 +17,7 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
     var sharpness: ImageProperty = Sharpness()
 
     // MARK: CIFilters
+
     private let colorControlsFilter = CIFilter.colorControls()
     private let exposureAdjustFilter = CIFilter.exposureAdjust()
     private let vibranceFilter = CIFilter.vibrance()
@@ -33,6 +27,16 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
     private let noiseReductionFilter = CIFilter.noiseReduction()
 
     private var processedCiImage: CIImage?
+
+    // MARK: Computed Properties
+
+    var hasModifiedProperties: Bool {
+        brightness.isUpdated || contrast.isUpdated || saturation.isUpdated || exposure.isUpdated || vibrance.isUpdated || highlights
+            .isUpdated || shadows.isUpdated || temperature.isUpdated || tint.isUpdated || gamma.isUpdated || noiseReduction
+            .isUpdated || sharpness.isUpdated
+    }
+
+    // MARK: Functions
 
     func updateProperties(to processedCiImage: CIImage?) -> CIImage? {
         defer {
@@ -68,7 +72,6 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
         sharpness.setToDefault()
         gamma.setToDefault()
     }
-
 
     private func updateProperty(_ filter: CIFilter, property: some ImageProperty) {
         guard property.isUpdated, let propertyKey = property.propertyKey else { return }

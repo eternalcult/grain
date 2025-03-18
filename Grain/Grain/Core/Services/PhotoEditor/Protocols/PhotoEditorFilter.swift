@@ -10,5 +10,4 @@ protocol PhotoEditorFilter {
     func applyFilter(_ newLut: Lut)
     /// Удаляет лут с изображения
     func removeFilter()
-
 }

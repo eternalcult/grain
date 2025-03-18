@@ -41,7 +41,11 @@ struct EffectsView: View {
                         mainProperty: $viewModel.vignetteIntensity,
                         additionalProperty: $viewModel.vignetteRadius
                     )
-                    PropertyDoubleSliderView(title: "Bloom", mainProperty: $viewModel.bloomIntensity, additionalProperty: $viewModel.bloomRadius)
+                    PropertyDoubleSliderView(
+                        title: "Bloom",
+                        mainProperty: $viewModel.bloomIntensity,
+                        additionalProperty: $viewModel.bloomRadius
+                    )
                 }
             }
         }

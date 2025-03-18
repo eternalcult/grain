@@ -1,14 +1,22 @@
-import UIKit
 import CoreImage
+import UIKit
+
+// MARK: - TextureService
 
 final class TextureService: TextureServiceProtocol {
+    // MARK: Properties
+
     private(set) var texture: Texture?
     private(set) var textureBlendMode: BlendMode = .normal
     private(set) var textureAlpha: Float = 0.5
 
+    // MARK: Computed Properties
+
     var hasTexture: Bool {
         texture != nil
     }
+
+    // MARK: Functions
 
     func update(to newTexture: Texture, completion: () -> Void) {
         if texture?.id != newTexture.id {
@@ -71,6 +79,7 @@ private extension TextureService {
         }
         return nil
     }
+
     private func resizeImageToAspectFill(image: CIImage, targetSize: CGSize) -> CIImage? {
         // Calculate the aspect ratio of the original image
         let aspectRatio = image.extent.size.width / image.extent.size.height

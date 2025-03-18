@@ -62,6 +62,8 @@ struct GrainApp: App {
         )
     }
 
+    // MARK: Functions
+
     func askReviewIfNeeded() {
         if launchCounter == 5 || launchCounter == 20 || launchCounter == 50 || launchCounter == 100 {
             AppService.askReview()

@@ -19,10 +19,6 @@ final class MainViewModel {
 
     var filtersPreview: [FilterPreview] = []
 
-    private var photoEditor: PhotoEditor & PhotoEditorFilter & PhotoEditorTexture & PhotoEditorImageProperties
-
-    // MARK: Computed Properties
-
     var showErrorAlert = false {
         didSet {
             if !showErrorAlert {
@@ -30,6 +26,10 @@ final class MainViewModel {
             }
         }
     }
+
+    private var photoEditor: PhotoEditor & PhotoEditorFilter & PhotoEditorTexture & PhotoEditorImageProperties
+
+    // MARK: Computed Properties
 
     var finalImage: Image? {
         photoEditor.finalImage
@@ -283,6 +283,7 @@ final class MainViewModel {
                         Vibration.success()
                     }
                 }
+
             // TODO: Show success alert or snackbar
             case let .failure(failure):
                 break // TODO: Show error alert or snackbar
