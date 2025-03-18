@@ -9,14 +9,14 @@ struct FilterPreviewView: View {
 
     var didTap: (() -> Void)?
 
-    private let filter: Lut
+    private let filter: Filter
     private let preview: CGImage?
     private let isSelected: Bool
     private let shouldShowFullScreen: Bool
 
     // MARK: Lifecycle
 
-    init(_ filter: Lut, _ preview: CGImage?, shouldShowFullScreen: Bool = false, isSelected: Bool = false, didTap: (() -> Void)?) {
+    init(_ filter: Filter, _ preview: CGImage?, shouldShowFullScreen: Bool = false, isSelected: Bool = false, didTap: (() -> Void)?) {
         self.filter = filter
         self.preview = preview
         self.shouldShowFullScreen = shouldShowFullScreen

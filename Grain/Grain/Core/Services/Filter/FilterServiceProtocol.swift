@@ -1,9 +1,9 @@
 import CoreImage
 
 protocol FilterServiceProtocol {
-    var currentFilter: Lut? { get }
+    var currentFilter: Filter? { get }
     var hasFilter: Bool { get }
-    func update(to newFilter: Lut, completion: () -> Void)
+    func update(to newFilter: Filter, completion: () -> Void)
     func applyFilter(to processedCiImage: CIImage?) -> Result<CIImage, Error>
     func removeFilter()
 }

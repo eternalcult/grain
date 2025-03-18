@@ -95,7 +95,7 @@ struct FiltersHListView: View {
         selectedCategory()
     }
 
-    private func isSelected(currentFilter: Lut, selectedFilter: Lut?) -> Bool {
+    private func isSelected(currentFilter: Filter, selectedFilter: Filter?) -> Bool {
         guard let selectedFilter else {
             return false
         }

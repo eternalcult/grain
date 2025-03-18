@@ -1,6 +1,8 @@
 import CoreImage
 import Foundation
 
+// MARK: - LutsManager
+
 final class LutsManager: LutsManagerProtocol {
     // MARK: Properties
 
@@ -9,7 +11,7 @@ final class LutsManager: LutsManagerProtocol {
     // MARK: Functions
 
     /// Parse .cube file into FilterCICubeData
-    func createDataForCIColorCube(for filter: Lut) throws -> FilterCICubeData {
+    func createDataForCIColorCube(for filter: Filter) throws -> FilterCICubeData {
         guard let filterFileURL = Bundle.main.url(forResource: filter.filename, withExtension: "cube") else {
             throw LutsServiceError.couldntFindFilterFileUrl
         }
@@ -22,7 +24,7 @@ final class LutsManager: LutsManagerProtocol {
     }
 
     /// Create CIColorCubeWithColorSpace filter from FilterCICubeData from SwiftData
-    func createCIColorCube(for filter: Lut) throws -> CIColorCubeWithColorSpace {
+    func createCIColorCube(for filter: Filter) throws -> CIColorCubeWithColorSpace {
         let filtersData = DataStorage.shared.filtersData
         if let currentFilterData = filtersData.first(where: { $0.id == filter.id }) {
             let filter = CIFilter.colorCubeWithColorSpace()
@@ -36,7 +38,7 @@ final class LutsManager: LutsManagerProtocol {
     }
 
     /// Apply selected filter and apply it to selected image
-    func apply(_ filter: Lut, for image: CIImage) throws -> CGImage {
+    func apply(_ filter: Filter, for image: CIImage) throws -> CGImage {
         print("Apply \(filter.title) filter for image")
         let cubeFilter = try createCIColorCube(for: filter)
         cubeFilter.inputImage = image

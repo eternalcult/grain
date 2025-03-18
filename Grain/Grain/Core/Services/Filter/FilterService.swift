@@ -4,7 +4,7 @@ import CoreImage
 final class FilterService: FilterServiceProtocol {
     // MARK: Properties
 
-    private(set) var currentFilter: Lut?
+    private(set) var currentFilter: Filter?
 
     private let lutsManager: LutsManagerProtocol
 
@@ -22,7 +22,7 @@ final class FilterService: FilterServiceProtocol {
 
     // MARK: Functions
 
-    func update(to newFilter: Lut, completion: () -> Void) {
+    func update(to newFilter: Filter, completion: () -> Void) {
         if currentFilter?.id != newFilter.id {
             currentFilter = newFilter
             completion()

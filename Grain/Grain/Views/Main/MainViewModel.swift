@@ -39,7 +39,7 @@ final class MainViewModel {
         photoEditor.texture
     }
 
-    var currentFilter: Lut? {
+    var currentFilter: Filter? {
         photoEditor.currentFilter
     }
 
@@ -235,7 +235,7 @@ final class MainViewModel {
         photoEditor.removeTexture()
     }
 
-    func applyFilter(_ newFilter: Lut) {
+    func applyFilter(_ newFilter: Filter) {
         photoEditor.applyFilter(newFilter)
     }
 

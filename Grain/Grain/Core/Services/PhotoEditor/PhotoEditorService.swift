@@ -128,11 +128,11 @@ extension PhotoEditorService: PhotoEditorFilter {
         filterService.hasFilter
     }
 
-    var currentFilter: Lut? {
+    var currentFilter: Filter? {
         filterService.currentFilter
     }
 
-    func applyFilter(_ newLut: Lut) {
+    func applyFilter(_ newLut: Filter) {
         filterService.update(to: newLut) {
             updateImage()
         }

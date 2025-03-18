@@ -1,5 +1,7 @@
 import CoreImage
 
+// MARK: - ImageProcessingService
+
 @Observable
 final class ImageProcessingService: ImageProcessingServiceProtocol {
     // MARK: Properties
