@@ -22,7 +22,6 @@ final class LutsManager: LutsManagerProtocol {
         )
     }
 
-    /// Create CIColorCubeWithColorSpace filter from FilterCICubeData from SwiftData
     func createCIColorCube(for filter: Filter) throws -> CIColorCubeWithColorSpace {
         let filtersData = DataStorage.shared.filtersData
         if let currentFilterData = filtersData.first(where: { $0.id == filter.id }) {

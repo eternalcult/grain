@@ -115,13 +115,13 @@ final class PhotoEditorService: PhotoEditor {
         sourceCiImage = nil
         processedCiImage = nil
         filterService.removeFilter()
-        textureService.removeTexture()
+        textureService.clear()
         imageProcessingService.reset()
         resetEffects()
     }
 }
 
-// MARK: PhotoEditorFilter
+// MARK: PhotoEditorFilter - свойтва и методы связанные с фильтрами
 
 extension PhotoEditorService: PhotoEditorFilter {
     var hasFilter: Bool {
@@ -144,7 +144,7 @@ extension PhotoEditorService: PhotoEditorFilter {
     }
 }
 
-// MARK: PhotoEditorTexture
+// MARK: PhotoEditorTexture - свойства и методы связанные с текстурами
 
 extension PhotoEditorService: PhotoEditorTexture {
     var texture: Texture? {
@@ -153,10 +153,10 @@ extension PhotoEditorService: PhotoEditorTexture {
 
     var textureBlendMode: BlendMode {
         get {
-            textureService.textureBlendMode
+            textureService.blendMode
         }
         set {
-            textureService.updateTextureBlendMode(to: newValue)
+            textureService.updateBlendMode(to: newValue)
         }
     }
 
@@ -165,7 +165,7 @@ extension PhotoEditorService: PhotoEditorTexture {
     }
 
     func updateTextureBlendMode(to newBlendMode: BlendMode) {
-        textureService.updateTextureBlendMode(to: newBlendMode)
+        textureService.updateBlendMode(to: newBlendMode)
         updateImage()
     }
 
@@ -176,13 +176,13 @@ extension PhotoEditorService: PhotoEditorTexture {
     }
 
     func removeTexture() {
-        textureService.removeTexture()
+        textureService.clear()
         updateImage()
     }
 
     var textureAlpha: Float {
         get {
-            textureService.textureAlpha
+            textureService.alpha
         }
         set {
             textureService.updateAlpha(to: newValue)
@@ -191,7 +191,7 @@ extension PhotoEditorService: PhotoEditorTexture {
     }
 }
 
-// MARK: PhotoEditorImageProperties
+// MARK: PhotoEditorImageProperties - свойства и методы связанные с изменением настроек изображения
 
 extension PhotoEditorService: PhotoEditorImageProperties {
     var hasModifiedProperties: Bool {
@@ -403,8 +403,6 @@ private extension PhotoEditorService {
         vignetteIntensity.setToDefault()
     }
 }
-
-// MARK: Private image properties funtions
 
 private extension PhotoEditorService {
     // MARK: Effects

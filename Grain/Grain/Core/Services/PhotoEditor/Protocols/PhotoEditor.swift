@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Все необходимые свойства и методы для реализации PhotoEditorService
 protocol PhotoEditor {
-    /// User friendly сообщение об ошибке
+    /// Строка для отображения user-friendly ошибки пользователю
     var errorMessage: String? { get set }
     /// Исходное изображение. Никак не изменяется
     var sourceImage: Image? { get }

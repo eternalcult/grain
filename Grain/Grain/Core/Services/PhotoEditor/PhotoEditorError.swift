@@ -1,16 +1,25 @@
 import Foundation
 
+/// Кастомные ошибки PhotoEditor
 enum PhotoEditorError: LocalizedError {
+    /// Ошибка рендера изображения
     case failedToRenderImage
+    ///
     case missingProcessedImage
+    /// Отсутствует разрешение на доступ к галерее
     case permissionToAccessPhotoLibraryDenied
+    /// Ошибка экспорта изображения в галерею
     case failedToExportImageToPhotoLibrary
-    case textureDoesntExistOrHasWrongName
+    /// Текстура не существует или указано не верное название
+    case textureDoesntExistOrHasWrongName // TODO: Переместить в ошибки TextureSevice
+    /// Неизвестная ошибка
     case unknown
+    /// Ошибка фотогалереи
     case photoLibraryError(description: String)
 
     // MARK: Computed Properties
 
+    /// User-frienly описание ошибки
     var errorDescription: String? {
         switch self {
         case .failedToRenderImage:

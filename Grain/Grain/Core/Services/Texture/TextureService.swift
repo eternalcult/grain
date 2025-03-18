@@ -8,8 +8,8 @@ final class TextureService: TextureServiceProtocol {
     // MARK: Properties
 
     private(set) var texture: Texture?
-    private(set) var textureBlendMode: BlendMode = .normal
-    private(set) var textureAlpha: Float = 0.5
+    private(set) var blendMode: BlendMode = .normal
+    private(set) var alpha: Float = 0.5
 
     // MARK: Computed Properties
 
@@ -27,12 +27,12 @@ final class TextureService: TextureServiceProtocol {
     }
 
     func updateAlpha(to newValue: Float) {
-        textureAlpha = newValue
+        alpha = newValue
     }
 
-    func updateTextureBlendMode(to newBlendMode: BlendMode) {
-        if textureBlendMode != newBlendMode {
-            textureBlendMode = newBlendMode
+    func updateBlendMode(to newBlendMode: BlendMode) {
+        if blendMode != newBlendMode {
+            blendMode = newBlendMode
         }
     }
 
@@ -46,7 +46,7 @@ final class TextureService: TextureServiceProtocol {
             else {
                 throw PhotoEditorError.textureDoesntExistOrHasWrongName
             }
-            let blendMode = textureBlendMode.ciFilter
+            let blendMode = blendMode.ciFilter
             blendMode.backgroundImage = processedCiImage
             blendMode.inputImage = configuredTexture
             if let outputImage = blendMode.outputImage {
@@ -59,10 +59,10 @@ final class TextureService: TextureServiceProtocol {
         }
     }
 
-    func removeTexture() {
+    func clear() {
         texture = nil
-        textureAlpha = 0.5
-        textureBlendMode = .normal
+        alpha = 0.5
+        blendMode = .normal
     }
 }
 
@@ -76,7 +76,7 @@ private extension TextureService {
 
     private func configureTexture(_ texture: CIImage, size: CGSize) -> CIImage? { // TODO: Refactor
         if let resized = resizeImageToAspectFill(image: texture, targetSize: size) {
-            return updateTextureIntensity(of: resized, to: CGFloat(textureAlpha))
+            return updateTextureIntensity(of: resized, to: CGFloat(alpha))
         }
         return nil
     }

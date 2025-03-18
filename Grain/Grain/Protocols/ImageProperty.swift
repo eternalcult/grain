@@ -12,7 +12,7 @@ protocol ImageProperty {
     var title: LocalizedStringKey { get }
     /// Диапазон доступных значений
     var range: ClosedRange<ImagePropertyValue> { get }
-    /// Шаг изменения значения
+    /// Шаг изменения значения. Необходимо для оптимизации перерисовки View при изменении значения через слайдер
     var step: Float { get }
     /// Стандартное значение
     var defaultValue: ImagePropertyValue { get }
