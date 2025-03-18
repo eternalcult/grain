@@ -231,8 +231,8 @@ final class MainViewModel {
         photoEditor.resetSettings()
     }
 
-    func removeTextureIfNeeded() {
-        photoEditor.removeTextureIfNeeded()
+    func removeTexture() {
+        photoEditor.removeTexture()
     }
 
     func applyFilter(_ newFilter: Filter) {

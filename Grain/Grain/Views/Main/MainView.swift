@@ -35,9 +35,7 @@ struct MainView: View {
             .background(Color.background)
             .navigationBarBackButtonHidden(true)
             .onChange(of: viewModel.errorMessage) { _, newError in
-                if newError != nil {
-                    viewModel.showErrorAlert = true
-                }
+                viewModel.showErrorAlert = newError != nil
             }
             .failureBlackAlert($viewModel.showErrorAlert, message: viewModel.errorMessage, duration: 3)
             .navigationDestination(for: MainRoute.self) { route in

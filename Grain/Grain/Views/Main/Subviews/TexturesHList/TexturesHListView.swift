@@ -38,7 +38,7 @@ struct TexturesHListView: View {
                 ScrollView(.horizontal) {
                     HStack(spacing: 4) {
                         RawPreviewView(isSelected: viewModel.texture == nil) {
-                            viewModel.removeTextureIfNeeded()
+                            viewModel.removeTexture()
                         }
                         .frame(width: 100, height: 100)
                         ForEach(DataStorage.shared.texturesCategories) { category in
