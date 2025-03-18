@@ -32,7 +32,7 @@ final class DataStorage {
 
     var filtersPreview = [FilterPreview]()
 
-    private let lutsManager = LutsService()
+    private let lutsManager = LutsManager()
 
     private var swiftDataManager: SwiftDataManager?
 

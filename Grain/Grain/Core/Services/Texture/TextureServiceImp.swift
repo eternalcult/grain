@@ -1,18 +1,13 @@
 import UIKit
 import CoreImage
 
-final class TextureServiceImp: TextureService { // TODO: TextureService protocol
+final class TextureService: TextureServiceProtocol {
     private(set) var texture: Texture?
     private(set) var textureBlendMode: BlendMode = .normal
     private(set) var textureAlpha: Float = 0.5
 
     var hasTexture: Bool {
         texture != nil
-    }
-
-
-    func updateAlpha(to newValue: Float) {
-        textureAlpha = newValue
     }
 
     func update(to newTexture: Texture, completion: () -> Void) {
@@ -22,16 +17,14 @@ final class TextureServiceImp: TextureService { // TODO: TextureService protocol
         }
     }
 
+    func updateAlpha(to newValue: Float) {
+        textureAlpha = newValue
+    }
+
     func updateTextureBlendMode(to newBlendMode: BlendMode) {
         if textureBlendMode != newBlendMode {
             textureBlendMode = newBlendMode
         }
-    }
-
-    func removeTexture() {
-        texture = nil
-        textureAlpha = 0.5
-        textureBlendMode = .normal
     }
 
     func overlayTexture(to processedCiImage: CIImage?) -> Result<CIImage, Error> {
@@ -56,9 +49,15 @@ final class TextureServiceImp: TextureService { // TODO: TextureService protocol
             return .failure(error)
         }
     }
+
+    func removeTexture() {
+        texture = nil
+        textureAlpha = 0.5
+        textureBlendMode = .normal
+    }
 }
 
-private extension TextureServiceImp {
+private extension TextureService {
     private func updateTextureIntensity(of texture: CIImage, to alpha: CGFloat) -> CIImage? {
         let alphaFilter = CIFilter.colorMatrix()
         alphaFilter.setValue(CIVector(x: 0, y: 0, z: 0, w: alpha), forKey: "inputAVector")

@@ -1,7 +1,7 @@
 import CoreImage
 import Foundation
 
-final class LutsService: LutsServiceProtocol {
+final class LutsManager: LutsManagerProtocol {
     // MARK: Properties
 
     private let context = CIContext()

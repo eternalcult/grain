@@ -1,6 +1,6 @@
 import CoreImage
 
-protocol TextureService {
+protocol TextureServiceProtocol {
     /// Примененная текстура в данный момент.
     var texture: Texture? { get }
     /// Режим смешивания текстуры.
@@ -14,6 +14,6 @@ protocol TextureService {
     func update(to newTexture: Texture, completion: () -> Void)
     func updateAlpha(to newValue: Float)
     func updateTextureBlendMode(to newBlendMode: BlendMode)
-    func removeTexture()
     func overlayTexture(to processedCiImage: CIImage?) -> Result<CIImage, Error>
+    func removeTexture()
 }

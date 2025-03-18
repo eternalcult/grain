@@ -19,7 +19,7 @@ final class MainViewModel {
 
     var filtersPreview: [FilterPreview] = []
 
-    private var photoEditor: PhotoEditor
+    private var photoEditor: PhotoEditor & PhotoEditorFilter & PhotoEditorTexture & PhotoEditorImageProperties
 
     // MARK: Computed Properties
 
@@ -221,14 +221,14 @@ final class MainViewModel {
 
     // MARK: Lifecycle
 
-    init(photoEditor: PhotoEditor = PhotoEditorService()) {
+    init(photoEditor: PhotoEditor & PhotoEditorFilter & PhotoEditorTexture & PhotoEditorImageProperties = PhotoEditorService()) {
         self.photoEditor = photoEditor
     }
 
     // MARK: Functions
 
     func resetSettings() {
-        photoEditor.resetSettings()
+        photoEditor.resetImageProperties()
     }
 
     func removeTexture() {
