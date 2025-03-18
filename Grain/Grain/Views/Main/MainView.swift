@@ -20,7 +20,7 @@ struct MainView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             VStack(spacing: 8) {
-                if viewModel.sourceImage != nil, viewModel.finalImage != nil {
+                if viewModel.sourceImage != nil {
                     VStack(spacing: 0) {
                         MainHeaderView(with: viewModel)
                             .environment(router)
@@ -41,12 +41,6 @@ struct MainView: View {
             .navigationDestination(for: MainRoute.self) { route in
                 router.view(for: route).environment(router)
             }
-            //        .onAppear { // Only for testing
-            //            if let uiImage = UIImage(named: "preview"),
-            //               let cgImage = uiImage.cgImage {
-            //                viewModel.photoEditor.updateSourceImage(CIImage(cgImage: cgImage), orientation: .up)
-            //            }
-            //        }
         }
     }
 }

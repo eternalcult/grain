@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - SliderView
+// MARK: - PropertySliderView
 
 struct PropertySliderView: View {
     // MARK: SwiftUI Properties
@@ -17,7 +17,7 @@ struct PropertySliderView: View {
                 + Text(": \(property.formattedValue())")
                 .font(.h5)
                 .foregroundStyle(Color.text.opacity(0.8))
-            Slider(value: $property.current, in: property.range)
+            Slider(value: $property.current, in: property.range, step: property.step)
                 .tint(Color.text.opacity(0.1))
         }
         .onTapGesture(count: 2) {

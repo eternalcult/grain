@@ -1,5 +1,6 @@
 import CoreImage
 
+@Observable
 final class ImageProcessingService: ImageProcessingServiceProtocol {
     // MARK: Properties
 
@@ -55,7 +56,7 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
         updateProperty(noiseReductionFilter, property: noiseReduction)
         updateProperty(noiseReductionFilter, property: sharpness)
 
-        return processedCiImage
+        return self.processedCiImage
     }
 
     func reset() {
@@ -72,7 +73,9 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
         sharpness.setToDefault()
         gamma.setToDefault()
     }
+}
 
+extension ImageProcessingService {
     private func updateProperty(_ filter: CIFilter, property: some ImageProperty) {
         guard property.isUpdated, let propertyKey = property.propertyKey else { return }
         filter.setValue(processedCiImage, forKey: kCIInputImageKey) // Устанавливаем изображение как входные данные фильтра

@@ -45,7 +45,9 @@ final class LutsManager: LutsManagerProtocol {
         }
         throw LutsServiceError.filterApplyingFailed
     }
+}
 
+extension LutsManager {
     private func readCubeFile(url: URL) throws -> (Int, [Float]) {
         // Считываем весь текст файла
         guard let content = try? String(contentsOf: url, encoding: .utf8) else {

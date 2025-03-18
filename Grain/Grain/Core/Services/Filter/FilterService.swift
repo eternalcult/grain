@@ -1,5 +1,6 @@
 import CoreImage
 
+@Observable
 final class FilterService: FilterServiceProtocol {
     // MARK: Properties
 

@@ -10,6 +10,7 @@ typealias ImagePropertyValue = Float
 protocol ImageProperty {
     var title: LocalizedStringKey { get }
     var range: ClosedRange<ImagePropertyValue> { get }
+    var step: Float { get }
     var defaultValue: ImagePropertyValue { get }
     var current: ImagePropertyValue { get set }
     var formatStyle: ImagePropertyValueFormattedStyle { get }
@@ -50,6 +51,17 @@ extension ImageProperty {
 
     var isUpdated: Bool {
         current != defaultValue
+    }
+
+    var step: Float {
+        switch formatStyle {
+        case .minus100to100:
+            (range.upperBound - range.lowerBound) / 200
+        case .zeroTo100:
+            (range.upperBound - range.lowerBound) / 100
+        case .without:
+            1
+        }
     }
 }
 
