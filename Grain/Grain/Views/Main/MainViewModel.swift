@@ -39,8 +39,8 @@ final class MainViewModel {
         photoEditor.texture
     }
 
-    var filter: Filter? {
-        photoEditor.filter
+    var currentFilter: Lut? {
+        photoEditor.currentFilter
     }
 
     var sourceImage: Image? {
@@ -235,7 +235,7 @@ final class MainViewModel {
         photoEditor.removeTexture()
     }
 
-    func applyFilter(_ newFilter: Filter) {
+    func applyFilter(_ newFilter: Lut) {
         photoEditor.applyFilter(newFilter)
     }
 
@@ -259,8 +259,8 @@ final class MainViewModel {
         applyTexture(randomElement)
     }
 
-    func removeFilterIfNeeded() {
-        photoEditor.removeFilterIfNeeded()
+    func removeFilter() {
+        photoEditor.removeFilter()
     }
 
     func updateTextureBlendMode(to blendMode: BlendMode) {
@@ -283,7 +283,6 @@ final class MainViewModel {
                         Vibration.success()
                     }
                 }
-
             // TODO: Show success alert or snackbar
             case let .failure(failure):
                 break // TODO: Show error alert or snackbar

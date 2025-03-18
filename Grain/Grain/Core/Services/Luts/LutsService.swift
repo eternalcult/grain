@@ -9,7 +9,7 @@ final class LutsService: LutsServiceProtocol {
     // MARK: Functions
 
     /// Parse .cube file into FilterCICubeData
-    func createDataForCIColorCube(for filter: Filter) throws -> FilterCICubeData {
+    func createDataForCIColorCube(for filter: Lut) throws -> FilterCICubeData {
         guard let filterFileURL = Bundle.main.url(forResource: filter.filename, withExtension: "cube") else {
             throw LutsServiceError.couldntFindFilterFileUrl
         }
@@ -22,7 +22,7 @@ final class LutsService: LutsServiceProtocol {
     }
 
     /// Create CIColorCubeWithColorSpace filter from FilterCICubeData from SwiftData
-    func createCIColorCube(for filter: Filter) throws -> CIColorCubeWithColorSpace {
+    func createCIColorCube(for filter: Lut) throws -> CIColorCubeWithColorSpace {
         let filtersData = DataStorage.shared.filtersData
         if let currentFilterData = filtersData.first(where: { $0.id == filter.id }) {
             let filter = CIFilter.colorCubeWithColorSpace()
@@ -36,7 +36,7 @@ final class LutsService: LutsServiceProtocol {
     }
 
     /// Apply selected filter and apply it to selected image
-    func apply(_ filter: Filter, for image: CIImage) throws -> CGImage {
+    func apply(_ filter: Lut, for image: CIImage) throws -> CGImage {
         print("Apply \(filter.title) filter for image")
         let cubeFilter = try createCIColorCube(for: filter)
         cubeFilter.inputImage = image

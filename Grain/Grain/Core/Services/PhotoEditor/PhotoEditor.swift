@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Методы связанные с TextureService
+/// Свойства и методы связанные с TextureService
 protocol PhotoEditorTexture {
     /// Примененная текстура в данный момент.
     var texture: Texture? { get }
@@ -20,22 +20,29 @@ protocol PhotoEditorTexture {
     func removeTexture()
 }
 
+// Свойства и методы связанные с LutService
+protocol PhotoEditorLut {
+    /// Примененный в данный момент лут
+    var currentFilter: Lut? { get }
+    /// Применен ли лут в данный момент.
+    var hasLut: Bool { get }
+
+    /// Применяет выбранный лут.
+    /// - Parameter newLut:Новый лут,, который необходимо применить к изображению
+    func applyFilter(_ newLut: Lut)
+    /// Удаляет лут с изображения
+    func removeFilter()
+
+}
+
 /// Все необходимые свойства и методы для реализации PhotoEditorService
-protocol PhotoEditor: PhotoEditorTexture {
+protocol PhotoEditor: PhotoEditorTexture, PhotoEditorLut {
     /// User friendly сообщение об ошибке
     var errorMessage: String? { get set }
     /// Исходное изображение. Никак не изменяется
     var sourceImage: Image? { get }
     var sourceCiImage: CIImage? { get }
     var finalImage: Image? { get }
-
-
-    // MARK: Filter
-
-    /// Примененный в данный момент фильтрю
-    var filter: Filter? { get }
-    /// Применен ли фильтр в данный момент.
-    var hasFilter: Bool { get }
 
     // MARK: Other
 
@@ -89,14 +96,6 @@ protocol PhotoEditor: PhotoEditorTexture {
     ///   - image: Новое исходное изображение
     ///   - orientation: Ориентация изображения
     func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation)
-
-    // MARK: Filters methods
-
-    /// Применяет выбранный фильтр.
-    /// - Parameter newFilter:Новый фильтр, который необходимо применить к изображению
-    func applyFilter(_ newFilter: Filter)
-    /// Убрать фильтр с изображения, если это необходимо
-    func removeFilterIfNeeded()
 
     /// Сохранить изображение в галлерею
     /// - Parameter completion: Результирующий completion

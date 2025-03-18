@@ -1,7 +1,7 @@
 import CoreImage
 import Foundation
 
-struct Filter: Identifiable, Decodable {
+struct Lut: Identifiable, Decodable {
     let id: Int
     let title: String
     let desc: String?

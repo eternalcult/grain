@@ -32,7 +32,7 @@ struct GalleryView: View {
                         ForEach(category.filters) { filter in
                             let filterPreview = DataStorage.shared.filtersPreview.first(where: { $0.id == filter.id })?.preview
                             if let filterPreview {
-                                if let selectedFilter = viewModel.filter {
+                                if let selectedFilter = viewModel.currentFilter {
                                     FilterPreviewView(
                                         filter,
                                         filterPreview,

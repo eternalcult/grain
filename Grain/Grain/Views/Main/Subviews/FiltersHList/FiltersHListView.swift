@@ -38,8 +38,8 @@ struct FiltersHListView: View {
             ScrollViewReader { proxy in
                 ScrollView(.horizontal) {
                     HStack(spacing: 4) {
-                        RawPreviewView(isSelected: viewModel.filter == nil) {
-                            viewModel.removeFilterIfNeeded()
+                        RawPreviewView(isSelected: viewModel.currentFilter == nil) {
+                            viewModel.removeFilter()
                         }
                         .frame(width: 100, height: 100)
                         ForEach(DataStorage.shared.filtersCategories) { category in
@@ -49,7 +49,7 @@ struct FiltersHListView: View {
                                         FilterPreviewView(
                                             filter,
                                             DataStorage.shared.filtersPreview.first(where: { $0.id == filter.id })?.preview,
-                                            isSelected: isSelected(currentFilter: filter, selectedFilter: viewModel.filter)
+                                            isSelected: isSelected(currentFilter: filter, selectedFilter: viewModel.currentFilter)
                                         ) {
                                             viewModel.applyFilter(filter)
                                         }
@@ -95,7 +95,7 @@ struct FiltersHListView: View {
         selectedCategory()
     }
 
-    private func isSelected(currentFilter: Filter, selectedFilter: Filter?) -> Bool {
+    private func isSelected(currentFilter: Lut, selectedFilter: Lut?) -> Bool {
         guard let selectedFilter else {
             return false
         }

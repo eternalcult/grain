@@ -23,15 +23,6 @@ final class PhotoEditorService: PhotoEditor {
         get {
             textureService.texture
         }
-        set {
-            if let newValue {
-                textureService.updateTexture(to: newValue) { isUpdated in
-                    if isUpdated {
-                        updateImage()
-                    }
-                }
-            }
-        }
     }
 
     var textureBlendMode: BlendMode {
@@ -52,14 +43,12 @@ final class PhotoEditorService: PhotoEditor {
         updateImage()
     }
     func applyTexture(_ newTexture: Texture) {
-        textureService.updateTexture(to: newTexture) { isUpdated in
-            if isUpdated {
-                updateImage()
-            }
+        textureService.update(to: newTexture) {
+            updateImage()
         }
     }
     func removeTexture() {
-        textureService.clear()
+        textureService.removeTexture()
         updateImage()
     }
     var textureAlpha: Float {
@@ -73,11 +62,26 @@ final class PhotoEditorService: PhotoEditor {
     }
     // MARK: Filter
 
-    private(set) var filter: Filter?
+    private let filterService = FilterServiceImp() // TODO: DI
+
+    var currentFilter: Lut? {
+        get {
+            filterService.currentFilter
+        }
+    }
+
+    func applyFilter(_ newLut: Lut) {
+        filterService.update(to: newLut) {
+            updateImage()
+        }
+    }
+
+    func removeFilter() {
+        filterService.removeFilter()
+        updateImage()
+    }
 
     private(set) var histogram: UIImage?
-
-    private let lutsService: LutsServiceProtocol
 
     private var processedCiImage: CIImage?
     private var sourceImageOrientation: UIImage.Orientation?
@@ -203,14 +207,8 @@ final class PhotoEditorService: PhotoEditor {
 
     // MARK: Filter
 
-    var hasFilter: Bool {
-        filter != nil
-    }
-
-    // MARK: Lifecycle
-
-    init(lutsService: LutsServiceProtocol = LutsService()) {
-        self.lutsService = lutsService
+    var hasLut: Bool {
+        filterService.hasFilter
     }
 
     // MARK: Functions
@@ -223,18 +221,6 @@ final class PhotoEditorService: PhotoEditor {
         }
         processedCiImage = image
         resetSettings()
-    }
-
-    func applyFilter(_ newFilter: Filter) {
-        if filter?.id != newFilter.id {
-            filter = newFilter
-            updateImage()
-        }
-    }
-
-    func removeFilterIfNeeded() {
-        filter = nil
-        updateImage()
     }
 
     func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void) {
@@ -272,8 +258,8 @@ final class PhotoEditorService: PhotoEditor {
         sourceImageOrientation = nil
         sourceCiImage = nil
         processedCiImage = nil
-        filter = nil
-        textureService.clear()
+        filterService.removeFilter()
+        textureService.removeTexture()
         resetSettings()
         resetEffects()
     }
@@ -350,12 +336,21 @@ private extension PhotoEditorService { // TODO: Crash
         // Effects
         updateVignette()
         updateBloom()
-        if let filter {
-            configureFilter(filter)
+
+        if filterService.hasFilter {
+            let applyLutResult = filterService.applyFilter(to: processedCiImage)
+            switch applyLutResult {
+            case let .success(lutImage):
+                processedCiImage = lutImage
+            case .failure(let error):
+                Crashlytics.crashlytics().record(error: error)
+                errorMessage = error.localizedDescription
+            }
         }
+
         if textureService.hasTexture {
-            let result = textureService.overlayTexture(to: processedCiImage)
-            switch result {
+            let overlayTextureResult = textureService.overlayTexture(to: processedCiImage)
+            switch overlayTextureResult {
             case let .success(texturedImage):
                 processedCiImage = texturedImage
             case let .failure(error):
@@ -363,6 +358,7 @@ private extension PhotoEditorService { // TODO: Crash
                 errorMessage = error.localizedDescription
             }
         }
+
         renderHistogram()
         renderImage()
     }
@@ -428,17 +424,6 @@ private extension PhotoEditorService {
         bloomFilter.radius = bloomRadius.current
         if let originalExtent = processedCiImage?.extent, let croppedOutput = bloomFilter.outputImage?.cropped(to: originalExtent) {
             processedCiImage = croppedOutput
-        }
-    }
-
-    func configureFilter(_ filter: Filter) {
-        do {
-            let filter = try lutsService.createCIColorCube(for: filter)
-            filter.inputImage = processedCiImage
-            processedCiImage = filter.outputImage
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
-            errorMessage = error.localizedDescription
         }
     }
 }
