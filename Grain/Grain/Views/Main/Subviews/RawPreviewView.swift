@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Используется отображения в FiltersScrollView и TexturesHListView пустого состояния, когда не выбран ни один из фильтров/текстур
 struct RawPreviewView: View {
     // MARK: Properties
 
@@ -23,19 +24,13 @@ struct RawPreviewView: View {
             VStack {
                 Spacer()
                 Text("None")
-                    .font(.h6)
-                    .minimumScaleFactor(0.1)
-                    .foregroundStyle(Color.textBlack)
-                    .frame(height: 20)
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 4)
-                    .background(Color.backgroundWhite.opacity(0.5))
+                    .hListItemTitleStyle()
                 Spacer()
             }
             .clipShape(.rect(cornerRadius: 4))
             .overlay(
                 RoundedRectangle(cornerRadius: 4)
-                    .stroke(isSelected ? Color.textWhite : .clear, lineWidth: 2)
+                    .stroke(isSelected ? Color.text : .clear, lineWidth: 2)
             )
         }
     }

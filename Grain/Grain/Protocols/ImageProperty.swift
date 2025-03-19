@@ -1,14 +1,30 @@
 import AppCore
-import Foundation
+import SwiftUI
 
 // MARK: - ImageProperty
 
+typealias ImagePropertyValue = Float
+
+// MARK: - ImageProperty
+/// Стандартная настройка изображения – яркость, контрастность и т.д
 protocol ImageProperty {
-    var title: String { get }
-    var range: ClosedRange<Float> { get }
-    var defaultValue: Float { get }
-    var current: Float { get set }
+    /// Название
+    var title: LocalizedStringKey { get }
+    /// Диапазон доступных значений
+    var range: ClosedRange<ImagePropertyValue> { get }
+    /// Шаг изменения значения. Необходимо для оптимизации перерисовки View при изменении значения через слайдер
+    var step: Float { get }
+    /// Стандартное значение
+    var defaultValue: ImagePropertyValue { get }
+    /// Текущее значение
+    var current: ImagePropertyValue { get set }
+    /// Стиль отображения - от 0 до 100%, от -100% до 100% или без форматирования
     var formatStyle: ImagePropertyValueFormattedStyle { get }
+    /// Ключ необходходимый для указания значения CIFilter
+    var propertyKey: String? { get }
+    /// Было ли изменено значение
+    var isUpdated: Bool { get }
+    /// Возвращает стандартное значение свойству current
     mutating func setToDefault()
 }
 
@@ -39,6 +55,21 @@ extension ImageProperty {
 
         case .without:
             return "\(Int(current))"
+        }
+    }
+
+    var isUpdated: Bool {
+        current != defaultValue
+    }
+
+    var step: Float {
+        switch formatStyle {
+        case .minus100to100:
+            (range.upperBound - range.lowerBound) / 200
+        case .zeroTo100:
+            (range.upperBound - range.lowerBound) / 100
+        case .without:
+            1
         }
     }
 }

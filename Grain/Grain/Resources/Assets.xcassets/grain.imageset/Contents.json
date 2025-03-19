@@ -1,6 +1,16 @@
 {
   "images" : [
     {
+      "filename" : "grain-black-icon.png",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
       "filename" : "grain-icon.png",
       "idiom" : "universal"
     }

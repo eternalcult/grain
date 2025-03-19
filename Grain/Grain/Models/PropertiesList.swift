@@ -16,7 +16,7 @@ import Foundation
  + sharpness
  - definition
  + noise reduction
- - vignette
+ + vignette
  */
 
 /*
