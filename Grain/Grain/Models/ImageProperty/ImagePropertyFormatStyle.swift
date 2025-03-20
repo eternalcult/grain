@@ -1,4 +1,4 @@
-enum ImagePropertyValueFormattedStyle {
+enum ImagePropertyFormatStyle {
     /// -100% – 0 – 100%
     case minus100to100
     /// 0% – 100%
