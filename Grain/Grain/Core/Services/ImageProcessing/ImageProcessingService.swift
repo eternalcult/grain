@@ -1,3 +1,4 @@
+import Factory
 import CoreImage
 
 // MARK: - ImageProcessingService
@@ -5,8 +6,8 @@ import CoreImage
 @Observable
 final class ImageProcessingService: ImageProcessingServiceProtocol {
     init(
-        imagePropertyFactory: ImagePropertyFactoryProtocol = ImagePropertyFactory(),
-        imageEffectFactory: ImageEffectFactoryProtocol = ImageEffectFactory()
+        imagePropertyFactory: ImagePropertyFactoryProtocol = Container.shared.imagePropertyFactory.resolve(),
+        imageEffectFactory: ImageEffectFactoryProtocol = Container.shared.imageEffectFactory.resolve()
     ) {
         // Properties
         brightness = imagePropertyFactory.makeProperty(of: .brightness)

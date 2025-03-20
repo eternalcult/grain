@@ -1,4 +1,5 @@
 import CoreImage
+import Factory
 import CoreImage.CIFilterBuiltins
 import FirebaseCrashlytics
 import Photos
@@ -17,26 +18,14 @@ final class PhotoEditorService: PhotoEditor {
 
     private(set) var histogram: UIImage?
 
-    private var imageProcessingService: ImageProcessingServiceProtocol
-    private let filterService: FilterServiceProtocol
-    private let textureService: TextureServiceProtocol
+    @ObservationIgnored @Injected(\.imageProcessingService) private var imageProcessingService
+    @ObservationIgnored @Injected(\.filterService) private var filterService
+    @ObservationIgnored @Injected(\.textureService) private var textureService
 
     private var processedCiImage: CIImage?
     private var sourceImageOrientation: UIImage.Orientation?
 
     private let context = CIContext() // TODO: Настроить CIContext
-
-    // MARK: Lifecycle
-
-    init(
-        imageProcessingService: ImageProcessingServiceProtocol = ImageProcessingService(),
-        filterService: FilterServiceProtocol = FilterService(),
-        textureService: TextureServiceProtocol = TextureService()
-    ) {
-        self.imageProcessingService = imageProcessingService
-        self.filterService = filterService
-        self.textureService = textureService
-    }
 
     // MARK: Functions
 

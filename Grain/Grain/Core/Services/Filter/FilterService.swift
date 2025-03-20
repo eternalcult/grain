@@ -1,3 +1,4 @@
+import Factory
 import CoreImage
 
 @Observable
@@ -6,18 +7,12 @@ final class FilterService: FilterServiceProtocol {
 
     private(set) var currentFilter: Filter?
 
-    private let lutsManager: LutsManagerProtocol
+    @ObservationIgnored @Injected(\.lutsManager) private var lutsManager
 
     // MARK: Computed Properties
 
     var hasFilter: Bool {
         currentFilter != nil
-    }
-
-    // MARK: Lifecycle
-
-    init(lutsManager: LutsManagerProtocol = LutsManager()) {
-        self.lutsManager = lutsManager
     }
 
     // MARK: Functions
