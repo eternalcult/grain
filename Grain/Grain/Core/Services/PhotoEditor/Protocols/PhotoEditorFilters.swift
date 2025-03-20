@@ -1,5 +1,5 @@
 /// Все необходимые свойства и методы необходимые PhotoEditor для работы с фильтрами
-protocol PhotoEditorFilter {
+protocol PhotoEditorFilters {
     /// Примененный в данный момент лут
     var currentFilter: Filter? { get }
     /// Применен ли лут в данный момент.

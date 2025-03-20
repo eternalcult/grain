@@ -3,29 +3,29 @@ protocol PhotoEditorImageProperties {
     /// Есть ли измененные свойства изображения.
     var hasModifiedProperties: Bool { get }
     /// Яркость.
-    var brightness: ImageProperty { get set }
+    var brightness: ImagePropertyProtocol { get set }
     /// Контрастность.
-    var contrast: ImageProperty { get set }
+    var contrast: ImagePropertyProtocol { get set }
     /// Насыщенность.
-    var saturation: ImageProperty { get set }
+    var saturation: ImagePropertyProtocol { get set }
     /// Экспозиция.
-    var exposure: ImageProperty { get set }
+    var exposure: ImagePropertyProtocol { get set }
     /// Сочность.
-    var vibrance: ImageProperty { get set }
+    var vibrance: ImagePropertyProtocol { get set }
     /// Светлые участки.
-    var highlights: ImageProperty { get set }
+    var highlights: ImagePropertyProtocol { get set }
     /// Тени.
-    var shadows: ImageProperty { get set }
+    var shadows: ImagePropertyProtocol { get set }
     /// Температура.
-    var temperature: ImageProperty { get set }
+    var temperature: ImagePropertyProtocol { get set }
     /// Оттенок.
-    var tint: ImageProperty { get set }
+    var tint: ImagePropertyProtocol { get set }
     /// Гамма.
-    var gamma: ImageProperty { get set }
+    var gamma: ImagePropertyProtocol { get set }
     /// Уменьшение шума.
-    var noiseReduction: ImageProperty { get set }
+    var noiseReduction: ImagePropertyProtocol { get set }
     /// Резкость.
-    var sharpness: ImageProperty { get set }
+    var sharpness: ImagePropertyProtocol { get set }
 
     /// Возвращает к исходным значениям все ImageProperties
     func resetImageProperties()

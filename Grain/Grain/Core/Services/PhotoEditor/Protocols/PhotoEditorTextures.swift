@@ -1,5 +1,5 @@
 /// Все необходимые свойства и методы необходимые PhotoEditor для работы с текстурами
-protocol PhotoEditorTexture {
+protocol PhotoEditorTextures {
     /// Примененная текстура в данный момент.
     var texture: Texture? { get }
     /// Режим смешивания текстуры.
