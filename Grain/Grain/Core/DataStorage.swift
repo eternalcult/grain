@@ -1,4 +1,3 @@
-import AppCore
 import CoreImage
 import SwiftData
 
@@ -92,10 +91,10 @@ final class DataStorage {
     }
 
     private func loadTextures() throws -> [TexturesCategory] {
-        try JSON.loadFile(with: "Textures", as: [TexturesCategory].self)
+        try JSONParser.loadFile(with: "Textures", as: [TexturesCategory].self)
     }
 
     private func loadFilters() throws -> [FiltersCategory] {
-        try JSON.loadFile(with: "Filters", as: [FiltersCategory].self)
+        try JSONParser.loadFile(with: "Filters", as: [FiltersCategory].self)
     }
 }

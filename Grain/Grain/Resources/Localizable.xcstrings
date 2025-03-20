@@ -41,6 +41,18 @@
         }
       }
     },
+    "A straightforward counter app for a popular board game." : {
+
+    },
+    "A straightforward counter app for a popular Star Realms board game." : {
+
+    },
+    "An easy-to-use photo editor with a variety of film emulation filters." : {
+
+    },
+    "Authority" : {
+      "shouldTranslate" : false
+    },
     "Blend mode:" : {
       "localizations" : {
         "de" : {
@@ -241,6 +253,12 @@
         }
       }
     },
+    "Carcassonne Counter" : {
+      "shouldTranslate" : false
+    },
+    "Check out my other apps!" : {
+
+    },
     "Color" : {
       "localizations" : {
         "de" : {
@@ -360,6 +378,9 @@
           }
         }
       }
+    },
+    "Common Settings" : {
+
     },
     "Compares the total of all channel values for the blend and base color and displays the lower value color. Darker Color does not produce a third color, which can result from the Darken blend, because it chooses the lowest channel values from both the base and the blend color to create the result color." : {
       "localizations" : {
@@ -1121,6 +1142,9 @@
         }
       }
     },
+    "Grain" : {
+      "shouldTranslate" : false
+    },
     "Highlights" : {
       "localizations" : {
         "de" : {
@@ -1200,6 +1224,9 @@
           }
         }
       }
+    },
+    "If you find the app useful, please leave a review on the App Store. Your support helps improve it. Thank you!" : {
+
     },
     "Intensity" : {
       "localizations" : {
@@ -2201,6 +2228,9 @@
         }
       }
     },
+    "Powerful photography app that lets you overlay any photo from your gallery onto your camera screen, turning it into a live guide for precise, perfectly aligned shots." : {
+
+    },
     "Radius" : {
       "localizations" : {
         "de" : {
@@ -2240,6 +2270,12 @@
           }
         }
       }
+    },
+    "Rate this app in Appstore" : {
+
+    },
+    "Recreate Cam" : {
+      "shouldTranslate" : false
     },
     "Replaces the colors, depending on the blend color. If the blend color (light source) is lighter than 50% gray, pixels darker than the blend color are replaced, and pixels lighter than the blend color do not change. If the blend color is darker than 50% gray, pixels lighter than the blend color are replaced, and pixels darker than the blend color do not change. This is useful for adding special effects to an image." : {
       "localizations" : {
@@ -2441,6 +2477,9 @@
         }
       }
     },
+    "Share" : {
+
+    },
     "Sharpness" : {
       "localizations" : {
         "de" : {
@@ -2600,6 +2639,12 @@
           }
         }
       }
+    },
+    "Switch Language" : {
+
+    },
+    "System Settings" : {
+
     },
     "Tap to choose an image\nfrom the gallery." : {
       "localizations" : {

@@ -1,5 +1,3 @@
-
-import AppCore
 import SwiftUI
 
 struct MainView: View {
@@ -37,7 +35,7 @@ struct MainView: View {
             .onChange(of: viewModel.errorMessage) { _, newError in
                 viewModel.showErrorAlert = newError != nil
             }
-            .failureBlackAlert($viewModel.showErrorAlert, message: viewModel.errorMessage, duration: 3)
+            .failureAlert($viewModel.showErrorAlert, message: viewModel.errorMessage, duration: 3)
             .navigationDestination(for: MainRoute.self) { route in
                 router.view(for: route).environment(router)
             }

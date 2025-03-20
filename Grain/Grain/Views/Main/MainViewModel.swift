@@ -1,4 +1,3 @@
-import AppCore
 import PhotosUI
 import SwiftUI
 
@@ -280,7 +279,7 @@ final class MainViewModel {
             case let .success(success):
                 Task {
                     await MainActor.run {
-                        Vibration.success()
+                        HapticFeedback.success()
                     }
                 }
 

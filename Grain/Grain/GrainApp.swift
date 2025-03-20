@@ -1,4 +1,3 @@
-import AppCore
 import Firebase
 import SwiftData
 import SwiftUI
@@ -25,7 +24,6 @@ struct GrainApp: App {
     // MARK: Lifecycle
 
     init() {
-        Font.registerFonts()
         FirebaseApp.configure()
     }
 
@@ -52,13 +50,11 @@ struct GrainApp: App {
     private var onboardingView: some View {
         OnboardingView(
             pages: DataStorage.shared.onboardingPages,
-            settings: .init(didTapNextButton: { isLastSlide in
+            didTapNextButton: { isLastSlide in
                 if isLastSlide {
                     hasLaunchedBefore = true
                 }
-            }, didTapCloseButton: {
-                hasLaunchedBefore = true
-            })
+            }
         )
     }
 

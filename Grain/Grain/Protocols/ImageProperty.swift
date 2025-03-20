@@ -1,4 +1,3 @@
-import AppCore
 import SwiftUI
 
 // MARK: - ImageProperty

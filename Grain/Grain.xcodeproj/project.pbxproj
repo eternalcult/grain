@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		C171BDBC2D49270F00670E46 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C171BDBB2D49270F00670E46 /* FirebaseAnalytics */; };
 		C171BDBE2D49270F00670E46 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C171BDBD2D49270F00670E46 /* FirebaseCrashlytics */; };
-		C1CC8A8D2D8360BA00FAB345 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = C1CC8A8C2D8360BA00FAB345 /* AppCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,13 +26,23 @@
 		C1F076C32D5263B5002508B0 /* GrainFastlaneSnapshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrainFastlaneSnapshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C11E22692D8ADE1200E7ACF8 /* Exceptions for "Grain" folder in "Grain" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C1517A9D2D34511200F61DC6 /* Grain */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 		C1E6800B2D6DD1DC0024BD81 /* Exceptions for "Grain" folder in "Compile Sources" phase from "Grain" target */ = {
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
 			buildPhase = C1517A9A2D34511200F61DC6 /* Sources */;
 			membershipExceptions = (
-				Core/JSON/Filters.json,
-				Core/JSON/Textures.json,
+				Data/Filters.json,
+				Data/Textures.json,
 			);
 		};
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
@@ -42,6 +51,7 @@
 		C1517AA02D34511200F61DC6 /* Grain */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				C11E22692D8ADE1200E7ACF8 /* Exceptions for "Grain" folder in "Grain" target */,
 				C1E6800B2D6DD1DC0024BD81 /* Exceptions for "Grain" folder in "Compile Sources" phase from "Grain" target */,
 			);
 			path = Grain;
@@ -59,7 +69,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1CC8A8D2D8360BA00FAB345 /* AppCore in Frameworks */,
 				C171BDBE2D49270F00670E46 /* FirebaseCrashlytics in Frameworks */,
 				C171BDBC2D49270F00670E46 /* FirebaseAnalytics in Frameworks */,
 			);
@@ -116,7 +125,6 @@
 			packageProductDependencies = (
 				C171BDBB2D49270F00670E46 /* FirebaseAnalytics */,
 				C171BDBD2D49270F00670E46 /* FirebaseCrashlytics */,
-				C1CC8A8C2D8360BA00FAB345 /* AppCore */,
 			);
 			productName = Grain;
 			productReference = C1517A9E2D34511200F61DC6 /* Grain.app */;
@@ -180,7 +188,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				C171BDBA2D49270E00670E46 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				C1CC8A8B2D8360BA00FAB345 /* XCRemoteSwiftPackageReference "app-core" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C1517A9F2D34511200F61DC6 /* Products */;
@@ -400,7 +407,7 @@
 				ENABLE_DEBUG_DYLIB = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = Grain/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Grain;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Grain needs access to your photo library to allow you to edit, save, and manage your images.";
@@ -440,7 +447,7 @@
 				ENABLE_DEBUG_DYLIB = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = Grain/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Grain;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Grain needs access to your photo library to allow you to edit, save, and manage your images.";
@@ -544,14 +551,6 @@
 				minimumVersion = 11.7.0;
 			};
 		};
-		C1CC8A8B2D8360BA00FAB345 /* XCRemoteSwiftPackageReference "app-core" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:eternalcult/app-core.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -564,11 +563,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C171BDBA2D49270E00670E46 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
-		};
-		C1CC8A8C2D8360BA00FAB345 /* AppCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C1CC8A8B2D8360BA00FAB345 /* XCRemoteSwiftPackageReference "app-core" */;
-			productName = AppCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
