@@ -54,14 +54,14 @@ struct SettingsView: View {
                     HStack {
                         Image(systemName: "globe.central.south.asia")
                             .foregroundStyle(Color.text)
-                        Text("Switch Language") // TODO: bundle: .module
+                        Text("Switch Language")
                             .font(.h5)
                             .foregroundStyle(Color.text)
                     }
                 }
 
             } header: {
-                Text("System Settings") // TODO: bundle: .module
+                Text("System Settings")
                     .font(.h6)
             }
             Section {
@@ -91,13 +91,13 @@ struct SettingsView: View {
                         HStack {
                             Image(systemName: "medal.star")
                                 .foregroundStyle(Color.text)
-                            Text("Rate this app in Appstore") // TODO: bundle: .module
+                            Text("Rate this app in Appstore")
                                 .font(.h5)
                                 .foregroundStyle(Color.text)
 
                         }
                         Text(
-                            "If you find the app useful, please leave a review on the App Store. Your support helps improve it. Thank you!") // TODO: bundle: .module
+                            "If you find the app useful, please leave a review on the App Store. Your support helps improve it. Thank you!")
                         .font(.textSub)
                         .foregroundStyle(Color.text)
                     }
@@ -109,14 +109,14 @@ struct SettingsView: View {
                     HStack {
                         Image(systemName: "square.and.arrow.up")
                             .tint(.text)
-                        Text("Share") // TODO: bundle: .module
+                        Text("Share")
                             .font(.h5)
                             .foregroundStyle(Color.text)
                     }
                 }
 
             } header: {
-                Text("Common Settings")  // TODO: bundle: .module
+                Text("Common Settings")
                     .font(.h6)
             }
             Section {
@@ -133,10 +133,10 @@ struct SettingsView: View {
                                     .clipShape(.rect(cornerRadius: 4))
 
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(app.title) // TODO: bundle: .module
+                                    Text(app.title)
                                         .font(.h3)
                                         .foregroundStyle(Color.text)
-                                    Text(app.description) // TODO: bundle: .module
+                                    Text(app.description)
                                         .font(.textSub)
                                         .foregroundStyle(Color.text)
 
@@ -146,7 +146,7 @@ struct SettingsView: View {
                     }
                 }
             } header: {
-                Text("Check out my other apps!")  // TODO: bundle: .module
+                Text("Check out my other apps!")
                     .font(.h6)
             }
         }

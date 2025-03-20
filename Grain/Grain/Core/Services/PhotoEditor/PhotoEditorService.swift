@@ -17,32 +17,6 @@ final class PhotoEditorService: PhotoEditor {
 
     private(set) var histogram: UIImage?
 
-    // MARK: Effects
-
-    var vignetteIntensity: ImageProperty = VignetteIntensity() { // TODO: Create ImageEffect protocol
-        didSet {
-            updateImage()
-        }
-    }
-
-    var vignetteRadius: ImageProperty = VignetteRadius() { // TODO: Create ImageEffect protocol
-        didSet {
-            updateImage()
-        }
-    }
-
-    var bloomIntensity: ImageProperty = BloomIntensity() { // TODO: Create ImageEffect protocol
-        didSet {
-            updateImage()
-        }
-    }
-
-    var bloomRadius: ImageProperty = BloomRadius() { // TODO: Create ImageEffect protocol
-        didSet {
-            updateImage()
-        }
-    }
-
     private var imageProcessingService: ImageProcessingServiceProtocol
     private let filterService: FilterServiceProtocol
     private let textureService: TextureServiceProtocol
@@ -51,9 +25,6 @@ final class PhotoEditorService: PhotoEditor {
     private var sourceImageOrientation: UIImage.Orientation?
 
     private let context = CIContext() // TODO: Настроить CIContext
-
-    private let vignetteFilter = CIFilter.vignette()
-    private let bloomFilter = CIFilter.bloom()
 
     // MARK: Lifecycle
 
@@ -123,7 +94,7 @@ final class PhotoEditorService: PhotoEditor {
 
 // MARK: PhotoEditorFilter - свойтва и методы связанные с фильтрами
 
-extension PhotoEditorService: PhotoEditorFilter {
+extension PhotoEditorService {
     var hasFilter: Bool {
         filterService.hasFilter
     }
@@ -146,7 +117,7 @@ extension PhotoEditorService: PhotoEditorFilter {
 
 // MARK: PhotoEditorTexture - свойства и методы связанные с текстурами
 
-extension PhotoEditorService: PhotoEditorTexture {
+extension PhotoEditorService {
     var texture: Texture? {
         textureService.texture
     }
@@ -193,12 +164,12 @@ extension PhotoEditorService: PhotoEditorTexture {
 
 // MARK: PhotoEditorImageProperties - свойства и методы связанные с изменением настроек изображения
 
-extension PhotoEditorService: PhotoEditorImageProperties {
+extension PhotoEditorService {
     var hasModifiedProperties: Bool {
         imageProcessingService.hasModifiedProperties
     }
 
-    var brightness: ImageProperty {
+    var brightness: ImagePropertyProtocol {
         get {
             imageProcessingService.brightness
         }
@@ -208,7 +179,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var contrast: ImageProperty {
+    var contrast: ImagePropertyProtocol {
         get {
             imageProcessingService.contrast
         }
@@ -218,7 +189,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var saturation: ImageProperty {
+    var saturation: ImagePropertyProtocol {
         get {
             imageProcessingService.saturation
         }
@@ -228,7 +199,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var exposure: ImageProperty {
+    var exposure: ImagePropertyProtocol {
         get {
             imageProcessingService.exposure
         }
@@ -238,7 +209,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var vibrance: ImageProperty {
+    var vibrance: ImagePropertyProtocol {
         get {
             imageProcessingService.vibrance
         }
@@ -248,7 +219,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var highlights: ImageProperty {
+    var highlights: ImagePropertyProtocol {
         get {
             imageProcessingService.highlights
         }
@@ -258,7 +229,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var shadows: ImageProperty {
+    var shadows: ImagePropertyProtocol {
         get {
             imageProcessingService.shadows
         }
@@ -268,7 +239,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var temperature: ImageProperty {
+    var temperature: ImagePropertyProtocol {
         get {
             imageProcessingService.temperature
         }
@@ -278,7 +249,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var tint: ImageProperty {
+    var tint: ImagePropertyProtocol {
         get {
             imageProcessingService.tint
         }
@@ -288,7 +259,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var gamma: ImageProperty {
+    var gamma: ImagePropertyProtocol {
         get {
             imageProcessingService.gamma
         }
@@ -298,7 +269,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var noiseReduction: ImageProperty {
+    var noiseReduction: ImagePropertyProtocol {
         get {
             imageProcessingService.noiseReduction
         }
@@ -308,7 +279,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var sharpness: ImageProperty {
+    var sharpness: ImagePropertyProtocol {
         get {
             imageProcessingService.sharpness
         }
@@ -320,6 +291,33 @@ extension PhotoEditorService: PhotoEditorImageProperties {
 
     func resetImageProperties() {
         imageProcessingService.reset()
+        updateImage()
+    }
+}
+
+// MARK: PhotoEditorEffects - свойства и методы связанные с добавлением эффектов
+
+extension PhotoEditorService: PhotoEditorEffects {
+    var vignette: ImageEffectProtocol {
+        get {
+            imageProcessingService.vignette
+        } set {
+            imageProcessingService.vignette = newValue
+            updateImage()
+        }
+    }
+
+    var bloom: ImageEffectProtocol {
+        get {
+            imageProcessingService.bloom
+        } set {
+            imageProcessingService.bloom = newValue
+            updateImage()
+        }
+    }
+
+    func resetEffects() {
+        imageProcessingService.resetEffects()
         updateImage()
     }
 }
@@ -367,10 +365,7 @@ private extension PhotoEditorService {
             image: sourceCiImage,
             scale: 0.5
         )
-        processedCiImage = imageProcessingService.updateProperties(to: processedCiImage)
-        // Effects
-        updateVignette()
-        updateBloom()
+        processedCiImage = imageProcessingService.updatePropertiesAndEffects(to: processedCiImage)
 
         if filterService.hasFilter {
             let applyLutResult = filterService.applyFilter(to: processedCiImage)
@@ -396,37 +391,5 @@ private extension PhotoEditorService {
 
         renderHistogram()
         renderImage()
-    }
-
-    func resetEffects() {
-        vignetteRadius.setToDefault()
-        vignetteIntensity.setToDefault()
-    }
-}
-
-private extension PhotoEditorService {
-    // MARK: Effects
-
-    func updateVignette() {
-        guard vignetteRadius.isUpdated || vignetteIntensity.isUpdated else {
-            return
-        }
-        vignetteFilter.inputImage = processedCiImage
-        vignetteFilter.intensity = vignetteIntensity.current
-        vignetteFilter.radius = vignetteRadius.current
-        processedCiImage = vignetteFilter.outputImage
-    }
-
-    func updateBloom() {
-        guard bloomRadius.isUpdated || bloomIntensity.isUpdated else {
-            return
-        }
-
-        bloomFilter.inputImage = processedCiImage
-        bloomFilter.intensity = bloomIntensity.current
-        bloomFilter.radius = bloomRadius.current
-        if let originalExtent = processedCiImage?.extent, let croppedOutput = bloomFilter.outputImage?.cropped(to: originalExtent) {
-            processedCiImage = croppedOutput
-        }
     }
 }

@@ -26,7 +26,7 @@ final class MainViewModel {
         }
     }
 
-    private var photoEditor: PhotoEditor & PhotoEditorFilter & PhotoEditorTexture & PhotoEditorImageProperties
+    private var photoEditor: PhotoEditor
 
     // MARK: Computed Properties
 
@@ -58,7 +58,7 @@ final class MainViewModel {
         photoEditor.hasModifiedProperties
     }
 
-    var brightness: ImageProperty {
+    var brightness: ImagePropertyProtocol {
         get {
             photoEditor.brightness
         }
@@ -67,7 +67,7 @@ final class MainViewModel {
         }
     }
 
-    var contrast: ImageProperty {
+    var contrast: ImagePropertyProtocol {
         get {
             photoEditor.contrast
         }
@@ -76,7 +76,7 @@ final class MainViewModel {
         }
     }
 
-    var saturation: ImageProperty {
+    var saturation: ImagePropertyProtocol {
         get {
             photoEditor.saturation
         }
@@ -85,7 +85,7 @@ final class MainViewModel {
         }
     }
 
-    var exposure: ImageProperty {
+    var exposure: ImagePropertyProtocol {
         get {
             photoEditor.exposure
         }
@@ -94,7 +94,7 @@ final class MainViewModel {
         }
     }
 
-    var vibrance: ImageProperty {
+    var vibrance: ImagePropertyProtocol {
         get {
             photoEditor.vibrance
         }
@@ -103,7 +103,7 @@ final class MainViewModel {
         }
     }
 
-    var highlights: ImageProperty {
+    var highlights: ImagePropertyProtocol {
         get {
             photoEditor.highlights
         }
@@ -112,7 +112,7 @@ final class MainViewModel {
         }
     }
 
-    var shadows: ImageProperty {
+    var shadows: ImagePropertyProtocol {
         get {
             photoEditor.shadows
         }
@@ -121,7 +121,7 @@ final class MainViewModel {
         }
     }
 
-    var temperature: ImageProperty {
+    var temperature: ImagePropertyProtocol {
         get {
             photoEditor.temperature
         }
@@ -130,7 +130,7 @@ final class MainViewModel {
         }
     }
 
-    var tint: ImageProperty {
+    var tint: ImagePropertyProtocol {
         get {
             photoEditor.tint
         }
@@ -139,7 +139,7 @@ final class MainViewModel {
         }
     }
 
-    var gamma: ImageProperty {
+    var gamma: ImagePropertyProtocol {
         get {
             photoEditor.gamma
         }
@@ -148,7 +148,7 @@ final class MainViewModel {
         }
     }
 
-    var noiseReduction: ImageProperty {
+    var noiseReduction: ImagePropertyProtocol {
         get {
             photoEditor.noiseReduction
         }
@@ -157,7 +157,7 @@ final class MainViewModel {
         }
     }
 
-    var sharpness: ImageProperty {
+    var sharpness: ImagePropertyProtocol {
         get {
             photoEditor.sharpness
         }
@@ -186,41 +186,24 @@ final class MainViewModel {
 
     // MARK: Effects
 
-    var vignetteIntensity: ImageProperty {
+    var vignette: ImageEffectProtocol {
         get {
-            photoEditor.vignetteIntensity
+            photoEditor.vignette
         } set {
-            photoEditor.vignetteIntensity = newValue
+            photoEditor.vignette = newValue
         }
     }
-
-    var vignetteRadius: ImageProperty {
+    var bloom: ImageEffectProtocol {
         get {
-            photoEditor.vignetteRadius
+            photoEditor.bloom
         } set {
-            photoEditor.vignetteRadius = newValue
-        }
-    }
-
-    var bloomIntensity: ImageProperty {
-        get {
-            photoEditor.bloomIntensity
-        } set {
-            photoEditor.bloomIntensity = newValue
-        }
-    }
-
-    var bloomRadius: ImageProperty {
-        get {
-            photoEditor.bloomRadius
-        } set {
-            photoEditor.bloomRadius = newValue
+            photoEditor.bloom = newValue
         }
     }
 
     // MARK: Lifecycle
 
-    init(photoEditor: PhotoEditor & PhotoEditorFilter & PhotoEditorTexture & PhotoEditorImageProperties = PhotoEditorService()) {
+    init(photoEditor: PhotoEditor = PhotoEditorService()) {
         self.photoEditor = photoEditor
     }
 

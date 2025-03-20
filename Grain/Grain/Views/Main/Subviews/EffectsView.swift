@@ -7,7 +7,7 @@ struct EffectsView: View {
 
     // MARK: Lifecycle
 
-    init(with parentViewModel: MainViewModel) {
+    init(with parentViewModel: MainViewModel) { // TODO: Вот тут случайно не retain cycle получается?
         viewModel = parentViewModel
     }
 
@@ -38,13 +38,13 @@ struct EffectsView: View {
                 VStack(spacing: 0) {
                     PropertyDoubleSliderView(
                         title: "Vignette",
-                        mainProperty: $viewModel.vignetteIntensity,
-                        additionalProperty: $viewModel.vignetteRadius
+                        mainProperty: $viewModel.vignette.intensity,
+                        additionalProperty: $viewModel.vignette.radius
                     )
                     PropertyDoubleSliderView(
                         title: "Bloom",
-                        mainProperty: $viewModel.bloomIntensity,
-                        additionalProperty: $viewModel.bloomRadius
+                        mainProperty: $viewModel.bloom.intensity,
+                        additionalProperty: $viewModel.bloom.radius
                     )
                 }
             }

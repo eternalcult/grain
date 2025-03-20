@@ -4,8 +4,8 @@ struct PropertyDoubleSliderView: View {
     // MARK: SwiftUI Properties
 
     let title: String
-    @Binding var mainProperty: ImageProperty
-    @Binding var additionalProperty: ImageProperty
+    @Binding var mainProperty: ImagePropertyProtocol
+    @Binding var additionalProperty: ImagePropertyProtocol
 
     // MARK: Content Properties
 

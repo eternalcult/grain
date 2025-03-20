@@ -4,20 +4,47 @@ import CoreImage
 
 @Observable
 final class ImageProcessingService: ImageProcessingServiceProtocol {
+    init(
+        imagePropertyFactory: ImagePropertyFactoryProtocol = ImagePropertyFactory(),
+        imageEffectFactory: ImageEffectFactoryProtocol = ImageEffectFactory()
+    ) {
+        // Properties
+        brightness = imagePropertyFactory.makeProperty(of: .brightness)
+        contrast = imagePropertyFactory.makeProperty(of: .contrast)
+        saturation = imagePropertyFactory.makeProperty(of: .saturation)
+        exposure = imagePropertyFactory.makeProperty(of: .exposure)
+        vibrance = imagePropertyFactory.makeProperty(of: .vibrance)
+        highlights = imagePropertyFactory.makeProperty(of: .highlights)
+        shadows = imagePropertyFactory.makeProperty(of: .shadows)
+        temperature = imagePropertyFactory.makeProperty(of: .temperature)
+        tint = imagePropertyFactory.makeProperty(of: .tint)
+        gamma = imagePropertyFactory.makeProperty(of: .gamma)
+        noiseReduction = imagePropertyFactory.makeProperty(of: .noiseReduction)
+        sharpness = imagePropertyFactory.makeProperty(of: .sharpness)
+        // Effects
+        vignette = imageEffectFactory.make(effect: .vignette)
+        bloom = imageEffectFactory.make(effect: .bloom)
+    }
+
     // MARK: Properties
 
-    var brightness: ImageProperty = Brightness()
-    var contrast: ImageProperty = Contrast()
-    var saturation: ImageProperty = Saturation()
-    var exposure: ImageProperty = Exposure()
-    var vibrance: ImageProperty = Vibrance()
-    var highlights: ImageProperty = Highlights()
-    var shadows: ImageProperty = Shadows()
-    var temperature: ImageProperty = Temperature()
-    var tint: ImageProperty = Tint()
-    var gamma: ImageProperty = Gamma()
-    var noiseReduction: ImageProperty = NoiseReduction()
-    var sharpness: ImageProperty = Sharpness()
+    var brightness: ImagePropertyProtocol
+    var contrast: ImagePropertyProtocol
+    var saturation: ImagePropertyProtocol
+    var exposure: ImagePropertyProtocol
+    var vibrance: ImagePropertyProtocol
+    var highlights: ImagePropertyProtocol
+    var shadows: ImagePropertyProtocol
+    var temperature: ImagePropertyProtocol
+    var tint: ImagePropertyProtocol
+    var gamma: ImagePropertyProtocol
+    var noiseReduction: ImagePropertyProtocol
+    var sharpness: ImagePropertyProtocol
+
+    // MARK: Effects
+
+    var vignette: ImageEffectProtocol
+    var bloom: ImageEffectProtocol
 
     // MARK: CIFilters
 
@@ -28,6 +55,11 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
     private let temperatureAndTintFilter = CIFilter.temperatureAndTint()
     private let gammaAdjustFilter = CIFilter.gammaAdjust()
     private let noiseReductionFilter = CIFilter.noiseReduction()
+
+    // MARK: Effects
+
+    private let vignetteFilter = CIFilter.vignette()
+    private let bloomFilter = CIFilter.bloom()
 
     private var processedCiImage: CIImage?
 
@@ -41,7 +73,7 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
 
     // MARK: Functions
 
-    func updateProperties(to processedCiImage: CIImage?) -> CIImage? { // TODO: Возвращать CIImage и выбрасывать ошибку если что-то не то
+    func updatePropertiesAndEffects(to processedCiImage: CIImage?) -> CIImage? { // TODO: Возвращать CIImage и выбрасывать ошибку если что-то не то
         defer {
             self.processedCiImage = nil
         }
@@ -58,7 +90,15 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
         updateProperty(noiseReductionFilter, property: noiseReduction)
         updateProperty(noiseReductionFilter, property: sharpness)
 
+        updateVignette()
+        updateBloom()
+
         return self.processedCiImage
+    }
+
+    func resetEffects() { // TODO: Add reset button for effects section
+        vignette.setToDefault()
+        bloom.setToDefault()
     }
 
     func reset() {
@@ -74,11 +114,12 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
         noiseReduction.setToDefault()
         sharpness.setToDefault()
         gamma.setToDefault()
+        resetEffects()
     }
 }
 
-extension ImageProcessingService {
-    private func updateProperty(_ filter: CIFilter, property: some ImageProperty) { // TODO: Кастомные ошибки, сделать обработку
+private extension ImageProcessingService {
+    func updateProperty(_ filter: CIFilter, property: some ImagePropertyProtocol) { // TODO: Кастомные ошибки, сделать обработку
         guard property.isUpdated, let propertyKey = property.propertyKey else { return }
         filter.setValue(processedCiImage, forKey: kCIInputImageKey) // Устанавливаем изображение как входные данные фильтра
         filter.setValue(property.current, forKey: propertyKey) // Устанавливаем значение для фильтра
@@ -86,7 +127,7 @@ extension ImageProcessingService {
     }
 
     // Highlights & Shadows
-    private func updateHS() {
+    func updateHS() {
         guard highlights.isUpdated || shadows.isUpdated else {
             return
         }
@@ -96,7 +137,7 @@ extension ImageProcessingService {
         processedCiImage = highlightShadowAdjustFilter.outputImage
     }
 
-    private func updateTemperatureAndTint() {
+    func updateTemperatureAndTint() {
         guard temperature.isUpdated || tint.isUpdated else {
             return
         }
@@ -104,5 +145,28 @@ extension ImageProcessingService {
         temperatureAndTintFilter.neutral = CIVector(x: CGFloat(temperature.defaultValue), y: 0)
         temperatureAndTintFilter.targetNeutral = CIVector(x: CGFloat(temperature.current), y: CGFloat(tint.current))
         processedCiImage = temperatureAndTintFilter.outputImage
+    }
+
+    func updateVignette() {
+        guard vignette.isUpdated else {
+            return
+        }
+        vignetteFilter.inputImage = processedCiImage
+        vignetteFilter.intensity = vignette.intensity.current
+        vignetteFilter.radius = vignette.radius.current
+        processedCiImage = vignetteFilter.outputImage
+    }
+
+    func updateBloom() {
+        guard bloom.isUpdated else {
+            return
+        }
+
+        bloomFilter.inputImage = processedCiImage
+        bloomFilter.intensity = bloom.intensity.current
+        bloomFilter.radius = bloom.radius.current
+        if let originalExtent = processedCiImage?.extent, let croppedOutput = bloomFilter.outputImage?.cropped(to: originalExtent) {
+            processedCiImage = croppedOutput
+        }
     }
 }
