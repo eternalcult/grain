@@ -1,7 +1,7 @@
 struct ImageEffectFactory: ImageEffectFactoryProtocol {
     func make(effect: ImageEffectType) -> ImageEffectProtocol {
         switch effect {
-        case  .vignette:
+        case .vignette:
             let intensity = ImageEffectIntensity(
                 title: "Intensity",
                 range: 0 ... 10,
@@ -17,6 +17,7 @@ struct ImageEffectFactory: ImageEffectFactoryProtocol {
                 propertyKey: nil
             )
             return ImageEffect(intensity: intensity, radius: radius)
+
         case .bloom:
             let intensity = ImageEffectIntensity(
                 title: "Intensity",

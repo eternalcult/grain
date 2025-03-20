@@ -5,28 +5,31 @@ final class ImagePropertyFactory: ImagePropertyFactoryProtocol {
         switch type {
         case .brightness:
             ImageProperty(
-                title: "Brightness", 
-                range: -0.20...0.20, // Default: -1...1
+                title: "Brightness",
+                range: -0.20 ... 0.20, // Default: -1...1
                 defaultValue: 0,
                 formatStyle: .minus100to100,
                 propertyKey: kCIInputBrightnessKey
             )
+
         case .contrast:
             ImageProperty(
                 title: "Contrast",
-                range: 0...2, // Default 0...4
+                range: 0 ... 2, // Default 0...4
                 defaultValue: 1,
                 formatStyle: .minus100to100,
                 propertyKey: kCIInputContrastKey
             )
+
         case .exposure:
             ImageProperty(
                 title: "Exposure",
-                range: -4...4, // Default -10...10
+                range: -4 ... 4, // Default -10...10
                 defaultValue: 0,
                 formatStyle: .minus100to100,
                 propertyKey: kCIInputEVKey
             )
+
         case .gamma:
             ImageProperty(
                 title: "Gamma", // Default
@@ -35,6 +38,7 @@ final class ImagePropertyFactory: ImagePropertyFactoryProtocol {
                 formatStyle: .minus100to100,
                 propertyKey: "inputPower"
             )
+
         case .highlights:
             ImageProperty(
                 title: "Highlights",
@@ -43,14 +47,16 @@ final class ImagePropertyFactory: ImagePropertyFactoryProtocol {
                 formatStyle: .zeroTo100,
                 propertyKey: nil
             )
+
         case .noiseReduction:
             ImageProperty(
                 title: "Noise Reduction",
-                range: 0.2...1, //Default
+                range: 0.2 ... 1, // Default
                 defaultValue: 0.2,
                 formatStyle: .zeroTo100,
                 propertyKey: "inputNoiseLevel"
             )
+
         case .saturation:
             ImageProperty(
                 title: "Saturation",
@@ -59,6 +65,7 @@ final class ImagePropertyFactory: ImagePropertyFactoryProtocol {
                 formatStyle: .minus100to100,
                 propertyKey: kCIInputSaturationKey
             )
+
         case .shadows:
             ImageProperty(
                 title: "Shadows",
@@ -67,6 +74,7 @@ final class ImagePropertyFactory: ImagePropertyFactoryProtocol {
                 formatStyle: .minus100to100,
                 propertyKey: nil
             )
+
         case .sharpness:
             ImageProperty(
                 title: "Sharpness",
@@ -75,6 +83,7 @@ final class ImagePropertyFactory: ImagePropertyFactoryProtocol {
                 formatStyle: .zeroTo100,
                 propertyKey: "inputSharpness"
             )
+
         case .temperature:
             ImageProperty(
                 title: "Temperature",
@@ -83,18 +92,20 @@ final class ImagePropertyFactory: ImagePropertyFactoryProtocol {
                 formatStyle: .without,
                 propertyKey: nil
             )
+
         case .tint:
             ImageProperty(
                 title: "Tint",
-                range: -200...200, // Default
+                range: -200 ... 200, // Default
                 defaultValue: 0,
                 formatStyle: .minus100to100,
                 propertyKey: nil
             )
+
         case .vibrance:
             ImageProperty(
                 title: "Vibrance",
-                range: -1...1, // Default
+                range: -1 ... 1, // Default
                 defaultValue: 0,
                 formatStyle: .minus100to100,
                 propertyKey: kCIInputAmountKey

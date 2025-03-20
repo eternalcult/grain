@@ -4,4 +4,3 @@ extension Double {
         newMin + ((self - currentMin) / (currentMax - currentMin)) * (newMax - newMin)
     }
 }
-

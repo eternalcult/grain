@@ -10,7 +10,6 @@ protocol TextureServiceProtocol {
     /// Прозрачность текстуры. Стандартное значение: 0.5.
     var alpha: Float { get }
 
-    
     func update(to newTexture: Texture, completion: () -> Void)
     /// Изменяет прозрачность текстуры на новое значение
     /// - Parameter newValue: Новая alpha текстуры – 0...1

@@ -6,7 +6,7 @@ protocol FilterServiceProtocol {
     var currentFilter: Filter? { get }
     /// Применен ли в данный момент фильтр изображению
     var hasFilter: Bool { get }
-    
+
     /// Обновляет currentFilter
     /// - Parameters:
     ///   - newFilter: Новый фильтр

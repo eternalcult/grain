@@ -1,5 +1,5 @@
-import Factory
 import CoreImage
+import Factory
 
 @Observable
 final class FilterService: FilterServiceProtocol {
@@ -33,7 +33,8 @@ final class FilterService: FilterServiceProtocol {
             guard let processedCiImage, let currentFilter else {
                 throw PhotoEditorError.unknown // TODO: Добавить тип ошибки
             }
-            let lutFilter = try lutsManager.createCIColorCube(for: currentFilter) // TODO: Можно сделать метод приватным и использовать lutsManager.apply?
+            let lutFilter = try lutsManager
+                .createCIColorCube(for: currentFilter) // TODO: Можно сделать метод приватным и использовать lutsManager.apply?
             lutFilter.inputImage = processedCiImage
             if let outputImage = lutFilter.outputImage {
                 return .success(outputImage)

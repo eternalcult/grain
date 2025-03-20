@@ -1,5 +1,7 @@
 import SwiftUI
 
+// MARK: - Router
+
 @MainActor
 protocol Router: AnyObject {
     var path: NavigationPath { get set }
@@ -12,8 +14,8 @@ protocol Router: AnyObject {
 
 extension Router {
     func push(_ route: any Route) {
-         path.append(route)
-     }
+        path.append(route)
+    }
 
     func pop() {
         guard !path.isEmpty else { return }

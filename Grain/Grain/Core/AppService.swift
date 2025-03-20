@@ -1,5 +1,5 @@
-import UIKit
 import StoreKit
+import UIKit
 
 @MainActor
 enum AppService {
@@ -34,7 +34,8 @@ enum AppService {
 
     static func askReviewWithComment(for appId: Int) {
         guard let appID = Bundle.main.bundleIdentifier,
-              let appStoreURL = URL(string: "https://apps.apple.com/app/id\(appId)?action=write-review") else {
+              let appStoreURL = URL(string: "https://apps.apple.com/app/id\(appId)?action=write-review")
+        else {
             // TODO: Handle error
             return
         }
@@ -52,15 +53,17 @@ enum AppService {
         let activityViewController = UIActivityViewController(activityItems: [appStoreURL], applicationActivities: nil)
 
         if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let rootViewController = scene.windows.first?.rootViewController {
-
+           let rootViewController = scene.windows.first?.rootViewController
+        {
             // Configure popover for iPad
             if let popoverController = activityViewController.popoverPresentationController {
                 popoverController.sourceView = rootViewController.view // Set the source view
-                popoverController.sourceRect = CGRect(x: rootViewController.view.bounds.midX,
-                                                      y: rootViewController.view.bounds.midY,
-                                                      width: 0,
-                                                      height: 0)
+                popoverController.sourceRect = CGRect(
+                    x: rootViewController.view.bounds.midX,
+                    y: rootViewController.view.bounds.midY,
+                    width: 0,
+                    height: 0
+                )
                 popoverController.permittedArrowDirections = [] // No arrow
             }
 

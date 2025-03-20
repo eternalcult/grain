@@ -1,3 +1,5 @@
+// MARK: - ImageEffectProtocol
+
 protocol ImageEffectProtocol {
     /// Интенсивность эффекта
     var intensity: ImageEffectIntensityProtocol { get set }
@@ -13,6 +15,7 @@ extension ImageEffectProtocol {
     var isUpdated: Bool {
         intensity.isUpdated || radius.isUpdated
     }
+
     mutating func setToDefault() {
         intensity.setToDefault()
         radius.setToDefault()

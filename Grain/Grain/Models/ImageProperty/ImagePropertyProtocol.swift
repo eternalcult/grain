@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - ImagePropertyProtocol
+
 /// Стандартная настройка изображения – яркость, контрастность и т.д
 protocol ImagePropertyProtocol {
     /// Название

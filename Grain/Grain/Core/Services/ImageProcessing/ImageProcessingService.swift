@@ -1,32 +1,10 @@
-import Factory
 import CoreImage
+import Factory
 
 // MARK: - ImageProcessingService
 
 @Observable
 final class ImageProcessingService: ImageProcessingServiceProtocol {
-    init(
-        imagePropertyFactory: ImagePropertyFactoryProtocol = Container.shared.imagePropertyFactory.resolve(),
-        imageEffectFactory: ImageEffectFactoryProtocol = Container.shared.imageEffectFactory.resolve()
-    ) {
-        // Properties
-        brightness = imagePropertyFactory.makeProperty(of: .brightness)
-        contrast = imagePropertyFactory.makeProperty(of: .contrast)
-        saturation = imagePropertyFactory.makeProperty(of: .saturation)
-        exposure = imagePropertyFactory.makeProperty(of: .exposure)
-        vibrance = imagePropertyFactory.makeProperty(of: .vibrance)
-        highlights = imagePropertyFactory.makeProperty(of: .highlights)
-        shadows = imagePropertyFactory.makeProperty(of: .shadows)
-        temperature = imagePropertyFactory.makeProperty(of: .temperature)
-        tint = imagePropertyFactory.makeProperty(of: .tint)
-        gamma = imagePropertyFactory.makeProperty(of: .gamma)
-        noiseReduction = imagePropertyFactory.makeProperty(of: .noiseReduction)
-        sharpness = imagePropertyFactory.makeProperty(of: .sharpness)
-        // Effects
-        vignette = imageEffectFactory.make(effect: .vignette)
-        bloom = imageEffectFactory.make(effect: .bloom)
-    }
-
     // MARK: Properties
 
     var brightness: ImagePropertyProtocol
@@ -72,9 +50,35 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
             .isUpdated || sharpness.isUpdated
     }
 
+    // MARK: Lifecycle
+
+    init(
+        imagePropertyFactory: ImagePropertyFactoryProtocol = Container.shared.imagePropertyFactory.resolve(),
+        imageEffectFactory: ImageEffectFactoryProtocol = Container.shared.imageEffectFactory.resolve()
+    ) {
+        // Properties
+        brightness = imagePropertyFactory.makeProperty(of: .brightness)
+        contrast = imagePropertyFactory.makeProperty(of: .contrast)
+        saturation = imagePropertyFactory.makeProperty(of: .saturation)
+        exposure = imagePropertyFactory.makeProperty(of: .exposure)
+        vibrance = imagePropertyFactory.makeProperty(of: .vibrance)
+        highlights = imagePropertyFactory.makeProperty(of: .highlights)
+        shadows = imagePropertyFactory.makeProperty(of: .shadows)
+        temperature = imagePropertyFactory.makeProperty(of: .temperature)
+        tint = imagePropertyFactory.makeProperty(of: .tint)
+        gamma = imagePropertyFactory.makeProperty(of: .gamma)
+        noiseReduction = imagePropertyFactory.makeProperty(of: .noiseReduction)
+        sharpness = imagePropertyFactory.makeProperty(of: .sharpness)
+        // Effects
+        vignette = imageEffectFactory.make(effect: .vignette)
+        bloom = imageEffectFactory.make(effect: .bloom)
+    }
+
     // MARK: Functions
 
-    func updatePropertiesAndEffects(to processedCiImage: CIImage?) -> CIImage? { // TODO: Возвращать CIImage и выбрасывать ошибку если что-то не то
+    func updatePropertiesAndEffects(to processedCiImage: CIImage?)
+        -> CIImage?
+    { // TODO: Возвращать CIImage и выбрасывать ошибку если что-то не то
         defer {
             self.processedCiImage = nil
         }

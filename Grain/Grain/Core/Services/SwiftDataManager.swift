@@ -1,9 +1,8 @@
 import Foundation
 import SwiftData
 
-public final class SwiftDataManager { // TODO: Нужен ли вообще этот менеджер, SwiftData architecture
-    // MARK: Properties
-
+public final class SwiftDataManager { // MARK: Properties
+    // TODO: Нужен ли вообще этот менеджер, SwiftData architecture
     private let modelContext: ModelContext
 
     // MARK: Lifecycle

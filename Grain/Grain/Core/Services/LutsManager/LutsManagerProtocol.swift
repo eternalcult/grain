@@ -9,6 +9,6 @@ protocol LutsManagerProtocol {
     /// - Parameter filter: Модель фильтра, для которго нужно создать CIColoCube фильтр
     /// - Returns: возвращает настроенный CIColorCubeWithColorSpace
     func createCIColorCube(for filter: Filter) throws -> CIColorCubeWithColorSpace
-    /// Применение 
+    /// Применение
     func apply(_ filter: Filter, for image: CIImage) throws -> CGImage
 }

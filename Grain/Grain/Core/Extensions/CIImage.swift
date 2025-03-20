@@ -7,7 +7,7 @@ extension CIImage {
     }
 
     func renderToUIImage(with context: CIContext, orientation: UIImage.Orientation? = .up) -> UIImage? {
-        guard let cgImage = context.createCGImage(self, from: self.extent) else {
+        guard let cgImage = context.createCGImage(self, from: extent) else {
             return nil
         }
         return UIImage(cgImage: cgImage, scale: 1, orientation: orientation ?? .up)

@@ -40,6 +40,7 @@ struct AlertModifier: ViewModifier {
                             isVisible = false
                         }
                     }
+
                 case .fixed:
                     break
                 }

@@ -193,6 +193,7 @@ final class MainViewModel {
             photoEditor.vignette = newValue
         }
     }
+
     var bloom: ImageEffectProtocol {
         get {
             photoEditor.bloom

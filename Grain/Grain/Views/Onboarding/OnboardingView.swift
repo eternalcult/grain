@@ -1,18 +1,30 @@
 import SwiftUI
 
+// MARK: - OnboardingView
+
 struct OnboardingView: View {
+    // MARK: SwiftUI Properties
+
     @State private var currentPage = 0
-    private let pages: [OnboardingPage]
+
+    // MARK: Properties
+
     var didTapNextButton: ((Bool) -> Void)?
+
+    private let pages: [OnboardingPage]
+
+    // MARK: Lifecycle
 
     init(pages: [OnboardingPage], didTapNextButton: ((Bool) -> Void)?) {
         self.pages = pages
         self.didTapNextButton = didTapNextButton
     }
 
+    // MARK: Content Properties
+
     var body: some View {
         TabView(selection: $currentPage) {
-            ForEach(0..<pages.count, id: \.self) { index in
+            ForEach(0 ..< pages.count, id: \.self) { index in
                 VStack {
                     if let imageName = pages[index].imageName {
                         Image(imageName)
@@ -40,7 +52,6 @@ struct OnboardingView: View {
                                 didTapNextButton?(false)
                             }
 
-
                         } label: {
                             if index != pages.count - 1 {
                                 Text("Next".uppercased())
@@ -61,7 +72,6 @@ struct OnboardingView: View {
                 }
                 .padding()
                 .tag(index)
-
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
@@ -79,12 +89,17 @@ struct OnboardingView: View {
     }
 }
 
+// MARK: - OnboardingPage
 
 struct OnboardingPage: Hashable {
+    // MARK: Properties
+
     let id = UUID()
     let imageName: String?
     let title: String
     let description: String?
+
+    // MARK: Lifecycle
 
     init(imageName: String? = nil, title: String, description: String? = nil) {
         self.imageName = imageName

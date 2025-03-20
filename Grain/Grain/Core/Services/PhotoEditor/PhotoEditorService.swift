@@ -1,6 +1,6 @@
 import CoreImage
-import Factory
 import CoreImage.CIFilterBuiltins
+import Factory
 import FirebaseCrashlytics
 import Photos
 import SwiftUI
@@ -284,7 +284,7 @@ extension PhotoEditorService {
     }
 }
 
-// MARK: PhotoEditorEffects - свойства и методы связанные с добавлением эффектов
+// MARK: PhotoEditorEffects
 
 extension PhotoEditorService: PhotoEditorEffects {
     var vignette: ImageEffectProtocol {

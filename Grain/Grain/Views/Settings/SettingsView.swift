@@ -1,5 +1,7 @@
 import SwiftUI
 
+// MARK: - AppInfo
+
 struct AppInfo: Identifiable {
     let id: Int
     let title: LocalizedStringKey
@@ -7,8 +9,15 @@ struct AppInfo: Identifiable {
     let iconName: String
 }
 
+// MARK: - SettingsView
+
 struct SettingsView: View {
+    // MARK: SwiftUI Properties
+
     @Environment(\.dismiss) private var dismiss
+
+    // MARK: Properties
+
     private let currentAppId: Int
 
     private let apps = [
@@ -16,35 +25,40 @@ struct SettingsView: View {
             id: 6_741_040_418,
             title: "Grain",
             description:
-                "An easy-to-use photo editor with a variety of film emulation filters.",
+            "An easy-to-use photo editor with a variety of film emulation filters.",
             iconName: "grain"
         ),
         AppInfo(
             id: 6_740_338_170,
             title: "Recreate Cam",
             description:
-                "Powerful photography app that lets you overlay any photo from your gallery onto your camera screen, turning it into a live guide for precise, perfectly aligned shots.",
+            "Powerful photography app that lets you overlay any photo from your gallery onto your camera screen, turning it into a live guide for precise, perfectly aligned shots.",
             iconName: "recreateCam"
         ),
         AppInfo(
             id: 6_480_306_800,
             title: "Authority",
             description:
-                "A straightforward counter app for a popular Star Realms board game.",
+            "A straightforward counter app for a popular Star Realms board game.",
             iconName: "authority"
         ),
         AppInfo(
             id: 6_480_453_456,
             title: "Carcassonne Counter",
             description:
-                "A straightforward counter app for a popular board game.",
+            "A straightforward counter app for a popular board game.",
             iconName: "carcassonne"
         ),
     ]
 
+    // MARK: Lifecycle
+
     init(currentAppId: Int) {
         self.currentAppId = currentAppId
     }
+
+    // MARK: Content Properties
+
     var body: some View {
         List {
             Section {
@@ -94,10 +108,10 @@ struct SettingsView: View {
                             Text("Rate this app in Appstore")
                                 .font(.h5)
                                 .foregroundStyle(Color.text)
-
                         }
                         Text(
-                            "If you find the app useful, please leave a review on the App Store. Your support helps improve it. Thank you!")
+                            "If you find the app useful, please leave a review on the App Store. Your support helps improve it. Thank you!"
+                        )
                         .font(.textSub)
                         .foregroundStyle(Color.text)
                     }
