@@ -1,8 +1,6 @@
 import Factory
 
 extension Container {
-    // MARK: Services
-
     var photoEditorService: Factory<PhotoEditor> {
         Factory(self) { PhotoEditorService() }
     }
@@ -21,15 +19,5 @@ extension Container {
 
     var lutsManager: Factory<LutsManagerProtocol> {
         Factory(self) { LutsManager() }
-    }
-
-    // MARK: Factories
-
-    var imagePropertyFactory: Factory<ImagePropertyFactoryProtocol> {
-        Factory(self) { ImagePropertyFactory() }
-    }
-
-    var imageEffectFactory: Factory<ImageEffectFactoryProtocol> {
-        Factory(self) { ImageEffectFactory() }
     }
 }
