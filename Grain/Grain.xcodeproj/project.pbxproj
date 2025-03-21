@@ -13,6 +13,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C196FB752D8D5BD3008A4AF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C1517A962D34511200F61DC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C1517A9D2D34511200F61DC6;
+			remoteInfo = Grain;
+		};
 		C1F076C92D5263B5002508B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C1517A962D34511200F61DC6 /* Project object */;
@@ -24,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		C1517A9E2D34511200F61DC6 /* Grain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grain.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C196FB712D8D5BD3008A4AF7 /* GrainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F076C32D5263B5002508B0 /* GrainFastlaneSnapshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrainFastlaneSnapshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -58,6 +66,11 @@
 			path = Grain;
 			sourceTree = "<group>";
 		};
+		C196FB722D8D5BD3008A4AF7 /* GrainTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GrainTests;
+			sourceTree = "<group>";
+		};
 		C1F076C42D5263B5002508B0 /* GrainFastlaneSnapshots */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = GrainFastlaneSnapshots;
@@ -76,6 +89,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C196FB6E2D8D5BD3008A4AF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C1F076C02D5263B5002508B0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -91,6 +111,7 @@
 			children = (
 				C1517AA02D34511200F61DC6 /* Grain */,
 				C1F076C42D5263B5002508B0 /* GrainFastlaneSnapshots */,
+				C196FB722D8D5BD3008A4AF7 /* GrainTests */,
 				C1517A9F2D34511200F61DC6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,6 +121,7 @@
 			children = (
 				C1517A9E2D34511200F61DC6 /* Grain.app */,
 				C1F076C32D5263B5002508B0 /* GrainFastlaneSnapshots.xctest */,
+				C196FB712D8D5BD3008A4AF7 /* GrainTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,6 +154,29 @@
 			productName = Grain;
 			productReference = C1517A9E2D34511200F61DC6 /* Grain.app */;
 			productType = "com.apple.product-type.application";
+		};
+		C196FB702D8D5BD3008A4AF7 /* GrainTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C196FB772D8D5BD3008A4AF7 /* Build configuration list for PBXNativeTarget "GrainTests" */;
+			buildPhases = (
+				C196FB6D2D8D5BD3008A4AF7 /* Sources */,
+				C196FB6E2D8D5BD3008A4AF7 /* Frameworks */,
+				C196FB6F2D8D5BD3008A4AF7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C196FB762D8D5BD3008A4AF7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C196FB722D8D5BD3008A4AF7 /* GrainTests */,
+			);
+			name = GrainTests;
+			packageProductDependencies = (
+			);
+			productName = GrainTests;
+			productReference = C196FB712D8D5BD3008A4AF7 /* GrainTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		C1F076C22D5263B5002508B0 /* GrainFastlaneSnapshots */ = {
 			isa = PBXNativeTarget;
@@ -169,6 +214,10 @@
 					C1517A9D2D34511200F61DC6 = {
 						CreatedOnToolsVersion = 16.2;
 					};
+					C196FB702D8D5BD3008A4AF7 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = C1517A9D2D34511200F61DC6;
+					};
 					C1F076C22D5263B5002508B0 = {
 						CreatedOnToolsVersion = 16.2;
 						TestTargetID = C1517A9D2D34511200F61DC6;
@@ -200,12 +249,20 @@
 			targets = (
 				C1517A9D2D34511200F61DC6 /* Grain */,
 				C1F076C22D5263B5002508B0 /* GrainFastlaneSnapshots */,
+				C196FB702D8D5BD3008A4AF7 /* GrainTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C1517A9C2D34511200F61DC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C196FB6F2D8D5BD3008A4AF7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -258,6 +315,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C196FB6D2D8D5BD3008A4AF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C1F076BF2D5263B5002508B0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -268,6 +332,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C196FB762D8D5BD3008A4AF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C1517A9D2D34511200F61DC6 /* Grain */;
+			targetProxy = C196FB752D8D5BD3008A4AF7 /* PBXContainerItemProxy */;
+		};
 		C1F076CA2D5263B5002508B0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C1517A9D2D34511200F61DC6 /* Grain */;
@@ -479,6 +548,43 @@
 			};
 			name = Release;
 		};
+		C196FB782D8D5BD3008A4AF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HAXYU5297D;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.vlad-antonov.GrainTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Grain.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Grain";
+			};
+			name = Debug;
+		};
+		C196FB792D8D5BD3008A4AF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HAXYU5297D;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.vlad-antonov.GrainTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Grain.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Grain";
+			};
+			name = Release;
+		};
 		C1F076CC2D5263B5002508B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -531,6 +637,15 @@
 			buildConfigurations = (
 				C1517AAD2D34511300F61DC6 /* Debug */,
 				C1517AAE2D34511300F61DC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C196FB772D8D5BD3008A4AF7 /* Build configuration list for PBXNativeTarget "GrainTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C196FB782D8D5BD3008A4AF7 /* Debug */,
+				C196FB792D8D5BD3008A4AF7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
