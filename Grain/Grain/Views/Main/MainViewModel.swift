@@ -1,6 +1,7 @@
 import PhotosUI
 import SwiftUI
 
+// TODO: Sort, add extensions for more readable format
 @Observable
 final class MainViewModel {
     // MARK: Properties

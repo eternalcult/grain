@@ -125,7 +125,7 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
 
 private extension ImageProcessingService {
     func updateProperty(_ filter: CIFilter, property: some ImagePropertyProtocol) { // TODO: Кастомные ошибки, сделать обработку
-        guard property.isUpdated, let propertyKey = property.propertyKey else { return }
+        guard let propertyKey = property.propertyKey else { return }
         filter.setValue(processedCiImage, forKey: kCIInputImageKey) // Устанавливаем изображение как входные данные фильтра
         filter.setValue(property.current, forKey: propertyKey) // Устанавливаем значение для фильтра
         processedCiImage = filter.outputImage
