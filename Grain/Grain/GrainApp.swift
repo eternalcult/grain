@@ -48,14 +48,11 @@ struct GrainApp: App {
     }
 
     private var onboardingView: some View {
-        OnboardingView(
-            pages: DataStorage.shared.onboardingPages,
-            didTapNextButton: { isLastSlide in
-                if isLastSlide {
-                    hasLaunchedBefore = true
-                }
+        OnboardingView { finished in
+            if finished {
+                hasLaunchedBefore = true
             }
-        )
+        }
     }
 
     // MARK: Functions

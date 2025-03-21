@@ -11,12 +11,11 @@ struct OnboardingView: View {
 
     var didTapNextButton: ((Bool) -> Void)?
 
-    private let pages: [OnboardingPage]
+    private let viewModel = OnboardingViewModel()
 
     // MARK: Lifecycle
 
-    init(pages: [OnboardingPage], didTapNextButton: ((Bool) -> Void)?) {
-        self.pages = pages
+    init(didTapNextButton: ((Bool) -> Void)?) {
         self.didTapNextButton = didTapNextButton
     }
 
@@ -24,25 +23,25 @@ struct OnboardingView: View {
 
     var body: some View {
         TabView(selection: $currentPage) {
-            ForEach(0 ..< pages.count, id: \.self) { index in
+            ForEach(0 ..< viewModel.pages.count, id: \.self) { index in
                 VStack {
-                    if let imageName = pages[index].imageName {
+                    if let imageName = viewModel.pages[index].imageName {
                         Image(imageName)
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: .infinity)
                     }
                     VStack(alignment: .leading) {
-                        Text(pages[index].title)
+                        Text(viewModel.pages[index].title)
                             .font(.h2)
                             .foregroundStyle(Color.textWhite)
-                        if let description = pages[index].description {
+                        if let description = viewModel.pages[index].description {
                             Text(description)
                                 .font(.text)
                                 .foregroundStyle(Color.textWhite)
                         }
                         Button {
-                            let isLast = index == pages.count - 1
+                            let isLast = index == viewModel.pages.count - 1
                             if isLast {
                                 didTapNextButton?(true)
                             } else {
@@ -53,7 +52,7 @@ struct OnboardingView: View {
                             }
 
                         } label: {
-                            if index != pages.count - 1 {
+                            if index != viewModel.pages.count - 1 {
                                 Text("Next".uppercased())
                                     .font(.buttonL)
                                     .frame(maxWidth: .infinity, maxHeight: 50)
@@ -86,24 +85,5 @@ struct OnboardingView: View {
             }
         }
         .background(Color.backgroundBlack)
-    }
-}
-
-// MARK: - OnboardingPage
-
-struct OnboardingPage: Hashable {
-    // MARK: Properties
-
-    let id = UUID()
-    let imageName: String?
-    let title: String
-    let description: String?
-
-    // MARK: Lifecycle
-
-    init(imageName: String? = nil, title: String, description: String? = nil) {
-        self.imageName = imageName
-        self.title = title
-        self.description = description
     }
 }
