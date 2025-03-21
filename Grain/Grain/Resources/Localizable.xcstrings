@@ -47,9 +47,6 @@
     "A straightforward counter app for a popular Star Realms board game." : {
 
     },
-    "An easy-to-use photo editor with a variety of film emulation filters." : {
-
-    },
     "Authority" : {
       "shouldTranslate" : false
     },
@@ -1141,9 +1138,6 @@
           }
         }
       }
-    },
-    "Grain" : {
-      "shouldTranslate" : false
     },
     "Highlights" : {
       "localizations" : {

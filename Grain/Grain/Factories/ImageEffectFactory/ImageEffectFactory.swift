@@ -1,4 +1,4 @@
-struct ImageEffectFactory: ImageEffectFactoryProtocol {
+final class ImageEffectFactory: ImageEffectFactoryProtocol {
     func make(effect: ImageEffectType) -> ImageEffectProtocol {
         switch effect {
         case .vignette:

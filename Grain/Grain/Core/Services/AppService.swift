@@ -3,6 +3,8 @@ import UIKit
 
 @MainActor
 enum AppService {
+    static let appId = 6741040418
+    
     static func openAppSettings() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
@@ -19,7 +21,7 @@ enum AppService {
         }
     }
 
-    static func openAppStore(for appId: Int) {
+    static func openAppStore() {
         let urlString = "https://apps.apple.com/app/id\(appId)"
         openURL(from: urlString)
     }
@@ -32,7 +34,7 @@ enum AppService {
         SKStoreReviewController.requestReview(in: windowScene)
     }
 
-    static func askReviewWithComment(for appId: Int) {
+    static func askReviewWithComment() {
         guard let appID = Bundle.main.bundleIdentifier,
               let appStoreURL = URL(string: "https://apps.apple.com/app/id\(appId)?action=write-review")
         else {
@@ -45,7 +47,7 @@ enum AppService {
         }
     }
 
-    static func shareAppLink(for appId: Int) {
+    static func shareAppLink() {
         guard let appStoreURL = URL(string: "https://apps.apple.com/app/id/\(appId)") else {
             return
         }
