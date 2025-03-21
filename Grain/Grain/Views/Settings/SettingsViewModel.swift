@@ -1,5 +1,4 @@
 final class SettingsViewModel {
-    
     let otherApps = [
         AppInfo(
             id: 6_740_338_170,

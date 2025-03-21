@@ -3,8 +3,12 @@ import UIKit
 
 @MainActor
 enum AppService {
-    static let appId = 6741040418
-    
+    // MARK: Static Properties
+
+    static let appId = 6_741_040_418
+
+    // MARK: Static Functions
+
     static func openAppSettings() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)

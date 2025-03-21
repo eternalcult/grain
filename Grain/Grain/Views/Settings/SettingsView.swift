@@ -3,7 +3,6 @@ import SwiftUI
 // MARK: - SettingsView
 
 struct SettingsView: View {
-
     private let viewModel = SettingsViewModel()
 
     // MARK: SwiftUI Properties
