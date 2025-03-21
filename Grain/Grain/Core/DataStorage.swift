@@ -67,7 +67,7 @@ final class DataStorage {
         filtersPreview = filters.map {
             FilterPreview(
                 id: $0.id,
-                preview: Task.isCancelled ? nil : try? lutsManager.apply($0, for: image.downsample(scaleFactor: 0.5))
+                preview: Task.isCancelled ? nil : try? lutsManager.createPreview($0, for: image.downsample(scaleFactor: 0.5))
             )
         }
     }

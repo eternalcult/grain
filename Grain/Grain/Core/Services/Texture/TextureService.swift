@@ -19,7 +19,7 @@ final class TextureService: TextureServiceProtocol {
 
     // MARK: Functions
 
-    func update(to newTexture: Texture, completion: () -> Void) {
+    func update(to newTexture: Texture, completion: () -> Void) { // TODO: Handle errors, check if texture exist
         if texture?.id != newTexture.id {
             texture = newTexture
             completion()

@@ -32,7 +32,7 @@ final class PhotoEditorService: PhotoEditor {
     func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation) {
         sourceCiImage = image
         sourceImageOrientation = orientation
-        if let sourceUiImage = image.renderToUIImage(with: context, orientation: orientation) {
+        if let sourceUiImage = image.renderToUIImage(with: context, orientation: orientation) { // TODO: Handle errors
             sourceImage = Image(uiImage: sourceUiImage)
         }
         processedCiImage = image
@@ -74,6 +74,8 @@ final class PhotoEditorService: PhotoEditor {
         sourceImageOrientation = nil
         sourceCiImage = nil
         processedCiImage = nil
+        finalImage = nil
+        histogram = nil
         filterService.removeFilter()
         textureService.clear()
         imageProcessingService.reset()
@@ -117,6 +119,7 @@ extension PhotoEditorService {
         }
         set {
             textureService.updateBlendMode(to: newValue)
+            updateImage()
         }
     }
 
@@ -124,12 +127,7 @@ extension PhotoEditorService {
         textureService.hasTexture
     }
 
-    func updateTextureBlendMode(to newBlendMode: BlendMode) {
-        textureService.updateBlendMode(to: newBlendMode)
-        updateImage()
-    }
-
-    func applyTexture(_ newTexture: Texture) {
+    func applyTexture(_ newTexture: Texture) { // TODO: Handle errors
         textureService.update(to: newTexture) {
             updateImage()
         }

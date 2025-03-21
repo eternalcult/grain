@@ -169,7 +169,11 @@ final class MainViewModel {
     // MARK: Texture
 
     var textureBlendMode: BlendMode {
-        photoEditor.textureBlendMode
+        get {
+            photoEditor.textureBlendMode
+        } set {
+            photoEditor.textureBlendMode = newValue
+        }
     }
 
     var textureAlpha: Float {
@@ -244,10 +248,6 @@ final class MainViewModel {
 
     func removeFilter() {
         photoEditor.removeFilter()
-    }
-
-    func updateTextureBlendMode(to blendMode: BlendMode) {
-        photoEditor.updateTextureBlendMode(to: blendMode)
     }
 
     func closeImage() {

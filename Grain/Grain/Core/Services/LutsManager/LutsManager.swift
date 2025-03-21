@@ -22,7 +22,36 @@ final class LutsManager: LutsManagerProtocol {
         )
     }
 
-    func createCIColorCube(for filter: Filter) throws -> CIColorCubeWithColorSpace {
+    func createPreview(_ filter: Filter, for image: CIImage) throws -> CGImage {
+        let cubeFilter = try createCIColorCube(for: filter)
+        cubeFilter.inputImage = image
+        if let output = cubeFilter.outputImage, let cgImage = context.createCGImage(output, from: output.extent) {
+            return cgImage
+        }
+        throw LutsManagerError.filterApplyingFailed
+    }
+
+
+
+    func apply(_ filter: Filter, for image: CIImage) throws -> CIImage {
+        let cubeFilter = try createCIColorCube(for: filter)
+        cubeFilter.inputImage = image
+        if let output = cubeFilter.outputImage {
+            return output
+        }
+        throw LutsManagerError.filterApplyingFailed
+    }
+
+    func verify(_ filter: Filter) -> Bool { // TODO: Handle errors
+        return (try? createCIColorCube(for: filter)) != nil
+    }
+}
+
+extension LutsManager {
+    /// Создает CoreImage фильтр для применения выбранного фильтра к изображению.
+    /// - Parameter filter: Модель фильтра, для которго нужно создать CIColoCube фильтр
+    /// - Returns: возвращает настроенный CIColorCubeWithColorSpace
+    private func createCIColorCube(for filter: Filter) throws -> CIColorCubeWithColorSpace {
         let filtersData = DataStorage.shared.filtersData
         if let currentFilterData = filtersData.first(where: { $0.id == filter.id }) {
             let filter = CIFilter.colorCubeWithColorSpace()
@@ -35,19 +64,6 @@ final class LutsManager: LutsManagerProtocol {
         throw LutsManagerError.CIColorCubeFilterCreationFailed
     }
 
-    /// Apply selected filter and apply it to selected image
-    func apply(_ filter: Filter, for image: CIImage) throws -> CGImage {
-        print("Apply \(filter.title) filter for image")
-        let cubeFilter = try createCIColorCube(for: filter)
-        cubeFilter.inputImage = image
-        if let output = cubeFilter.outputImage, let cgImage = context.createCGImage(output, from: output.extent) {
-            return cgImage
-        }
-        throw LutsManagerError.filterApplyingFailed
-    }
-}
-
-extension LutsManager {
     private func readCubeFile(url: URL) throws -> (Int, [Float]) {
         // Считываем весь текст файла
         guard let content = try? String(contentsOf: url, encoding: .utf8) else {
