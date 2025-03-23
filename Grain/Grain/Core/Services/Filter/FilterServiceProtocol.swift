@@ -11,7 +11,7 @@ protocol FilterServiceProtocol {
     /// - Parameters:
     ///   - newFilter: Новый фильтр
     ///   - completion: Вызывается только если id старого и нового фильтра различались
-    func update(to newFilter: Filter, completion: () -> Void)
+    func prepare(to newFilter: Filter, completion: () -> Void)
 
     /// Применить фильтр к изображению
     /// - Parameter processedCiImage: Изображение, к которому будет применен фильтр

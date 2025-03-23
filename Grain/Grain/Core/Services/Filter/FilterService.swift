@@ -17,7 +17,7 @@ final class FilterService: FilterServiceProtocol {
 
     // MARK: Functions
 
-    func update(to newFilter: Filter, completion: () -> Void) {
+    func prepare(to newFilter: Filter, completion: () -> Void) {
         if currentFilter?.id != newFilter.id, lutsManager.verify(newFilter) {
             currentFilter = newFilter
             completion()

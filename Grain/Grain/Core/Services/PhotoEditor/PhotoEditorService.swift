@@ -1,3 +1,4 @@
+import os
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import Factory
@@ -9,6 +10,7 @@ import SwiftUI
 
 @Observable
 final class PhotoEditorService: PhotoEditor {
+    private let logger = Logger.photoEditor
     // MARK: Properties
 
     var errorMessage: String?
@@ -30,6 +32,7 @@ final class PhotoEditorService: PhotoEditor {
     // MARK: Functions
 
     func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation) {
+        logger.info(#function)
         sourceCiImage = image
         sourceImageOrientation = orientation
         if let sourceUiImage = image.renderToUIImage(with: context, orientation: orientation) { // TODO: Handle errors
@@ -40,6 +43,7 @@ final class PhotoEditorService: PhotoEditor {
     }
 
     func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void) {
+        logger.info(#function)
         if let processedCiImage, let uiImage = processedCiImage.renderToUIImage(with: context, orientation: sourceImageOrientation) {
             // Request permission to access the photo library
             PHPhotoLibrary.requestAuthorization { status in
@@ -69,6 +73,7 @@ final class PhotoEditorService: PhotoEditor {
     }
 
     func reset() {
+        logger.info(#function)
         sourceImage = nil
         processedCiImage = nil
         sourceImageOrientation = nil
@@ -95,12 +100,14 @@ extension PhotoEditorService {
     }
 
     func applyFilter(_ newLut: Filter) {
-        filterService.update(to: newLut) {
+        logger.info(#function)
+        filterService.prepare(to: newLut) {
             updateImage()
         }
     }
 
     func removeFilter() {
+        logger.info(#function)
         filterService.removeFilter()
         updateImage()
     }
@@ -128,12 +135,14 @@ extension PhotoEditorService {
     }
 
     func applyTexture(_ newTexture: Texture) { // TODO: Handle errors
-        textureService.update(to: newTexture) {
+        logger.info(#function)
+        textureService.prepare(to: newTexture) {
             updateImage()
         }
     }
 
     func removeTexture() {
+        logger.info(#function)
         textureService.clear()
         updateImage()
     }
@@ -277,6 +286,7 @@ extension PhotoEditorService {
     }
 
     func resetImageProperties() {
+        logger.info(#function)
         imageProcessingService.reset()
         updateImage()
     }
@@ -304,6 +314,7 @@ extension PhotoEditorService: PhotoEditorEffects {
     }
 
     func resetEffects() {
+        logger.info(#function)
         imageProcessingService.resetEffects()
         updateImage()
     }
@@ -313,6 +324,7 @@ extension PhotoEditorService: PhotoEditorEffects {
 
 private extension PhotoEditorService {
     func renderImage() {
+        logger.info(#function)
         do {
             if let uiImage = processedCiImage?.renderToUIImage(with: context, orientation: sourceImageOrientation) {
                 finalImage = Image(uiImage: uiImage)
@@ -322,10 +334,12 @@ private extension PhotoEditorService {
         } catch {
             Crashlytics.crashlytics().record(error: error)
             errorMessage = error.localizedDescription
+            logger.error("\(#function) \(error.localizedDescription)")
         }
     }
 
     func renderHistogram() {
+        logger.info(#function)
         let filter = CIFilter.histogramDisplay()
         filter.inputImage = processedCiImage
         filter.lowLimit = 0
@@ -337,6 +351,7 @@ private extension PhotoEditorService {
     }
 
     func downscale(image: CIImage, scale: CGFloat) -> CIImage? {
+        logger.info(#function)
         let filter = CIFilter(name: "CILanczosScaleTransform")!
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(scale, forKey: kCIInputScaleKey)
@@ -344,7 +359,8 @@ private extension PhotoEditorService {
     }
 
     func updateImage() {
-        guard let sourceCiImage else { return }
+        logger.info(#function)
+        guard let sourceCiImage else { return } // TODO: Handle errors
 
         // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить
         // TODO: При рендеринге используется это же изображение низкого качества, исправить
