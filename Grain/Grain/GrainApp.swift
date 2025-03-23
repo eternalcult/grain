@@ -1,6 +1,7 @@
 import Firebase
 import SwiftData
 import SwiftUI
+import Factory
 
 @main
 struct GrainApp: App {
@@ -8,6 +9,9 @@ struct GrainApp: App {
 
     @AppStorage("launchCounter") private var launchCounter: Int = 0
     @AppStorage("hasLaunchedBefore") private var hasLaunchedBefore: Bool = false
+
+    // MARK: DI
+    @ObservationIgnored @Injected(\.dataService) private var dataService
 
     // MARK: Computed Properties
 
@@ -32,18 +36,9 @@ struct GrainApp: App {
     private var mainView: some View {
         MainView()
             .onAppear {
+                dataService.configureFiltersDataIfNeeded()
                 launchCounter += 1
                 askReviewIfNeeded()
-            }
-            .modelContainer(for: [FilterCICubeData.self]) { container in
-                switch container {
-                case let .success(container):
-                    DataStorage.shared.addSwiftDataContext(container.mainContext)
-                    DataStorage.shared.configureFiltersDataIfNeeded()
-
-                case let .failure(failure):
-                    print("Error with model container", failure.localizedDescription)
-                }
             }
     }
 

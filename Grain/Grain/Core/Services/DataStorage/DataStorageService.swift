@@ -1,37 +1,34 @@
 import CoreImage
+import Factory
 import SwiftData
 
-final class DataStorage {
-    // MARK: Static Properties
-
-    static let shared = DataStorage()
-
+@Observable final class DataStorageService: DataStorageProtocol {
     // MARK: Properties
 
     private(set) var filtersCategories: [FiltersCategory] = []
     private(set) var texturesCategories: [TexturesCategory] = []
+    private(set) var filtersPreview = [FilterPreview]()
 
-    var filtersPreview = [FilterPreview]()
+    // MARK: DI
 
-    private let lutsManager = LutsManager()
-
-    private var swiftDataManager: SwiftDataManager?
+    @ObservationIgnored @Injected(\.lutsManager) private var lutsManager
+    @ObservationIgnored @Injected(\.swiftDataService) private var swiftDataService
 
     // MARK: Computed Properties
 
     var filtersData: [FilterCICubeData] {
-        swiftDataManager?.fetch(FilterCICubeData.self) ?? []
+        swiftDataService.fetch(FilterCICubeData.self)
     }
 
     // MARK: Lifecycle
 
-    private init() {
+    init() {
         do {
             filtersCategories = try loadFilters()
             texturesCategories = try loadTextures()
         } catch {
-            print("ERROR", error.localizedDescription)
-            // TODO: Handle error
+            print("ERROR", error.localizedDescription) // TODO: Handle error
+
         }
 
         print("Filters count:", filtersCategories.flatMap(\.filters).count)
@@ -40,12 +37,7 @@ final class DataStorage {
 
     // MARK: Functions
 
-    func addSwiftDataContext(_ context: ModelContext) {
-        swiftDataManager = SwiftDataManager(context: context)
-    }
-
     func configureFiltersDataIfNeeded() {
-        let filtersData = filtersData
         for category in filtersCategories {
             for filter in category.filters {
                 let isDataExist = filtersData.contains(where: { $0.id == filter.id })
@@ -53,12 +45,12 @@ final class DataStorage {
                     print("\(filter.title) doesn't exist in SwiftData. Trying to create filter data")
                     if let filterData = try? lutsManager.createDataForCIColorCube(for: filter) {
                         print("Add filter data for \(filter.title)")
-                        swiftDataManager?.insert(filterData)
+                        swiftDataService.insert(filterData)
                     }
                 }
             }
         }
-        swiftDataManager?.saveChanges()
+        swiftDataService.saveChanges()
     }
 
     func createFiltersPreviews(with image: CIImage) async {
@@ -72,11 +64,17 @@ final class DataStorage {
         }
     }
 
-    private func loadTextures() throws -> [TexturesCategory] {
+    func removePreviews() {
+        filtersPreview.removeAll()
+    }
+}
+
+private extension DataStorageService {
+    func loadTextures() throws -> [TexturesCategory] {
         try JSONParser.loadFile(with: "Textures", as: [TexturesCategory].self)
     }
 
-    private func loadFilters() throws -> [FiltersCategory] {
+    func loadFilters() throws -> [FiltersCategory] {
         try JSONParser.loadFile(with: "Filters", as: [FiltersCategory].self)
     }
 }

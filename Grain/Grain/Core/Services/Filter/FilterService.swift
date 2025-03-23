@@ -7,6 +7,8 @@ final class FilterService: FilterServiceProtocol {
 
     private(set) var currentFilter: Filter?
 
+    // MARK: DI
+
     @ObservationIgnored @Injected(\.lutsManager) private var lutsManager
 
     // MARK: Computed Properties

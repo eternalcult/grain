@@ -20,6 +20,8 @@ final class PhotoEditorService: PhotoEditor {
 
     private(set) var histogram: UIImage?
 
+    // MARK: DI
+
     @ObservationIgnored @Injected(\.imageProcessingService) private var imageProcessingService
     @ObservationIgnored @Injected(\.filterService) private var filterService
     @ObservationIgnored @Injected(\.textureService) private var textureService

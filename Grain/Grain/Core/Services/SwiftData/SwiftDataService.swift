@@ -1,28 +1,25 @@
 import Foundation
 import SwiftData
 
-public final class SwiftDataManager { // MARK: Properties
-    // TODO: Нужен ли вообще этот менеджер, SwiftData architecture
+final class SwiftDataService: SwiftDataProtocol {
     private let modelContext: ModelContext
 
     // MARK: Lifecycle
 
     // Initialize with a ModelContext
-    public init(context: ModelContext) {
+    init(context: ModelContext) {
         modelContext = context
     }
 
     // MARK: Functions
 
-    // MARK: - Generic CRUD Operations
-
     /// Insert a new object
-    public func insert(_ model: some PersistentModel) {
+    func insert(_ model: some PersistentModel) {
         modelContext.insert(model)
     }
 
     /// Fetch objects of a specific type with an optional predicate
-    public func fetch<T: PersistentModel>(
+    func fetch<T: PersistentModel>(
         _ modelType: T.Type,
         predicate: Predicate<T>? = nil,
         sortDescriptors: [SortDescriptor<T>] = []
@@ -40,12 +37,12 @@ public final class SwiftDataManager { // MARK: Properties
     }
 
     /// Delete an object
-    public func delete(_ model: some PersistentModel) {
+    func delete(_ model: some PersistentModel) {
         modelContext.delete(model)
     }
 
     /// Save changes explicitly
-    public func saveChanges() {
+    func saveChanges() {
         do {
             try modelContext.save()
         } catch {

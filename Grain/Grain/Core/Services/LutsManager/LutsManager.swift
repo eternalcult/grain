@@ -1,5 +1,6 @@
 import CoreImage
 import Foundation
+import Factory
 
 // MARK: - LutsManager
 
@@ -7,6 +8,10 @@ final class LutsManager: LutsManagerProtocol {
     // MARK: Properties
 
     private let context = CIContext()
+
+    // MARK: DI
+    
+    @ObservationIgnored @Injected(\.swiftDataService) private var swiftDataService
 
     // MARK: Functions
 
@@ -52,7 +57,7 @@ extension LutsManager {
     /// - Parameter filter: Модель фильтра, для которго нужно создать CIColoCube фильтр
     /// - Returns: возвращает настроенный CIColorCubeWithColorSpace
     private func createCIColorCube(for filter: Filter) throws -> CIColorCubeWithColorSpace {
-        let filtersData = DataStorage.shared.filtersData
+        let filtersData = swiftDataService.fetch(FilterCICubeData.self)
         if let currentFilterData = filtersData.first(where: { $0.id == filter.id }) {
             let filter = CIFilter.colorCubeWithColorSpace()
             filter.colorSpace = CGColorSpace(name: CGColorSpace.sRGB)

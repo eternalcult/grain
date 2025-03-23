@@ -1,5 +1,6 @@
 import PhotosUI
 import SwiftUI
+import Factory
 
 // TODO: Sort, add extensions for more readable format
 @Observable
@@ -17,7 +18,9 @@ final class MainViewModel {
     var isLoadingFiltersPreviews: Bool = false
     var showsPalette = false
 
-    var filtersPreview: [FilterPreview] = []
+    var filtersPreview: [FilterPreview] {
+        dataService.filtersPreview
+    }
 
     var showErrorAlert = false {
         didSet {
@@ -27,9 +30,20 @@ final class MainViewModel {
         }
     }
 
-    private var photoEditor: PhotoEditor
+    // MARK: DI
+    
+    @ObservationIgnored @Injected(\.photoEditorService) private var photoEditor
+    @ObservationIgnored @Injected(\.dataService) private var dataService
 
     // MARK: Computed Properties
+
+    var filtersCategories: [FiltersCategory] {
+        dataService.filtersCategories
+    }
+
+    var texturesCategories: [TexturesCategory] {
+        dataService.texturesCategories
+    }
 
     var finalImage: Image? {
         photoEditor.finalImage
@@ -207,12 +221,6 @@ final class MainViewModel {
         }
     }
 
-    // MARK: Lifecycle
-
-    init(photoEditor: PhotoEditor = PhotoEditorService()) {
-        self.photoEditor = photoEditor
-    }
-
     // MARK: Functions
 
     func resetSettings() {
@@ -228,7 +236,7 @@ final class MainViewModel {
     }
 
     func applyRandomFilter() {
-        let filters = DataStorage.shared.filtersCategories.flatMap(\.filters)
+        let filters = dataService.filtersCategories.flatMap(\.filters)
         guard let randomElement = filters.randomElement() else {
             return
         }
@@ -240,7 +248,7 @@ final class MainViewModel {
     }
 
     func applyRandomTexture() {
-        let textures = DataStorage.shared.texturesCategories.flatMap(\.textures)
+        let textures = dataService.texturesCategories.flatMap(\.textures)
         guard let randomElement = textures.randomElement() else {
             return
         }
@@ -255,7 +263,7 @@ final class MainViewModel {
         selectedItem = nil
         loadFiltersPreviews?.cancel()
         photoEditor.reset()
-        DataStorage.shared.filtersPreview = []
+        dataService.removePreviews()
     }
 
     func saveImageToPhotoLibrary() {
@@ -267,7 +275,6 @@ final class MainViewModel {
                         HapticFeedback.success()
                     }
                 }
-
             // TODO: Show success alert or snackbar
             case let .failure(failure):
                 break // TODO: Show error alert or snackbar
@@ -288,8 +295,7 @@ final class MainViewModel {
             {
                 // TODO: Может вместо того, чтобы отдельно передавать CIImage и ориентацию передавать UIImage?
                 photoEditor.updateSourceImage(ciImage, orientation: uiImage.imageOrientation)
-                await DataStorage.shared.createFiltersPreviews(with: ciImage)
-                filtersPreview = DataStorage.shared.filtersPreview
+                await dataService.createFiltersPreviews(with: ciImage)
             }
             isLoadingFiltersPreviews = false
         }

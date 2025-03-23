@@ -22,7 +22,7 @@ struct GalleryView: View {
         ScrollView {
             switch type {
             case .filters:
-                ForEach(DataStorage.shared.filtersCategories) { category in
+                ForEach(viewModel.filtersCategories) { category in
                     Text(category.title)
                         .font(.h1)
                         .foregroundStyle(Color.text)
@@ -30,7 +30,7 @@ struct GalleryView: View {
                         .lineLimit(1)
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(category.filters) { filter in
-                            let filterPreview = DataStorage.shared.filtersPreview.first(where: { $0.id == filter.id })?.preview
+                            let filterPreview = viewModel.filtersPreview.first(where: { $0.id == filter.id })?.preview
                             if let filterPreview {
                                 if let selectedFilter = viewModel.currentFilter {
                                     FilterPreviewView(
@@ -56,7 +56,7 @@ struct GalleryView: View {
                 }
 
             case .textures:
-                ForEach(DataStorage.shared.texturesCategories) { category in
+                ForEach(viewModel.texturesCategories) { category in
                     Text(category.title)
                         .font(.h1)
                         .foregroundStyle(Color.text)
