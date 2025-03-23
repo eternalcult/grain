@@ -31,7 +31,7 @@ final class SwiftDataService: SwiftDataProtocol {
             )
             return try modelContext.fetch(fetchDescriptor)
         } catch {
-            print("Error fetching \(modelType): \(error)")
+            print("Error fetching \(modelType): \(error)") // TODO: Handle errors
             return []
         }
     }
@@ -46,7 +46,7 @@ final class SwiftDataService: SwiftDataProtocol {
         do {
             try modelContext.save()
         } catch {
-            print("Error saving changes: \(error)")
+            print("Error saving changes: \(error)") // TODO: Handle errors
         }
     }
 }

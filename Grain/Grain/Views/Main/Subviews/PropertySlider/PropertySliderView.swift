@@ -19,9 +19,6 @@ struct PropertySliderView: View {
                 .foregroundStyle(Color.text.opacity(0.8))
             Slider(value: $property.current, in: property.range, step: property.step)
                 .tint(Color.text.opacity(0.1))
-                .onChange(of: property.current) { _, newValue in
-                    print("newValue", newValue)
-                }
         }
         .onTapGesture(count: 2) {
             property.setToDefault()

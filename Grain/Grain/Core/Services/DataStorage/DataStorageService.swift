@@ -27,12 +27,12 @@ import SwiftData
             filtersCategories = try loadFilters()
             texturesCategories = try loadTextures()
         } catch {
-            print("ERROR", error.localizedDescription) // TODO: Handle error
+            print("Data storage error", error.localizedDescription) // TODO: Handle error
 
         }
 
-        print("Filters count:", filtersCategories.flatMap(\.filters).count)
-        print("Textures count:", texturesCategories.flatMap(\.textures).count)
+        print("Filters count:", filtersCategories.flatMap(\.filters).count) // TODO: Logger
+        print("Textures count:", texturesCategories.flatMap(\.textures).count) // TODO: Logger
     }
 
     // MARK: Functions
@@ -42,9 +42,9 @@ import SwiftData
             for filter in category.filters {
                 let isDataExist = filtersData.contains(where: { $0.id == filter.id })
                 if !isDataExist {
-                    print("\(filter.title) doesn't exist in SwiftData. Trying to create filter data")
+                    print("\(filter.title) doesn't exist in SwiftData. Trying to create filter data") // TODO: Logger
                     if let filterData = try? lutsManager.createDataForCIColorCube(for: filter) {
-                        print("Add filter data for \(filter.title)")
+                        print("Add filter data for \(filter.title)") // TODO: Logger
                         swiftDataService.insert(filterData)
                     }
                 }
@@ -54,7 +54,7 @@ import SwiftData
     }
 
     func createFiltersPreviews(with image: CIImage) async {
-        print("Creating previews for filters")
+        print("Creating previews for filters") // TODO: Logger
         let filters = filtersCategories.flatMap(\.filters)
         filtersPreview = filters.map {
             FilterPreview(
