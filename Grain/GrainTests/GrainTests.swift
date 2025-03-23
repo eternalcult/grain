@@ -1,10 +1,15 @@
-import XCTest
 @testable import Grain
+import XCTest
+
+// MARK: - PhotoEditorTests
 
 final class PhotoEditorTests: XCTestCase {
+    // MARK: Properties
 
     var photoEditor: PhotoEditor!
     var testCiImage: CIImage!
+
+    // MARK: Overridden Functions
 
     override func setUpWithError() throws {
         photoEditor = PhotoEditorService()
@@ -14,6 +19,8 @@ final class PhotoEditorTests: XCTestCase {
     override func tearDownWithError() throws {
         photoEditor = nil
     }
+
+    // MARK: Functions
 
     func testInitState() {
         XCTAssertNil(photoEditor.sourceImage)
@@ -56,12 +63,10 @@ final class PhotoEditorTests: XCTestCase {
         XCTAssertFalse(photoEditor.hasFilter)
         XCTAssertFalse(photoEditor.hasTexture)
     }
-
-
 }
 
-
 // MARK: Image Properties
+
 extension PhotoEditorTests {
     func testHasModifiedProperties() {
         XCTAssertFalse(photoEditor.hasModifiedProperties)
@@ -199,11 +204,9 @@ extension PhotoEditorTests {
     }
 }
 
-
 // MARK: Filters
 
 extension PhotoEditorTests {
-
     func testCurrentFilter() {
         XCTAssertNil(photoEditor.currentFilter)
         photoEditor.applyFilter(mockValidFilter)
@@ -281,11 +284,11 @@ extension PhotoEditorTests {
         XCTAssertNil(photoEditor.texture)
     }
 
-
     func testValidTextureApply() {
         photoEditor.applyTexture(mockValidTexture)
         XCTAssertTrue(photoEditor.hasTexture)
     }
+
     // TODO: Применение несуществующей текстуры
 
     func testResetTexture() {

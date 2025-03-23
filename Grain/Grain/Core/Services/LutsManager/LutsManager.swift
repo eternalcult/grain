@@ -1,6 +1,6 @@
 import CoreImage
-import Foundation
 import Factory
+import Foundation
 
 // MARK: - LutsManager
 
@@ -10,7 +10,7 @@ final class LutsManager: LutsManagerProtocol {
     private let context = CIContext()
 
     // MARK: DI
-    
+
     @ObservationIgnored @Injected(\.swiftDataService) private var swiftDataService
 
     // MARK: Functions
@@ -36,8 +36,6 @@ final class LutsManager: LutsManagerProtocol {
         throw LutsManagerError.filterApplyingFailed
     }
 
-
-
     func apply(_ filter: Filter, for image: CIImage) throws -> CIImage {
         let cubeFilter = try createCIColorCube(for: filter)
         cubeFilter.inputImage = image
@@ -48,7 +46,7 @@ final class LutsManager: LutsManagerProtocol {
     }
 
     func verify(_ filter: Filter) -> Bool { // TODO: Handle errors
-        return (try? createCIColorCube(for: filter)) != nil
+        (try? createCIColorCube(for: filter)) != nil
     }
 }
 

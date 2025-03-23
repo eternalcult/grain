@@ -1,6 +1,8 @@
 import Foundation
 import SwiftData
 
+// MARK: - SwiftDataProtocol
+
 protocol SwiftDataProtocol {
     init(context: ModelContext)
     func insert(_ model: some PersistentModel)

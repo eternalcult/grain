@@ -12,7 +12,6 @@ extension Logger {
     static let `default` = Logger(category: "Default")
 }
 
-
 extension Logger {
     static let photoEditor = Logger(category: "Photo Editor")
 }

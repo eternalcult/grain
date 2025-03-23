@@ -1,8 +1,8 @@
-import os
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import Factory
 import FirebaseCrashlytics
+import os
 import Photos
 import SwiftUI
 
@@ -10,7 +10,6 @@ import SwiftUI
 
 @Observable
 final class PhotoEditorService: PhotoEditor {
-    private let logger = Logger.photoEditor
     // MARK: Properties
 
     var errorMessage: String?
@@ -19,6 +18,8 @@ final class PhotoEditorService: PhotoEditor {
     private(set) var finalImage: Image?
 
     private(set) var histogram: UIImage?
+
+    private let logger = Logger.photoEditor
 
     // MARK: DI
 

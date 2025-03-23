@@ -1,7 +1,7 @@
+import Factory
 import Firebase
 import SwiftData
 import SwiftUI
-import Factory
 
 @main
 struct GrainApp: App {
@@ -10,7 +10,10 @@ struct GrainApp: App {
     @AppStorage("launchCounter") private var launchCounter: Int = 0
     @AppStorage("hasLaunchedBefore") private var hasLaunchedBefore: Bool = false
 
+    // MARK: Properties
+
     // MARK: DI
+
     @ObservationIgnored @Injected(\.dataService) private var dataService
 
     // MARK: Computed Properties

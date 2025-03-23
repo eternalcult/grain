@@ -2,6 +2,8 @@ import Foundation
 import SwiftData
 
 final class SwiftDataService: SwiftDataProtocol {
+    // MARK: Properties
+
     private let modelContext: ModelContext
 
     // MARK: Lifecycle

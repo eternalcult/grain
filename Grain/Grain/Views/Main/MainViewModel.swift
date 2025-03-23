@@ -1,6 +1,6 @@
+import Factory
 import PhotosUI
 import SwiftUI
-import Factory
 
 // TODO: Sort, add extensions for more readable format
 @Observable
@@ -18,10 +18,6 @@ final class MainViewModel {
     var isLoadingFiltersPreviews: Bool = false
     var showsPalette = false
 
-    var filtersPreview: [FilterPreview] {
-        dataService.filtersPreview
-    }
-
     var showErrorAlert = false {
         didSet {
             if !showErrorAlert {
@@ -31,11 +27,15 @@ final class MainViewModel {
     }
 
     // MARK: DI
-    
+
     @ObservationIgnored @Injected(\.photoEditorService) private var photoEditor
     @ObservationIgnored @Injected(\.dataService) private var dataService
 
     // MARK: Computed Properties
+
+    var filtersPreview: [FilterPreview] {
+        dataService.filtersPreview
+    }
 
     var filtersCategories: [FiltersCategory] {
         dataService.filtersCategories
@@ -275,6 +275,7 @@ final class MainViewModel {
                         HapticFeedback.success()
                     }
                 }
+
             // TODO: Show success alert or snackbar
             case let .failure(failure):
                 break // TODO: Show error alert or snackbar

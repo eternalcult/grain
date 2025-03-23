@@ -21,5 +21,3 @@ let mockInvalidTexture = Texture(
     title: " Invalid texture",
     filename: "mock_texture"
 )
-
-

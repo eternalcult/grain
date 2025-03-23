@@ -2,6 +2,8 @@ import CoreImage
 import Factory
 import SwiftData
 
+// MARK: - DataStorageService
+
 @Observable final class DataStorageService: DataStorageProtocol {
     // MARK: Properties
 
@@ -28,7 +30,6 @@ import SwiftData
             texturesCategories = try loadTextures()
         } catch {
             print("Data storage error", error.localizedDescription) // TODO: Handle error
-
         }
 
         print("Filters count:", filtersCategories.flatMap(\.filters).count) // TODO: Logger

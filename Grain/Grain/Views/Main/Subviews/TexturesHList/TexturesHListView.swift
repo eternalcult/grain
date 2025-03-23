@@ -55,9 +55,6 @@ struct TexturesHListView: View {
                                         .onChange(of: geometry.frame(in: .global)) { _, newValue in
                                             trackItemPosition(texture.id, frame: newValue)
                                         }
-                                        .onChange(of: visibleItems) { _, newValue in
-                                            print(newValue)
-                                        }
                                     }
                                     .frame(width: 100)
                                 }
