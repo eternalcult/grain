@@ -29,6 +29,8 @@ import SwiftData
         print("Textures count:", texturesCategories.flatMap(\.textures).count) // TODO: Logger
     }
 
+    // MARK: Functions
+
     func createFiltersPreviews(with image: CIImage) async {
         print("Creating previews for filters") // TODO: Logger
         let filters = filtersCategories.flatMap(\.filters)

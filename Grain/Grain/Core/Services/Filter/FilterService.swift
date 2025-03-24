@@ -1,12 +1,15 @@
 import CoreImage
 import Factory
 
+// MARK: - FilterService
+
 @Observable
 final class FilterService: FilterServiceProtocol {
     // MARK: Properties
 
-    private let context = CIContext()
     private(set) var currentFilter: Filter?
+
+    private let context = CIContext()
 
     // MARK: Computed Properties
 
@@ -66,4 +69,3 @@ private extension FilterService {
         }
     }
 }
-
