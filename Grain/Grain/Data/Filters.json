@@ -7,90 +7,105 @@
                     "id": 1,
                     "title": "Polatroid 600",
                     "desc": "A nostalgic filter mimicking the soft tones and unique vignetting of vintage Polaroid 600 film.",
+                    "dimension": 33,
                     "filename": "Polaroid 600"
                 },
                 {
                     "id": 2,
                     "title": "Fujix Astia 100F",
                     "desc": "Brings out vibrant yet natural colors with smooth tonal transitions, ideal for portraits and landscapes.",
+                    "dimension": 33,
                     "filename": "Fuji Astia 100F"
                 },
                 {
                     "id": 3,
                     "title": "Fujix Eterna 3513",
                     "desc": "A cinematic filter with muted tones and high contrast for a dramatic, filmic look.",
+                    "dimension": 33,
                     "filename": "Fuji Eterna 3513"
                 },
                 {
                     "id": 4,
                     "title": "Fujix Eterna 8563",
                     "desc": "Designed for a balanced, soft color palette with subtle highlights, perfect for storytelling.",
+                    "dimension": 33,
                     "filename": "Fuji Eterna 8563"
                 },
                 {
                     "id": 5,
                     "title": "Fujix Provia 100F",
                     "desc": "Offers rich, vibrant colors and crisp details, ideal for capturing lively scenes.",
+                    "dimension": 33,
                     "filename": "Fuji Provia 100F"
                 },
                 {
                     "id": 6,
                     "title": "Fujix Sensia 100",
                     "desc": "A versatile filter with gentle saturation and a warm tint for everyday photography.",
+                    "dimension": 33,
                     "filename": "Fuji Sensia 100"
                 },
                 {
                     "id": 7,
                     "title": "Fujix Superia Xtra 400",
                     "desc": "Known for its bold colors and enhanced contrast, perfect for dynamic and high-energy shots.",
+                    "dimension": 33,
                     "filename": "Fuji Superia Xtra 400"
                 },
                 {
                     "id": 8,
                     "title": "Fujix Vivid 8543",
                     "desc": "Creates a strikingly vivid color profile with intense saturation, suited for impactful visuals.",
+                    "dimension": 33,
                     "filename": "Fuji Vivid 8543"
                 },
                 {
                     "id": 9,
                     "title": "Kodex Ektachrome 64",
                     "desc": "A retro-inspired filter with cool tones and a fine grain for a vintage aesthetic.",
+                    "dimension": 33,
                     "filename": "Kodak Ektachrome 64"
                 },
                 {
                     "id": 10,
                     "title": "Kodex Professional Portra 400",
                     "desc": "Delivers soft, natural tones with excellent skin color reproduction, great for portraits.",
+                    "dimension": 33,
                     "filename": "Kodak Professional Portra 400"
                 },
                 {
                     "id": 11,
                     "title": "Kodex Vision 2383",
                     "desc": "A cinematic filter with deep shadows and vivid highlights, replicating a classic movie look.",
+                    "dimension": 33,
                     "filename": "Kodak Vision 2383"
                 },
                 {
                     "id": 12,
                     "title": "LLP Tetrachrome 400",
                     "desc": "Features a unique color separation effect, creating a vibrant and experimental style.",
+                    "dimension": 33,
                     "filename": "LPP Tetrachrome 400"
                 },
                 {
                     "id": 13,
                     "title": "Afga Portrait XPS 160",
                     "desc": "A gentle filter with soft pastel tones, designed to enhance skin tones for portrait work.",
+                    "dimension": 33,
                     "filename": "Agfa Portrait XPS 160"
                 },
                 {
                     "id": 14,
                     "title": "65mm",
                     "desc": "Adds a cinematic depth and texture, emulating the look of classic large-format film.",
+                    "dimension": 33,
                     "filename": "65MM_FILM_01"
                 },
                 {
                     "id": 15,
                     "title": "35mm",
                     "desc": "A modern film-inspired filter with a balanced grain and rich contrast, ideal for everyday captures.",
+                    "dimension": 33,
                     "filename": "MODERN_FILM_01"
                 }
             ]
@@ -103,144 +118,168 @@
                     "id": 16,
                     "title": "Psycho",
                     "desc": "'We all go a little mad sometimes.'",
-                    "filename": "CINECOLOR_PSYCHO"
+                    "dimension": 33,
+                    "filename": "Psycho"
                 },
                 {
                     "id": 22,
                     "title": "Alien",
                     "desc": "'In space, no one can hear you scream.'",
-                    "filename": "CINECOLOR_ALIEN"
+                    "dimension": 33,
+                    "filename": "Alien"
                 },
                 {
                     "id": 17,
                     "title": "Blade Runner 2049",
                     "desc": "'You’ve never seen a miracle.'",
-                    "filename": "CINECOLOR_BLADE_RUNNER_2049"
+                    "dimension": 33,
+                    "filename": "Blade Runner 2049"
                 },
                 {
                     "id": 18,
                     "title": "Clockwork Orange",
                     "desc": "'What’s it going to be then, eh?'",
-                    "filename": "CINECOLOR_CLOCKWORK_ORANGE"
+                    "dimension": 33,
+                    "filename": "Clockwork Orange"
                 },
                 {
                     "id": 19,
                     "title": "Jaws",
                     "desc": "'You’re gonna need a bigger boat.'",
-                    "filename": "CINECOLOR_JAWS"
+                    "dimension": 33,
+                    "filename": "Jaws"
                 },
                 {
                     "id": 20,
                     "title": "Saving Private Ryan",
                     "desc": "'Earn this.'",
-                    "filename": "CINECOLOR_SAVING_PRIVATE_RYAN"
+                    "dimension": 33,
+                    "filename": "Saving Private Ryan"
                 },
                 {
                     "id": 21,
                     "title": "Sin City",
                     "desc": "'The night is hot as hell.'",
-                    "filename": "CINECOLOR_SIN_CITY"
+                    "dimension": 33,
+                    "filename": "Sin City"
                 },
                 {
                     "id": 27,
                     "title": "Amelie",
                     "desc": "'Times are hard for dreamers.'",
+                    "dimension": 33,
                     "filename": "Amelie"
                 },
                 {
                     "id": 28,
                     "title": "Aviator",
                     "desc": "'The way of the future.'",
+                    "dimension": 33,
                     "filename": "Aviator"
                 },
                 {
                     "id": 29,
                     "title": "Blade Runner",
                     "desc": "'All those moments will be lost in time… like tears in rain.'",
+                    "dimension": 33,
                     "filename": "Blade Runner"
                 },
                 {
                     "id": 35,
                     "title": "Drive",
                     "desc": "'You give me a time and a place, I give you a five-minute window.'",
+                    "dimension": 33,
                     "filename": "Drive"
                 },
                 {
                     "id": 42,
                     "title": "Godfather",
                     "desc": "'I'm gonna make him an offer he can't refuse.'",
+                    "dimension": 33,
                     "filename": "Godfather"
                 },
                 {
                     "id": 43,
                     "title": "Grand Budapest",
                     "desc": "'Rudeness is merely the expression of fear.'",
+                    "dimension": 33,
                     "filename": "Grand Budapest"
                 },
                 {
                     "id": 46,
                     "title": "Hannibal",
                     "desc": "'I’m having an old friend for dinner.'",
+                    "dimension": 33,
                     "filename": "Hannibal"
                 },
                 {
                     "id": 47,
                     "title": "Her",
                     "desc": "'The past is just a story we tell ourselves.'",
+                    "dimension": 33,
                     "filename": "Her"
                 },
                 {
                     "id": 48,
                     "title": "Mad Max",
                     "desc": "'Oh, what a day! What a lovely day!'",
+                    "dimension": 33,
                     "filename": "Mad Max"
                 },
                 {
                     "id": 49,
                     "title": "The Matrix",
                     "desc": "'There is no spoon.'",
-                    "filename": "Matrix V1"
+                    "dimension": 33,
+                    "filename": "The Matrix"
                 },
                 {
                     "id": 50,
                     "title": "The Matrix Reloaded",
                     "desc": "'I know kung fu.'",
-                    "filename": "Matrix V2"
+                    "dimension": 33,
+                    "filename": "The Matrix Reloaded"
                 },
                 {
                     "id": 52,
                     "title": "Moonrise Kindom",
                     "desc": "'I love you, but you don’t know what you’re talking about.'",
+                    "dimension": 33,
                     "filename": "Moonrise Kingdom"
                 },
                 {
                     "id": 59,
                     "title": "Stranger Things",
                     "desc": "'Friends don’t lie.'",
+                    "dimension": 33,
                     "filename": "Stranger Things"
                 },
                 {
                     "id": 64,
                     "title": "Wonder Woman",
                     "desc": "'It’s about what you believe.'",
+                    "dimension": 33,
                     "filename": "Wonder Woman"
                 },
                 {
                     "id": 55,
                     "title": "Revenant",
                     "desc": "'As long as you can still grab a breath, you fight.'",
+                    "dimension": 33,
                     "filename": "Revenant"
                 },
                 {
                     "id": 38,
                     "title": "Enemy",
                     "desc": "'Chaos is order yet undeciphered.'",
+                    "dimension": 33,
                     "filename": "Enemy"
                 },
                 {
                     "id": 57,
                     "title": "Seven",
                     "desc": "'What’s in the box?!'",
+                    "dimension": 33,
                     "filename": "Seven"
                 }
             ]
