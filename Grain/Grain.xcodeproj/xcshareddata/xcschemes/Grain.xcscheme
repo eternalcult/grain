@@ -50,6 +50,17 @@
                ReferencedContainer = "container:Grain.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C196FB702D8D5BD3008A4AF7"
+               BuildableName = "GrainTests.xctest"
+               BlueprintName = "GrainTests"
+               ReferencedContainer = "container:Grain.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

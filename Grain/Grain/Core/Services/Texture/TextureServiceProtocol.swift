@@ -10,8 +10,11 @@ protocol TextureServiceProtocol {
     /// Прозрачность текстуры. Стандартное значение: 0.5.
     var alpha: Float { get }
 
-    
-    func update(to newTexture: Texture, completion: () -> Void)
+    /// Обновляет texutre
+    /// - Parameters:
+    ///   - newTexture: Новая текстура
+    ///   - completion: Вызывается только если id старой и новой текстуры  различаются
+    func prepare(to newTexture: Texture, completion: () -> Void)
     /// Изменяет прозрачность текстуры на новое значение
     /// - Parameter newValue: Новая alpha текстуры – 0...1
     func updateAlpha(to newValue: Float)
@@ -21,7 +24,7 @@ protocol TextureServiceProtocol {
     /// Наложение текстуры поверх выбранного изображения, с учетом выбранного режима наложения и прозрачности
     /// - Parameter processedCiImage: Изображение к которому должна быть применена текстура
     /// - Returns: При успехе  возвращает обновленный CIImage, если что-то пошло не так возвращает ошибку
-    func overlayTexture(to processedCiImage: CIImage?) -> Result<CIImage, Error> // TODO: Добавить кастомную ошибку
+    func overlayTextureIfNeeded(to processedCiImage: CIImage) throws -> CIImage
     /// Удаляет текстуру и возвращает начальные значения alpha и blendMode
     func clear()
 }

@@ -15,7 +15,7 @@ struct TexturesHListView: View {
             // Категории
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(DataStorage.shared.texturesCategories) { category in
+                    ForEach(viewModel.texturesCategories) { category in
                         Button {
                             scrollToIndex = category.id
                         } label: {
@@ -41,7 +41,7 @@ struct TexturesHListView: View {
                             viewModel.removeTexture()
                         }
                         .frame(width: 100, height: 100)
-                        ForEach(DataStorage.shared.texturesCategories) { category in
+                        ForEach(viewModel.texturesCategories) { category in
                             HStack(spacing: 4) {
                                 ForEach(category.textures) { texture in
                                     GeometryReader { geometry in
@@ -54,9 +54,6 @@ struct TexturesHListView: View {
                                         .frame(width: 100, height: 100)
                                         .onChange(of: geometry.frame(in: .global)) { _, newValue in
                                             trackItemPosition(texture.id, frame: newValue)
-                                        }
-                                        .onChange(of: visibleItems) { _, newValue in
-                                            print(newValue)
                                         }
                                     }
                                     .frame(width: 100)
@@ -104,7 +101,7 @@ struct TexturesHListView: View {
     }
 
     private func selectedCategory() {
-        let selectedCategories = DataStorage.shared.texturesCategories.filter { $0.textures.contains { texture in
+        let selectedCategories = viewModel.texturesCategories.filter { $0.textures.contains { texture in
             visibleItems.contains(texture.id)
         }}
         visibleTexturesCategory = selectedCategories.last?.id

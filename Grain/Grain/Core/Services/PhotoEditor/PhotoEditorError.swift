@@ -10,12 +10,14 @@ enum PhotoEditorError: LocalizedError {
     case permissionToAccessPhotoLibraryDenied
     /// Ошибка экспорта изображения в галерею
     case failedToExportImageToPhotoLibrary
-    /// Текстура не существует или указано не верное название
-    case textureDoesntExistOrHasWrongName // TODO: Переместить в ошибки TextureSevice
     /// Неизвестная ошибка
     case unknown
     /// Ошибка фотогалереи
     case photoLibraryError(description: String)
+    case histogramRenderIssue
+    case downscalingIssue
+    case sourceImageIsMissingWhileTryingToUpdateImage
+    case processedImageIsMissingWhileTryingToUpdateImage
 
     // MARK: Computed Properties
 
@@ -34,8 +36,14 @@ enum PhotoEditorError: LocalizedError {
             "Unknown error."
         case let .photoLibraryError(description):
             description
-        case .textureDoesntExistOrHasWrongName:
-            "Texture doesn't exist or has wrong name"
+        case .histogramRenderIssue:
+            "Histogram render issue."
+        case .downscalingIssue:
+            "Issue with downscaling processed image."
+        case .sourceImageIsMissingWhileTryingToUpdateImage:
+            "Source image is missing while trying to update image."
+        case .processedImageIsMissingWhileTryingToUpdateImage:
+            "Processed image is missing while trying to update image."
         }
     }
 }

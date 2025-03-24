@@ -19,7 +19,7 @@ final class TextureService: TextureServiceProtocol {
 
     // MARK: Functions
 
-    func update(to newTexture: Texture, completion: () -> Void) {
+    func prepare(to newTexture: Texture, completion: () -> Void) { // TODO: Handle errors, check if texture exist, remove completion?
         if texture?.id != newTexture.id {
             texture = newTexture
             completion()
@@ -36,26 +36,23 @@ final class TextureService: TextureServiceProtocol {
         }
     }
 
-    func overlayTexture(to processedCiImage: CIImage?) -> Result<CIImage, Error> {
-        do {
-            guard let texture,
-                  let uiImage = UIImage(named: texture.filename),
-                  let cgImage = uiImage.cgImage,
-                  let processedCiImage,
-                  let configuredTexture = configureTexture(CIImage(cgImage: cgImage), size: processedCiImage.extent.size)
-            else {
-                throw PhotoEditorError.textureDoesntExistOrHasWrongName
-            }
-            let blendMode = blendMode.ciFilter
-            blendMode.backgroundImage = processedCiImage
-            blendMode.inputImage = configuredTexture
-            if let outputImage = blendMode.outputImage {
-                return .success(outputImage)
-            } else {
-                throw PhotoEditorError.unknown // TODO: Добавить тип ошибки
-            }
-        } catch {
-            return .failure(error)
+    func overlayTextureIfNeeded(to processedCiImage: CIImage) throws -> CIImage {
+        guard let texture else {
+            return processedCiImage
+        }
+        guard let uiImage = UIImage(named: texture.filename),
+              let cgImage = uiImage.cgImage,
+              let configuredTexture = try configureTexture(CIImage(cgImage: cgImage), size: processedCiImage.extent.size)
+        else {
+            throw TextureServiceError.textureDoesntExistOrHasWrongName
+        }
+        let blendMode = blendMode.ciFilter
+        blendMode.backgroundImage = processedCiImage
+        blendMode.inputImage = configuredTexture
+        if let outputImage = blendMode.outputImage {
+            return outputImage
+        } else {
+            throw TextureServiceError.overlayIssue
         }
     }
 
@@ -67,21 +64,19 @@ final class TextureService: TextureServiceProtocol {
 }
 
 private extension TextureService {
-    private func updateTextureIntensity(of texture: CIImage, to alpha: CGFloat) -> CIImage? {
+    private func configureTexture(_ texture: CIImage, size: CGSize) throws -> CIImage? {
+        let resized = resizeImageToAspectFill(image: texture, targetSize: size)
         let alphaFilter = CIFilter.colorMatrix()
-        alphaFilter.setValue(CIVector(x: 0, y: 0, z: 0, w: alpha), forKey: "inputAVector")
-        alphaFilter.inputImage = texture
-        return alphaFilter.outputImage
-    }
-
-    private func configureTexture(_ texture: CIImage, size: CGSize) -> CIImage? { // TODO: Refactor
-        if let resized = resizeImageToAspectFill(image: texture, targetSize: size) {
-            return updateTextureIntensity(of: resized, to: CGFloat(alpha))
+        alphaFilter.setValue(CIVector(x: 0, y: 0, z: 0, w: CGFloat(alpha)), forKey: "inputAVector")
+        alphaFilter.inputImage = resized
+        if let output = alphaFilter.outputImage {
+            return output
+        } else {
+            throw TextureServiceError.alphaIssue
         }
-        return nil
     }
 
-    private func resizeImageToAspectFill(image: CIImage, targetSize: CGSize) -> CIImage? {
+    private func resizeImageToAspectFill(image: CIImage, targetSize: CGSize) -> CIImage {
         // Calculate the aspect ratio of the original image
         let aspectRatio = image.extent.size.width / image.extent.size.height
         var newSize = targetSize

@@ -1,6 +1,8 @@
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import Factory
 import FirebaseCrashlytics
+import os
 import Photos
 import SwiftUI
 
@@ -17,62 +19,26 @@ final class PhotoEditorService: PhotoEditor {
 
     private(set) var histogram: UIImage?
 
-    // MARK: Effects
+    private let logger = Logger.photoEditor
 
-    var vignetteIntensity: ImageProperty = VignetteIntensity() { // TODO: Create ImageEffect protocol
-        didSet {
-            updateImage()
-        }
-    }
+    // MARK: DI
 
-    var vignetteRadius: ImageProperty = VignetteRadius() { // TODO: Create ImageEffect protocol
-        didSet {
-            updateImage()
-        }
-    }
-
-    var bloomIntensity: ImageProperty = BloomIntensity() { // TODO: Create ImageEffect protocol
-        didSet {
-            updateImage()
-        }
-    }
-
-    var bloomRadius: ImageProperty = BloomRadius() { // TODO: Create ImageEffect protocol
-        didSet {
-            updateImage()
-        }
-    }
-
-    private var imageProcessingService: ImageProcessingServiceProtocol
-    private let filterService: FilterServiceProtocol
-    private let textureService: TextureServiceProtocol
+    @ObservationIgnored @Injected(\.imageProcessingService) private var imageProcessingService
+    @ObservationIgnored @Injected(\.filterService) private var filterService
+    @ObservationIgnored @Injected(\.textureService) private var textureService
 
     private var processedCiImage: CIImage?
     private var sourceImageOrientation: UIImage.Orientation?
 
     private let context = CIContext() // TODO: Настроить CIContext
 
-    private let vignetteFilter = CIFilter.vignette()
-    private let bloomFilter = CIFilter.bloom()
-
-    // MARK: Lifecycle
-
-    init(
-        imageProcessingService: ImageProcessingServiceProtocol = ImageProcessingService(),
-        filterService: FilterServiceProtocol = FilterService(),
-        textureService: TextureServiceProtocol = TextureService()
-    ) {
-        self.imageProcessingService = imageProcessingService
-        self.filterService = filterService
-        self.textureService = textureService
-    }
-
     // MARK: Functions
 
     func updateSourceImage(_ image: CIImage, orientation: UIImage.Orientation) {
+        logger.info(#function)
         sourceCiImage = image
         sourceImageOrientation = orientation
-        if let sourceUiImage = image.renderToUIImage(with: context, orientation: orientation) {
+        if let sourceUiImage = image.renderToUIImage(with: context, orientation: orientation) { // TODO: Handle errors
             sourceImage = Image(uiImage: sourceUiImage)
         }
         processedCiImage = image
@@ -80,6 +46,7 @@ final class PhotoEditorService: PhotoEditor {
     }
 
     func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void) {
+        logger.info(#function)
         if let processedCiImage, let uiImage = processedCiImage.renderToUIImage(with: context, orientation: sourceImageOrientation) {
             // Request permission to access the photo library
             PHPhotoLibrary.requestAuthorization { status in
@@ -109,12 +76,15 @@ final class PhotoEditorService: PhotoEditor {
     }
 
     func reset() {
+        logger.info(#function)
         sourceImage = nil
         processedCiImage = nil
         sourceImageOrientation = nil
         sourceCiImage = nil
         processedCiImage = nil
-        filterService.removeFilter()
+        finalImage = nil
+        histogram = nil
+        filterService.clear()
         textureService.clear()
         imageProcessingService.reset()
         resetEffects()
@@ -123,7 +93,7 @@ final class PhotoEditorService: PhotoEditor {
 
 // MARK: PhotoEditorFilter - свойтва и методы связанные с фильтрами
 
-extension PhotoEditorService: PhotoEditorFilter {
+extension PhotoEditorService {
     var hasFilter: Bool {
         filterService.hasFilter
     }
@@ -133,20 +103,22 @@ extension PhotoEditorService: PhotoEditorFilter {
     }
 
     func applyFilter(_ newLut: Filter) {
-        filterService.update(to: newLut) {
+        logger.info(#function)
+        filterService.prepare(to: newLut) {
             updateImage()
         }
     }
 
     func removeFilter() {
-        filterService.removeFilter()
+        logger.info(#function)
+        filterService.clear()
         updateImage()
     }
 }
 
 // MARK: PhotoEditorTexture - свойства и методы связанные с текстурами
 
-extension PhotoEditorService: PhotoEditorTexture {
+extension PhotoEditorService {
     var texture: Texture? {
         textureService.texture
     }
@@ -157,6 +129,7 @@ extension PhotoEditorService: PhotoEditorTexture {
         }
         set {
             textureService.updateBlendMode(to: newValue)
+            updateImage()
         }
     }
 
@@ -164,18 +137,15 @@ extension PhotoEditorService: PhotoEditorTexture {
         textureService.hasTexture
     }
 
-    func updateTextureBlendMode(to newBlendMode: BlendMode) {
-        textureService.updateBlendMode(to: newBlendMode)
-        updateImage()
-    }
-
-    func applyTexture(_ newTexture: Texture) {
-        textureService.update(to: newTexture) {
+    func applyTexture(_ newTexture: Texture) { // TODO: Handle errors
+        logger.info(#function)
+        textureService.prepare(to: newTexture) {
             updateImage()
         }
     }
 
     func removeTexture() {
+        logger.info(#function)
         textureService.clear()
         updateImage()
     }
@@ -193,12 +163,12 @@ extension PhotoEditorService: PhotoEditorTexture {
 
 // MARK: PhotoEditorImageProperties - свойства и методы связанные с изменением настроек изображения
 
-extension PhotoEditorService: PhotoEditorImageProperties {
+extension PhotoEditorService {
     var hasModifiedProperties: Bool {
         imageProcessingService.hasModifiedProperties
     }
 
-    var brightness: ImageProperty {
+    var brightness: ImagePropertyProtocol {
         get {
             imageProcessingService.brightness
         }
@@ -208,7 +178,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var contrast: ImageProperty {
+    var contrast: ImagePropertyProtocol {
         get {
             imageProcessingService.contrast
         }
@@ -218,7 +188,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var saturation: ImageProperty {
+    var saturation: ImagePropertyProtocol {
         get {
             imageProcessingService.saturation
         }
@@ -228,7 +198,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var exposure: ImageProperty {
+    var exposure: ImagePropertyProtocol {
         get {
             imageProcessingService.exposure
         }
@@ -238,7 +208,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var vibrance: ImageProperty {
+    var vibrance: ImagePropertyProtocol {
         get {
             imageProcessingService.vibrance
         }
@@ -248,7 +218,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var highlights: ImageProperty {
+    var highlights: ImagePropertyProtocol {
         get {
             imageProcessingService.highlights
         }
@@ -258,7 +228,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var shadows: ImageProperty {
+    var shadows: ImagePropertyProtocol {
         get {
             imageProcessingService.shadows
         }
@@ -268,7 +238,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var temperature: ImageProperty {
+    var temperature: ImagePropertyProtocol {
         get {
             imageProcessingService.temperature
         }
@@ -278,7 +248,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var tint: ImageProperty {
+    var tint: ImagePropertyProtocol {
         get {
             imageProcessingService.tint
         }
@@ -288,7 +258,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var gamma: ImageProperty {
+    var gamma: ImagePropertyProtocol {
         get {
             imageProcessingService.gamma
         }
@@ -298,7 +268,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var noiseReduction: ImageProperty {
+    var noiseReduction: ImagePropertyProtocol {
         get {
             imageProcessingService.noiseReduction
         }
@@ -308,7 +278,7 @@ extension PhotoEditorService: PhotoEditorImageProperties {
         }
     }
 
-    var sharpness: ImageProperty {
+    var sharpness: ImagePropertyProtocol {
         get {
             imageProcessingService.sharpness
         }
@@ -319,15 +289,47 @@ extension PhotoEditorService: PhotoEditorImageProperties {
     }
 
     func resetImageProperties() {
+        logger.info(#function)
         imageProcessingService.reset()
         updateImage()
+    }
+}
+
+// MARK: PhotoEditorEffects
+
+extension PhotoEditorService: PhotoEditorEffects {
+    var vignette: ImageEffectProtocol {
+        get {
+            imageProcessingService.vignette
+        } set {
+            imageProcessingService.vignette = newValue
+            updateImage()
+        }
+    }
+
+    var bloom: ImageEffectProtocol {
+        get {
+            imageProcessingService.bloom
+        } set {
+            imageProcessingService.bloom = newValue
+            updateImage()
+        }
+    }
+
+    func resetEffects() {
+        logger.info(#function)
+        imageProcessingService.resetEffects()
+        if sourceImage != nil {
+            updateImage()
+        }
     }
 }
 
 // MARK: Private methods
 
 private extension PhotoEditorService {
-    func renderImage() {
+    func renderImage() throws {
+        logger.info(#function)
         do {
             if let uiImage = processedCiImage?.renderToUIImage(with: context, orientation: sourceImageOrientation) {
                 finalImage = Image(uiImage: uiImage)
@@ -335,12 +337,12 @@ private extension PhotoEditorService {
                 throw PhotoEditorError.failedToRenderImage
             }
         } catch {
-            Crashlytics.crashlytics().record(error: error)
-            errorMessage = error.localizedDescription
+            throw error
         }
     }
 
-    func renderHistogram() {
+    func renderHistogram() throws {
+        logger.info(#function)
         let filter = CIFilter.histogramDisplay()
         filter.inputImage = processedCiImage
         filter.lowLimit = 0
@@ -348,85 +350,43 @@ private extension PhotoEditorService {
 
         if let output = filter.outputImage {
             histogram = output.renderToUIImage(with: context)
+        } else {
+            throw PhotoEditorError.histogramRenderIssue
         }
     }
 
-    func downscale(image: CIImage, scale: CGFloat) -> CIImage? {
+    func downscale(image: CIImage, scale: CGFloat) throws -> CIImage {
+        logger.info(#function)
         let filter = CIFilter(name: "CILanczosScaleTransform")!
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(scale, forKey: kCIInputScaleKey)
-        return filter.outputImage
+        if let outputImage = filter.outputImage {
+            return outputImage
+        } else {
+            throw PhotoEditorError.downscalingIssue
+        }
     }
 
+    // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить. При рендеринге используется это же изображение низкого качества.
     func updateImage() {
-        guard let sourceCiImage else { return }
-
-        // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить
-        // TODO: При рендеринге используется это же изображение низкого качества, исправить
-        processedCiImage = downscale(
-            image: sourceCiImage,
-            scale: 0.5
-        )
-        processedCiImage = imageProcessingService.updateProperties(to: processedCiImage)
-        // Effects
-        updateVignette()
-        updateBloom()
-
-        if filterService.hasFilter {
-            let applyLutResult = filterService.applyFilter(to: processedCiImage)
-            switch applyLutResult {
-            case let .success(lutImage):
-                processedCiImage = lutImage
-            case let .failure(error):
-                Crashlytics.crashlytics().record(error: error)
-                errorMessage = error.localizedDescription
-            }
-        }
-
-        if textureService.hasTexture {
-            let overlayTextureResult = textureService.overlayTexture(to: processedCiImage)
-            switch overlayTextureResult {
-            case let .success(texturedImage):
-                processedCiImage = texturedImage
-            case let .failure(error):
-                Crashlytics.crashlytics().record(error: error)
-                errorMessage = error.localizedDescription
-            }
-        }
-
-        renderHistogram()
-        renderImage()
-    }
-
-    func resetEffects() {
-        vignetteRadius.setToDefault()
-        vignetteIntensity.setToDefault()
-    }
-}
-
-private extension PhotoEditorService {
-    // MARK: Effects
-
-    func updateVignette() {
-        guard vignetteRadius.isUpdated || vignetteIntensity.isUpdated else {
-            return
-        }
-        vignetteFilter.inputImage = processedCiImage
-        vignetteFilter.intensity = vignetteIntensity.current
-        vignetteFilter.radius = vignetteRadius.current
-        processedCiImage = vignetteFilter.outputImage
-    }
-
-    func updateBloom() {
-        guard bloomRadius.isUpdated || bloomIntensity.isUpdated else {
-            return
-        }
-
-        bloomFilter.inputImage = processedCiImage
-        bloomFilter.intensity = bloomIntensity.current
-        bloomFilter.radius = bloomRadius.current
-        if let originalExtent = processedCiImage?.extent, let croppedOutput = bloomFilter.outputImage?.cropped(to: originalExtent) {
-            processedCiImage = croppedOutput
+        logger.info(#function)
+        do {
+            guard let sourceCiImage else { throw PhotoEditorError.sourceImageIsMissingWhileTryingToUpdateImage }
+            guard var processedCiImage else { throw PhotoEditorError.processedImageIsMissingWhileTryingToUpdateImage }
+            processedCiImage = try downscale(
+                image: sourceCiImage,
+                scale: 0.5
+            )
+            processedCiImage = try imageProcessingService.updatePropertiesAndEffects(to: processedCiImage)
+            processedCiImage = try filterService.applyFilterIfNeeded(to: processedCiImage)
+            processedCiImage = try textureService.overlayTextureIfNeeded(to: processedCiImage)
+            self.processedCiImage = processedCiImage
+            try renderHistogram()
+            try renderImage()
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            errorMessage = error.localizedDescription
+            logger.error("\(#function) \(error.localizedDescription)")
         }
     }
 }

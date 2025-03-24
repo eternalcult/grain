@@ -1,4 +1,3 @@
-import AppCore
 import SwiftUI
 
 @MainActor @Observable
@@ -26,7 +25,7 @@ final class MainRouter: Router {
                     .environment(viewModel)
 
             case .settings:
-                SettingsView(currentAppId: 6_741_040_418)
+                SettingsView()
 
             case .blendMode:
                 BlendModeView()

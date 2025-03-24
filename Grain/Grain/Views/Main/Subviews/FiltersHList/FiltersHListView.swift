@@ -16,7 +16,7 @@ struct FiltersHListView: View {
             // Категории
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(DataStorage.shared.filtersCategories) { category in
+                    ForEach(viewModel.filtersCategories) { category in
                         Button {
                             scrollToIndex = category.id
                         } label: {
@@ -42,13 +42,13 @@ struct FiltersHListView: View {
                             viewModel.removeFilter()
                         }
                         .frame(width: 100, height: 100)
-                        ForEach(DataStorage.shared.filtersCategories) { category in
+                        ForEach(viewModel.filtersCategories) { category in
                             HStack(spacing: 4) {
                                 ForEach(category.filters) { filter in
                                     GeometryReader { geometry in
                                         FilterPreviewView(
                                             filter,
-                                            DataStorage.shared.filtersPreview.first(where: { $0.id == filter.id })?.preview,
+                                            viewModel.filtersPreview.first(where: { $0.id == filter.id })?.preview,
                                             isSelected: isSelected(currentFilter: filter, selectedFilter: viewModel.currentFilter)
                                         ) {
                                             viewModel.applyFilter(filter)
@@ -103,7 +103,7 @@ struct FiltersHListView: View {
     }
 
     private func selectedCategory() {
-        let selectedCategories = DataStorage.shared.filtersCategories.filter { $0.filters.contains { filter in
+        let selectedCategories = viewModel.filtersCategories.filter { $0.filters.contains { filter in
             visibleItems.contains(filter.id)
         }}
         visibleFiltersCategory = selectedCategories.last?.id

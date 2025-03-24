@@ -1,5 +1,5 @@
 {
-  "originHash" : "f11c2e6226263c5f2d4b0489acedf3975cd09a6a2016411f3aeba6bc11400066",
+  "originHash" : "c6ef031dc6263d22f19d2f44cae0c5f40ea7828e041cb096801853d0458f5fd5",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -20,12 +20,12 @@
       }
     },
     {
-      "identity" : "app-core",
+      "identity" : "factory",
       "kind" : "remoteSourceControl",
-      "location" : "git@github.com:eternalcult/app-core.git",
+      "location" : "https://github.com/hmlongco/Factory",
       "state" : {
-        "branch" : "main",
-        "revision" : "180201f65073813742cd8aaa67e7d8f8a0d67dee"
+        "revision" : "fb04a8918848e413d3921d346a23bae7f81088d9",
+        "version" : "2.4.3"
       }
     },
     {
@@ -98,15 +98,6 @@
       "state" : {
         "revision" : "a0bc79961d7be727d258d33d5a6b2f1023270ba1",
         "version" : "1.22.5"
-      }
-    },
-    {
-      "identity" : "lottie-spm",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/airbnb/lottie-spm.git",
-      "state" : {
-        "revision" : "8c6edf4f0fa84fe9c058600a4295eb0c01661c69",
-        "version" : "4.5.1"
       }
     },
     {

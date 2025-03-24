@@ -76,7 +76,7 @@ struct TexturesView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             Slider(value: Binding(
                                 get: { Double(viewModel.textureBlendMode.rawValue) },
-                                set: { viewModel.updateTextureBlendMode(to: BlendMode(rawValue: Int($0)) ?? .normal) }
+                                set: { viewModel.textureBlendMode = BlendMode(rawValue: Int($0)) ?? .normal }
                             ), in: BlendMode.range, step: 1)
                                 .tint(Color.text.opacity(0.1))
                         }

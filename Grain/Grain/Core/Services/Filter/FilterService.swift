@@ -1,4 +1,5 @@
 import CoreImage
+import Factory
 
 @Observable
 final class FilterService: FilterServiceProtocol {
@@ -6,7 +7,9 @@ final class FilterService: FilterServiceProtocol {
 
     private(set) var currentFilter: Filter?
 
-    private let lutsManager: LutsManagerProtocol
+    // MARK: DI
+
+    @ObservationIgnored @Injected(\.lutsManager) private var lutsManager
 
     // MARK: Computed Properties
 
@@ -14,39 +17,23 @@ final class FilterService: FilterServiceProtocol {
         currentFilter != nil
     }
 
-    // MARK: Lifecycle
-
-    init(lutsManager: LutsManagerProtocol = LutsManager()) {
-        self.lutsManager = lutsManager
-    }
-
     // MARK: Functions
 
-    func update(to newFilter: Filter, completion: () -> Void) {
-        if currentFilter?.id != newFilter.id {
+    func prepare(to newFilter: Filter, completion: () -> Void) {
+        if currentFilter?.id != newFilter.id, lutsManager.verify(newFilter) {
             currentFilter = newFilter
             completion()
         }
     }
 
-    func removeFilter() {
+    func clear() {
         currentFilter = nil
     }
 
-    func applyFilter(to processedCiImage: CIImage?) -> Result<CIImage, Error> {
-        do {
-            guard let processedCiImage, let currentFilter else {
-                throw PhotoEditorError.unknown // TODO: Добавить тип ошибки
-            }
-            let lutFilter = try lutsManager.createCIColorCube(for: currentFilter) // TODO: Можно сделать метод приватным и использовать lutsManager.apply?
-            lutFilter.inputImage = processedCiImage
-            if let outputImage = lutFilter.outputImage {
-                return .success(outputImage)
-            } else {
-                throw PhotoEditorError.unknown // TODO: Добавить тип ошибки
-            }
-        } catch {
-            return .failure(error)
+    func applyFilterIfNeeded(to processedCiImage: CIImage) throws -> CIImage {
+        guard let currentFilter else {
+            return processedCiImage
         }
+        return try lutsManager.apply(currentFilter, for: processedCiImage)
     }
 }

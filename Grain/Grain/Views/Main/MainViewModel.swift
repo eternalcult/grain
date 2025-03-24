@@ -1,7 +1,8 @@
-import AppCore
+import Factory
 import PhotosUI
 import SwiftUI
 
+// TODO: Sort, add extensions for more readable format
 @Observable
 final class MainViewModel {
     // MARK: Properties
@@ -17,8 +18,6 @@ final class MainViewModel {
     var isLoadingFiltersPreviews: Bool = false
     var showsPalette = false
 
-    var filtersPreview: [FilterPreview] = []
-
     var showErrorAlert = false {
         didSet {
             if !showErrorAlert {
@@ -27,9 +26,24 @@ final class MainViewModel {
         }
     }
 
-    private var photoEditor: PhotoEditor & PhotoEditorFilter & PhotoEditorTexture & PhotoEditorImageProperties
+    // MARK: DI
+
+    @ObservationIgnored @Injected(\.photoEditorService) private var photoEditor
+    @ObservationIgnored @Injected(\.dataService) private var dataService
 
     // MARK: Computed Properties
+
+    var filtersPreview: [FilterPreview] {
+        dataService.filtersPreview
+    }
+
+    var filtersCategories: [FiltersCategory] {
+        dataService.filtersCategories
+    }
+
+    var texturesCategories: [TexturesCategory] {
+        dataService.texturesCategories
+    }
 
     var finalImage: Image? {
         photoEditor.finalImage
@@ -59,7 +73,7 @@ final class MainViewModel {
         photoEditor.hasModifiedProperties
     }
 
-    var brightness: ImageProperty {
+    var brightness: ImagePropertyProtocol {
         get {
             photoEditor.brightness
         }
@@ -68,7 +82,7 @@ final class MainViewModel {
         }
     }
 
-    var contrast: ImageProperty {
+    var contrast: ImagePropertyProtocol {
         get {
             photoEditor.contrast
         }
@@ -77,7 +91,7 @@ final class MainViewModel {
         }
     }
 
-    var saturation: ImageProperty {
+    var saturation: ImagePropertyProtocol {
         get {
             photoEditor.saturation
         }
@@ -86,7 +100,7 @@ final class MainViewModel {
         }
     }
 
-    var exposure: ImageProperty {
+    var exposure: ImagePropertyProtocol {
         get {
             photoEditor.exposure
         }
@@ -95,7 +109,7 @@ final class MainViewModel {
         }
     }
 
-    var vibrance: ImageProperty {
+    var vibrance: ImagePropertyProtocol {
         get {
             photoEditor.vibrance
         }
@@ -104,7 +118,7 @@ final class MainViewModel {
         }
     }
 
-    var highlights: ImageProperty {
+    var highlights: ImagePropertyProtocol {
         get {
             photoEditor.highlights
         }
@@ -113,7 +127,7 @@ final class MainViewModel {
         }
     }
 
-    var shadows: ImageProperty {
+    var shadows: ImagePropertyProtocol {
         get {
             photoEditor.shadows
         }
@@ -122,7 +136,7 @@ final class MainViewModel {
         }
     }
 
-    var temperature: ImageProperty {
+    var temperature: ImagePropertyProtocol {
         get {
             photoEditor.temperature
         }
@@ -131,7 +145,7 @@ final class MainViewModel {
         }
     }
 
-    var tint: ImageProperty {
+    var tint: ImagePropertyProtocol {
         get {
             photoEditor.tint
         }
@@ -140,7 +154,7 @@ final class MainViewModel {
         }
     }
 
-    var gamma: ImageProperty {
+    var gamma: ImagePropertyProtocol {
         get {
             photoEditor.gamma
         }
@@ -149,7 +163,7 @@ final class MainViewModel {
         }
     }
 
-    var noiseReduction: ImageProperty {
+    var noiseReduction: ImagePropertyProtocol {
         get {
             photoEditor.noiseReduction
         }
@@ -158,7 +172,7 @@ final class MainViewModel {
         }
     }
 
-    var sharpness: ImageProperty {
+    var sharpness: ImagePropertyProtocol {
         get {
             photoEditor.sharpness
         }
@@ -170,7 +184,11 @@ final class MainViewModel {
     // MARK: Texture
 
     var textureBlendMode: BlendMode {
-        photoEditor.textureBlendMode
+        get {
+            photoEditor.textureBlendMode
+        } set {
+            photoEditor.textureBlendMode = newValue
+        }
     }
 
     var textureAlpha: Float {
@@ -187,42 +205,20 @@ final class MainViewModel {
 
     // MARK: Effects
 
-    var vignetteIntensity: ImageProperty {
+    var vignette: ImageEffectProtocol {
         get {
-            photoEditor.vignetteIntensity
+            photoEditor.vignette
         } set {
-            photoEditor.vignetteIntensity = newValue
+            photoEditor.vignette = newValue
         }
     }
 
-    var vignetteRadius: ImageProperty {
+    var bloom: ImageEffectProtocol {
         get {
-            photoEditor.vignetteRadius
+            photoEditor.bloom
         } set {
-            photoEditor.vignetteRadius = newValue
+            photoEditor.bloom = newValue
         }
-    }
-
-    var bloomIntensity: ImageProperty {
-        get {
-            photoEditor.bloomIntensity
-        } set {
-            photoEditor.bloomIntensity = newValue
-        }
-    }
-
-    var bloomRadius: ImageProperty {
-        get {
-            photoEditor.bloomRadius
-        } set {
-            photoEditor.bloomRadius = newValue
-        }
-    }
-
-    // MARK: Lifecycle
-
-    init(photoEditor: PhotoEditor & PhotoEditorFilter & PhotoEditorTexture & PhotoEditorImageProperties = PhotoEditorService()) {
-        self.photoEditor = photoEditor
     }
 
     // MARK: Functions
@@ -240,7 +236,7 @@ final class MainViewModel {
     }
 
     func applyRandomFilter() {
-        let filters = DataStorage.shared.filtersCategories.flatMap(\.filters)
+        let filters = dataService.filtersCategories.flatMap(\.filters)
         guard let randomElement = filters.randomElement() else {
             return
         }
@@ -252,7 +248,7 @@ final class MainViewModel {
     }
 
     func applyRandomTexture() {
-        let textures = DataStorage.shared.texturesCategories.flatMap(\.textures)
+        let textures = dataService.texturesCategories.flatMap(\.textures)
         guard let randomElement = textures.randomElement() else {
             return
         }
@@ -263,15 +259,11 @@ final class MainViewModel {
         photoEditor.removeFilter()
     }
 
-    func updateTextureBlendMode(to blendMode: BlendMode) {
-        photoEditor.updateTextureBlendMode(to: blendMode)
-    }
-
     func closeImage() {
         selectedItem = nil
         loadFiltersPreviews?.cancel()
         photoEditor.reset()
-        DataStorage.shared.filtersPreview = []
+        dataService.removePreviews()
     }
 
     func saveImageToPhotoLibrary() {
@@ -280,7 +272,7 @@ final class MainViewModel {
             case let .success(success):
                 Task {
                     await MainActor.run {
-                        Vibration.success()
+                        HapticFeedback.success()
                     }
                 }
 
@@ -304,8 +296,7 @@ final class MainViewModel {
             {
                 // TODO: Может вместо того, чтобы отдельно передавать CIImage и ориентацию передавать UIImage?
                 photoEditor.updateSourceImage(ciImage, orientation: uiImage.imageOrientation)
-                await DataStorage.shared.createFiltersPreviews(with: ciImage)
-                filtersPreview = DataStorage.shared.filtersPreview
+                await dataService.createFiltersPreviews(with: ciImage)
             }
             isLoadingFiltersPreviews = false
         }

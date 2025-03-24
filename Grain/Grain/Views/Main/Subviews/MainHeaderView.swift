@@ -31,7 +31,7 @@ struct MainHeaderView: View {
                     Spacer()
                 }
             }
-            Image("grain") // TODO: Update color
+            Image("grain")
                 .resizable()
                 .frame(width: 50, height: 50)
                 .opacity(0.5)

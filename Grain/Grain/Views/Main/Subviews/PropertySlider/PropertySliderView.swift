@@ -5,7 +5,7 @@ import SwiftUI
 struct PropertySliderView: View {
     // MARK: SwiftUI Properties
 
-    @Binding var property: ImageProperty
+    @Binding var property: ImagePropertyProtocol
 
     // MARK: Content Properties
 

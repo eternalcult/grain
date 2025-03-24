@@ -1,4 +1,3 @@
-import AppCore
 import SwiftUI
 
 struct PhotoEditorView: View {
@@ -35,7 +34,7 @@ struct PhotoEditorView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .opacity(viewModel.showsFilteredImage ? 1 : 0)
                             .onLongPressGesture {} onPressingChanged: { isPressing in
-                                Vibration.soft()
+                                HapticFeedback.soft()
                                 viewModel.showsFilteredImage = !isPressing
                             }
                     }
