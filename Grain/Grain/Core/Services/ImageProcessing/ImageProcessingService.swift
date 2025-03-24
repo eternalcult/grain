@@ -99,7 +99,6 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
             currentCiImage = try updateVignette()
             currentCiImage = try updateBloom()
 
-
             if let currentCiImage {
                 print("return updated value FINAL")
                 return currentCiImage

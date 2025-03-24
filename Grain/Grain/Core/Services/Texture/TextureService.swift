@@ -42,7 +42,8 @@ final class TextureService: TextureServiceProtocol {
         }
         guard let uiImage = UIImage(named: texture.filename),
               let cgImage = uiImage.cgImage,
-              let configuredTexture = try configureTexture(CIImage(cgImage: cgImage), size: processedCiImage.extent.size) else {
+              let configuredTexture = try configureTexture(CIImage(cgImage: cgImage), size: processedCiImage.extent.size)
+        else {
             throw TextureServiceError.textureDoesntExistOrHasWrongName
         }
         let blendMode = blendMode.ciFilter
@@ -63,7 +64,6 @@ final class TextureService: TextureServiceProtocol {
 }
 
 private extension TextureService {
-
     private func configureTexture(_ texture: CIImage, size: CGSize) throws -> CIImage? {
         let resized = resizeImageToAspectFill(image: texture, targetSize: size)
         let alphaFilter = CIFilter.colorMatrix()

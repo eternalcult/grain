@@ -8,7 +8,6 @@ enum TextureServiceError: LocalizedError {
     /// Проблема с наложением текстуры
     case overlayIssue
 
-
     // MARK: Computed Properties
 
     /// User-frienly описание ошибки
