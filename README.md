@@ -7,7 +7,7 @@
 ![swift](https://img.shields.io/badge/Language-Swift-blue) ![mvvm+r](https://img.shields.io/badge/Architecture-MVVM+Router-blue) ![swiftUI](https://img.shields.io/badge/UI-SwiftUI-blue) ![ios17](https://img.shields.io/badge/Minimum_Deployment-iOS17-blue) ![DI](https://img.shields.io/badge/DI-Factory-blue) ![CI/CD](https://img.shields.io/badge/CI/CD-Xcode_Cloud-blue)
 
 ## Документация
-Чтобы собрать документацию: Shift + Control + Command + D
+Cобрать документацию можно в Xcode с помощью: Shift + Control + Command + D
 
 ## Зависимости
 
