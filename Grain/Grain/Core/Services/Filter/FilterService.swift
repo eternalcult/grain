@@ -26,19 +26,14 @@ final class FilterService: FilterServiceProtocol {
         }
     }
 
-    func removeFilter() {
+    func clear() {
         currentFilter = nil
     }
 
-    func applyFilter(to processedCiImage: CIImage?) -> Result<CIImage, Error> {
-        do {
-            guard let processedCiImage, let currentFilter else {
-                throw PhotoEditorError.unknown // TODO: Добавить тип ошибки
-            }
-            let updatedImage = try lutsManager.apply(currentFilter, for: processedCiImage)
-            return .success(updatedImage)
-        } catch {
-            return .failure(error)
+    func applyFilterIfNeeded(to processedCiImage: CIImage) throws -> CIImage {
+        guard let currentFilter else {
+            return processedCiImage
         }
+        return try lutsManager.apply(currentFilter, for: processedCiImage)
     }
 }

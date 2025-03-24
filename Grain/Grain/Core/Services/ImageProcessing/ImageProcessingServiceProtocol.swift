@@ -40,7 +40,7 @@ protocol ImageProcessingServiceProtocol {
     /// Обновить значения у текущего изображения
     /// - Parameter processedCiImage: Изображение у которого будут изменены свойства
     /// - Returns: Возвращает CIImage?
-    func updatePropertiesAndEffects(to processedCiImage: CIImage?) -> CIImage?
+    func updatePropertiesAndEffects(to processedCiImage: CIImage) throws -> CIImage
 
     /// Возвращает к исходным значениям все ImageEffects
     func resetEffects()

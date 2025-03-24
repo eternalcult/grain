@@ -84,7 +84,7 @@ final class PhotoEditorService: PhotoEditor {
         processedCiImage = nil
         finalImage = nil
         histogram = nil
-        filterService.removeFilter()
+        filterService.clear()
         textureService.clear()
         imageProcessingService.reset()
         resetEffects()
@@ -111,7 +111,7 @@ extension PhotoEditorService {
 
     func removeFilter() {
         logger.info(#function)
-        filterService.removeFilter()
+        filterService.clear()
         updateImage()
     }
 }
@@ -319,14 +319,16 @@ extension PhotoEditorService: PhotoEditorEffects {
     func resetEffects() {
         logger.info(#function)
         imageProcessingService.resetEffects()
-        updateImage()
+        if sourceImage != nil {
+            updateImage()
+        }
     }
 }
 
 // MARK: Private methods
 
 private extension PhotoEditorService {
-    func renderImage() {
+    func renderImage() throws {
         logger.info(#function)
         do {
             if let uiImage = processedCiImage?.renderToUIImage(with: context, orientation: sourceImageOrientation) {
@@ -335,13 +337,11 @@ private extension PhotoEditorService {
                 throw PhotoEditorError.failedToRenderImage
             }
         } catch {
-            Crashlytics.crashlytics().record(error: error)
-            errorMessage = error.localizedDescription
-            logger.error("\(#function) \(error.localizedDescription)")
+            throw error
         }
     }
 
-    func renderHistogram() {
+    func renderHistogram() throws {
         logger.info(#function)
         let filter = CIFilter.histogramDisplay()
         filter.inputImage = processedCiImage
@@ -350,52 +350,43 @@ private extension PhotoEditorService {
 
         if let output = filter.outputImage {
             histogram = output.renderToUIImage(with: context)
+        } else {
+            throw PhotoEditorError.histogramRenderIssue
         }
     }
 
-    func downscale(image: CIImage, scale: CGFloat) -> CIImage? {
+    func downscale(image: CIImage, scale: CGFloat) throws -> CIImage {
         logger.info(#function)
         let filter = CIFilter(name: "CILanczosScaleTransform")!
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(scale, forKey: kCIInputScaleKey)
-        return filter.outputImage
+        if let outputImage = filter.outputImage {
+            return outputImage
+        } else {
+            throw PhotoEditorError.downscalingIssue
+        }
     }
 
+    // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить. При рендеринге используется это же изображение низкого качества.
     func updateImage() {
         logger.info(#function)
-        guard let sourceCiImage else { return } // TODO: Handle errors
-
-        // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить
-        // TODO: При рендеринге используется это же изображение низкого качества, исправить
-        processedCiImage = downscale(
-            image: sourceCiImage,
-            scale: 0.5
-        )
-        processedCiImage = imageProcessingService.updatePropertiesAndEffects(to: processedCiImage)
-
-        if filterService.hasFilter {
-            let applyLutResult = filterService.applyFilter(to: processedCiImage)
-            switch applyLutResult {
-            case let .success(lutImage):
-                processedCiImage = lutImage
-            case let .failure(error):
-                Crashlytics.crashlytics().record(error: error)
-                errorMessage = error.localizedDescription
-            }
+        do {
+            guard let sourceCiImage else { throw PhotoEditorError.sourceImageIsMissingWhileTryingToUpdateImage }
+            guard var processedCiImage else { throw PhotoEditorError.processedImageIsMissingWhileTryingToUpdateImage }
+            processedCiImage = try downscale(
+                image: sourceCiImage,
+                scale: 0.5
+            )
+            processedCiImage = try imageProcessingService.updatePropertiesAndEffects(to: processedCiImage)
+            processedCiImage = try filterService.applyFilterIfNeeded(to: processedCiImage)
+            processedCiImage = try textureService.overlayTextureIfNeeded(to: processedCiImage)
+            self.processedCiImage = processedCiImage
+            try renderHistogram()
+            try renderImage()
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            errorMessage = error.localizedDescription
+            logger.error("\(#function) \(error.localizedDescription)")
         }
-
-        if textureService.hasTexture {
-            let overlayTextureResult = textureService.overlayTexture(to: processedCiImage)
-            switch overlayTextureResult {
-            case let .success(texturedImage):
-                processedCiImage = texturedImage
-            case let .failure(error):
-                Crashlytics.crashlytics().record(error: error)
-                errorMessage = error.localizedDescription
-            }
-        }
-
-        renderHistogram()
-        renderImage()
     }
 }

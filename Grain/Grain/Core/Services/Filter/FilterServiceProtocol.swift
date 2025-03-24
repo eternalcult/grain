@@ -15,8 +15,8 @@ protocol FilterServiceProtocol {
 
     /// Применить фильтр к изображению
     /// - Parameter processedCiImage: Изображение, к которому будет применен фильтр
-    /// - Returns: При успехе возвращает обновленный CIImage или ошибку
-    func applyFilter(to processedCiImage: CIImage?) -> Result<CIImage, Error>
+    /// - Returns: Если текущий фильтр не выбран, возвращает  processedCiImage без изменений
+    func applyFilterIfNeeded(to processedCiImage: CIImage) throws -> CIImage
     /// Удаляет текущий фильтр
-    func removeFilter()
+    func clear()
 }
