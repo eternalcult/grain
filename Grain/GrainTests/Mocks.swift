@@ -5,12 +5,14 @@ let mockValidFilter = Filter(
     id: 1,
     title: "Valid filter",
     desc: "Valid filter description",
-    filename: "Polaroid 600"
+    dimension: 33,
+    filename: "Amelie"
 )
 let mockInvalidFilter = Filter(
     id: 0,
     title: "Invalid filter",
     desc: "Invalid filter description",
+    dimension: 33,
     filename: "mock_filter"
 )
 let mockValidTexture = Texture(

@@ -10,12 +10,6 @@ struct GrainApp: App {
     @AppStorage("launchCounter") private var launchCounter: Int = 0
     @AppStorage("hasLaunchedBefore") private var hasLaunchedBefore: Bool = false
 
-    // MARK: Properties
-
-    // MARK: DI
-
-    @ObservationIgnored @Injected(\.dataService) private var dataService
-
     // MARK: Computed Properties
 
     var body: some Scene {
@@ -39,7 +33,6 @@ struct GrainApp: App {
     private var mainView: some View {
         MainView()
             .onAppear {
-                dataService.configureFiltersDataIfNeeded()
                 launchCounter += 1
                 askReviewIfNeeded()
             }
