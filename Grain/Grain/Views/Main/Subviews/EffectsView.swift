@@ -7,7 +7,7 @@ struct EffectsView: View {
 
     // MARK: Lifecycle
 
-    init(with parentViewModel: MainViewModel) { // TODO: Вот тут случайно не retain cycle получается?
+    init(with parentViewModel: MainViewModel) {
         viewModel = parentViewModel
     }
 

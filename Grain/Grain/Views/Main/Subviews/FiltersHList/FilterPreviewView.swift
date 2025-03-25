@@ -28,7 +28,7 @@ struct FilterPreviewView: View {
 
     var body: some View {
         GeometryReader { proxy in
-            if let preview {
+            if let preview { // TODO: Убрать опционал
                 Button {
                     if shouldShowFullScreen {
                         showsFullScreen = true
@@ -52,8 +52,6 @@ struct FilterPreviewView: View {
                             FullscreenImageView(title: filter.title, desc: filter.desc, cgImage: preview, isShow: $showsFullScreen)
                         }
                 }
-            } else {
-                // TODO: Что если превью отстутвует?
             }
         }
     }

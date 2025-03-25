@@ -1,3 +1,4 @@
+import os
 import CoreImage
 import Factory
 import SwiftData
@@ -7,6 +8,7 @@ import SwiftData
 @Observable final class DataStorageService: DataStorageProtocol {
     // MARK: Properties
 
+    private let logger = Logger.dataStorage
     private(set) var filtersCategories: [FiltersCategory] = []
     private(set) var texturesCategories: [TexturesCategory] = []
     private(set) var filtersPreview = [FilterPreview]()
@@ -22,17 +24,16 @@ import SwiftData
             filtersCategories = try loadFilters()
             texturesCategories = try loadTextures()
         } catch {
-            print("Data storage error", error.localizedDescription) // TODO: Handle error
+            print(error.localizedDescription) // TODO: Handle error
         }
 
-        print("Filters count:", filtersCategories.flatMap(\.filters).count) // TODO: Logger
-        print("Textures count:", texturesCategories.flatMap(\.textures).count) // TODO: Logger
+        logger.info("Filters count: \(self.filtersCategories.flatMap(\.filters).count)")
+        logger.info("Textures count: \(self.texturesCategories.flatMap(\.textures).count)")
     }
 
     // MARK: Functions
 
     func createFiltersPreviews(with image: CIImage) async {
-        print("Creating previews for filters") // TODO: Logger
         let filters = filtersCategories.flatMap(\.filters)
         filtersPreview = filters.map {
             FilterPreview(

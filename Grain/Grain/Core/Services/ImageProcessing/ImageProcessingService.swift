@@ -100,7 +100,6 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
             currentCiImage = try updateBloom()
 
             if let currentCiImage {
-                print("return updated value FINAL")
                 return currentCiImage
             } else {
                 throw ImageProcessingError.currentCiImageIsMissing
@@ -138,10 +137,7 @@ private extension ImageProcessingService {
         filter.setValue(currentCiImage, forKey: kCIInputImageKey) // Устанавливаем изображение как входные данные фильтра
         filter.setValue(property.current, forKey: propertyKey) // Устанавливаем значение для фильтра
 
-        print("update property \(property.title)\(property.current)")
-
         if let outputImage = filter.outputImage {
-            print("return updated value")
             return outputImage
         } else {
             throw ImageProcessingError.cantUpdateProperty(propertyName: property.title)

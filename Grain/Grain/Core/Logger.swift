@@ -14,4 +14,5 @@ extension Logger {
 
 extension Logger {
     static let photoEditor = Logger(category: "Photo Editor")
+    static let dataStorage = Logger(category: "Data Storage")
 }
