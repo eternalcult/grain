@@ -1,6 +1,6 @@
-import os
 import CoreImage
 import Factory
+import os
 import SwiftData
 
 // MARK: - DataStorageService
@@ -8,10 +8,11 @@ import SwiftData
 @Observable final class DataStorageService: DataStorageProtocol {
     // MARK: Properties
 
-    private let logger = Logger.dataStorage
     private(set) var filtersCategories: [FiltersCategory] = []
     private(set) var texturesCategories: [TexturesCategory] = []
     private(set) var filtersPreview = [FilterPreview]()
+
+    private let logger = Logger.dataStorage
 
     // MARK: DI
 
@@ -27,8 +28,8 @@ import SwiftData
             print(error.localizedDescription) // TODO: Handle error
         }
 
-        logger.info("Filters count: \(self.filtersCategories.flatMap(\.filters).count)")
-        logger.info("Textures count: \(self.texturesCategories.flatMap(\.textures).count)")
+        logger.info("Filters count: \(filtersCategories.flatMap(\.filters).count)")
+        logger.info("Textures count: \(texturesCategories.flatMap(\.textures).count)")
     }
 
     // MARK: Functions
