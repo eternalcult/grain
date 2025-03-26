@@ -1,4 +1,11 @@
-# Grain - lightweight photo editor
+# Grain - lightweight photo editor [![App Store](https://img.shields.io/badge/App_Store-0D96F6?logo=app-store&logoColor=white)](https://apps.apple.com/ru/app/grain-photo-editor/id6741040418)
+
+![created at](https://img.shields.io/github/created-at/eternalcult/grain)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/eternalcult/grain/main)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/eternalcult/grain/main)
+
+
+
 
 <p align="center">
   <img src="https://github.com/eternalcult/grain/blob/main/Grain/Grain/Resources/Assets.xcassets/grain.imageset/grain-icon.png" alt="Icon" width="300" height="300">
