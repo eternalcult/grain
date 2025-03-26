@@ -4,9 +4,6 @@
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/eternalcult/grain/main)
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/eternalcult/grain/main)
 
-
-
-
 <p align="center">
   <img src="https://github.com/eternalcult/grain/blob/main/Grain/Grain/Resources/Assets.xcassets/grain.imageset/grain-icon.png" alt="Icon" width="300" height="300">
 </p>
@@ -16,16 +13,17 @@
 ## Особенности
 
 ## Документация
+
 Cобрать документацию можно в Xcode с помощью: Shift + Control + Command + D
 
 ## Зависимости
 
-- **[Firebase](https://github.com/firebase/firebase-ios-sdk)**
-- **[Factory](https://github.com/hmlongco/Factory)**
+- **[Firebase](https://github.com/firebase/firebase-ios-sdk)** – Analytics & Crashlytics. В Crashlytics отправляются не только краши, но и все ошибки, которые могут возникнуть в приложении.
+- **[Factory](https://github.com/hmlongco/Factory)** – используется для Dependency Injection на проекте.
 
 ## Что такое .cubedata?
 
-- Файлы .cubedata - это .cube файлы (стандартный lut формат, который используется во всех фото/видео редакторах для покраски исходников) переконвертированные в данные, которые поддерживает CIColorCubeFilter. Для этого в отдельном репозитории лежит небольшая аппка, которая создает .cubedata файлы через drag'n'drop
+Файлы .cubedata — это .cube-файлы (стандартный LUT-формат, используемый во всех фото- и видеоредакторах для цветокоррекции), переконвертированные в формат, поддерживаемый CIColorCubeFilter. Для этого в отдельном репозитории есть небольшое приложение, которое позволяет создавать .cubedata файлы с помощью drag & drop.
 <p align="center">
   <img src="https://s6.gifyu.com/images/bzgEg.gif" width="500"/>
 </p>
