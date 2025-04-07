@@ -11,6 +11,8 @@
 ![swift](https://img.shields.io/badge/Language-Swift-blue) ![mvvm+r](https://img.shields.io/badge/Architecture-MVVM+Router-blue) ![swiftUI](https://img.shields.io/badge/UI-SwiftUI-blue) ![ios17](https://img.shields.io/badge/Minimum_Deployment-iOS17-blue) ![DI](https://img.shields.io/badge/DI-Factory-blue) ![CI/CD](https://img.shields.io/badge/CI/CD-Xcode_Cloud-blue)
 
 ## Особенности
+### Почему в проекте нет @Published, @StateObject и т.д?
+Начиная с iOS 17 SwiftUI предоставляет поддержку Observation. [Migrating from the Observable Object protocol to the Observable macro](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro)
 
 ## Документация
 
