@@ -24,7 +24,7 @@ protocol PhotoEditor: PhotoEditorImageProperties, PhotoEditorFilters, PhotoEdito
 
     /// Сохранить изображение в галлерею
     /// - Parameter completion: Результирующий completion
-    func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void)
+    func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void) // TODO: Result completion
     /// Удаляет исходное изображение и возвращает все исходные значения
     func reset()
 }

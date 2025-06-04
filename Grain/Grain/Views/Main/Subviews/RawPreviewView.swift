@@ -4,13 +4,16 @@ import SwiftUI
 struct RawPreviewView: View {
     // MARK: Properties
 
-    var didTap: (() -> Void)?
+    var didTap: OptionalCompletion
 
     private let isSelected: Bool
 
     // MARK: Lifecycle
 
-    init(isSelected: Bool = false, didTap: (() -> Void)?) {
+    init(
+        isSelected: Bool = false,
+        didTap: OptionalCompletion
+    ) {
         self.isSelected = isSelected
         self.didTap = didTap
     }

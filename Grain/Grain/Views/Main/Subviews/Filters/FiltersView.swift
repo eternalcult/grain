@@ -4,7 +4,7 @@ struct FiltersView: View {
     // MARK: SwiftUI Properties
 
     @Environment(MainRouter.self) private var router
-    @State private var viewModel: MainViewModel
+    @State private var viewModel: MainViewModel // TODO: Может не стейт, а @Bindable или @ObservedObject?
 
     // MARK: Lifecycle
 

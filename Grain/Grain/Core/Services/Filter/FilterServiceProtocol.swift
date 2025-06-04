@@ -11,12 +11,15 @@ protocol FilterServiceProtocol {
     ///   - filter: Выбранный фильтр
     ///   - image: Текущее изображение
     /// - Returns: Превью текущего изображения с наложенным фильтром
-    func createPreview(_ filter: Filter, for image: CIImage) throws -> CGImage
+    func createPreview(
+        _ filter: Filter,
+        for image: CIImage
+    ) throws -> CGImage
     /// Обновляет currentFilter
     /// - Parameters:
     ///   - newFilter: Новый фильтр
     ///   - completion: Вызывается только если id старого и нового фильтра различались
-    func prepare(to newFilter: Filter, completion: () -> Void)
+    func prepare(to newFilter: Filter, completion: Completion)
     /// Применить фильтр к изображению
     /// - Parameter processedCiImage: Изображение, к которому будет применен фильтр
     /// - Returns: Если текущий фильтр не выбран, возвращает  processedCiImage без изменений

@@ -17,7 +17,10 @@ final class MainRouter: Router {
     // MARK: Content Methods
 
     @ViewBuilder
-    func view(for route: any Route, completion _: (() -> Void)? = nil) -> some View {
+    func view(
+        for route: any Route,
+        completion _: OptionalCompletion = nil
+    ) -> some View {
         if let route = route as? MainRoute {
             switch route {
             case let .gallery(type):

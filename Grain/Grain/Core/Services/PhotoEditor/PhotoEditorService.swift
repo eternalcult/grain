@@ -45,6 +45,7 @@ final class PhotoEditorService: PhotoEditor {
         imageProcessingService.reset()
     }
 
+    // TODO: Result completion
     func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void) {
         logger.info(#function)
         if let processedCiImage, let uiImage = processedCiImage.renderToUIImage(with: context, orientation: sourceImageOrientation) {
