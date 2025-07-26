@@ -43,6 +43,19 @@ struct PhotoEditorView: View {
                     }
                 }
                 HStack(spacing: 0) {
+                    if viewModel.hasModifiedValues {
+                        Button {
+                            viewModel.clearAll()
+                        } label: {
+                            Image(systemName: "arrow.trianglehead.counterclockwise")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .padding(4)
+                                .tint(Color.text)
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                        }
+                    }
                     Button {
                         viewModel.showsHistogram.toggle()
                     } label: {

@@ -48,6 +48,10 @@ final class MainViewModel {
         photoEditor.errorMessage
     }
 
+    var hasModifiedValues: Bool {
+        hasModifiedProperties || hasModifiedEffects || hasTexture || hasFilter
+    }
+
     func closeImage() {
         selectedItem = nil
         loadFiltersPreviews?.cancel()
@@ -90,11 +94,20 @@ final class MainViewModel {
             isLoadingFiltersPreviews = false
         }
     }
+
+    func clearAll() {
+        photoEditor.clearAll()
+    }
 }
 
 // MARK: Filters
 
 extension MainViewModel {
+
+    var hasFilter: Bool {
+        photoEditor.hasFilter
+    }
+
     var currentFilter: Filter? {
         photoEditor.currentFilter
     }

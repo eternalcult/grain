@@ -90,6 +90,13 @@ final class PhotoEditorService: PhotoEditor {
         imageProcessingService.reset()
         resetEffects()
     }
+
+    func clearAll() {
+        removeFilter()
+        resetImageProperties()
+        resetEffects()
+        removeTexture()
+    }
 }
 
 // MARK: PhotoEditorFilter - свойтва и методы связанные с фильтрами
