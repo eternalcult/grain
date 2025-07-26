@@ -3,13 +3,7 @@ import SwiftUI
 struct EffectsView: View {
     // MARK: SwiftUI Properties
 
-    @State private var viewModel: MainViewModel
-
-    // MARK: Lifecycle
-
-    init(with parentViewModel: MainViewModel) {
-        viewModel = parentViewModel
-    }
+    @Environment(MainViewModel.self) private var viewModel
 
     // MARK: Content Properties
 
@@ -49,13 +43,25 @@ struct EffectsView: View {
                 VStack(spacing: 0) {
                     PropertyDoubleSliderView(
                         title: "Vignette",
-                        mainProperty: $viewModel.vignette.intensity,
-                        additionalProperty: $viewModel.vignette.radius
+                        mainProperty: Binding(
+                            get: { viewModel.vignette.intensity },
+                            set: { viewModel.vignette.intensity = $0 }
+                        ),
+                        additionalProperty: Binding(
+                            get: { viewModel.vignette.radius },
+                            set: { viewModel.vignette.radius = $0 }
+                        )
                     )
                     PropertyDoubleSliderView(
                         title: "Bloom",
-                        mainProperty: $viewModel.bloom.intensity,
-                        additionalProperty: $viewModel.bloom.radius
+                        mainProperty: Binding(
+                            get: { viewModel.bloom.intensity },
+                            set: { viewModel.bloom.intensity = $0 }
+                        ),
+                        additionalProperty: Binding(
+                            get: { viewModel.bloom.radius },
+                            set: { viewModel.bloom.radius = $0 }
+                        )
                     )
                 }
             }

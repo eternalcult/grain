@@ -2,7 +2,6 @@ import Factory
 import PhotosUI
 import SwiftUI
 
-// TODO: Небольшой рефакторинг, разбить на extensions по категориям
 @Observable
 final class MainViewModel {
     // MARK: Properties

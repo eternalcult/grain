@@ -376,6 +376,9 @@
         }
       }
     },
+    "ColorControls" : {
+
+    },
     "Common Settings" : {
 
     },
@@ -2141,6 +2144,9 @@
           }
         }
       }
+    },
+    "One of color controls properties is missing" : {
+
     },
     "Overlay" : {
       "localizations" : {

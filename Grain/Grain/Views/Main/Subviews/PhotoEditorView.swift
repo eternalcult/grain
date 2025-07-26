@@ -4,13 +4,7 @@ struct PhotoEditorView: View {
     // MARK: SwiftUI Properties
 
     @Environment(MainRouter.self) private var router
-    @State private var viewModel: MainViewModel
-
-    // MARK: Lifecycle
-
-    init(with parentViewModel: MainViewModel) {
-        viewModel = parentViewModel
-    }
+    @Environment(MainViewModel.self) private var viewModel
 
     // MARK: Content Properties
 
@@ -78,12 +72,10 @@ struct PhotoEditorView: View {
 
             ScrollView(.vertical) {
                 VStack(spacing: 8) {
-                    FiltersView(with: viewModel)
-                        .environment(router)
-                    ImagePropertiesView(with: viewModel)
-                    EffectsView(with: viewModel)
-                    TexturesView(with: viewModel)
-                        .environment(router)
+                    FiltersView()
+                    ImagePropertiesView()
+                    EffectsView()
+                    TexturesView()
                 }
             }
             .scrollIndicators(.hidden)

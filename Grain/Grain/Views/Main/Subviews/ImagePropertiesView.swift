@@ -3,13 +3,7 @@ import SwiftUI
 struct ImagePropertiesView: View {
     // MARK: SwiftUI Properties
 
-    @State private var viewModel: MainViewModel
-
-    // MARK: Lifecycle
-
-    init(with parentViewModel: MainViewModel) {
-        viewModel = parentViewModel
-    }
+    @Environment(MainViewModel.self) private var viewModel
 
     // MARK: Content Properties
 
@@ -44,18 +38,78 @@ struct ImagePropertiesView: View {
             }
             if viewModel.showsSettings {
                 VStack(spacing: 0) {
-                    PropertySliderView(property: $viewModel.brightness)
-                    PropertySliderView(property: $viewModel.contrast)
-                    PropertySliderView(property: $viewModel.saturation)
-                    PropertySliderView(property: $viewModel.exposure)
-                    PropertySliderView(property: $viewModel.vibrance)
-                    PropertySliderView(property: $viewModel.highlights)
-                    PropertySliderView(property: $viewModel.shadows)
-                    PropertySliderView(property: $viewModel.temperature)
-                    PropertySliderView(property: $viewModel.tint)
-                    PropertySliderView(property: $viewModel.gamma)
-                    PropertySliderView(property: $viewModel.noiseReduction)
-                    PropertySliderView(property: $viewModel.sharpness)
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.brightness },
+                            set: { viewModel.brightness = $0 }
+                        )
+                    )
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.contrast },
+                            set: { viewModel.contrast = $0 }
+                        )
+                    )
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.saturation },
+                            set: { viewModel.saturation = $0 }
+                        )
+                    )
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.exposure },
+                            set: { viewModel.exposure = $0 }
+                        )
+                    )
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.vibrance },
+                            set: { viewModel.vibrance = $0 }
+                        )
+                    )
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.highlights },
+                            set: { viewModel.highlights = $0 }
+                        )
+                    )
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.shadows },
+                            set: { viewModel.shadows = $0 }
+                        )
+                    )
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.temperature },
+                            set: { viewModel.temperature = $0 }
+                        )
+                    )
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.tint },
+                            set: { viewModel.tint = $0 }
+                        )
+                    )
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.gamma },
+                            set: { viewModel.gamma = $0 }
+                        )
+                    )
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.noiseReduction },
+                            set: { viewModel.noiseReduction = $0 }
+                        )
+                    )
+                    PropertySliderView(
+                        property: Binding(
+                            get: { viewModel.sharpness },
+                            set: { viewModel.sharpness = $0 }
+                        )
+                    )
                 }
             }
         }
