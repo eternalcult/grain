@@ -50,6 +50,10 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
             .isUpdated || sharpness.isUpdated
     }
 
+    var hasModifiedEffects: Bool {
+        vignette.isUpdated || bloom.isUpdated
+    }
+
     // MARK: Lifecycle
 
     init(
@@ -109,7 +113,7 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
         }
     }
 
-    func resetEffects() { // TODO: Add reset button for effects section
+    func resetEffects() {
         vignette.setToDefault()
         bloom.setToDefault()
     }

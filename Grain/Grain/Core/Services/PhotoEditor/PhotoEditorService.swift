@@ -299,6 +299,10 @@ extension PhotoEditorService {
 // MARK: PhotoEditorEffects
 
 extension PhotoEditorService: PhotoEditorEffects {
+    var hasModifiedEffects: Bool {
+        imageProcessingService.hasModifiedEffects
+    }
+
     var vignette: ImageEffectProtocol {
         get {
             imageProcessingService.vignette

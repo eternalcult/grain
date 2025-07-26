@@ -25,6 +25,17 @@ struct EffectsView: View {
                             .foregroundStyle(Color.text.opacity(0.8))
                             .padding(.bottom, 5)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                        if viewModel.hasModifiedEffects {
+                            Button {
+                                viewModel.resetEffects()
+                            } label: {
+                                Image(systemName: "arrow.trianglehead.counterclockwise")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .tint(.text.opacity(0.8))
+                            }
+                        }
+                        Spacer()
                     }
                     Spacer()
                     Image(systemName: "triangle.fill")
