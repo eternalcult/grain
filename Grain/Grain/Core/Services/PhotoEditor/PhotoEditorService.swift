@@ -380,7 +380,7 @@ private extension PhotoEditorService {
             guard var processedCiImage else { throw PhotoEditorError.processedImageIsMissingWhileTryingToUpdateImage }
             processedCiImage = try downscale(
                 image: sourceCiImage,
-                scale: 0.5
+                scale: 0.8
             )
             processedCiImage = try imageProcessingService.updatePropertiesAndEffects(to: processedCiImage)
             processedCiImage = try filterService.applyFilterIfNeeded(to: processedCiImage)
