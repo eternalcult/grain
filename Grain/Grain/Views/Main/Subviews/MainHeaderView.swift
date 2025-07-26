@@ -17,7 +17,7 @@ struct MainHeaderView: View {
 
     var body: some View {
         ZStack {
-            if viewModel.finalImage != nil {
+            if viewModel.sourceImage != nil {
                 HStack {
                     Button {
                         router.push(MainRoute.settings)
