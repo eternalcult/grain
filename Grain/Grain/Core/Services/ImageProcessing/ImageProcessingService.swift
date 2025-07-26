@@ -89,21 +89,45 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
         currentCiImage = processedCiImage
 
         do {
-            // TODO: В виде оптимизации можно проверять isUpdated у каждого свойства и обновлять его только по необходимости
+            if brightness.isUpdated || contrast.isUpdated || saturation.isUpdated {
+                currentCiImage = try updateColorControls()
+            }
 
-            currentCiImage = try updateColorControls()
-            currentCiImage = try updateProperty(colorControlsFilter, property: brightness)
-            currentCiImage = try updateProperty(colorControlsFilter, property: contrast)
-            currentCiImage = try updateProperty(colorControlsFilter, property: saturation)
-            currentCiImage = try updateProperty(exposureAdjustFilter, property: exposure)
-            currentCiImage = try updateProperty(vibranceFilter, property: vibrance)
-            currentCiImage = try updateHS()
-            currentCiImage = try updateProperty(gammaAdjustFilter, property: gamma)
-            currentCiImage = try updateTemperatureAndTint()
-            currentCiImage = try updateProperty(noiseReductionFilter, property: noiseReduction)
-            currentCiImage = try updateProperty(noiseReductionFilter, property: sharpness)
-            currentCiImage = try updateVignette()
-            currentCiImage = try updateBloom()
+            if exposure.isUpdated {
+                currentCiImage = try updateProperty(exposureAdjustFilter, property: exposure)
+            }
+            
+            if vibrance.isUpdated {
+                currentCiImage = try updateProperty(vibranceFilter, property: vibrance)
+            }
+
+            if highlights.isUpdated || shadows.isUpdated {
+                currentCiImage = try updateHS()
+            }
+            
+            if gamma.isUpdated {
+                currentCiImage = try updateProperty(gammaAdjustFilter, property: gamma)
+            }
+
+            if temperature.isUpdated || tint.isUpdated {
+                currentCiImage = try updateTemperatureAndTint()
+            }
+            
+            if noiseReduction.isUpdated {
+                currentCiImage = try updateProperty(noiseReductionFilter, property: noiseReduction)
+            }
+            
+            if sharpness.isUpdated {
+                currentCiImage = try updateProperty(noiseReductionFilter, property: sharpness)
+            }
+            
+            if vignette.isUpdated {
+                currentCiImage = try updateVignette()
+            }
+            
+            if bloom.isUpdated {
+                currentCiImage = try updateBloom()
+            }
 
             if let currentCiImage {
                 return currentCiImage
