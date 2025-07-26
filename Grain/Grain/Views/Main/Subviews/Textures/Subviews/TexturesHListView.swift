@@ -37,7 +37,7 @@ struct TexturesHListView: View {
             ScrollViewReader { proxy in
                 ScrollView(.horizontal) {
                     HStack(spacing: 4) {
-                        RawPreviewView(isSelected: viewModel.texture == nil) {
+                        RawPreviewView(isSelected: viewModel.currentTexture == nil) {
                             viewModel.removeTexture()
                         }
                         .frame(width: 100, height: 100)
@@ -47,7 +47,7 @@ struct TexturesHListView: View {
                                     GeometryReader { geometry in
                                         TexturePreviewView(
                                             texture: texture,
-                                            isSelected: isSelected(currentTexture: texture, selectedTexture: viewModel.texture)
+                                            isSelected: isSelected(currentTexture: texture, selectedTexture: viewModel.currentTexture)
                                         ) {
                                             viewModel.applyTexture(texture)
                                         }

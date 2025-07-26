@@ -64,7 +64,7 @@ struct GalleryView: View {
                         .lineLimit(1)
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(category.textures) { texture in
-                            if let selectedTexture = viewModel.texture {
+                            if let selectedTexture = viewModel.currentTexture {
                                 TexturePreviewView(texture: texture, isSelected: selectedTexture.id == texture.id) {
                                     viewModel.applyTexture(texture)
                                 }
