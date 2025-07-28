@@ -4,7 +4,7 @@ struct MainView: View {
     // MARK: SwiftUI Properties
 
     @State private var router: MainRouter
-    @State private var viewModel = MainViewModel()
+    @State private var viewModel: MainViewModel
 
     // MARK: Lifecycle
 
@@ -22,8 +22,9 @@ struct MainView: View {
                     VStack(spacing: 0) {
                         MainHeaderView(with: viewModel)
                             .environment(router)
-                        PhotoEditorView(with: viewModel)
+                        PhotoEditorView()
                             .environment(router)
+                            .environment(viewModel)
                     }
                     .padding(.horizontal, 8)
                 } else {

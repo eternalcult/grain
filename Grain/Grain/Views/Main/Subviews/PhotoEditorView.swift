@@ -4,13 +4,7 @@ struct PhotoEditorView: View {
     // MARK: SwiftUI Properties
 
     @Environment(MainRouter.self) private var router
-    @State private var viewModel: MainViewModel
-
-    // MARK: Lifecycle
-
-    init(with parentViewModel: MainViewModel) {
-        viewModel = parentViewModel
-    }
+    @Environment(MainViewModel.self) private var viewModel
 
     // MARK: Content Properties
 
@@ -49,6 +43,19 @@ struct PhotoEditorView: View {
                     }
                 }
                 HStack(spacing: 0) {
+                    if viewModel.hasModifiedValues {
+                        Button {
+                            viewModel.clearAll()
+                        } label: {
+                            Image(systemName: "arrow.trianglehead.counterclockwise")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .padding(4)
+                                .tint(Color.text)
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                        }
+                    }
                     Button {
                         viewModel.showsHistogram.toggle()
                     } label: {
@@ -78,12 +85,10 @@ struct PhotoEditorView: View {
 
             ScrollView(.vertical) {
                 VStack(spacing: 8) {
-                    FiltersView(with: viewModel)
-                        .environment(router)
-                    ImagePropertiesView(with: viewModel)
-                    EffectsView(with: viewModel)
-                    TexturesView(with: viewModel)
-                        .environment(router)
+                    FiltersView()
+                    ImagePropertiesView()
+                    EffectsView()
+                    TexturesView()
                 }
             }
             .scrollIndicators(.hidden)

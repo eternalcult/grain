@@ -4,13 +4,7 @@ struct TexturesView: View {
     // MARK: SwiftUI Properties
 
     @Environment(MainRouter.self) private var router
-    @State private var viewModel: MainViewModel
-
-    // MARK: Lifecycle
-
-    init(with parentViewModel: MainViewModel) {
-        viewModel = parentViewModel
-    }
+    @Environment(MainViewModel.self) private var viewModel
 
     // MARK: Content Properties
 
@@ -96,7 +90,10 @@ struct TexturesView: View {
                                     .foregroundStyle(Color.text.opacity(0.8))
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            Slider(value: $viewModel.textureAlpha, in: 0 ... 1)
+                            Slider(value: Binding(
+                                get: { viewModel.textureAlpha },
+                                set: { viewModel.textureAlpha = $0 }
+                            ), in: 0 ... 1)
                                 .tint(Color.text.opacity(0.1))
                         }
                     }

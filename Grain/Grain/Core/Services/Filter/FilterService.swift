@@ -19,7 +19,10 @@ final class FilterService: FilterServiceProtocol {
 
     // MARK: Functions
 
-    func createPreview(_ filter: Filter, for image: CIImage) throws -> CGImage {
+    func createPreview(
+        _ filter: Filter,
+        for image: CIImage
+    ) throws -> CGImage {
         let cubeFilter = try createCIColorCube(for: filter)
         cubeFilter.inputImage = image
         if let output = cubeFilter.outputImage, let cgImage = context.createCGImage(output, from: output.extent) {
@@ -28,7 +31,10 @@ final class FilterService: FilterServiceProtocol {
         throw FilterServiceError.filterApplyingFailed
     }
 
-    func prepare(to newFilter: Filter, completion: () -> Void) {
+    func prepare(
+        to newFilter: Filter,
+        completion: Completion
+    ) {
         if currentFilter?.id != newFilter.id {
             currentFilter = newFilter
             completion()

@@ -45,6 +45,7 @@ final class PhotoEditorService: PhotoEditor {
         imageProcessingService.reset()
     }
 
+    // TODO: Result completion
     func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void) {
         logger.info(#function)
         if let processedCiImage, let uiImage = processedCiImage.renderToUIImage(with: context, orientation: sourceImageOrientation) {
@@ -88,6 +89,13 @@ final class PhotoEditorService: PhotoEditor {
         textureService.clear()
         imageProcessingService.reset()
         resetEffects()
+    }
+
+    func clearAll() {
+        removeFilter()
+        resetImageProperties()
+        resetEffects()
+        removeTexture()
     }
 }
 
@@ -298,6 +306,10 @@ extension PhotoEditorService {
 // MARK: PhotoEditorEffects
 
 extension PhotoEditorService: PhotoEditorEffects {
+    var hasModifiedEffects: Bool {
+        imageProcessingService.hasModifiedEffects
+    }
+
     var vignette: ImageEffectProtocol {
         get {
             imageProcessingService.vignette

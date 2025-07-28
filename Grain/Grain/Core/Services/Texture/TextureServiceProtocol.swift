@@ -14,7 +14,7 @@ protocol TextureServiceProtocol {
     /// - Parameters:
     ///   - newTexture: Новая текстура
     ///   - completion: Вызывается только если id старой и новой текстуры  различаются
-    func prepare(to newTexture: Texture, completion: () -> Void)
+    func prepare(to newTexture: Texture, completion: Completion)
     /// Изменяет прозрачность текстуры на новое значение
     /// - Parameter newValue: Новая alpha текстуры – 0...1
     func updateAlpha(to newValue: Float)

@@ -3,14 +3,18 @@ import SwiftUI
 struct TexturePreviewView: View {
     // MARK: Properties
 
-    var didTap: (() -> Void)?
+    var didTap: OptionalCompletion
 
     private let isSelected: Bool
     private let texture: Texture
 
     // MARK: Lifecycle
 
-    init(texture: Texture, isSelected: Bool = false, didTap: (() -> Void)?) {
+    init(
+        texture: Texture,
+        isSelected: Bool = false,
+        didTap: OptionalCompletion
+    ) {
         self.texture = texture
         self.isSelected = isSelected
         self.didTap = didTap

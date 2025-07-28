@@ -4,14 +4,8 @@ struct FiltersView: View {
     // MARK: SwiftUI Properties
 
     @Environment(MainRouter.self) private var router
-    @State private var viewModel: MainViewModel
-
-    // MARK: Lifecycle
-
-    init(with parentViewModel: MainViewModel) {
-        viewModel = parentViewModel
-    }
-
+    @Environment(MainViewModel.self) private var viewModel
+    
     // MARK: Content Properties
 
     var body: some View {

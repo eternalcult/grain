@@ -2,9 +2,6 @@ import CoreImage
 
 /// Отвечает за изменение стандартных настроек изображения – яркость, контрастность и т.д.
 protocol ImageProcessingServiceProtocol {
-    /// Есть ли измененные значения – значения у которых текущее значение отличается от дефолтного.
-    var hasModifiedProperties: Bool { get }
-
     /// Яркость.
     var brightness: ImagePropertyProtocol { get set }
     /// Контрастность.
@@ -30,12 +27,18 @@ protocol ImageProcessingServiceProtocol {
     /// Резкость.
     var sharpness: ImagePropertyProtocol { get set }
 
+    /// Есть ли измененные значения, текущее значение которых отличается от дефолтных
+    var hasModifiedProperties: Bool { get }
+
     // MARK: Effects
 
     /// Виньетка
     var vignette: ImageEffectProtocol { get set }
     /// Блум
     var bloom: ImageEffectProtocol { get set }
+
+    /// Есть ли измененные значения, текущее значение которых отличается от дефолтных
+    var hasModifiedEffects: Bool { get }
 
     /// Обновить значения у текущего изображения
     /// - Parameter processedCiImage: Изображение у которого будут изменены свойства

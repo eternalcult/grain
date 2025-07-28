@@ -6,7 +6,7 @@ import SwiftUI
 protocol Router: AnyObject {
     var path: NavigationPath { get set }
     associatedtype DestinationView: View
-    func view(for route: any Route, completion: (() -> Void)?) -> DestinationView
+    func view(for route: any Route, completion: OptionalCompletion) -> DestinationView
     func push(_ route: any Route)
     func pop()
     func popToRoot()

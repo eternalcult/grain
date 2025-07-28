@@ -32,6 +32,7 @@
 /* Begin PBXFileReference section */
 		C1517A9E2D34511200F61DC6 /* Grain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C196FB712D8D5BD3008A4AF7 /* GrainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1995C422E34BA6D00DB1FDD /* Grain.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Grain.xcodeproj; sourceTree = "<group>"; };
 		C1F076C32D5263B5002508B0 /* GrainFastlaneSnapshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrainFastlaneSnapshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -123,6 +124,11 @@
 				C1F076C32D5263B5002508B0 /* GrainFastlaneSnapshots.xctest */,
 				C196FB712D8D5BD3008A4AF7 /* GrainTests.xctest */,
 			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C1995C462E34BA6D00DB1FDD /* Products */ = {
+			isa = PBXGroup;
 			name = Products;
 			sourceTree = "<group>";
 		};
@@ -245,6 +251,12 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C1517A9F2D34511200F61DC6 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C1995C462E34BA6D00DB1FDD /* Products */;
+					ProjectRef = C1995C422E34BA6D00DB1FDD /* Grain.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				C1517A9D2D34511200F61DC6 /* Grain */,
@@ -494,7 +506,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.vlad-antonov.Grain";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -534,7 +546,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.vlad-antonov.Grain";
 				PRODUCT_NAME = "$(TARGET_NAME)";

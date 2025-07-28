@@ -50,6 +50,10 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
             .isUpdated || sharpness.isUpdated
     }
 
+    var hasModifiedEffects: Bool {
+        vignette.isUpdated || bloom.isUpdated
+    }
+
     // MARK: Lifecycle
 
     init(
@@ -85,19 +89,45 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
         currentCiImage = processedCiImage
 
         do {
-            // TODO: В виде оптимизации можно проверять isUpdated у каждого свойства и обновлять его только по необходимости
-            currentCiImage = try updateProperty(colorControlsFilter, property: brightness)
-            currentCiImage = try updateProperty(colorControlsFilter, property: contrast)
-            currentCiImage = try updateProperty(colorControlsFilter, property: saturation)
-            currentCiImage = try updateProperty(exposureAdjustFilter, property: exposure)
-            currentCiImage = try updateProperty(vibranceFilter, property: vibrance)
-            currentCiImage = try updateHS()
-            currentCiImage = try updateProperty(gammaAdjustFilter, property: gamma)
-            currentCiImage = try updateTemperatureAndTint()
-            currentCiImage = try updateProperty(noiseReductionFilter, property: noiseReduction)
-            currentCiImage = try updateProperty(noiseReductionFilter, property: sharpness)
-            currentCiImage = try updateVignette()
-            currentCiImage = try updateBloom()
+            if brightness.isUpdated || contrast.isUpdated || saturation.isUpdated {
+                currentCiImage = try updateColorControls()
+            }
+
+            if exposure.isUpdated {
+                currentCiImage = try updateProperty(exposureAdjustFilter, property: exposure)
+            }
+            
+            if vibrance.isUpdated {
+                currentCiImage = try updateProperty(vibranceFilter, property: vibrance)
+            }
+
+            if highlights.isUpdated || shadows.isUpdated {
+                currentCiImage = try updateHS()
+            }
+            
+            if gamma.isUpdated {
+                currentCiImage = try updateProperty(gammaAdjustFilter, property: gamma)
+            }
+
+            if temperature.isUpdated || tint.isUpdated {
+                currentCiImage = try updateTemperatureAndTint()
+            }
+            
+            if noiseReduction.isUpdated {
+                currentCiImage = try updateProperty(noiseReductionFilter, property: noiseReduction)
+            }
+            
+            if sharpness.isUpdated {
+                currentCiImage = try updateProperty(noiseReductionFilter, property: sharpness)
+            }
+            
+            if vignette.isUpdated {
+                currentCiImage = try updateVignette()
+            }
+            
+            if bloom.isUpdated {
+                currentCiImage = try updateBloom()
+            }
 
             if let currentCiImage {
                 return currentCiImage
@@ -109,7 +139,7 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
         }
     }
 
-    func resetEffects() { // TODO: Add reset button for effects section
+    func resetEffects() {
         vignette.setToDefault()
         bloom.setToDefault()
     }
@@ -132,6 +162,25 @@ final class ImageProcessingService: ImageProcessingServiceProtocol {
 }
 
 private extension ImageProcessingService {
+    func updateColorControls() throws -> CIImage {
+        guard let brightnessKey = brightness.propertyKey,
+              let contrastKey = contrast.propertyKey,
+              let saturationKey = saturation.propertyKey else {
+            throw ImageProcessingError.propertyKeyIsMissing(propertyName: "One of color controls properties is missing")
+        }
+
+        colorControlsFilter.setValue(currentCiImage, forKey: kCIInputImageKey)
+        colorControlsFilter.setValue(brightness.current, forKey: brightnessKey)
+        colorControlsFilter.setValue(contrast.current, forKey: contrastKey)
+        colorControlsFilter.setValue(saturation.current, forKey: saturationKey)
+
+        if let outputImage = colorControlsFilter.outputImage {
+            return outputImage
+        } else {
+            throw ImageProcessingError.cantUpdateProperty(propertyName: "ColorControls")
+        }
+    }
+
     func updateProperty(_ filter: CIFilter, property: some ImagePropertyProtocol) throws -> CIImage {
         guard let propertyKey = property.propertyKey else { throw ImageProcessingError.propertyKeyIsMissing(propertyName: property.title) }
         filter.setValue(currentCiImage, forKey: kCIInputImageKey) // Устанавливаем изображение как входные данные фильтра

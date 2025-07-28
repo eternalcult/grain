@@ -2,7 +2,6 @@ import Factory
 import PhotosUI
 import SwiftUI
 
-// TODO: Небольшой рефакторинг, разбить на extensions по категориям
 @Observable
 final class MainViewModel {
     // MARK: Properties
@@ -16,7 +15,6 @@ final class MainViewModel {
     var showsTextures = false
     var showsHistogram = false
     var isLoadingFiltersPreviews: Bool = false
-    var showsPalette = false
 
     var showErrorAlert = false {
         didSet {
@@ -33,29 +31,10 @@ final class MainViewModel {
 
     // MARK: Computed Properties
 
-    var filtersPreview: [FilterPreview] {
-        dataService.filtersPreview
-    }
-
-    var filtersCategories: [FiltersCategory] {
-        dataService.filtersCategories
-    }
-
-    var texturesCategories: [TexturesCategory] {
-        dataService.texturesCategories
-    }
-
     var finalImage: Image? {
         photoEditor.finalImage
     }
 
-    var texture: Texture? {
-        photoEditor.texture
-    }
-
-    var currentFilter: Filter? {
-        photoEditor.currentFilter
-    }
 
     var sourceImage: Image? {
         photoEditor.sourceImage
@@ -69,10 +48,102 @@ final class MainViewModel {
         photoEditor.errorMessage
     }
 
-    var hasModifiedProperties: Bool {
-        photoEditor.hasModifiedProperties
+    var hasModifiedValues: Bool {
+        hasModifiedProperties || hasModifiedEffects || hasTexture || hasFilter
     }
 
+    func closeImage() {
+        selectedItem = nil
+        loadFiltersPreviews?.cancel()
+        photoEditor.reset()
+        dataService.removePreviews()
+    }
+
+    func saveImageToPhotoLibrary() {
+        photoEditor.saveImageToPhotoLibrary { result in
+            switch result {
+            case let .success(success):
+                Task {
+                    await MainActor.run {
+                        HapticFeedback.success()
+                    }
+                }
+
+            // TODO: Show success alert or snackbar
+            case let .failure(failure):
+                break // TODO: Show error alert or snackbar
+            }
+        }
+    }
+
+    func prepareForEditing() {
+        guard let selectedItem else {
+            return
+        }
+        loadFiltersPreviews?.cancel()
+        loadFiltersPreviews = Task {
+            isLoadingFiltersPreviews = true
+            showsFilters = false
+            if let data = try? await selectedItem.loadTransferable(type: Data.self),
+               let uiImage = UIImage(data: data), let ciImage = CIImage(data: data)
+            {
+                // TODO: Может вместо того, чтобы отдельно передавать CIImage и ориентацию передавать UIImage?
+                photoEditor.updateSourceImage(ciImage, orientation: uiImage.imageOrientation)
+                await dataService.createFiltersPreviews(with: ciImage)
+            }
+            isLoadingFiltersPreviews = false
+        }
+    }
+
+    func clearAll() {
+        photoEditor.clearAll()
+    }
+}
+
+// MARK: Filters
+
+extension MainViewModel {
+
+    var hasFilter: Bool {
+        photoEditor.hasFilter
+    }
+
+    var currentFilter: Filter? {
+        photoEditor.currentFilter
+    }
+
+    var filtersPreview: [FilterPreview] {
+        dataService.filtersPreview
+    }
+
+    var filtersCategories: [FiltersCategory] {
+        dataService.filtersCategories
+    }
+
+    var texturesCategories: [TexturesCategory] {
+        dataService.texturesCategories
+    }
+
+    func applyFilter(_ newFilter: Filter) {
+        photoEditor.applyFilter(newFilter)
+    }
+
+    func applyRandomFilter() {
+        let filters = dataService.filtersCategories.flatMap(\.filters)
+        guard let randomElement = filters.randomElement() else {
+            return
+        }
+        applyFilter(randomElement)
+    }
+
+    func removeFilter() {
+        photoEditor.removeFilter()
+    }
+}
+
+// MARK: Image properties
+
+extension MainViewModel {
     var brightness: ImagePropertyProtocol {
         get {
             photoEditor.brightness
@@ -181,7 +252,25 @@ final class MainViewModel {
         }
     }
 
-    // MARK: Texture
+    var hasModifiedProperties: Bool {
+        photoEditor.hasModifiedProperties
+    }
+
+    func resetSettings() {
+        photoEditor.resetImageProperties()
+    }
+}
+
+// MARK: Textures
+
+extension MainViewModel {
+    var currentTexture: Texture? {
+        photoEditor.texture
+    }
+
+    var hasTexture: Bool {
+        photoEditor.hasTexture
+    }
 
     var textureBlendMode: BlendMode {
         get {
@@ -199,12 +288,26 @@ final class MainViewModel {
         }
     }
 
-    var hasTexture: Bool {
-        photoEditor.hasTexture
+    func applyTexture(_ newTexture: Texture) {
+        photoEditor.applyTexture(newTexture)
     }
 
-    // MARK: Effects
+    func applyRandomTexture() {
+        let textures = dataService.texturesCategories.flatMap(\.textures)
+        guard let randomElement = textures.randomElement() else {
+            return
+        }
+        applyTexture(randomElement)
+    }
 
+    func removeTexture() {
+        photoEditor.removeTexture()
+    }
+}
+
+// MARK: Effects
+
+extension MainViewModel {
     var vignette: ImageEffectProtocol {
         get {
             photoEditor.vignette
@@ -221,84 +324,11 @@ final class MainViewModel {
         }
     }
 
-    // MARK: Functions
-
-    func resetSettings() {
-        photoEditor.resetImageProperties()
+    var hasModifiedEffects: Bool {
+        photoEditor.hasModifiedEffects
     }
 
-    func removeTexture() {
-        photoEditor.removeTexture()
-    }
-
-    func applyFilter(_ newFilter: Filter) {
-        photoEditor.applyFilter(newFilter)
-    }
-
-    func applyRandomFilter() {
-        let filters = dataService.filtersCategories.flatMap(\.filters)
-        guard let randomElement = filters.randomElement() else {
-            return
-        }
-        applyFilter(randomElement)
-    }
-
-    func applyTexture(_ newTexture: Texture) {
-        photoEditor.applyTexture(newTexture)
-    }
-
-    func applyRandomTexture() {
-        let textures = dataService.texturesCategories.flatMap(\.textures)
-        guard let randomElement = textures.randomElement() else {
-            return
-        }
-        applyTexture(randomElement)
-    }
-
-    func removeFilter() {
-        photoEditor.removeFilter()
-    }
-
-    func closeImage() {
-        selectedItem = nil
-        loadFiltersPreviews?.cancel()
-        photoEditor.reset()
-        dataService.removePreviews()
-    }
-
-    func saveImageToPhotoLibrary() {
-        photoEditor.saveImageToPhotoLibrary { result in
-            switch result {
-            case let .success(success):
-                Task {
-                    await MainActor.run {
-                        HapticFeedback.success()
-                    }
-                }
-
-            // TODO: Show success alert or snackbar
-            case let .failure(failure):
-                break // TODO: Show error alert or snackbar
-            }
-        }
-    }
-
-    func prepareForEditing() {
-        guard let selectedItem else {
-            return
-        }
-        loadFiltersPreviews?.cancel()
-        loadFiltersPreviews = Task {
-            isLoadingFiltersPreviews = true
-            showsFilters = false
-            if let data = try? await selectedItem.loadTransferable(type: Data.self),
-               let uiImage = UIImage(data: data), let ciImage = CIImage(data: data)
-            {
-                // TODO: Может вместо того, чтобы отдельно передавать CIImage и ориентацию передавать UIImage?
-                photoEditor.updateSourceImage(ciImage, orientation: uiImage.imageOrientation)
-                await dataService.createFiltersPreviews(with: ciImage)
-            }
-            isLoadingFiltersPreviews = false
-        }
+    func resetEffects() {
+        photoEditor.resetEffects()
     }
 }
