@@ -48,7 +48,7 @@ final class PhotoEditorService: PhotoEditor {
     // TODO: Result completion
     func saveImageToPhotoLibrary(completion: @escaping (Result<Void, PhotoEditorError>) -> Void) {
         logger.info(#function)
-        if let processedCiImage, let uiImage = processedCiImage.renderToUIImage(with: context, orientation: sourceImageOrientation) {
+        if let finalImage = renderImageForExport() {
             // Request permission to access the photo library
             PHPhotoLibrary.requestAuthorization { status in
                 guard status == .authorized else {
@@ -58,7 +58,7 @@ final class PhotoEditorService: PhotoEditor {
 
                 // Save the image
                 PHPhotoLibrary.shared().performChanges {
-                    PHAssetChangeRequest.creationRequestForAsset(from: uiImage)
+                    PHAssetChangeRequest.creationRequestForAsset(from: finalImage)
                 } completionHandler: { success, error in
                     if success {
                         completion(.success(()))
@@ -113,14 +113,14 @@ extension PhotoEditorService {
     func applyFilter(_ newLut: Filter) {
         logger.info(#function)
         filterService.prepare(to: newLut) {
-            updateImage()
+            updateProcessedImage()
         }
     }
 
     func removeFilter() {
         logger.info(#function)
         filterService.clear()
-        updateImage()
+        updateProcessedImage()
     }
 }
 
@@ -137,7 +137,7 @@ extension PhotoEditorService {
         }
         set {
             textureService.updateBlendMode(to: newValue)
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -148,14 +148,14 @@ extension PhotoEditorService {
     func applyTexture(_ newTexture: Texture) { // TODO: Handle errors
         logger.info(#function)
         textureService.prepare(to: newTexture) {
-            updateImage()
+            updateProcessedImage()
         }
     }
 
     func removeTexture() {
         logger.info(#function)
         textureService.clear()
-        updateImage()
+        updateProcessedImage()
     }
 
     var textureAlpha: Float {
@@ -164,7 +164,7 @@ extension PhotoEditorService {
         }
         set {
             textureService.updateAlpha(to: newValue)
-            updateImage()
+            updateProcessedImage()
         }
     }
 }
@@ -182,7 +182,7 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.brightness = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -192,7 +192,7 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.contrast = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -202,7 +202,7 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.saturation = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -212,7 +212,7 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.exposure = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -222,7 +222,7 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.vibrance = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -232,7 +232,7 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.highlights = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -242,7 +242,7 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.shadows = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -252,7 +252,7 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.temperature = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -262,7 +262,7 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.tint = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -272,7 +272,7 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.gamma = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -282,7 +282,7 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.noiseReduction = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -292,14 +292,14 @@ extension PhotoEditorService {
         }
         set {
             imageProcessingService.sharpness = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
     func resetImageProperties() {
         logger.info(#function)
         imageProcessingService.reset()
-        updateImage()
+        updateProcessedImage()
     }
 }
 
@@ -315,7 +315,7 @@ extension PhotoEditorService: PhotoEditorEffects {
             imageProcessingService.vignette
         } set {
             imageProcessingService.vignette = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -324,7 +324,7 @@ extension PhotoEditorService: PhotoEditorEffects {
             imageProcessingService.bloom
         } set {
             imageProcessingService.bloom = newValue
-            updateImage()
+            updateProcessedImage()
         }
     }
 
@@ -332,7 +332,7 @@ extension PhotoEditorService: PhotoEditorEffects {
         logger.info(#function)
         imageProcessingService.resetEffects()
         if sourceImage != nil {
-            updateImage()
+            updateProcessedImage()
         }
     }
 }
@@ -379,8 +379,26 @@ private extension PhotoEditorService {
         }
     }
 
+    /// Рендерит изображение с полным разрешением для экспорта
+    func renderImageForExport() -> UIImage? {
+        logger.info(#function)
+        do {
+            guard let sourceCiImage else { throw PhotoEditorError.sourceImageIsMissingWhileTryingToUpdateImage }
+            var finalCiImage = sourceCiImage
+            finalCiImage = try imageProcessingService.updatePropertiesAndEffects(to: finalCiImage)
+            finalCiImage = try filterService.applyFilterIfNeeded(to: finalCiImage)
+            finalCiImage = try textureService.overlayTextureIfNeeded(to: finalCiImage)
+            return finalCiImage.renderToUIImage(with: context, orientation: sourceImageOrientation)
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            errorMessage = error.localizedDescription
+            logger.error("\(#function) \(error.localizedDescription)")
+        }
+        return nil
+    }
+
     // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить. При рендеринге используется это же изображение низкого качества.
-    func updateImage() {
+    func updateProcessedImage() {
         logger.info(#function)
         do {
             guard let sourceCiImage else { throw PhotoEditorError.sourceImageIsMissingWhileTryingToUpdateImage }
