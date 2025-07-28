@@ -45,7 +45,7 @@ struct MainHeaderView: View {
                             .font(.h5)
                             .foregroundStyle(Color.text)
                             .padding(.horizontal, 10)
-                            .padding(.vertical, 5)
+                            .padding(.vertical, .xs)
                             .border(Color.text, width: 1)
                     }
                 }

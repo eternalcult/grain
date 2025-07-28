@@ -8,7 +8,7 @@ struct EffectsView: View {
     // MARK: Content Properties
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: .s) {
             Button {
                 viewModel.showsEffects.toggle()
             } label: {
@@ -17,7 +17,7 @@ struct EffectsView: View {
                         Text("Effects")
                             .font(.h4)
                             .foregroundStyle(Color.text.opacity(0.8))
-                            .padding(.bottom, 5)
+                            .padding(.bottom, .xs)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         if viewModel.hasModifiedEffects {
                             Button {
@@ -40,7 +40,7 @@ struct EffectsView: View {
                 }
             }
             if viewModel.showsEffects {
-                VStack(spacing: 0) {
+                VStack(spacing: .none) {
                     PropertyDoubleSliderView(
                         title: "Vignette",
                         mainProperty: Binding(
@@ -66,7 +66,7 @@ struct EffectsView: View {
                 }
             }
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, .m)
         .padding(.vertical, 12)
         .background(Color.backgroundSecondary.opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: 8))

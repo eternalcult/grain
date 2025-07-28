@@ -11,7 +11,7 @@ private struct HListItemTitleStyle: ViewModifier {
             .foregroundStyle(Color.text)
             .frame(height: 20)
             .frame(maxWidth: .infinity)
-            .padding(.horizontal, 4)
+            .padding(.horizontal, .xs)
             .background(Color.background.opacity(0.5))
     }
 }

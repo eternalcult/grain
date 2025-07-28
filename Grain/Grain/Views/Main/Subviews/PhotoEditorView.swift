@@ -9,7 +9,7 @@ struct PhotoEditorView: View {
     // MARK: Content Properties
 
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: .s) {
             VStack {
                 ZStack(alignment: .trailing) {
                     if let sourceImage = viewModel.sourceImage {
@@ -42,7 +42,7 @@ struct PhotoEditorView: View {
                             .padding()
                     }
                 }
-                HStack(spacing: 0) {
+                HStack(spacing: .none) {
                     if viewModel.hasModifiedValues {
                         Button {
                             viewModel.clearAll()
@@ -51,7 +51,7 @@ struct PhotoEditorView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
-                                .padding(4)
+                                .padding(.xs)
                                 .tint(Color.text)
                                 .clipShape(RoundedRectangle(cornerRadius: 4))
                         }
@@ -63,12 +63,12 @@ struct PhotoEditorView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .padding(4)
+                            .padding(.xs)
                             .tint(viewModel.showsHistogram ? Color.textBlack : Color.text)
                             .background(viewModel.showsHistogram ? Color.backgroundWhiteSecondary.opacity(0.8) : .clear)
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                     }
-                    .padding(4)
+                    .padding(.xs)
                     Button {
                         viewModel.closeImage()
                     } label: {
@@ -76,7 +76,7 @@ struct PhotoEditorView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .padding(4)
+                            .padding(.xs)
                             .tint(Color.text)
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                     }
@@ -84,7 +84,7 @@ struct PhotoEditorView: View {
             }
 
             ScrollView(.vertical) {
-                VStack(spacing: 8) {
+                VStack(spacing: .s) {
                     FiltersView()
                     ImagePropertiesView()
                     EffectsView()

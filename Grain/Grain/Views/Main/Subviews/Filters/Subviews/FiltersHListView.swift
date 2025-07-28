@@ -37,13 +37,13 @@ struct FiltersHListView: View {
             // Фильтры
             ScrollViewReader { proxy in
                 ScrollView(.horizontal) {
-                    HStack(spacing: 4) {
+                    HStack(spacing: .xs) {
                         RawPreviewView(isSelected: viewModel.currentFilter == nil) {
                             viewModel.removeFilter()
                         }
                         .frame(width: 100, height: 100)
                         ForEach(viewModel.filtersCategories) { category in
-                            HStack(spacing: 4) {
+                            HStack(spacing: .xs) {
                                 ForEach(category.filters) { filter in
                                     GeometryReader { geometry in
                                         FilterPreviewView(
@@ -64,7 +64,7 @@ struct FiltersHListView: View {
                             .id(category.id)
                         }
                     }
-                    .padding(.vertical, 2)
+                    .padding(.vertical, .xs)
                 }
                 .scrollIndicators(.hidden)
                 .onChange(of: scrollToIndex) { _, newValue in

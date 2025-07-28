@@ -8,7 +8,7 @@ private struct ToggleListHeaderStyle: ViewModifier {
         content
             .font(.h4)
             .foregroundStyle(Color.text.opacity(0.8))
-            .padding(.bottom, 5)
+            .padding(.bottom, .xs)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

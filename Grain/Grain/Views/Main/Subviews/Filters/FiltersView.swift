@@ -9,7 +9,7 @@ struct FiltersView: View {
     // MARK: Content Properties
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: .s) {
             Button {
                 viewModel.showsFilters.toggle()
             } label: {
@@ -33,7 +33,7 @@ struct FiltersView: View {
                                     .tint(.text)
                             }
                         }
-                        .padding(.trailing, 8)
+                        .padding(.trailing, .s)
                         if !viewModel.isLoadingFiltersPreviews {
                             Button {
                                 router.push(MainRoute.gallery(.filters))
@@ -53,13 +53,13 @@ struct FiltersView: View {
             }
             .allowsHitTesting(!viewModel.isLoadingFiltersPreviews)
             if viewModel.showsFilters {
-                VStack(spacing: 8) {
+                VStack(spacing: .s) {
                     FiltersHListView()
                         .environment(viewModel)
                 }
             }
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, .m)
         .padding(.vertical, 12)
         .background(Color.backgroundSecondary.opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: 8))

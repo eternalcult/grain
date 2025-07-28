@@ -36,13 +36,13 @@ struct TexturesHListView: View {
             // Текстуры
             ScrollViewReader { proxy in
                 ScrollView(.horizontal) {
-                    HStack(spacing: 4) {
+                    HStack(spacing: .xs) {
                         RawPreviewView(isSelected: viewModel.currentTexture == nil) {
                             viewModel.removeTexture()
                         }
                         .frame(width: 100, height: 100)
                         ForEach(viewModel.texturesCategories) { category in
-                            HStack(spacing: 4) {
+                            HStack(spacing: .xs) {
                                 ForEach(category.textures) { texture in
                                     GeometryReader { geometry in
                                         TexturePreviewView(
@@ -62,7 +62,7 @@ struct TexturesHListView: View {
                             .id(category.id)
                         }
                     }
-                    .padding(.vertical, 2)
+                    .padding(.vertical, .xs)
                 }
                 .scrollIndicators(.hidden)
                 .onChange(of: scrollToIndex) { _, newValue in

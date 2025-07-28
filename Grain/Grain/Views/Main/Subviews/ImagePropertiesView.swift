@@ -8,7 +8,7 @@ struct ImagePropertiesView: View {
     // MARK: Content Properties
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: .s) {
             Button {
                 viewModel.showsSettings.toggle()
             } label: {
@@ -37,7 +37,7 @@ struct ImagePropertiesView: View {
                 }
             }
             if viewModel.showsSettings {
-                VStack(spacing: 0) {
+                VStack(spacing: .none) {
                     PropertySliderView(
                         property: Binding(
                             get: { viewModel.brightness },
@@ -113,7 +113,7 @@ struct ImagePropertiesView: View {
                 }
             }
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, .m)
         .padding(.vertical, 12)
         .background(Color.backgroundSecondary.opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: 8))

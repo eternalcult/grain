@@ -14,7 +14,7 @@ struct BlendModeView: View {
                 .foregroundStyle(Color.text)
                 .minimumScaleFactor(0.1)
                 .lineLimit(1)
-            VStack(spacing: 16) {
+            VStack(spacing: .m) {
                 ForEach(BlendMode.allCases, id: \.self) { blendMode in
                     VStack {
                         Text(blendMode.title)

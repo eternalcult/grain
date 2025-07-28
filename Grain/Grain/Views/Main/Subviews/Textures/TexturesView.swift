@@ -9,7 +9,7 @@ struct TexturesView: View {
     // MARK: Content Properties
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: .s) {
             Button {
                 viewModel.showsTextures.toggle()
             } label: {
@@ -27,7 +27,7 @@ struct TexturesView: View {
                                     .tint(.text.opacity(0.8))
                             }
                         }
-                        .padding(.trailing, 8)
+                        .padding(.trailing, .s)
                         Button {
                             router.push(MainRoute.gallery(.textures))
                         } label: {
@@ -44,12 +44,12 @@ struct TexturesView: View {
                 }
             }
             if viewModel.showsTextures {
-                VStack(spacing: 8) {
+                VStack(spacing: .s) {
                     TexturesHListView()
                         .environment(viewModel)
 
                     if viewModel.hasTexture {
-                        VStack(spacing: 0) {
+                        VStack(spacing: .none) {
                             HStack {
                                 Text("Blend mode:")
                                     .font(.h5)
@@ -74,7 +74,7 @@ struct TexturesView: View {
                             ), in: BlendMode.range, step: 1)
                                 .tint(Color.text.opacity(0.1))
                         }
-                        VStack(spacing: 0) {
+                        VStack(spacing: .none) {
                             HStack {
                                 Text("Intensity:")
                                     .font(.h5)
@@ -100,7 +100,7 @@ struct TexturesView: View {
                 }
             }
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, .m)
         .padding(.vertical, 12)
         .background(Color.backgroundSecondary.opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: 8))

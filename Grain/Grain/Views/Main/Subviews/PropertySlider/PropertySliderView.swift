@@ -10,7 +10,7 @@ struct PropertySliderView: View {
     // MARK: Content Properties
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: .none) {
             Text(property.title)
                 .font(.h5)
                 .foregroundStyle(Color.text.opacity(0.8))

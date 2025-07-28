@@ -28,7 +28,7 @@ struct GalleryView: View {
                         .foregroundStyle(Color.text)
                         .minimumScaleFactor(0.1)
                         .lineLimit(1)
-                    LazyVGrid(columns: columns, spacing: 8) {
+                    LazyVGrid(columns: columns, spacing: .s) {
                         ForEach(category.filters) { filter in
                             let filterPreview = viewModel.filtersPreview.first(where: { $0.id == filter.id })?.preview
                             if let filterPreview {
@@ -62,7 +62,7 @@ struct GalleryView: View {
                         .foregroundStyle(Color.text)
                         .minimumScaleFactor(0.1)
                         .lineLimit(1)
-                    LazyVGrid(columns: columns, spacing: 8) {
+                    LazyVGrid(columns: columns, spacing: .s) {
                         ForEach(category.textures) { texture in
                             if let selectedTexture = viewModel.currentTexture {
                                 TexturePreviewView(texture: texture, isSelected: selectedTexture.id == texture.id) {

@@ -14,7 +14,7 @@ struct PropertyDoubleSliderView: View {
             Text(title)
                 .font(.h5)
                 .foregroundStyle(Color.text.opacity(0.8))
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: .none) {
                 Text(mainProperty.title)
                     .font(.h5)
                     .foregroundStyle(Color.text.opacity(0.8))
@@ -27,7 +27,7 @@ struct PropertyDoubleSliderView: View {
             .onTapGesture(count: 2) {
                 mainProperty.setToDefault()
             }
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: .none) {
                 Text(additionalProperty.title)
                     .font(.h5)
                     .foregroundStyle(Color.text.opacity(0.8))

@@ -53,7 +53,7 @@ struct SettingsView: View {
                 Button {
                     AppService.askReviewWithComment()
                 } label: {
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: .xs) {
                         HStack {
                             Image(systemName: "medal.star")
                                 .foregroundStyle(Color.text)
@@ -97,7 +97,7 @@ struct SettingsView: View {
                                 .frame(maxWidth: 50, maxHeight: 50)
                                 .clipShape(.rect(cornerRadius: 4))
 
-                            VStack(alignment: .leading, spacing: 4) {
+                            VStack(alignment: .leading, spacing: .xs) {
                                 Text(app.title)
                                     .font(.h3)
                                     .foregroundStyle(Color.text)
@@ -105,7 +105,7 @@ struct SettingsView: View {
                                     .font(.textSub)
                                     .foregroundStyle(Color.text)
 
-                            }.padding(.vertical, 4)
+                            }.padding(.vertical, .xs)
                         }
                     }
                 }

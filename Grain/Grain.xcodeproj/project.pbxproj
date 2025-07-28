@@ -33,6 +33,7 @@
 		C1517A9E2D34511200F61DC6 /* Grain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C196FB712D8D5BD3008A4AF7 /* GrainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1995C422E34BA6D00DB1FDD /* Grain.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Grain.xcodeproj; sourceTree = "<group>"; };
+		C1BF8EDE2E37FB94003EF7D2 /* Grain.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Grain.xcodeproj; sourceTree = "<group>"; };
 		C1F076C32D5263B5002508B0 /* GrainFastlaneSnapshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrainFastlaneSnapshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -128,6 +129,11 @@
 			sourceTree = "<group>";
 		};
 		C1995C462E34BA6D00DB1FDD /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C1BF8EE22E37FB94003EF7D2 /* Products */ = {
 			isa = PBXGroup;
 			name = Products;
 			sourceTree = "<group>";
@@ -255,6 +261,10 @@
 				{
 					ProductGroup = C1995C462E34BA6D00DB1FDD /* Products */;
 					ProjectRef = C1995C422E34BA6D00DB1FDD /* Grain.xcodeproj */;
+				},
+				{
+					ProductGroup = C1BF8EE22E37FB94003EF7D2 /* Products */;
+					ProjectRef = C1BF8EDE2E37FB94003EF7D2 /* Grain.xcodeproj */;
 				},
 			);
 			projectRoot = "";

@@ -17,16 +17,16 @@ struct MainView: View {
 
     var body: some View {
         NavigationStack(path: $router.path) {
-            VStack(spacing: 8) {
+            VStack(spacing: .s) {
                 if viewModel.sourceImage != nil {
-                    VStack(spacing: 0) {
+                    VStack(spacing: .none) {
                         MainHeaderView(with: viewModel)
                             .environment(router)
                         PhotoEditorView()
                             .environment(router)
                             .environment(viewModel)
                     }
-                    .padding(.horizontal, 8)
+                    .padding(.horizontal, .s)
                 } else {
                     MainPhotoPickerView(with: viewModel)
                 }
