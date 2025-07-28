@@ -397,16 +397,26 @@ private extension PhotoEditorService {
         return nil
     }
 
-    // TODO: Если изображение слишком маленькое, то при даунскейле оно может стать слишком пиксельным. Возможно стоит попробовать проверять к примеру высоты и/или ширину изображения, если оно больше определенного значения - даунскейлить. При рендеринге используется это же изображение низкого качества.
+    /// Обновляет обработанное изображение, если изображение больше чем 1024px по одной из сторон, применяется даунскейл для быстрой отрисовки превью
     func updateProcessedImage() {
         logger.info(#function)
         do {
             guard let sourceCiImage else { throw PhotoEditorError.sourceImageIsMissingWhileTryingToUpdateImage }
             guard var processedCiImage else { throw PhotoEditorError.processedImageIsMissingWhileTryingToUpdateImage }
-            processedCiImage = try downscale(
-                image: sourceCiImage,
-                scale: 0.5
-            )
+            
+
+            let imageSize = sourceCiImage.extent.size
+            let shouldDownscale = max(imageSize.width, imageSize.height) > 1024
+            
+            if shouldDownscale { // Определяем нужно ли масштабировать изображение
+                processedCiImage = try downscale(
+                    image: sourceCiImage,
+                    scale: 0.5
+                )
+            } else { // Используем оригинальное изображение без масштабирования
+                processedCiImage = sourceCiImage
+            }
+            
             processedCiImage = try imageProcessingService.updatePropertiesAndEffects(to: processedCiImage)
             processedCiImage = try filterService.applyFilterIfNeeded(to: processedCiImage)
             processedCiImage = try textureService.overlayTextureIfNeeded(to: processedCiImage)
